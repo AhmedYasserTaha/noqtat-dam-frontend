@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owner(uid) { return signedIn() && request.auth.uid == uid; }
+    function postAuthor(id) {
+      return signedIn() && get(/databases/$(database)/documents/posts/$(id)).data.authorId == request.auth.uid;
+    }
+    function postAuthorAfter(id) {
+      return signedIn() && getAfter(/databases/$(database)/documents/posts/$(id)).data.authorId == request.auth.uid;
+    }
+    function bloodType(value) { return value in ['A+','A-','B+','B-','AB+','AB-','O+','O-']; }
+    function validPost(p) {
+      return p.keys().hasOnly(['type','authorId','authorName','text','createdAt','likesCount','commentsCount','bloodType','bagsNeeded','bagsCollected','hospitalName','governorate','city','urgency','deadline','notes','status','isVerified'])
+        && p.type in ['normal','blood_request'] && p.authorName is string && p.text is string
+        && p.createdAt is timestamp && p.likesCount is int && p.commentsCount is int
+        && (p.type == 'normal' || (bloodType(p.bloodType) && p.bagsNeeded is int && p.bagsNeeded > 0
+          && p.bagsCollected is int && p.bagsCollected >= 0 && p.bagsCollected <= p.bagsNeeded
+          && p.hospitalName is string && p.governorate is string && p.city is string
+          && p.urgency in ['critical','within_24h','scheduled'] && p.deadline is timestamp
+          && p.notes is string && p.status in ['open','fulfilled','expired'] && p.isVerified is bool));
+    }
+    match /users/{uid} {
+      allow read, delete: if owner(uid);
+      allow create, update: if owner(uid)
+        && request.resource.data.keys().hasOnly(['name','phone','bloodType','governorate','city','isAvailable','lastDonationAt','donationsCount','fcmToken','createdAt'])
+        && request.resource.data.name is string && request.resource.data.phone is string
+        && bloodType(request.resource.data.bloodType) && request.resource.data.governorate is string
+        && request.resource.data.city is string && request.resource.data.isAvailable is bool
+        && request.resource.data.donationsCount is int && request.resource.data.createdAt is timestamp
+        && (request.resource.data.lastDonationAt == null || request.resource.data.lastDonationAt is timestamp)
+        && (request.resource.data.fcmToken == null || request.resource.data.fcmToken is string);
+    }
+    match /posts/{postId} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.authorId == request.auth.uid
+        && validPost(request.resource.data) && request.resource.data.createdAt == request.time
+        && request.resource.data.likesCount == 0 && request.resource.data.commentsCount == 0
+        && (request.resource.data.type == 'normal' || (request.resource.data.isVerified == false && request.resource.data.bagsCollected == 0 && request.resource.data.status == 'open'));
+      allow update: if postAuthor(postId) && validPost(request.resource.data)
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['authorId','createdAt','type','isVerified','likesCount','commentsCount']);
+      allow delete: if postAuthor(postId);
+      match /private/contact {
+        allow read: if postAuthor(postId) || (signedIn()
+          && exists(/databases/$(database)/documents/posts/$(postId)/pledges/$(request.auth.uid))
+          && get(/databases/$(database)/documents/posts/$(postId)/pledges/$(request.auth.uid)).data.status in ['on_the_way','donated']);
+        allow create, update: if postAuthorAfter(postId)
+          && request.resource.data.keys().hasOnly(['contactPhone']) && request.resource.data.contactPhone is string;
+        allow delete: if postAuthor(postId);
+      }
+      match /pledges/{uid} {
+        allow read: if owner(uid) || postAuthor(postId);
+        allow create: if owner(uid)
+          && get(/databases/$(database)/documents/posts/$(postId)).data.type == 'blood_request'
+          && get(/databases/$(database)/documents/posts/$(postId)).data.status == 'open'
+          && request.resource.data.keys().hasOnly(['donorId','donorName','status','createdAt'])
+          && request.resource.data.donorId == uid && request.resource.data.donorName is string
+          && request.resource.data.status == 'on_the_way' && request.resource.data.createdAt == request.time;
+        allow update: if owner(uid) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+          && request.resource.data.status in ['on_the_way','donated','cancelled'];
+        allow delete: if owner(uid);
+      }
+      // Comment and like interactions are deferred along with their UI.
+      match /comments/{id} { allow read: if signedIn(); allow write: if false; }
+      match /likes/{uid} { allow read: if signedIn(); allow write: if false; }
+    }
+  }
+}

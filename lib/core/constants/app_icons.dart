@@ -1,0 +1,22 @@
+abstract final class AppIcons {
+  static const bloodDropFilled = 'assets/icons/blood_drop_filled.svg';
+  static const bloodDropOutline = 'assets/icons/blood_drop_outline.svg';
+  static const bell = 'assets/icons/bell.svg';
+  static const locationPin = 'assets/icons/location_pin.svg';
+  static const arrowBackRtl = 'assets/icons/arrow_back_rtl.svg';
+  static const close = 'assets/icons/close.svg';
+  static const plus = 'assets/icons/plus.svg';
+  static const share = 'assets/icons/share.svg';
+  static const check = 'assets/icons/check.svg';
+  static const clock = 'assets/icons/clock.svg';
+  static const homeOutline = 'assets/icons/home_outline.svg';
+  static const homeFilled = 'assets/icons/home_filled.svg';
+  static const map = 'assets/icons/map.svg';
+  static const userOutline = 'assets/icons/user_outline.svg';
+  static const userFilled = 'assets/icons/user_filled.svg';
+  static const settings = 'assets/icons/settings.svg';
+  static const backspace = 'assets/icons/backspace.svg';
+  static const heart = 'assets/icons/heart.svg';
+  static const comment = 'assets/icons/comment.svg';
+  static const search = 'assets/icons/search.svg';
+}

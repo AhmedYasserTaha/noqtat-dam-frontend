@@ -1,0 +1,12 @@
+{
+  "@@locale": "ar",
+  "appName": "دمي",
+  "home": "الرئيسية",
+  "phoneLogin": "تسجيل الدخول",
+  "completeProfile": "إكمال الملف الشخصي",
+  "profile": "الملف الشخصي",
+  "bloodRequest": "طلب تبرع بالدم",
+  "placeholder": "قريباً",
+  "retry": "إعادة المحاولة",
+  "empty": "لا توجد بيانات"
+}

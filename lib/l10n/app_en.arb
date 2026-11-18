@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "appName": "Damy",
+  "home": "Home",
+  "phoneLogin": "Phone login",
+  "completeProfile": "Complete profile",
+  "profile": "Profile",
+  "bloodRequest": "Blood request",
+  "placeholder": "Coming soon",
+  "retry": "Retry",
+  "empty": "No data"
+}

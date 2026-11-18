@@ -1,0 +1,70 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../../core/utils/model_dates.dart';
+import '../../domain/entities/post.dart';
+
+class PostModel extends Post {
+  const PostModel({
+    required super.id,
+    required super.type,
+    required super.authorId,
+    required super.authorName,
+    required super.text,
+    required super.createdAt,
+    required super.likesCount,
+    required super.commentsCount,
+    super.bloodType,
+    super.bagsNeeded,
+    super.bagsCollected,
+    super.hospitalName,
+    super.governorate,
+    super.city,
+    super.urgency,
+    super.deadline,
+    super.notes,
+    super.status,
+    super.isVerified,
+  });
+  factory PostModel.fromMap(Map<String, dynamic> map) => PostModel(
+    id: map['id'] as String,
+    type: map['type'] as String,
+    authorId: map['authorId'] as String,
+    authorName: map['authorName'] as String,
+    text: map['text'] as String,
+    createdAt: readDate(map['createdAt']),
+    likesCount: map['likesCount'] as int,
+    commentsCount: map['commentsCount'] as int,
+    bloodType: map['bloodType'] as String?,
+    bagsNeeded: map['bagsNeeded'] as int?,
+    bagsCollected: map['bagsCollected'] as int?,
+    hospitalName: map['hospitalName'] as String?,
+    governorate: map['governorate'] as String?,
+    city: map['city'] as String?,
+    urgency: map['urgency'] as String?,
+    deadline: readOptionalDate(map['deadline']),
+    notes: map['notes'] as String?,
+    status: map['status'] as String?,
+    isVerified: map['isVerified'] as bool?,
+  );
+  Map<String, dynamic> toMap() => {
+    'id': id,
+    'type': type,
+    'authorId': authorId,
+    'authorName': authorName,
+    'text': text,
+    'createdAt': Timestamp.fromDate(createdAt),
+    'likesCount': likesCount,
+    'commentsCount': commentsCount,
+    'bloodType': bloodType,
+    'bagsNeeded': bagsNeeded,
+    'bagsCollected': bagsCollected,
+    'hospitalName': hospitalName,
+    'governorate': governorate,
+    'city': city,
+    'urgency': urgency,
+    'deadline': deadline == null ? null : Timestamp.fromDate(deadline!),
+    'notes': notes,
+    'status': status,
+    'isVerified': isVerified,
+  };
+}
