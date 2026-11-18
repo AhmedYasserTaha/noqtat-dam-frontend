@@ -151,4 +151,113 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get closeLocations => 'إغلاق';
+
+  @override
+  String get mapTab => 'الخريطة';
+
+  @override
+  String get myRequestsTab => 'طلباتي';
+
+  @override
+  String get myAccountTab => 'حسابي';
+
+  @override
+  String get createRequestAction => 'إنشاء طلب دم';
+
+  @override
+  String get readyToDonate => 'جاهز تتبرع تاني';
+
+  @override
+  String get donationHistoryDemo => 'آخر تبرع من 4 شهور · 3 تبرعات سابقة';
+
+  @override
+  String get closestUrgentRequest => 'عاجل جدًا · أقرب طلب ليك';
+
+  @override
+  String get threeHoursLeft => 'باقي 3 ساعات';
+
+  @override
+  String get threeBagsNeeded => '3 أكياس دم مطلوبة';
+
+  @override
+  String get mansouraHospitalDistance => 'مستشفى المنصورة الجامعي · 2.4 كم';
+
+  @override
+  String get hospitalVerified => 'موثّق من المستشفى';
+
+  @override
+  String get oneOfThreeCollected => 'اتجمع 1 من 3';
+
+  @override
+  String get twoOnTheWay => '2 في الطريق';
+
+  @override
+  String get iWillDonate => 'أنا هتبرع';
+
+  @override
+  String get shareRequest => 'مشاركة الطلب';
+
+  @override
+  String get urgentLabel => 'عاجل';
+
+  @override
+  String get donateAction => 'تبرّع';
+
+  @override
+  String get demoDonorName => 'محمد أحمد';
+
+  @override
+  String get twoHoursAgo => 'من ساعتين';
+
+  @override
+  String get demoDonationPost =>
+      'النهاردة تبرعت بالدم لأول مرة، والإحساس مش بيتوصف. لو بتفكر تتبرع متترددش!';
+
+  @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get filterMyBlood => 'فصيلتي';
+
+  @override
+  String get filterNearby => 'قريب مني';
+
+  @override
+  String get mansouraCity => 'المنصورة';
+
+  @override
+  String get demoFeedLabel => 'معاينة التصميم · بيانات تجريبية';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String get noDemoNotifications => 'مفيش إشعارات في المعاينة دي.';
+
+  @override
+  String get demoDonationNotice =>
+      'ده طلب تجريبي لعرض التصميم. مش هيتم تسجيل تعهّد بالتبرع.';
+
+  @override
+  String get demoShareText =>
+      'طلب تجريبي: 3 أكياس O- في مستشفى المنصورة الجامعي. للمعاينة فقط، مش طلب تبرع حقيقي.';
+
+  @override
+  String get requestCopied => 'تم نسخ نص الطلب التجريبي';
+
+  @override
+  String get twoBagsTitle => 'كيسين دم';
+
+  @override
+  String get talkhaHospitalDistance => 'مستشفى طلخا العام · 11 كم';
+
+  @override
+  String get plateletsTitle => 'كيس صفائح دموية';
+
+  @override
+  String get salamHospitalDistance => 'مستشفى السلام · 5 كم';
+
+  @override
+  String get matchingFeaturedRequest =>
+      'الطلب المميز فوق مطابق لفصيلتك التجريبية O-';
 }

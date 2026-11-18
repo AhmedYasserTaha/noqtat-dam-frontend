@@ -3,7 +3,10 @@
 Arabic-first blood donation app scaffold. Login, registration and password
 recovery have responsive forms matching the supplied Arabic designs. These are
 UI only: submit/guest actions show an unavailable notice; they do not call Firebase.
-The remaining feature pages are placeholders. Phone/OTP backend scaffolding is
+Home now has a design preview with sample request/community cards and working
+local filters. Donation/notification actions display preview notices; sharing
+copies explicitly marked sample text. It does not load or write live feed data.
+The other feature pages are placeholders. Phone/OTP backend scaffolding is
 unchanged; password authentication and recovery are not implemented.
 
 ## Architecture
@@ -21,8 +24,14 @@ code generation. ARB localization generation is enabled.
 
 `DamyApp` defaults to Arabic; localization delegates supply RTL. Pass
 `locale: Locale('en')` for English. Cairo 400/600/700/900 is bundled locally under
-`assets/fonts` with its OFL license. SVG files are intentionally absent; put the
-20 expected assets listed in `AppIcons` into `assets/icons` before using them.
+`assets/fonts` with its OFL license.
+SVG assets in `assets/svg` are registered and resolved through `AppIcons` and
+`AppIcon`. Home and the standalone `AppBottomNav` use these bundled icons.
+
+The authenticated routes share `AppShell` and its independent bottom navigation
+widget. Home, map, requests and profile have routes; map/requests remain
+placeholders. The center action opens the existing blood-request route. The
+authentication guard is unchanged.
 
 ## Local verification
 

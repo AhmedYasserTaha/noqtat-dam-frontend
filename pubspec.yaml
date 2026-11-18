@@ -66,6 +66,7 @@ flutter:
   generate: true
   assets:
     - assets/icons/
+    - assets/svg/
     - assets/data/egypt/
   fonts:
     - family: Cairo

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../di/injection.dart';
+import 'app_shell.dart';
 import '../../l10n/app_localizations.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/auth_state.dart';
@@ -96,12 +97,33 @@ GoRouter createRouter(
       path: '/complete-profile',
       builder: (context, state) => const CompleteProfilePage(),
     ),
-    GoRoute(
-      path: '/',
-      builder: (context, state) => BlocProvider(
-        create: (_) => getIt<FeedCubit>(),
-        child: const HomeFeedPage(),
-      ),
+    ShellRoute(
+      builder: (context, state, child) =>
+          AppShell(location: state.uri.path, child: child),
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => BlocProvider(
+            create: (_) => getIt<FeedCubit>(),
+            child: const HomeFeedPage(),
+          ),
+        ),
+        GoRoute(
+          path: '/map',
+          builder: (context, state) =>
+              PendingTabPage(title: AppLocalizations.of(context)!.mapTab),
+        ),
+        GoRoute(
+          path: '/requests',
+          builder: (context, state) => PendingTabPage(
+            title: AppLocalizations.of(context)!.myRequestsTab,
+          ),
+        ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => const ProfilePage(),
+        ),
+      ],
     ),
     GoRoute(
       path: '/blood-request',
@@ -110,6 +132,5 @@ GoRouter createRouter(
         child: const BloodRequestPage(),
       ),
     ),
-    GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
   ],
 );

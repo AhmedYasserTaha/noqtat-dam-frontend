@@ -151,4 +151,114 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get closeLocations => 'Close';
+
+  @override
+  String get mapTab => 'Map';
+
+  @override
+  String get myRequestsTab => 'My requests';
+
+  @override
+  String get myAccountTab => 'Account';
+
+  @override
+  String get createRequestAction => 'Create blood request';
+
+  @override
+  String get readyToDonate => 'Ready to donate again';
+
+  @override
+  String get donationHistoryDemo => 'Last donated 4 months ago · 3 donations';
+
+  @override
+  String get closestUrgentRequest => 'Critical · Closest request';
+
+  @override
+  String get threeHoursLeft => '3 hours left';
+
+  @override
+  String get threeBagsNeeded => '3 blood bags needed';
+
+  @override
+  String get mansouraHospitalDistance =>
+      'Mansoura University Hospital · 2.4 km';
+
+  @override
+  String get hospitalVerified => 'Verified by the hospital';
+
+  @override
+  String get oneOfThreeCollected => '1 of 3 collected';
+
+  @override
+  String get twoOnTheWay => '2 on the way';
+
+  @override
+  String get iWillDonate => 'I will donate';
+
+  @override
+  String get shareRequest => 'Share request';
+
+  @override
+  String get urgentLabel => 'Urgent';
+
+  @override
+  String get donateAction => 'Donate';
+
+  @override
+  String get demoDonorName => 'Mohamed Ahmed';
+
+  @override
+  String get twoHoursAgo => '2 hours ago';
+
+  @override
+  String get demoDonationPost =>
+      'I donated blood for the first time today. It feels incredible. If you are thinking about donating, go for it!';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterMyBlood => 'My blood type';
+
+  @override
+  String get filterNearby => 'Near me';
+
+  @override
+  String get mansouraCity => 'Mansoura';
+
+  @override
+  String get demoFeedLabel => 'Design preview · Sample data';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get noDemoNotifications => 'No notifications in this preview.';
+
+  @override
+  String get demoDonationNotice =>
+      'This is a sample request for the design preview. No donation pledge will be recorded.';
+
+  @override
+  String get demoShareText =>
+      'SAMPLE: 3 O- blood bags at Mansoura University Hospital. Design preview only, not a real donation request.';
+
+  @override
+  String get requestCopied => 'Sample request text copied';
+
+  @override
+  String get twoBagsTitle => 'Two blood bags';
+
+  @override
+  String get talkhaHospitalDistance => 'Talkha General Hospital · 11 km';
+
+  @override
+  String get plateletsTitle => 'Platelet donation';
+
+  @override
+  String get salamHospitalDistance => 'Al Salam Hospital · 5 km';
+
+  @override
+  String get matchingFeaturedRequest =>
+      'The featured request above matches your sample O- blood type';
 }

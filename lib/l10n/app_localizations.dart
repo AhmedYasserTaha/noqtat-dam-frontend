@@ -379,6 +379,216 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إغلاق'**
   String get closeLocations;
+
+  /// No description provided for @mapTab.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخريطة'**
+  String get mapTab;
+
+  /// No description provided for @myRequestsTab.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلباتي'**
+  String get myRequestsTab;
+
+  /// No description provided for @myAccountTab.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابي'**
+  String get myAccountTab;
+
+  /// No description provided for @createRequestAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء طلب دم'**
+  String get createRequestAction;
+
+  /// No description provided for @readyToDonate.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاهز تتبرع تاني'**
+  String get readyToDonate;
+
+  /// No description provided for @donationHistoryDemo.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر تبرع من 4 شهور · 3 تبرعات سابقة'**
+  String get donationHistoryDemo;
+
+  /// No description provided for @closestUrgentRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'عاجل جدًا · أقرب طلب ليك'**
+  String get closestUrgentRequest;
+
+  /// No description provided for @threeHoursLeft.
+  ///
+  /// In ar, this message translates to:
+  /// **'باقي 3 ساعات'**
+  String get threeHoursLeft;
+
+  /// No description provided for @threeBagsNeeded.
+  ///
+  /// In ar, this message translates to:
+  /// **'3 أكياس دم مطلوبة'**
+  String get threeBagsNeeded;
+
+  /// No description provided for @mansouraHospitalDistance.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستشفى المنصورة الجامعي · 2.4 كم'**
+  String get mansouraHospitalDistance;
+
+  /// No description provided for @hospitalVerified.
+  ///
+  /// In ar, this message translates to:
+  /// **'موثّق من المستشفى'**
+  String get hospitalVerified;
+
+  /// No description provided for @oneOfThreeCollected.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتجمع 1 من 3'**
+  String get oneOfThreeCollected;
+
+  /// No description provided for @twoOnTheWay.
+  ///
+  /// In ar, this message translates to:
+  /// **'2 في الطريق'**
+  String get twoOnTheWay;
+
+  /// No description provided for @iWillDonate.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنا هتبرع'**
+  String get iWillDonate;
+
+  /// No description provided for @shareRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'مشاركة الطلب'**
+  String get shareRequest;
+
+  /// No description provided for @urgentLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'عاجل'**
+  String get urgentLabel;
+
+  /// No description provided for @donateAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبرّع'**
+  String get donateAction;
+
+  /// No description provided for @demoDonorName.
+  ///
+  /// In ar, this message translates to:
+  /// **'محمد أحمد'**
+  String get demoDonorName;
+
+  /// No description provided for @twoHoursAgo.
+  ///
+  /// In ar, this message translates to:
+  /// **'من ساعتين'**
+  String get twoHoursAgo;
+
+  /// No description provided for @demoDonationPost.
+  ///
+  /// In ar, this message translates to:
+  /// **'النهاردة تبرعت بالدم لأول مرة، والإحساس مش بيتوصف. لو بتفكر تتبرع متترددش!'**
+  String get demoDonationPost;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل'**
+  String get filterAll;
+
+  /// No description provided for @filterMyBlood.
+  ///
+  /// In ar, this message translates to:
+  /// **'فصيلتي'**
+  String get filterMyBlood;
+
+  /// No description provided for @filterNearby.
+  ///
+  /// In ar, this message translates to:
+  /// **'قريب مني'**
+  String get filterNearby;
+
+  /// No description provided for @mansouraCity.
+  ///
+  /// In ar, this message translates to:
+  /// **'المنصورة'**
+  String get mansouraCity;
+
+  /// No description provided for @demoFeedLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'معاينة التصميم · بيانات تجريبية'**
+  String get demoFeedLabel;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإشعارات'**
+  String get notificationsTitle;
+
+  /// No description provided for @noDemoNotifications.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش إشعارات في المعاينة دي.'**
+  String get noDemoNotifications;
+
+  /// No description provided for @demoDonationNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'ده طلب تجريبي لعرض التصميم. مش هيتم تسجيل تعهّد بالتبرع.'**
+  String get demoDonationNotice;
+
+  /// No description provided for @demoShareText.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب تجريبي: 3 أكياس O- في مستشفى المنصورة الجامعي. للمعاينة فقط، مش طلب تبرع حقيقي.'**
+  String get demoShareText;
+
+  /// No description provided for @requestCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نسخ نص الطلب التجريبي'**
+  String get requestCopied;
+
+  /// No description provided for @twoBagsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيسين دم'**
+  String get twoBagsTitle;
+
+  /// No description provided for @talkhaHospitalDistance.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستشفى طلخا العام · 11 كم'**
+  String get talkhaHospitalDistance;
+
+  /// No description provided for @plateletsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيس صفائح دموية'**
+  String get plateletsTitle;
+
+  /// No description provided for @salamHospitalDistance.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستشفى السلام · 5 كم'**
+  String get salamHospitalDistance;
+
+  /// No description provided for @matchingFeaturedRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطلب المميز فوق مطابق لفصيلتك التجريبية O-'**
+  String get matchingFeaturedRequest;
 }
 
 class _AppLocalizationsDelegate
