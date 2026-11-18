@@ -38,5 +38,13 @@
   "passwordTooShort": "Use at least 8 characters",
   "showPassword": "Show password",
   "hidePassword": "Hide password",
-  "authUnavailable": "This service is currently unavailable."
+  "authUnavailable": "This service is currently unavailable.",
+  "selectGovernorate": "Select governorate",
+  "districtLabel": "District / center",
+  "selectDistrict": "Select district or center",
+  "chooseGovernorateFirst": "Choose a governorate first",
+  "searchLocations": "Search by name...",
+  "noLocationsFound": "No matching locations",
+  "loadingLocations": "Loading governorates...",
+  "closeLocations": "Close"
 }

@@ -127,4 +127,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get authUnavailable => 'الخدمة دي مش متاحة حالياً.';
+
+  @override
+  String get selectGovernorate => 'اختار المحافظة';
+
+  @override
+  String get districtLabel => 'المركز / القسم';
+
+  @override
+  String get selectDistrict => 'اختار المركز أو القسم';
+
+  @override
+  String get chooseGovernorateFirst => 'اختار المحافظة الأول';
+
+  @override
+  String get searchLocations => 'ابحث بالاسم...';
+
+  @override
+  String get noLocationsFound => 'مفيش نتائج للبحث ده';
+
+  @override
+  String get loadingLocations => 'جاري تحميل المحافظات...';
+
+  @override
+  String get closeLocations => 'إغلاق';
 }

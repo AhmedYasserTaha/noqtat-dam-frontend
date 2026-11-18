@@ -38,5 +38,13 @@
   "passwordTooShort": "كلمة السر لازم تكون 8 حروف على الأقل",
   "showPassword": "إظهار كلمة السر",
   "hidePassword": "إخفاء كلمة السر",
-  "authUnavailable": "الخدمة دي مش متاحة حالياً."
+  "authUnavailable": "الخدمة دي مش متاحة حالياً.",
+  "selectGovernorate": "اختار المحافظة",
+  "districtLabel": "المركز / القسم",
+  "selectDistrict": "اختار المركز أو القسم",
+  "chooseGovernorateFirst": "اختار المحافظة الأول",
+  "searchLocations": "ابحث بالاسم...",
+  "noLocationsFound": "مفيش نتائج للبحث ده",
+  "loadingLocations": "جاري تحميل المحافظات...",
+  "closeLocations": "إغلاق"
 }

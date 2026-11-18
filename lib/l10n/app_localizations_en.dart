@@ -127,4 +127,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authUnavailable => 'This service is currently unavailable.';
+
+  @override
+  String get selectGovernorate => 'Select governorate';
+
+  @override
+  String get districtLabel => 'District / center';
+
+  @override
+  String get selectDistrict => 'Select district or center';
+
+  @override
+  String get chooseGovernorateFirst => 'Choose a governorate first';
+
+  @override
+  String get searchLocations => 'Search by name...';
+
+  @override
+  String get noLocationsFound => 'No matching locations';
+
+  @override
+  String get loadingLocations => 'Loading governorates...';
+
+  @override
+  String get closeLocations => 'Close';
 }

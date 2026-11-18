@@ -84,6 +84,14 @@ subcollections; production cleanup needs a trusted backend.
 
 ## Platform setup
 
+Registration location fields use an offline snapshot of Open Admin Data with all
+27 governorates and 365 second-level centers/districts. The district list depends
+on the selected governorate and resets when it changes; both lists support Arabic
+and English search. No additional package or network request is needed. Source,
+pinned revision, CC-BY-4.0 license and coverage caveat are in
+`assets/data/egypt/README.md`. This community snapshot is not an official live
+registry. Location selection is still UI only, as is the rest of registration.
+
 Android `minSdk` is 24 for the resolved Firebase packages. Internet permission
 is declared in the main manifest. Configure real release signing before shipping.
 

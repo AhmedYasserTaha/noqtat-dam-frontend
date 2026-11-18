@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/blood_types.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/egypt_location_fields.dart';
 import '../../../../l10n/app_localizations.dart';
 
 enum AuthMode { login, register, recovery }
@@ -327,14 +328,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ),
                                 ),
                               const SizedBox(height: 18),
-                              _label(t.governorateLabel),
-                              _field(
-                                hint: t.governorateHint,
-                                validator: (value) =>
-                                    (value ?? '').trim().isEmpty
-                                    ? t.requiredField
-                                    : null,
-                              ),
+                              const EgyptLocationFields(),
                             ],
                             const SizedBox(height: 10),
                             _button(

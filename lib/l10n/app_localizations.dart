@@ -331,6 +331,54 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الخدمة دي مش متاحة حالياً.'**
   String get authUnavailable;
+
+  /// No description provided for @selectGovernorate.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار المحافظة'**
+  String get selectGovernorate;
+
+  /// No description provided for @districtLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المركز / القسم'**
+  String get districtLabel;
+
+  /// No description provided for @selectDistrict.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار المركز أو القسم'**
+  String get selectDistrict;
+
+  /// No description provided for @chooseGovernorateFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار المحافظة الأول'**
+  String get chooseGovernorateFirst;
+
+  /// No description provided for @searchLocations.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث بالاسم...'**
+  String get searchLocations;
+
+  /// No description provided for @noLocationsFound.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش نتائج للبحث ده'**
+  String get noLocationsFound;
+
+  /// No description provided for @loadingLocations.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تحميل المحافظات...'**
+  String get loadingLocations;
+
+  /// No description provided for @closeLocations.
+  ///
+  /// In ar, this message translates to:
+  /// **'إغلاق'**
+  String get closeLocations;
 }
 
 class _AppLocalizationsDelegate
