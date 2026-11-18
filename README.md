@@ -1,7 +1,10 @@
 # Damy
 
-Arabic-first blood donation app scaffold. Setup only: all feature pages are
-placeholders. Phone/OTP and profile completion have no forms yet.
+Arabic-first blood donation app scaffold. Login, registration and password
+recovery have responsive forms matching the supplied Arabic designs. These are
+UI only: submit/guest actions show an unavailable notice; they do not call Firebase.
+The remaining feature pages are placeholders. Phone/OTP backend scaffolding is
+unchanged; password authentication and recovery are not implemented.
 
 ## Architecture
 

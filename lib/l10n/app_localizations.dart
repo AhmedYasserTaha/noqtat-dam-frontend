@@ -151,6 +151,186 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لا توجد بيانات'**
   String get empty;
+
+  /// No description provided for @authBrand.
+  ///
+  /// In ar, this message translates to:
+  /// **'دم الخير'**
+  String get authBrand;
+
+  /// No description provided for @authTagline.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل قطرة بتفرق'**
+  String get authTagline;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بيك تاني'**
+  String get welcomeBack;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء حساب جديد'**
+  String get createAccount;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسيت كلمة السر؟'**
+  String get forgotPassword;
+
+  /// No description provided for @mobileNumber.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الموبايل'**
+  String get mobileNumber;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة السر'**
+  String get passwordLabel;
+
+  /// No description provided for @loginAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول'**
+  String get loginAction;
+
+  /// No description provided for @continueGuest.
+  ///
+  /// In ar, this message translates to:
+  /// **'كمّل كزائر'**
+  String get continueGuest;
+
+  /// No description provided for @noAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'معندكش حساب؟'**
+  String get noAccount;
+
+  /// No description provided for @registerNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل دلوقتي'**
+  String get registerNow;
+
+  /// No description provided for @haveAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'عندك حساب؟'**
+  String get haveAccount;
+
+  /// No description provided for @stepOneOfTwo.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخطوة 1 من 2'**
+  String get stepOneOfTwo;
+
+  /// No description provided for @registerSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بياناتك بتساعدنا نوصّلك بالطلبات المناسبة ليك.'**
+  String get registerSubtitle;
+
+  /// No description provided for @fullName.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم الكامل'**
+  String get fullName;
+
+  /// No description provided for @fullNameHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب اسمك الكامل'**
+  String get fullNameHint;
+
+  /// No description provided for @yourBloodType.
+  ///
+  /// In ar, this message translates to:
+  /// **'فصيلة دمك'**
+  String get yourBloodType;
+
+  /// No description provided for @chooseBloodType.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار فصيلة دمك'**
+  String get chooseBloodType;
+
+  /// No description provided for @governorateLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المحافظة'**
+  String get governorateLabel;
+
+  /// No description provided for @governorateHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب محافظتك'**
+  String get governorateHint;
+
+  /// No description provided for @continueAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'كمّل'**
+  String get continueAction;
+
+  /// No description provided for @recoverySubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ولا يهمك، اكتب رقم الموبايل المرتبط بحسابك علشان تسترجع كلمة السر.'**
+  String get recoverySubtitle;
+
+  /// No description provided for @sendRecoveryCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال كود الاسترجاع'**
+  String get sendRecoveryCode;
+
+  /// No description provided for @rememberPassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتكرت كلمة السر؟'**
+  String get rememberPassword;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In ar, this message translates to:
+  /// **'من فضلك كمّل البيانات'**
+  String get requiredField;
+
+  /// No description provided for @invalidPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب رقم موبايل مصري صحيح'**
+  String get invalidPhone;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة السر لازم تكون 8 حروف على الأقل'**
+  String get passwordTooShort;
+
+  /// No description provided for @showPassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار كلمة السر'**
+  String get showPassword;
+
+  /// No description provided for @hidePassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء كلمة السر'**
+  String get hidePassword;
+
+  /// No description provided for @authUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخدمة دي مش متاحة حالياً.'**
+  String get authUnavailable;
 }
 
 class _AppLocalizationsDelegate

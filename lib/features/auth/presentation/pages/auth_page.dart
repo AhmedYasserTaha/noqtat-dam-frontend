@@ -1,15 +1,5 @@
-import 'package:flutter/material.dart';
+import '../widgets/auth_screen.dart';
 
-import '../../../../l10n/app_localizations.dart';
-
-class AuthPage extends StatelessWidget {
-  const AuthPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.phoneLogin)),
-      body: Center(child: Text(l10n.placeholder)),
-    );
-  }
+class AuthPage extends AuthScreen {
+  const AuthPage({super.key}) : super(mode: AuthMode.login);
 }

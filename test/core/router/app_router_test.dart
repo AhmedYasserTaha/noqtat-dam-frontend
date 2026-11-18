@@ -6,6 +6,18 @@ import 'package:damy/features/profile/presentation/cubit/profile_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('anonymous users can open registration and recovery', () {
+    for (final route in ['/auth/register', '/auth/forgot-password']) {
+      expect(
+        authRedirect(
+          const AuthState(status: AuthStatus.unauthenticated),
+          const ProfileState(),
+          route,
+        ),
+        isNull,
+      );
+    }
+  });
   const authenticated = AuthState(
     status: AuthStatus.authenticated,
     user: AuthUser(uid: 'u'),

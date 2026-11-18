@@ -35,4 +35,96 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get empty => 'لا توجد بيانات';
+
+  @override
+  String get authBrand => 'دم الخير';
+
+  @override
+  String get authTagline => 'كل قطرة بتفرق';
+
+  @override
+  String get welcomeBack => 'أهلاً بيك تاني';
+
+  @override
+  String get createAccount => 'إنشاء حساب جديد';
+
+  @override
+  String get forgotPassword => 'نسيت كلمة السر؟';
+
+  @override
+  String get mobileNumber => 'رقم الموبايل';
+
+  @override
+  String get passwordLabel => 'كلمة السر';
+
+  @override
+  String get loginAction => 'تسجيل الدخول';
+
+  @override
+  String get continueGuest => 'كمّل كزائر';
+
+  @override
+  String get noAccount => 'معندكش حساب؟';
+
+  @override
+  String get registerNow => 'سجّل دلوقتي';
+
+  @override
+  String get haveAccount => 'عندك حساب؟';
+
+  @override
+  String get stepOneOfTwo => 'الخطوة 1 من 2';
+
+  @override
+  String get registerSubtitle =>
+      'بياناتك بتساعدنا نوصّلك بالطلبات المناسبة ليك.';
+
+  @override
+  String get fullName => 'الاسم الكامل';
+
+  @override
+  String get fullNameHint => 'اكتب اسمك الكامل';
+
+  @override
+  String get yourBloodType => 'فصيلة دمك';
+
+  @override
+  String get chooseBloodType => 'اختار فصيلة دمك';
+
+  @override
+  String get governorateLabel => 'المحافظة';
+
+  @override
+  String get governorateHint => 'اكتب محافظتك';
+
+  @override
+  String get continueAction => 'كمّل';
+
+  @override
+  String get recoverySubtitle =>
+      'ولا يهمك، اكتب رقم الموبايل المرتبط بحسابك علشان تسترجع كلمة السر.';
+
+  @override
+  String get sendRecoveryCode => 'إرسال كود الاسترجاع';
+
+  @override
+  String get rememberPassword => 'افتكرت كلمة السر؟';
+
+  @override
+  String get requiredField => 'من فضلك كمّل البيانات';
+
+  @override
+  String get invalidPhone => 'اكتب رقم موبايل مصري صحيح';
+
+  @override
+  String get passwordTooShort => 'كلمة السر لازم تكون 8 حروف على الأقل';
+
+  @override
+  String get showPassword => 'إظهار كلمة السر';
+
+  @override
+  String get hidePassword => 'إخفاء كلمة السر';
+
+  @override
+  String get authUnavailable => 'الخدمة دي مش متاحة حالياً.';
 }
