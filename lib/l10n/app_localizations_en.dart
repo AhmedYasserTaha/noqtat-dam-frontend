@@ -454,7 +454,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpRequestBody =>
-      'Tap + in the navigation bar to open the request page. It is currently a placeholder and does not publish real requests.';
+      'Tap +, choose the blood type, bag count and hospital details, then review and confirm the preview. Requests are not published or saved yet.';
 
   @override
   String get helpDonateTitle => 'Does Donate reserve a donation?';
@@ -469,4 +469,98 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get helpContactBody =>
       'Official support channels have not been defined yet. Profile email and phone values are examples, not real support contacts.';
+
+  @override
+  String get createRequestSubtitle =>
+      'Set the details and review your request. This is a UI preview only.';
+
+  @override
+  String get requiredBloodType => 'Required blood type';
+
+  @override
+  String get numberOfBags => 'Number of bags';
+
+  @override
+  String get bagsNeededLabel => 'blood bags needed';
+
+  @override
+  String get increaseBags => 'Increase bags';
+
+  @override
+  String get decreaseBags => 'Decrease bags';
+
+  @override
+  String get hospitalNameLabel => 'Hospital name';
+
+  @override
+  String get hospitalNameHint => 'Enter hospital name';
+
+  @override
+  String get urgencyLabel => 'Urgency';
+
+  @override
+  String get urgencyCritical => 'Critical';
+
+  @override
+  String get urgencyCriticalHint => 'Needed as soon as possible';
+
+  @override
+  String get urgencyDay => 'Within 24 hours';
+
+  @override
+  String get urgencyDayHint => 'Needed within a day';
+
+  @override
+  String get urgencyScheduled => 'Scheduled';
+
+  @override
+  String get urgencyScheduledHint => 'Choose a date and time';
+
+  @override
+  String get deadlineLabel => 'Donation deadline';
+
+  @override
+  String get chooseDeadline => 'Choose date and time';
+
+  @override
+  String get contactPhoneLabel => 'Contact phone';
+
+  @override
+  String get contactPreviewHint =>
+      'Shown in this preview only. It will not be saved or shared.';
+
+  @override
+  String get requestNotesLabel => 'Additional notes';
+
+  @override
+  String get requestNotesHint => 'Add any request details...';
+
+  @override
+  String get reviewRequestTitle => 'Review request';
+
+  @override
+  String get requestPreviewNotice =>
+      'Preview only: no publishing or notifications. Empty fields are allowed.';
+
+  @override
+  String get previewNotSpecified => 'Not specified';
+
+  @override
+  String get confirmRequestPreview => 'Confirm preview';
+
+  @override
+  String get editRequestPreview => 'Edit details';
+
+  @override
+  String get requestPreviewDone => 'Request preview complete';
+
+  @override
+  String get requestNotPublished =>
+      'This demonstrates the create-request flow only. Nothing was published or saved; My requests still shows sample data.';
+
+  @override
+  String get viewMyRequests => 'View my requests';
+
+  @override
+  String get backToHome => 'Back to Home';
 }

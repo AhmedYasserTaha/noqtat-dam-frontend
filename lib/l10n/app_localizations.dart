@@ -947,7 +947,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpRequestBody.
   ///
   /// In ar, this message translates to:
-  /// **'اضغط علامة + من شريط التنقّل لفتح صفحة إنشاء الطلب. الصفحة حاليًا مؤقتة ولا تنشر طلبات فعلية.'**
+  /// **'اضغط علامة +، واختار الفصيلة وعدد الأكياس وتفاصيل المستشفى. زر معاينة الطلب يعرض البيانات قبل تأكيد تجريبي؛ لا يتم نشر أو حفظ الطلب حاليًا.'**
   String get helpRequestBody;
 
   /// No description provided for @helpDonateTitle.
@@ -973,6 +973,186 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.'**
   String get helpContactBody;
+
+  /// No description provided for @createRequestSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّد احتياجك وراجع شكل الطلب قبل المتابعة. دي معاينة للواجهة فقط.'**
+  String get createRequestSubtitle;
+
+  /// No description provided for @requiredBloodType.
+  ///
+  /// In ar, this message translates to:
+  /// **'فصيلة الدم المطلوبة'**
+  String get requiredBloodType;
+
+  /// No description provided for @numberOfBags.
+  ///
+  /// In ar, this message translates to:
+  /// **'عدد الأكياس'**
+  String get numberOfBags;
+
+  /// No description provided for @bagsNeededLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكياس دم مطلوبة'**
+  String get bagsNeededLabel;
+
+  /// No description provided for @increaseBags.
+  ///
+  /// In ar, this message translates to:
+  /// **'زيادة عدد الأكياس'**
+  String get increaseBags;
+
+  /// No description provided for @decreaseBags.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقليل عدد الأكياس'**
+  String get decreaseBags;
+
+  /// No description provided for @hospitalNameLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المستشفى'**
+  String get hospitalNameLabel;
+
+  /// No description provided for @hospitalNameHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب اسم المستشفى'**
+  String get hospitalNameHint;
+
+  /// No description provided for @urgencyLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'درجة الاستعجال'**
+  String get urgencyLabel;
+
+  /// No description provided for @urgencyCritical.
+  ///
+  /// In ar, this message translates to:
+  /// **'عاجل جدًا'**
+  String get urgencyCritical;
+
+  /// No description provided for @urgencyCriticalHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'احتياج في أقرب وقت'**
+  String get urgencyCriticalHint;
+
+  /// No description provided for @urgencyDay.
+  ///
+  /// In ar, this message translates to:
+  /// **'خلال 24 ساعة'**
+  String get urgencyDay;
+
+  /// No description provided for @urgencyDayHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'احتياج خلال اليوم'**
+  String get urgencyDayHint;
+
+  /// No description provided for @urgencyScheduled.
+  ///
+  /// In ar, this message translates to:
+  /// **'موعد محدد'**
+  String get urgencyScheduled;
+
+  /// No description provided for @urgencyScheduledHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّد اليوم والوقت المناسبين'**
+  String get urgencyScheduledHint;
+
+  /// No description provided for @deadlineLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر موعد للتبرع'**
+  String get deadlineLabel;
+
+  /// No description provided for @chooseDeadline.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار اليوم والوقت'**
+  String get chooseDeadline;
+
+  /// No description provided for @contactPhoneLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم التواصل'**
+  String get contactPhoneLabel;
+
+  /// No description provided for @contactPreviewHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم للعرض في المعاينة فقط، مش هيتم حفظه أو مشاركته.'**
+  String get contactPreviewHint;
+
+  /// No description provided for @requestNotesLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظات إضافية'**
+  String get requestNotesLabel;
+
+  /// No description provided for @requestNotesHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'أي تفاصيل تحب تضيفها عن الطلب...'**
+  String get requestNotesHint;
+
+  /// No description provided for @reviewRequestTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'معاينة الطلب'**
+  String get reviewRequestTitle;
+
+  /// No description provided for @requestPreviewNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'معاينة تجريبية بدون نشر أو إرسال إشعارات. الخانات الفاضية مسموحة حاليًا.'**
+  String get requestPreviewNotice;
+
+  /// No description provided for @previewNotSpecified.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يتم التحديد'**
+  String get previewNotSpecified;
+
+  /// No description provided for @confirmRequestPreview.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد المعاينة'**
+  String get confirmRequestPreview;
+
+  /// No description provided for @editRequestPreview.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل البيانات'**
+  String get editRequestPreview;
+
+  /// No description provided for @requestPreviewDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'معاينة الطلب جاهزة'**
+  String get requestPreviewDone;
+
+  /// No description provided for @requestNotPublished.
+  ///
+  /// In ar, this message translates to:
+  /// **'دي تجربة لشكل إنشاء الطلب بس. لم يتم نشر أو حفظ الطلب، وطلباتي هتفضل تعرض البيانات التجريبية.'**
+  String get requestNotPublished;
+
+  /// No description provided for @viewMyRequests.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض طلباتي'**
+  String get viewMyRequests;
+
+  /// No description provided for @backToHome.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرجوع للرئيسية'**
+  String get backToHome;
 }
 
 class _AppLocalizationsDelegate

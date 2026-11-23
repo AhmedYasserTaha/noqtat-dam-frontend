@@ -452,7 +452,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get helpRequestBody =>
-      'اضغط علامة + من شريط التنقّل لفتح صفحة إنشاء الطلب. الصفحة حاليًا مؤقتة ولا تنشر طلبات فعلية.';
+      'اضغط علامة +، واختار الفصيلة وعدد الأكياس وتفاصيل المستشفى. زر معاينة الطلب يعرض البيانات قبل تأكيد تجريبي؛ لا يتم نشر أو حفظ الطلب حاليًا.';
 
   @override
   String get helpDonateTitle => 'هل زر التبرع بيحجز تبرع؟';
@@ -467,4 +467,98 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get helpContactBody =>
       'قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.';
+
+  @override
+  String get createRequestSubtitle =>
+      'حدّد احتياجك وراجع شكل الطلب قبل المتابعة. دي معاينة للواجهة فقط.';
+
+  @override
+  String get requiredBloodType => 'فصيلة الدم المطلوبة';
+
+  @override
+  String get numberOfBags => 'عدد الأكياس';
+
+  @override
+  String get bagsNeededLabel => 'أكياس دم مطلوبة';
+
+  @override
+  String get increaseBags => 'زيادة عدد الأكياس';
+
+  @override
+  String get decreaseBags => 'تقليل عدد الأكياس';
+
+  @override
+  String get hospitalNameLabel => 'اسم المستشفى';
+
+  @override
+  String get hospitalNameHint => 'اكتب اسم المستشفى';
+
+  @override
+  String get urgencyLabel => 'درجة الاستعجال';
+
+  @override
+  String get urgencyCritical => 'عاجل جدًا';
+
+  @override
+  String get urgencyCriticalHint => 'احتياج في أقرب وقت';
+
+  @override
+  String get urgencyDay => 'خلال 24 ساعة';
+
+  @override
+  String get urgencyDayHint => 'احتياج خلال اليوم';
+
+  @override
+  String get urgencyScheduled => 'موعد محدد';
+
+  @override
+  String get urgencyScheduledHint => 'حدّد اليوم والوقت المناسبين';
+
+  @override
+  String get deadlineLabel => 'آخر موعد للتبرع';
+
+  @override
+  String get chooseDeadline => 'اختار اليوم والوقت';
+
+  @override
+  String get contactPhoneLabel => 'رقم التواصل';
+
+  @override
+  String get contactPreviewHint =>
+      'رقم للعرض في المعاينة فقط، مش هيتم حفظه أو مشاركته.';
+
+  @override
+  String get requestNotesLabel => 'ملاحظات إضافية';
+
+  @override
+  String get requestNotesHint => 'أي تفاصيل تحب تضيفها عن الطلب...';
+
+  @override
+  String get reviewRequestTitle => 'معاينة الطلب';
+
+  @override
+  String get requestPreviewNotice =>
+      'معاينة تجريبية بدون نشر أو إرسال إشعارات. الخانات الفاضية مسموحة حاليًا.';
+
+  @override
+  String get previewNotSpecified => 'لم يتم التحديد';
+
+  @override
+  String get confirmRequestPreview => 'تأكيد المعاينة';
+
+  @override
+  String get editRequestPreview => 'تعديل البيانات';
+
+  @override
+  String get requestPreviewDone => 'معاينة الطلب جاهزة';
+
+  @override
+  String get requestNotPublished =>
+      'دي تجربة لشكل إنشاء الطلب بس. لم يتم نشر أو حفظ الطلب، وطلباتي هتفضل تعرض البيانات التجريبية.';
+
+  @override
+  String get viewMyRequests => 'عرض طلباتي';
+
+  @override
+  String get backToHome => 'الرجوع للرئيسية';
 }

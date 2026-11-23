@@ -16,7 +16,10 @@ retained for future feature implementation.
   and phone edits, local availability/notification toggles and logout navigation.
 - Privacy/terms draft pages, help/FAQ, app information and a simulated delete-account
   confirmation. No real deletion or profile writes. Policy text is preview copy.
-- Placeholder map, create-request and complete-profile pages.
+- Create-request UI with blood type, bag count, hospital, location, urgency,
+  optional date/time, phone and notes. Review/edit/confirm flow is local only;
+  confirmation does not publish, save, notify or change the static request list.
+- Placeholder map and complete-profile pages.
 - White theme, bundled Cairo fonts, project SVG icons, Arabic RTL and English.
 - Offline governorate/district selectors. Data source, license and revision:
   assets/data/egypt/README.md.

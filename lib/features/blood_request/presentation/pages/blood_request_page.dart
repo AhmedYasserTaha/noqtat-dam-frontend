@@ -1,15 +1,578 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
+import '../../../../core/constants/app_icons.dart';
+import '../../../../core/constants/blood_types.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_icon.dart';
+import '../../../../core/widgets/egypt_location_fields.dart';
+import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
 
-class BloodRequestPage extends StatelessWidget {
+class BloodRequestPage extends StatefulWidget {
   const BloodRequestPage({super.key});
   @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.bloodRequest)),
-      body: Center(child: Text(l10n.placeholder)),
+  State<BloodRequestPage> createState() => _BloodRequestPageState();
+}
+
+class _BloodRequestPageState extends State<BloodRequestPage> {
+  final _hospital = TextEditingController();
+  final _phone = TextEditingController();
+  final _notes = TextEditingController();
+  String _bloodType = 'O-';
+  int _bags = 3;
+  int _urgency = 0;
+  String? _governorate, _district;
+  DateTime? _deadline;
+  bool _finished = false;
+
+  @override
+  void dispose() {
+    _hospital.dispose();
+    _phone.dispose();
+    _notes.dispose();
+    super.dispose();
+  }
+
+  String _dateLabel(BuildContext context) => _deadline == null
+      ? AppLocalizations.of(context)!.chooseDeadline
+      : DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
+            .add_jm()
+            .format(_deadline!);
+
+  Future<void> _chooseDate() async {
+    final now = DateTime.now();
+    final date = await showDatePicker(
+      context: context,
+      initialDate: _deadline ?? now,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2100),
+    );
+    if (!mounted || date == null) return;
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(_deadline ?? now),
+    );
+    if (!mounted || time == null) return;
+    setState(
+      () => _deadline = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        time.hour,
+        time.minute,
+      ),
     );
   }
+
+  Future<void> _review() async {
+    FocusScope.of(context).unfocus();
+    final t = AppLocalizations.of(context)!;
+    final urgency = [
+      t.urgencyCritical,
+      t.urgencyDay,
+      t.urgencyScheduled,
+    ][_urgency];
+    final published = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      backgroundColor: Colors.white,
+      builder: (sheetContext) => SizedBox(
+        height: MediaQuery.sizeOf(sheetContext).height * .85,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(24, 0, 24, 28),
+          children: [
+            Text(
+              t.reviewRequestTitle,
+              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              t.requestPreviewNotice,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.muted,
+                height: 1.8,
+              ),
+            ),
+            const SizedBox(height: 20),
+            PreviewCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: AppColors.red,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          _bloodType,
+                          textDirection: TextDirection.ltr,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '$_bags ${t.bagsNeededLabel}',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            Text(
+                              urgency,
+                              style: const TextStyle(
+                                color: AppColors.red,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  PreviewRow(
+                    label: t.hospitalNameLabel,
+                    value: _hospital.text.isEmpty
+                        ? t.previewNotSpecified
+                        : _hospital.text,
+                    icon: AppIcons.locationPin,
+                  ),
+                  PreviewRow(
+                    label: t.governorateLabel,
+                    value: _governorate ?? t.previewNotSpecified,
+                    icon: AppIcons.map,
+                  ),
+                  PreviewRow(
+                    label: t.districtLabel,
+                    value: _district ?? t.previewNotSpecified,
+                    icon: AppIcons.locationPin,
+                  ),
+                  PreviewRow(
+                    label: t.deadlineLabel,
+                    value: _deadline == null
+                        ? t.previewNotSpecified
+                        : _dateLabel(context),
+                    icon: AppIcons.clock,
+                  ),
+                  PreviewRow(
+                    label: t.contactPhoneLabel,
+                    value: _phone.text.isEmpty
+                        ? t.previewNotSpecified
+                        : _phone.text,
+                    icon: AppIcons.userOutline,
+                  ),
+                  PreviewRow(
+                    label: t.requestNotesLabel,
+                    value: _notes.text.isEmpty
+                        ? t.previewNotSpecified
+                        : _notes.text,
+                    icon: AppIcons.comment,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(sheetContext, true),
+              child: Text(t.confirmRequestPreview),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton(
+              onPressed: () => Navigator.pop(sheetContext, false),
+              child: Text(t.editRequestPreview),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (!mounted || published != true) return;
+    setState(() => _finished = true);
+  }
+
+  Widget _label(String text) => Padding(
+    padding: const EdgeInsets.only(bottom: 10),
+    child: Text(
+      text,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          t.createRequestAction,
+          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
+        ),
+        leading: IconButton(
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+          onPressed: () => context.canPop() ? context.pop() : context.go('/'),
+          icon: const AppIcon(AppIcons.arrowBackRtl, color: AppColors.ink),
+        ),
+      ),
+      body: _finished
+          ? _success(t)
+          : Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 512),
+                child: ListView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+                  children: [
+                    Text(
+                      t.createRequestSubtitle,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        height: 1.8,
+                        color: AppColors.muted,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    PreviewCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _label(t.requiredBloodType),
+                          GridView.count(
+                            crossAxisCount: 4,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 8,
+                            childAspectRatio: 1.65,
+                            children: [
+                              for (final type in BloodTypes.values)
+                                OutlinedButton(
+                                  onPressed: () =>
+                                      setState(() => _bloodType = type),
+                                  style: OutlinedButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    backgroundColor: _bloodType == type
+                                        ? AppColors.red
+                                        : Colors.white,
+                                    foregroundColor: _bloodType == type
+                                        ? Colors.white
+                                        : AppColors.ink,
+                                    side: BorderSide(
+                                      color: _bloodType == type
+                                          ? AppColors.red
+                                          : AppColors.border,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    type,
+                                    textDirection: TextDirection.ltr,
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  t.numberOfBags,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                tooltip: t.decreaseBags,
+                                onPressed: _bags > 1
+                                    ? () => setState(() => _bags--)
+                                    : null,
+                                icon: const Text(
+                                  '−',
+                                  style: TextStyle(fontSize: 28),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 40,
+                                child: Text(
+                                  '$_bags',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                tooltip: t.increaseBags,
+                                onPressed: () => setState(() => _bags++),
+                                icon: const AppIcon(
+                                  AppIcons.plus,
+                                  color: AppColors.red,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PreviewCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _label(t.hospitalNameLabel),
+                          TextField(
+                            key: const ValueKey('request-hospital'),
+                            controller: _hospital,
+                            decoration: InputDecoration(
+                              hintText: t.hospitalNameHint,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          EgyptLocationFields(
+                            onChanged: (governorate, district) {
+                              final language = Localizations.localeOf(context)
+                                  .languageCode;
+                              _governorate = governorate?.name(language);
+                              _district = district?.name(language);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PreviewCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _label(t.urgencyLabel),
+                          for (final (index, title, subtitle) in [
+                            (0, t.urgencyCritical, t.urgencyCriticalHint),
+                            (1, t.urgencyDay, t.urgencyDayHint),
+                            (2, t.urgencyScheduled, t.urgencyScheduledHint),
+                          ])
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: OutlinedButton(
+                                onPressed: () =>
+                                    setState(() => _urgency = index),
+                                style: OutlinedButton.styleFrom(
+                                  padding: const EdgeInsets.all(12),
+                                  foregroundColor: AppColors.ink,
+                                  side: BorderSide(
+                                    color: _urgency == index
+                                        ? AppColors.red
+                                        : AppColors.border,
+                                    width: _urgency == index ? 1.5 : 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    AppIcon(
+                                      _urgency == index
+                                          ? AppIcons.check
+                                          : AppIcons.clock,
+                                      color: _urgency == index
+                                          ? AppColors.red
+                                          : AppColors.muted,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            title,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                          Text(
+                                            subtitle,
+                                            style: const TextStyle(
+                                              fontSize: 11,
+                                              color: AppColors.muted,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          const SizedBox(height: 10),
+                          _label(t.deadlineLabel),
+                          OutlinedButton(
+                            onPressed: _chooseDate,
+                            child: Row(
+                              children: [
+                                const AppIcon(
+                                  AppIcons.clock,
+                                  color: AppColors.muted,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    _dateLabel(context),
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PreviewCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _label(t.contactPhoneLabel),
+                          TextField(
+                            key: const ValueKey('request-phone'),
+                            controller: _phone,
+                            keyboardType: TextInputType.phone,
+                            textDirection: TextDirection.ltr,
+                            decoration: const InputDecoration(
+                              hintText: '010 1234 5678',
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            t.contactPreviewHint,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              height: 1.8,
+                              color: AppColors.muted,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          _label(t.requestNotesLabel),
+                          TextField(
+                            key: const ValueKey('request-notes'),
+                            controller: _notes,
+                            minLines: 3,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              hintText: t.requestNotesHint,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+      bottomNavigationBar: _finished
+          ? null
+          : SafeArea(
+              top: false,
+              minimum: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+              child: Center(
+                heightFactor: 1,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 472),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: _review,
+                      child: Text(
+                        t.reviewRequestTitle,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
+
+  Widget _success(AppLocalizations t) => Center(
+    child: SingleChildScrollView(
+      padding: const EdgeInsets.all(28),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 420),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 88,
+              height: 88,
+              decoration: const BoxDecoration(
+                color: AppColors.red,
+                shape: BoxShape.circle,
+              ),
+              child: const Center(
+                child: AppIcon(AppIcons.check, color: Colors.white, size: 40),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              t.requestPreviewDone,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              t.requestNotPublished,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                height: 1.9,
+                color: AppColors.muted,
+              ),
+            ),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => context.go('/requests'),
+                child: Text(t.viewMyRequests),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              onPressed: () => context.go('/'),
+              child: Text(t.backToHome),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
