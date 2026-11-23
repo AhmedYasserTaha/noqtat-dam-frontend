@@ -563,7 +563,7 @@ abstract class AppLocalizations {
   /// No description provided for @policyDraftNotice.
   ///
   /// In ar, this message translates to:
-  /// **'نص مبدئي وليس سياسة نهائية أو شروطًا قانونية. يُراجع قبل الإطلاق العام.'**
+  /// **'النص ده بيوصف شغل التطبيق حاليًا. مش سياسة قانونية.'**
   String get policyDraftNotice;
 
   /// No description provided for @privacyDataTitle.
@@ -623,7 +623,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsAccuracyBody.
   ///
   /// In ar, this message translates to:
-  /// **'عند إطلاق الخدمة، يجب تقديم بيانات صحيحة واحترام خصوصية الآخرين، وعدم نشر طلبات مضللة أو محتوى مسيء أو بيع الدم أو استغلال المحتاجين. إجراءات المراجعة والإبلاغ ستُوضح ضمن الشروط النهائية.'**
+  /// **'الطلبات والمنشورات بيكتبها المستخدمين. التطبيق مش بيراجعها ولا بيتأكد منها، ومفيش إبلاغ أو مراجعة جوه التطبيق لحد دلوقتي.'**
   String get termsAccuracyBody;
 
   /// No description provided for @termsMedicalTitle.
@@ -635,7 +635,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsMedicalBody.
   ///
   /// In ar, this message translates to:
-  /// **'التطبيق ليس جهة طبية. ولا بيحدد لو حد ينفع يتبرع ولا أي فصيلة مناسبة. الأهلية والفحوص بتقررها الجهة الطبية المختصة في المستشفى. في الطوارئ تواصل مع المستشفى أو الإسعاف مباشرة.'**
+  /// **'التطبيق مش بيحدد لو حد ينفع يتبرع ولا أي فصيلة مناسبة. اتأكد من ده مع المستشفى. في الطوارئ تواصل مع المستشفى أو الإسعاف مباشرة.'**
   String get termsMedicalBody;
 
   /// No description provided for @aboutBody.
@@ -677,7 +677,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpContactBody.
   ///
   /// In ar, this message translates to:
-  /// **'قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.'**
+  /// **'مفيش قناة دعم جوه التطبيق لحد دلوقتي.'**
   String get helpContactBody;
 
   /// No description provided for @createRequestSubtitle.

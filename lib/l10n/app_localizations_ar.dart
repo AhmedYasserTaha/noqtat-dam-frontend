@@ -245,7 +245,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get policyDraftNotice =>
-      'نص مبدئي وليس سياسة نهائية أو شروطًا قانونية. يُراجع قبل الإطلاق العام.';
+      'النص ده بيوصف شغل التطبيق حاليًا. مش سياسة قانونية.';
 
   @override
   String get privacyDataTitle => 'البيانات اللي بنحتفظ بيها';
@@ -280,14 +280,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get termsAccuracyBody =>
-      'عند إطلاق الخدمة، يجب تقديم بيانات صحيحة واحترام خصوصية الآخرين، وعدم نشر طلبات مضللة أو محتوى مسيء أو بيع الدم أو استغلال المحتاجين. إجراءات المراجعة والإبلاغ ستُوضح ضمن الشروط النهائية.';
+      'الطلبات والمنشورات بيكتبها المستخدمين. التطبيق مش بيراجعها ولا بيتأكد منها، ومفيش إبلاغ أو مراجعة جوه التطبيق لحد دلوقتي.';
 
   @override
   String get termsMedicalTitle => 'التنسيق مع المستشفى';
 
   @override
   String get termsMedicalBody =>
-      'التطبيق ليس جهة طبية. ولا بيحدد لو حد ينفع يتبرع ولا أي فصيلة مناسبة. الأهلية والفحوص بتقررها الجهة الطبية المختصة في المستشفى. في الطوارئ تواصل مع المستشفى أو الإسعاف مباشرة.';
+      'التطبيق مش بيحدد لو حد ينفع يتبرع ولا أي فصيلة مناسبة. اتأكد من ده مع المستشفى. في الطوارئ تواصل مع المستشفى أو الإسعاف مباشرة.';
 
   @override
   String get aboutBody =>
@@ -311,8 +311,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get helpContactTitle => 'التواصل مع الدعم';
 
   @override
-  String get helpContactBody =>
-      'قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.';
+  String get helpContactBody => 'مفيش قناة دعم جوه التطبيق لحد دلوقتي.';
 
   @override
   String get createRequestSubtitle => 'حدّد احتياجك وراجع الطلب قبل النشر.';

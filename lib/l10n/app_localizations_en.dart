@@ -245,7 +245,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get policyDraftNotice =>
-      'Draft text, not a final policy or legal terms. Review it before a public launch.';
+      'This text describes how the app currently works. It is not a legal policy.';
 
   @override
   String get privacyDataTitle => 'Data we keep';
@@ -280,14 +280,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsAccuracyBody =>
-      'For a live service, users should provide accurate details, respect others’ privacy, and avoid misleading requests, abusive content, blood sales or exploitation. Review and reporting procedures must be defined in the final terms.';
+      'Requests and posts are written by users. The app does not review or verify them, and it has no in-app reporting or moderation yet.';
 
   @override
   String get termsMedicalTitle => 'Hospital coordination';
 
   @override
   String get termsMedicalBody =>
-      'The app is not a healthcare provider. It does not decide whether anyone can donate or which blood type is suitable. Eligibility and testing are decided by qualified medical staff at the hospital. In an emergency, contact the hospital or emergency services directly.';
+      'The app does not decide whether anyone can donate or which blood type is suitable. Please confirm that with the hospital. In an emergency, contact the hospital or emergency services directly.';
 
   @override
   String get aboutBody =>
@@ -311,8 +311,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpContactTitle => 'Contact support';
 
   @override
-  String get helpContactBody =>
-      'Official support channels have not been defined yet. Profile email and phone values are examples, not real support contacts.';
+  String get helpContactBody => 'There is no support channel in the app yet.';
 
   @override
   String get createRequestSubtitle =>
