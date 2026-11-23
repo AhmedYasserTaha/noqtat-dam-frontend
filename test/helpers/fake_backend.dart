@@ -137,7 +137,7 @@ void stubHome(FakeBackend b, {List<Map<String, dynamic>>? requests}) {
       },
       'closestUrgentRequest': null,
       'requests': list,
-      'posts': [],
+      'posts': <Object?>[],
     }),
   );
   b.on('GET /requests', (_) => FakeReply({'items': list, 'nextBefore': null}));
