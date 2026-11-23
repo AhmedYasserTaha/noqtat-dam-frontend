@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Damy';
+  String get appName => 'Qatret Dam';
 
   @override
   String get home => 'Home';
@@ -37,7 +37,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get empty => 'No data';
 
   @override
-  String get authBrand => 'Dam El Kheir';
+  String get authBrand => 'Qatret Dam';
 
   @override
   String get authTagline => 'Every drop counts';

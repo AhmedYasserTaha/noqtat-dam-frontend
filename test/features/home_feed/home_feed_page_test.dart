@@ -70,7 +70,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(
-      find.text('دم الخير'),
+      find.text('قطره دم'),
       findsOneWidget,
       reason: tester
           .widgetList<Text>(find.byType(Text))

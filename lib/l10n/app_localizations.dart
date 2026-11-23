@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In ar, this message translates to:
-  /// **'دمي'**
+  /// **'قطره دم'**
   String get appName;
 
   /// No description provided for @home.
@@ -155,7 +155,7 @@ abstract class AppLocalizations {
   /// No description provided for @authBrand.
   ///
   /// In ar, this message translates to:
-  /// **'دم الخير'**
+  /// **'قطره دم'**
   String get authBrand;
 
   /// No description provided for @authTagline.

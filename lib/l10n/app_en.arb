@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "Damy",
+  "appName": "Qatret Dam",
   "home": "Home",
   "phoneLogin": "Phone login",
   "completeProfile": "Complete profile",
@@ -9,7 +9,7 @@
   "placeholder": "Coming soon",
   "retry": "Retry",
   "empty": "No data",
-  "authBrand": "Dam El Kheir",
+  "authBrand": "Qatret Dam",
   "authTagline": "Every drop counts",
   "welcomeBack": "Welcome back",
   "createAccount": "Create an account",

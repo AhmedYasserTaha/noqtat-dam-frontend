@@ -1,6 +1,6 @@
 {
   "@@locale": "ar",
-  "appName": "دمي",
+  "appName": "قطره دم",
   "home": "الرئيسية",
   "phoneLogin": "تسجيل الدخول",
   "completeProfile": "إكمال الملف الشخصي",
@@ -9,7 +9,7 @@
   "placeholder": "قريباً",
   "retry": "إعادة المحاولة",
   "empty": "لا توجد بيانات",
-  "authBrand": "دم الخير",
+  "authBrand": "قطره دم",
   "authTagline": "كل قطرة بتفرق",
   "welcomeBack": "أهلاً بيك تاني",
   "createAccount": "إنشاء حساب جديد",

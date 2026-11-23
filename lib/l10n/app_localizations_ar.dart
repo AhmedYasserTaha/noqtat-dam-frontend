@@ -10,7 +10,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appName => 'دمي';
+  String get appName => 'قطره دم';
 
   @override
   String get home => 'الرئيسية';
@@ -37,7 +37,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get empty => 'لا توجد بيانات';
 
   @override
-  String get authBrand => 'دم الخير';
+  String get authBrand => 'قطره دم';
 
   @override
   String get authTagline => 'كل قطرة بتفرق';
