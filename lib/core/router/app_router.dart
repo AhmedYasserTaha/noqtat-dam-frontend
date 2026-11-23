@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../di/injection.dart';
+import '../network/api_checker.dart';
 import '../../features/blood_request/presentation/cubit/blood_request_cubit.dart';
 
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
@@ -51,6 +52,7 @@ String? authRedirect(AuthState auth, String path) {
 }
 
 GoRouter createRouter(AuthCubit auth, Listenable refresh) => GoRouter(
+  navigatorKey: ApiChecker.navigatorKey,
   initialLocation: '/splash',
   refreshListenable: refresh,
   redirect: (context, state) => authRedirect(auth.state, state.uri.path),

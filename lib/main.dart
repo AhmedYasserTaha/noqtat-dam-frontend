@@ -3,11 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'app.dart';
 import 'core/di/injection.dart';
+import 'core/network/api_checker.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  ApiChecker.init();
   configureDependencies();
   runApp(const DamyApp());
 }

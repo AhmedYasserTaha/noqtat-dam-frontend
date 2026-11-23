@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 
+import 'api_checker.dart';
 import '../errors/failures.dart';
 import '../storage/token_store.dart';
 
@@ -55,7 +56,9 @@ class ApiClient {
               receiveTimeout: const Duration(seconds: 20),
               headers: {'accept': 'application/json'},
             ),
-          );
+          ) {
+    ApiChecker.attachToDio(_dio);
+  }
 
   final Dio _dio;
   final TokenStore tokens;
