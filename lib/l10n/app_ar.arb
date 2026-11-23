@@ -119,7 +119,7 @@
   "requestNotesLabel": "ملاحظات إضافية",
   "requestNotesHint": "أي تفاصيل تحب تضيفها عن الطلب...",
   "reviewRequestTitle": "معاينة الطلب",
-  "requestPreviewNotice": "راجع البيانات. نشر الطلب بيخليه ظاهر لباقي المستخدمين.",
+  "requestPreviewNotice": "راجع البيانات. تفاصيل الطلب هتظهر لباقي المستخدمين في الصفحة الرئيسية. رقم التواصل بيظهر بس لصاحب الطلب وللمتبرعين اللي تعهدوا بالتبرع.",
   "previewNotSpecified": "لم يتم التحديد",
   "confirmRequestPreview": "نشر الطلب",
   "editRequestPreview": "تعديل البيانات",

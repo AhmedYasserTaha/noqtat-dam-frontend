@@ -382,7 +382,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get requestPreviewNotice =>
-      'راجع البيانات. نشر الطلب بيخليه ظاهر لباقي المستخدمين.';
+      'راجع البيانات. تفاصيل الطلب هتظهر لباقي المستخدمين في الصفحة الرئيسية. رقم التواصل بيظهر بس لصاحب الطلب وللمتبرعين اللي تعهدوا بالتبرع.';
 
   @override
   String get previewNotSpecified => 'لم يتم التحديد';

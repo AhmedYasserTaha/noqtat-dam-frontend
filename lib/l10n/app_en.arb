@@ -119,7 +119,7 @@
   "requestNotesLabel": "Additional notes",
   "requestNotesHint": "Add any request details...",
   "reviewRequestTitle": "Review request",
-  "requestPreviewNotice": "Check the details. Publishing makes this request visible to other users.",
+  "requestPreviewNotice": "Review the details. The request details will be visible to other users in the feed. The contact number is visible only to you and to users who have pledged to donate.",
   "previewNotSpecified": "Not specified",
   "confirmRequestPreview": "Publish request",
   "editRequestPreview": "Edit details",

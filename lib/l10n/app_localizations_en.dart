@@ -383,7 +383,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get requestPreviewNotice =>
-      'Check the details. Publishing makes this request visible to other users.';
+      'Review the details. The request details will be visible to other users in the feed. The contact number is visible only to you and to users who have pledged to donate.';
 
   @override
   String get previewNotSpecified => 'Not specified';

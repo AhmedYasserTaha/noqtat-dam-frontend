@@ -815,7 +815,7 @@ abstract class AppLocalizations {
   /// No description provided for @requestPreviewNotice.
   ///
   /// In ar, this message translates to:
-  /// **'راجع البيانات. نشر الطلب بيخليه ظاهر لباقي المستخدمين.'**
+  /// **'راجع البيانات. تفاصيل الطلب هتظهر لباقي المستخدمين في الصفحة الرئيسية. رقم التواصل بيظهر بس لصاحب الطلب وللمتبرعين اللي تعهدوا بالتبرع.'**
   String get requestPreviewNotice;
 
   /// No description provided for @previewNotSpecified.
