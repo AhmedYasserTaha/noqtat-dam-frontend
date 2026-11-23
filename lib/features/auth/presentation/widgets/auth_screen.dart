@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/blood_types.dart';
@@ -20,7 +19,6 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
   bool _hidden = true;
-  bool _submitted = false;
   String? _bloodType;
   bool get _login => widget.mode == AuthMode.login;
   bool get _register => widget.mode == AuthMode.register;
@@ -32,8 +30,9 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void _submit() {
-    setState(() => _submitted = true);
-    if (_form.currentState!.validate() && (!_register || _bloodType != null)) {
+    if (_login || _register) {
+      context.go('/');
+    } else {
       _unavailable();
     }
   }
@@ -167,10 +166,6 @@ class _AuthScreenState extends State<AuthScreen> {
                               _field(
                                 hint: t.fullNameHint,
                                 autofillHints: const [AutofillHints.name],
-                                validator: (value) =>
-                                    (value ?? '').trim().length >= 2
-                                    ? null
-                                    : t.requiredField,
                               ),
                               const SizedBox(height: 18),
                             ],
@@ -207,15 +202,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                       autofillHints: const [
                                         AutofillHints.telephoneNumberNational,
                                       ],
-                                      formatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(11),
-                                      ],
-                                      validator: (value) =>
-                                          RegExp(r'^01[0125]\d{8}$')
-                                              .hasMatch(value ?? '')
-                                          ? null
-                                          : t.invalidPhone,
                                     ),
                                   ),
                                 ],
@@ -232,12 +218,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ? AutofillHints.newPassword
                                       : AutofillHints.password,
                                 ],
-                                validator: (value) =>
-                                    (value ?? '').length >= (_register ? 8 : 1)
-                                    ? null
-                                    : (_register
-                                          ? t.passwordTooShort
-                                          : t.requiredField),
                                 suffix: IconButton(
                                   tooltip: _hidden
                                       ? t.showPassword
@@ -316,17 +296,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                     ),
                                 ],
                               ),
-                              if (_submitted && _bloodType == null)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Text(
-                                    t.chooseBloodType,
-                                    style: const TextStyle(
-                                      color: AppColors.red,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
                               const SizedBox(height: 18),
                               const EgyptLocationFields(),
                             ],
@@ -411,16 +380,11 @@ class _AuthScreenState extends State<AuthScreen> {
     bool obscure = false,
     TextInputType? keyboardType,
     Iterable<String>? autofillHints,
-    List<TextInputFormatter>? formatters,
-    FormFieldValidator<String>? validator,
     Widget? suffix,
   }) => TextFormField(
     obscureText: obscure,
     keyboardType: keyboardType,
     autofillHints: autofillHints,
-    inputFormatters: formatters,
-    validator: validator,
-    autovalidateMode: AutovalidateMode.onUserInteraction,
     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
     decoration: InputDecoration(
       hintText: hint,

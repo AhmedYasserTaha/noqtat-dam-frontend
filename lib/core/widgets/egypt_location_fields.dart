@@ -99,13 +99,10 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
     required EgyptLocation? value,
     required VoidCallback? onTap,
   }) {
-    final t = AppLocalizations.of(context)!;
     final language = Localizations.localeOf(context).languageCode;
     return FormField<EgyptLocation>(
       key: key,
       initialValue: value,
-      validator: (_) => value == null ? t.requiredField : null,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       builder: (field) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

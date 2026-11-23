@@ -1,14 +1,15 @@
 ﻿# Damy — UI only
 
-Arabic-first Flutter UI prototype. Opens directly on Home without login,
-feature authentication, dependency injection or feature backend requests.
+Arabic-first Flutter UI prototype. Opens on the login screen. Login or
+registration forms navigate to Home locally, without real authentication,
+dependency injection or feature backend requests.
 Firebase remains connected and initialized in main.dart using the original
 project configuration. The Firebase packages and local rules/index files are
 retained for future feature implementation.
 
 ## Included
 
-- Login, registration and password-recovery forms with local validation.
+- Login, registration and password-recovery forms without validation or required fields.
 - Home preview, sample cards, filters and independent bottom navigation.
 - Placeholder map, my requests, profile, create-request and complete-profile pages.
 - White theme, bundled Cairo fonts, project SVG icons, Arabic RTL and English.
@@ -16,7 +17,7 @@ retained for future feature implementation.
   assets/data/egypt/README.md.
 
 Only presentation folders remain under lib/features. Shared UI, routes, theme,
-constants and offline location utilities live in lib/core. Form validation,
+constants and offline location utilities live in lib/core. Form input,
 local selection/filtering and navigation remain so the prototype is interactive.
 
 Repositories, data sources, domain models, use cases, Cubits and DI have been

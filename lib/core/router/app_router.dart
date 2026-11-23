@@ -11,7 +11,7 @@ import '../../features/blood_request/presentation/pages/blood_request_page.dart'
 import '../../features/profile/presentation/pages/profile_page.dart';
 
 GoRouter createRouter() => GoRouter(
-  initialLocation: '/',
+  initialLocation: '/auth',
   routes: [
     GoRoute(path: '/auth', builder: (context, state) => const AuthPage()),
     GoRoute(
