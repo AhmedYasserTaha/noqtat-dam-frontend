@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../../core/constants/app_icons.dart';
 import '../../../../core/constants/blood_types.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/failure_message.dart';
 import '../../../../core/widgets/app_icon.dart';
 import '../../../../core/widgets/egypt_location_fields.dart';
 import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/entities/blood_request.dart';
+import '../cubit/blood_request_cubit.dart';
 
 class BloodRequestPage extends StatefulWidget {
   const BloodRequestPage({super.key});
@@ -23,7 +27,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   String _bloodType = 'O-';
   int _bags = 3;
   int _urgency = 0;
-  String? _governorate, _district;
+  String? _governorate, _district, _governorateId, _districtId;
   DateTime? _deadline;
   bool _finished = false;
 
@@ -69,6 +73,18 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   Future<void> _review() async {
     FocusScope.of(context).unfocus();
     final t = AppLocalizations.of(context)!;
+    final missing =
+        _hospital.text.trim().isEmpty ||
+        _districtId == null ||
+        _phone.text.trim().isEmpty;
+    if (missing) {
+      _snack(t.requestMissingFields);
+      return;
+    }
+    if (_urgency == 2 && _deadline == null) {
+      _snack(t.requestNeedsDeadline);
+      return;
+    }
     final urgency = [
       t.urgencyCritical,
       t.urgencyDay,
@@ -204,8 +220,24 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
       ),
     );
     if (!mounted || published != true) return;
-    setState(() => _finished = true);
+    context.read<BloodRequestCubit>().submit(
+      BloodRequestDraft(
+        bloodType: _bloodType,
+        bagsNeeded: _bags,
+        hospitalName: _hospital.text.trim(),
+        governorateId: _governorateId!,
+        districtId: _districtId!,
+        urgency: Urgency.values[_urgency],
+        contactPhone: _phone.text.trim(),
+        deadline: _deadline,
+        notes: _notes.text,
+      ),
+    );
   }
+
+  void _snack(String message) =>
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   Widget _label(String text) => Padding(
     padding: const EdgeInsets.only(bottom: 10),
@@ -216,7 +248,23 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      BlocConsumer<BloodRequestCubit, BloodRequestState>(
+        listener: (context, state) {
+          if (state.status == CreateStatus.success) {
+            setState(() => _finished = true);
+          } else if (state.status == CreateStatus.failure &&
+              state.failure != null) {
+            _snack(
+              failureMessage(AppLocalizations.of(context)!, state.failure!),
+            );
+          }
+        },
+        builder: (context, state) =>
+            _scaffold(context, state.status == CreateStatus.submitting),
+      );
+
+  Widget _scaffold(BuildContext context, bool submitting) {
     final t = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
@@ -327,7 +375,9 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                               ),
                               IconButton(
                                 tooltip: t.increaseBags,
-                                onPressed: () => setState(() => _bags++),
+                                onPressed: _bags < 20
+                                    ? () => setState(() => _bags++)
+                                    : null,
                                 icon: const AppIcon(
                                   AppIcons.plus,
                                   color: AppColors.red,
@@ -358,6 +408,8 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                                   .languageCode;
                               _governorate = governorate?.name(language);
                               _district = district?.name(language);
+                              _governorateId = governorate?.id;
+                              _districtId = district?.id;
                             },
                           ),
                         ],
@@ -506,9 +558,9 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                     width: double.infinity,
                     height: 52,
                     child: ElevatedButton(
-                      onPressed: _review,
+                      onPressed: submitting ? null : _review,
                       child: Text(
-                        t.reviewRequestTitle,
+                        submitting ? t.loading : t.reviewRequestTitle,
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 16,

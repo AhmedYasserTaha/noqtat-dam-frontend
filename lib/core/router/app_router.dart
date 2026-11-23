@@ -1,4 +1,14 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+import '../di/injection.dart';
+import '../../features/blood_request/presentation/cubit/blood_request_cubit.dart';
+
+import '../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../features/auth/presentation/cubit/auth_state.dart';
 
 import 'app_shell.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
@@ -11,9 +21,45 @@ import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/info_page.dart';
 import '../../features/blood_request/presentation/pages/my_requests_page.dart';
 
-GoRouter createRouter() => GoRouter(
-  initialLocation: '/auth',
+/// Re-runs the router redirect whenever the auth state changes.
+class RouterRefresh extends ChangeNotifier {
+  RouterRefresh(Stream<dynamic> stream) {
+    _sub = stream.listen((_) => notifyListeners());
+  }
+  late final StreamSubscription<dynamic> _sub;
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+}
+
+const _publicPaths = {'/privacy', '/terms', '/about', '/help'};
+
+String? authRedirect(AuthState auth, String path) {
+  if (auth.status == AuthStatus.initial) {
+    return path == '/splash' ? null : '/splash';
+  }
+  if (_publicPaths.contains(path)) return null;
+  final signedIn = auth.status == AuthStatus.authenticated;
+  final onAuth = path.startsWith('/auth') || path == '/splash';
+  if (!signedIn && !onAuth) return '/auth';
+  // A failed login or register keeps the user on the form.
+  if (signedIn && onAuth) return '/';
+  if (!signedIn && path == '/splash') return '/auth';
+  return null;
+}
+
+GoRouter createRouter(AuthCubit auth, Listenable refresh) => GoRouter(
+  initialLocation: '/splash',
+  refreshListenable: refresh,
+  redirect: (context, state) => authRedirect(auth.state, state.uri.path),
   routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) =>
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
+    ),
     GoRoute(
       path: '/privacy',
       builder: (context, state) => const InfoPage(kind: ProfileInfo.privacy),
@@ -60,7 +106,10 @@ GoRouter createRouter() => GoRouter(
     ),
     GoRoute(
       path: '/blood-request',
-      builder: (context, state) => const BloodRequestPage(),
+      builder: (context, state) => BlocProvider(
+        create: (_) => getIt<BloodRequestCubit>(),
+        child: const BloodRequestPage(),
+      ),
     ),
   ],
 );

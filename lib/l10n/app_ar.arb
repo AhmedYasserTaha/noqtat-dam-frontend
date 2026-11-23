@@ -2,13 +2,10 @@
   "@@locale": "ar",
   "appName": "قطره دم",
   "home": "الرئيسية",
-  "phoneLogin": "تسجيل الدخول",
   "completeProfile": "إكمال الملف الشخصي",
   "profile": "الملف الشخصي",
-  "bloodRequest": "طلب تبرع بالدم",
   "placeholder": "قريباً",
   "retry": "إعادة المحاولة",
-  "empty": "لا توجد بيانات",
   "authBrand": "قطره دم",
   "authTagline": "كل قطرة بتفرق",
   "welcomeBack": "أهلاً بيك تاني",
@@ -21,21 +18,16 @@
   "noAccount": "معندكش حساب؟",
   "registerNow": "سجّل دلوقتي",
   "haveAccount": "عندك حساب؟",
-  "stepOneOfTwo": "الخطوة 1 من 2",
   "registerSubtitle": "بياناتك بتساعدنا نوصّلك بالطلبات المناسبة ليك.",
   "fullName": "الاسم الكامل",
   "fullNameHint": "اكتب اسمك الكامل",
   "yourBloodType": "فصيلة دمك",
-  "chooseBloodType": "اختار فصيلة دمك",
+  "chooseBloodType": "اختار فصيلة دمك.",
   "governorateLabel": "المحافظة",
-  "governorateHint": "اكتب محافظتك",
-  "continueAction": "كمّل",
   "recoverySubtitle": "ولا يهمك، اكتب رقم الموبايل المرتبط بحسابك علشان تسترجع كلمة السر.",
   "sendRecoveryCode": "إرسال كود الاسترجاع",
   "rememberPassword": "افتكرت كلمة السر؟",
-  "requiredField": "من فضلك كمّل البيانات",
   "invalidPhone": "اكتب رقم موبايل مصري صحيح",
-  "passwordTooShort": "كلمة السر لازم تكون 8 حروف على الأقل",
   "showPassword": "إظهار كلمة السر",
   "hidePassword": "إخفاء كلمة السر",
   "authUnavailable": "الخدمة دي مش متاحة حالياً.",
@@ -47,70 +39,32 @@
   "noLocationsFound": "مفيش نتائج للبحث ده",
   "loadingLocations": "جاري تحميل المحافظات...",
   "closeLocations": "إغلاق",
-  "mapTab": "الخريطة",
   "myRequestsTab": "طلباتي",
   "myAccountTab": "حسابي",
   "createRequestAction": "إنشاء طلب دم",
-  "readyToDonate": "جاهز تتبرع تاني",
-  "donationHistoryDemo": "آخر تبرع من 4 شهور · 3 تبرعات سابقة",
-  "closestUrgentRequest": "عاجل جدًا · أقرب طلب ليك",
-  "threeHoursLeft": "باقي 3 ساعات",
-  "threeBagsNeeded": "3 أكياس دم مطلوبة",
-  "mansouraHospitalDistance": "مستشفى المنصورة الجامعي · 2.4 كم",
   "hospitalVerified": "موثّق من المستشفى",
-  "oneOfThreeCollected": "اتجمع 1 من 3",
-  "twoOnTheWay": "2 في الطريق",
   "iWillDonate": "أنا هتبرع",
   "shareRequest": "مشاركة الطلب",
   "urgentLabel": "عاجل",
   "donateAction": "تبرّع",
-  "demoDonorName": "محمد أحمد",
-  "twoHoursAgo": "من ساعتين",
-  "demoDonationPost": "النهاردة تبرعت بالدم لأول مرة، والإحساس مش بيتوصف. لو بتفكر تتبرع متترددش!",
   "filterAll": "الكل",
   "filterMyBlood": "فصيلتي",
   "filterNearby": "قريب مني",
-  "mansouraCity": "المنصورة",
-  "demoFeedLabel": "معاينة التصميم · بيانات تجريبية",
   "notificationsTitle": "الإشعارات",
-  "noDemoNotifications": "مفيش إشعارات في المعاينة دي.",
-  "demoDonationNotice": "ده طلب تجريبي لعرض التصميم. مش هيتم تسجيل تعهّد بالتبرع.",
-  "demoShareText": "طلب تجريبي: 3 أكياس O- في مستشفى المنصورة الجامعي. للمعاينة فقط، مش طلب تبرع حقيقي.",
-  "requestCopied": "تم نسخ نص الطلب التجريبي",
-  "twoBagsTitle": "كيسين دم",
-  "talkhaHospitalDistance": "مستشفى طلخا العام · 11 كم",
-  "plateletsTitle": "كيس صفائح دموية",
-  "salamHospitalDistance": "مستشفى السلام · 5 كم",
-  "matchingFeaturedRequest": "الطلب المميز فوق مطابق لفصيلتك التجريبية O-",
+  "requestCopied": "تم نسخ نص الطلب",
   "staticAccountPreview": "بيانات تجريبية · للعرض فقط",
   "requestActive": "نشطة",
   "requestComplete": "مكتملة",
   "requestCancelled": "ملغية",
-  "demoUniversityHospital": "مستشفى المنصورة الجامعي",
-  "demoTalkhaHospital": "مستشفى طلخا العام",
-  "demoSalamHospital": "مستشفى السلام",
   "requestDateLabel": "تاريخ الطلب:",
   "bagsCollectedLabel": "أكياس تم تجميعها",
   "requestDetails": "تفاصيل الطلب",
-  "demoRequestNotes": "طلب تجريبي لعرض احتياج المستشفى لفصيلة الدم. بيانات المكان والتبرعات ليست طلبًا حقيقيًا.",
   "editProfileTitle": "تعديل الملف الشخصي",
-  "localEditNotice": "تغيير تجريبي في الواجهة فقط",
-  "savePreview": "حفظ للمعاينة",
-  "demoMemberSince": "متبرع من يناير 2026",
-  "donationsStat": "تبرعات سابقة",
-  "requestsStat": "طلبات نشطة",
-  "monthsSinceStat": "شهور من آخر تبرع",
   "personalInfoTitle": "البيانات الشخصية",
-  "emailLabel": "البريد الإلكتروني",
-  "demoGovernorate": "الدقهلية",
-  "birthDateLabel": "تاريخ الميلاد",
-  "genderLabel": "النوع",
-  "maleLabel": "ذكر",
   "donationInfoTitle": "بيانات التبرع",
   "lastDonationLabel": "آخر تبرع",
   "availabilityLabel": "متاح للتبرع",
   "donationHistoryTitle": "سجل التبرعات",
-  "demoDonationHistory": "23/07/2026 · مستشفى المنصورة الجامعي\n12/03/2026 · مستشفى طلخا العام\n08/01/2026 · مستشفى السلام\n\nسجل تجريبي، لا يثبت أهلية التبرع.",
   "settingsTitle": "الإعدادات",
   "languageLabel": "لغة التطبيق",
   "languagePreviewBody": "الواجهة متاحة بالعربية والإنجليزية. تغيير اللغة من الإعدادات هيتضاف لاحقًا.",
@@ -122,31 +76,28 @@
   "versionLabel": "إصدار التطبيق",
   "logoutAction": "تسجيل الخروج",
   "deleteAccountTitle": "حذف الحساب",
-  "deletePreviewBody": "ده تأكيد تجريبي لشكل حذف الحساب. مفيش حساب حقيقي هيتحذف أو بيانات هتتمسح.",
   "keepAccountAction": "الاحتفاظ بالحساب",
-  "confirmPreviewAction": "تأكيد المعاينة",
-  "noAccountDeleted": "دي معاينة بس. لم يتم حذف أي حساب أو بيانات.",
-  "policyDraftNotice": "مسودة تجريبية لعرض الواجهة، وليست سياسة نهائية أو شروط استخدام سارية. تُراجع وتُحدّث قبل تشغيل الخدمات الفعلية.",
-  "privacyDataTitle": "البيانات في النسخة الحالية",
-  "privacyDataBody": "الملف والطلبات المعروضة بيانات ثابتة للتجربة. تعديل الاسم أو التفضيلات يغيّر الواجهة مؤقتًا ولا يحفظ بيانات حساب على Firebase. تهيئة Firebase موجودة، لكن ميزات الحسابات والطلبات غير مفعّلة.",
+  "policyDraftNotice": "نص مبدئي وليس سياسة نهائية أو شروطًا قانونية. يُراجع قبل الإطلاق العام.",
+  "privacyDataTitle": "البيانات اللي بنحتفظ بيها",
+  "privacyDataBody": "اسمك ورقم موبايلك وفصيلة دمك وموقعك وحالة إتاحتك والطلبات والتعهدات والمنشورات اللي بتعملها بتتخزن على سيرفر التطبيق. رقم التواصل في الطلب بيظهر بس للي بيتعهد بالتبرع. بيانات التبرع هي اللي سجلتها بنفسك.",
   "privacyContactTitle": "بيانات التواصل والموقع",
-  "privacyContactBody": "عند تفعيل الخدمة، يلزم توضيح البيانات التي تُجمع وسبب جمعها ومن يطلع عليها، خصوصًا رقم الهاتف والموقع وفصيلة الدم. لا تستخدم أرقام أشخاص أو بيانات مرضى حقيقية في هذه المعاينة.",
+  "privacyContactBody": "متكتبش بيانات مريض حقيقية في الطلب. استخدم بس اللي يلزم للتنسيق، زي المستشفى والفصيلة ورقم تواصل.",
   "privacyControlTitle": "حقوق المستخدم والتواصل",
-  "privacyControlBody": "وسائل طلب الوصول للبيانات وتصحيحها وحذفها، وفترات الاحتفاظ بها، وبيانات مسؤول التواصل ستُحدد قبل الإطلاق. زر حذف الحساب الحالي للعرض فقط.",
+  "privacyControlBody": "تقدر تعدّل بياناتك وتحذف حسابك من الملف الشخصي. الحذف بيشيل حسابك وطلباتك وتعهداتك من السيرفر.",
   "termsUseTitle": "الغرض من التطبيق",
-  "termsUseBody": "قطره دم مشروع يهدف لتسهيل التواصل حول احتياجات التبرع بالدم. النسخة الحالية تعرض التصميم فقط ولا تؤكد وجود طلبات حقيقية أو متبرعين أو حجوزات.",
+  "termsUseBody": "قطره دم بيساعد الناس تتواصل حول احتياجات التبرع بالدم. التطبيق مش بيتحقق من الطلبات ولا المتبرعين ولا التبرعات.",
   "termsAccuracyTitle": "المحتوى والاستخدام المسؤول",
   "termsAccuracyBody": "عند إطلاق الخدمة، يجب تقديم بيانات صحيحة واحترام خصوصية الآخرين، وعدم نشر طلبات مضللة أو محتوى مسيء أو بيع الدم أو استغلال المحتاجين. إجراءات المراجعة والإبلاغ ستُوضح ضمن الشروط النهائية.",
   "termsMedicalTitle": "التنسيق مع المستشفى",
-  "termsMedicalBody": "التطبيق ليس جهة طبية ولا بديلًا عن المستشفى. أي تبرع فعلي يُنسّق مع جهة طبية مختصة، وهي التي تقرر الأهلية والفحوص المطلوبة. في الطوارئ تواصل مباشرة مع جهة الرعاية المختصة ولا تعتمد على المعاينة.",
-  "aboutBody": "قطره دم بيجمع فكرة طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا، مع دعم الإنجليزية. كل الطلبات والإحصائيات المعروضة حاليًا بيانات تجريبية، والخدمات الفعلية هتتضاف بعد اكتمال الواجهات.",
+  "termsMedicalBody": "التطبيق ليس جهة طبية. ولا بيحدد لو حد ينفع يتبرع ولا أي فصيلة مناسبة. الأهلية والفحوص بتقررها الجهة الطبية المختصة في المستشفى. في الطوارئ تواصل مع المستشفى أو الإسعاف مباشرة.",
+  "aboutBody": "قطره دم بيجمع طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا مع دعم الإنجليزية. التطبيق مش بيتحقق من التبرعات ولا بيدّي نصيحة طبية.",
   "helpRequestTitle": "إزاي أعمل طلب؟",
-  "helpRequestBody": "اضغط علامة +، واختار الفصيلة وعدد الأكياس وتفاصيل المستشفى. زر معاينة الطلب يعرض البيانات قبل تأكيد تجريبي؛ لا يتم نشر أو حفظ الطلب حاليًا.",
+  "helpRequestBody": "اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.",
   "helpDonateTitle": "هل زر التبرع بيحجز تبرع؟",
-  "helpDonateBody": "لا، الأزرار الحالية للعرض والتجربة فقط. مش بيتم تسجيل تعهّد أو إرسال إشعار لأي شخص.",
+  "helpDonateBody": "اضغط \"هتبرع\" على الطلب علشان تتعهد. هيظهرلك رقم صاحب الطلب علشان تتصل وتتأكد. المستشفى هي اللي تقرر لو ينفع تتبرع. \"تبرعت\" هو تسجيل منك أنت بس.",
   "helpContactTitle": "التواصل مع الدعم",
   "helpContactBody": "قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.",
-  "createRequestSubtitle": "حدّد احتياجك وراجع شكل الطلب قبل المتابعة. دي معاينة للواجهة فقط.",
+  "createRequestSubtitle": "حدّد احتياجك وراجع الطلب قبل النشر.",
   "requiredBloodType": "فصيلة الدم المطلوبة",
   "numberOfBags": "عدد الأكياس",
   "bagsNeededLabel": "أكياس دم مطلوبة",
@@ -164,16 +115,162 @@
   "deadlineLabel": "آخر موعد للتبرع",
   "chooseDeadline": "اختار اليوم والوقت",
   "contactPhoneLabel": "رقم التواصل",
-  "contactPreviewHint": "رقم للعرض في المعاينة فقط، مش هيتم حفظه أو مشاركته.",
+  "contactPreviewHint": "بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده.",
   "requestNotesLabel": "ملاحظات إضافية",
   "requestNotesHint": "أي تفاصيل تحب تضيفها عن الطلب...",
   "reviewRequestTitle": "معاينة الطلب",
-  "requestPreviewNotice": "معاينة تجريبية بدون نشر أو إرسال إشعارات. الخانات الفاضية مسموحة حاليًا.",
+  "requestPreviewNotice": "راجع البيانات. نشر الطلب بيخليه ظاهر لباقي المستخدمين.",
   "previewNotSpecified": "لم يتم التحديد",
-  "confirmRequestPreview": "تأكيد المعاينة",
+  "confirmRequestPreview": "نشر الطلب",
   "editRequestPreview": "تعديل البيانات",
-  "requestPreviewDone": "معاينة الطلب جاهزة",
-  "requestNotPublished": "دي تجربة لشكل إنشاء الطلب بس. لم يتم نشر أو حفظ الطلب، وطلباتي هتفضل تعرض البيانات التجريبية.",
+  "requestPreviewDone": "تم نشر الطلب",
+  "requestNotPublished": "طلبك بقى ظاهر. المتبرعين اللي بيتعهدوا هيشوفوا رقم تواصلك. تقدر تديره من طلباتي.",
   "viewMyRequests": "عرض طلباتي",
-  "backToHome": "الرجوع للرئيسية"
+  "backToHome": "الرجوع للرئيسية",
+  "fieldRequired": "الحقل ده مطلوب",
+  "errInvalidPhone": "اكتب رقم موبايل مصري صحيح، مثلًا 010 1234 5678.",
+  "errWeakPassword": "كلمة المرور لازم تكون 8 حروف أو أرقام على الأقل.",
+  "errPhoneTaken": "رقم الموبايل ده مسجل قبل كده. جرّب تسجّل دخول.",
+  "errWrongCredentials": "رقم الموبايل أو كلمة المرور غلط.",
+  "errInvalidCode": "الكود غلط أو انتهت صلاحيته.",
+  "errNeedGovernorate": "حدّد المحافظة الأول وبعدين جرّب تاني.",
+  "errTooMany": "محاولات كتير. استنى كام دقيقة وجرّب تاني.",
+  "errNetwork": "مش قادر أوصل للسيرفر. اتأكد من الإنترنت وجرّب تاني.",
+  "errServer": "حصلت مشكلة في السيرفر. جرّب بعد شوية.",
+  "errNotFound": "العنصر ده لم يعد موجودًا.",
+  "errPermission": "مش مسموح لك بالإجراء ده.",
+  "errUnauthorized": "انتهت الجلسة. سجّل دخول تاني.",
+  "errGeneric": "ماقدرناش نكمل. راجع البيانات وجرّب تاني.",
+  "chooseLocation": "اختار المحافظة والمركز.",
+  "resetCodeLabel": "كود الاستعادة",
+  "resetCodeHint": "اكتب الكود اللي وصلك واختار كلمة مرور جديدة.",
+  "newPasswordLabel": "كلمة المرور الجديدة",
+  "resetDone": "تم تغيير كلمة المرور. سجّل دخول بالجديدة.",
+  "resetPasswordAction": "تغيير كلمة المرور",
+  "createAccountAction": "إنشاء الحساب",
+  "loading": "جاري التحميل...",
+  "closestRequest": "أقرب طلب",
+  "markedAvailable": "حاليًا حاطط نفسك متاح للتبرع",
+  "markedUnavailable": "حاليًا حاطط نفسك غير متاح",
+  "noDonationsRecorded": "لسه مفيش تبرعات مسجلة",
+  "selfReportedCount": "{count, plural, =1{تبرع واحد} =2{تبرعان} few{{count} تبرعات} other{{count} تبرعًا}} · من تسجيلك",
+  "selfReportedLast": "آخر تبرع {date} · {count, plural, =1{تبرع واحد} =2{تبرعان} few{{count} تبرعات} other{{count} تبرعًا}} · من تسجيلك",
+  "bagsNeeded": "{count, plural, =1{مطلوب كيس دم واحد} =2{مطلوب كيسا دم} few{مطلوب {count} أكياس دم} other{مطلوب {count} كيس دم}}",
+  "collectedOf": "اتجمّع {collected} من {needed}",
+  "onTheWayCount": "{count, plural, =0{لسه مفيش حد في الطريق} =1{واحد في الطريق} =2{اتنين في الطريق} few{{count} في الطريق} other{{count} في الطريق}}",
+  "viewPledge": "تعهّدي",
+  "chooseLocationChip": "اختار الموقع",
+  "noNotificationsYet": "مفيش إشعارات لسه.",
+  "noRequestsYet": "مفيش طلبات للعرض.",
+  "pledgeTitle": "شكرًا على تعهّدك",
+  "phoneCopied": "تم نسخ الرقم",
+  "pledgeNote": "اتصل بصاحب الطلب علشان تتأكد من المستشفى والميعاد. المستشفى هي اللي تقرر لو ينفع تتبرع. اضغط \"تبرعت\" بعد ما تتبرع فعلًا: ده تسجيل منك أنت ومحدش بيتحقق منه.",
+  "iDonated": "تبرعت (تسجيل مني)",
+  "cancelPledge": "إلغاء تعهّدي",
+  "shareTextBody": "مطلوب دم: {bags, plural, =1{كيس واحد} =2{كيسان} few{{bags} أكياس} other{{bags} كيس}} فصيلة {type} في {hospital}، {place}. افتح تطبيق قطره دم للمساعدة.",
+  "deadlinePassed": "انتهى الموعد",
+  "daysLeft": "{count, plural, =1{باقي يوم} =2{باقي يومان} few{باقي {count} أيام} other{باقي {count} يومًا}}",
+  "hoursLeft": "{count, plural, =1{باقي ساعة} =2{باقي ساعتان} few{باقي {count} ساعات} other{باقي {count} ساعة}}",
+  "minutesLeft": "{count, plural, =1{باقي دقيقة} =2{باقي دقيقتان} few{باقي {count} دقائق} other{باقي {count} دقيقة}}",
+  "requestMissingFields": "اكتب المستشفى والمركز ورقم تواصل الأول.",
+  "requestNeedsDeadline": "اختار تاريخ ووقت للطلب المجدول.",
+  "myRequestsSubtitle": "الطلبات اللي نشرتها",
+  "markFulfilled": "تم تغطية الطلب",
+  "cancelRequest": "إلغاء الطلب",
+  "saveChanges": "حفظ التعديلات",
+  "profileSaved": "تم الحفظ",
+  "accountSubtitle": "حسابك وبيانات التبرع",
+  "memberSince": "عضو منذ {date}",
+  "notSet": "غير محدد",
+  "selfReportedTag": "من تسجيلك",
+  "selfReportedNote": "التسجيلات دي منك أنت. مش متحقق منها ولا بتوضح لو ينفع تتبرع.",
+  "availabilityHint": "بيظهر لأصحاب الطلبات إنك متاح. مش فحص طبي.",
+  "notificationsHint": "تفضيلك. الإشعارات على الموبايل لسه مش متفعلة.",
+  "deleteAccountBody": "ده هيحذف حسابك وطلباتك وتعهداتك نهائيًا ومش هينفع تتراجع.",
+  "deleteAccountConfirm": "حذف نهائي",
+  "@selfReportedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@selfReportedLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@bagsNeeded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@collectedOf": {
+    "placeholders": {
+      "collected": {
+        "type": "int"
+      },
+      "needed": {
+        "type": "int"
+      }
+    }
+  },
+  "@onTheWayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@shareTextBody": {
+    "placeholders": {
+      "bags": {
+        "type": "int"
+      },
+      "type": {
+        "type": "String"
+      },
+      "hospital": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "@daysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@hoursLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@minutesLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@memberSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }

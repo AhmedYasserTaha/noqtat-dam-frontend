@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/blood_types.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/failure_message.dart';
 import '../../../../core/widgets/egypt_location_fields.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../cubit/auth_cubit.dart';
+import '../cubit/auth_state.dart';
+import '../../domain/entities/auth_user.dart';
 
 enum AuthMode { login, register, recovery }
 
@@ -20,6 +25,23 @@ class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
   bool _hidden = true;
   String? _bloodType;
+  String? _governorateId, _districtId;
+  String? _localError;
+  bool _codeStep = false;
+  final _name = TextEditingController();
+  final _phone = TextEditingController();
+  final _password = TextEditingController();
+  final _code = TextEditingController();
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _phone.dispose();
+    _password.dispose();
+    _code.dispose();
+    super.dispose();
+  }
+
   bool get _login => widget.mode == AuthMode.login;
   bool get _register => widget.mode == AuthMode.register;
 
@@ -29,17 +51,71 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  String? _required(String? v, AppLocalizations t) =>
+      (v == null || v.trim().isEmpty) ? t.fieldRequired : null;
+
+  String? _passwordRule(String? v, AppLocalizations t) =>
+      (v == null || v.length < 8) ? t.errWeakPassword : null;
+
   void _submit() {
-    if (_login || _register) {
-      context.go('/');
+    final t = AppLocalizations.of(context)!;
+    final auth = context.read<AuthCubit>();
+    setState(() => _localError = null);
+    if (!_form.currentState!.validate()) return;
+    final phone = _phone.text.trim();
+    if (_login) {
+      auth.login(phone, _password.text);
+    } else if (_register) {
+      if (_bloodType == null) {
+        setState(() => _localError = t.chooseBloodType);
+        return;
+      }
+      if (_districtId == null) {
+        setState(() => _localError = t.chooseLocation);
+        return;
+      }
+      auth.register(
+        RegisterData(
+          name: _name.text.trim(),
+          phone: phone,
+          password: _password.text,
+          bloodType: _bloodType!,
+          governorateId: _governorateId,
+          districtId: _districtId,
+        ),
+      );
+    } else if (_codeStep) {
+      auth.resetPassword(phone, _code.text.trim(), _password.text);
     } else {
-      _unavailable();
+      auth.requestPasswordReset(phone);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => BlocConsumer<AuthCubit, AuthState>(
+    listener: (context, state) {
+      if (widget.mode != AuthMode.recovery) return;
+      if (state.status == AuthStatus.resetCodeRequested) {
+        setState(() => _codeStep = true);
+      } else if (state.status == AuthStatus.resetDone) {
+        final t = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(t.resetDone)));
+        context.read<AuthCubit>().clearStatus();
+        context.go('/auth');
+      }
+    },
+    builder: (context, state) => _buildScreen(context, state),
+  );
+
+  Widget _buildScreen(BuildContext context, AuthState state) {
     final t = AppLocalizations.of(context)!;
+    final loading = state.isLoading;
+    final error =
+        _localError ??
+        (state.status == AuthStatus.failure && state.failure != null
+            ? failureMessage(t, state.failure!)
+            : null);
     return Scaffold(
       body: SafeArea(
         child: Align(
@@ -69,7 +145,10 @@ class _AuthScreenState extends State<AuthScreen> {
                                   IconButton.filledTonal(
                                     tooltip: MaterialLocalizations.of(context)
                                         .backButtonTooltip,
-                                    onPressed: () => context.go('/auth'),
+                                    onPressed: () {
+                                      context.read<AuthCubit>().clearStatus();
+                                      context.go('/auth');
+                                    },
                                     style: IconButton.styleFrom(
                                       backgroundColor: Colors.white,
                                       foregroundColor: AppColors.ink,
@@ -80,13 +159,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                     ),
                                     icon: const BackButtonIcon(),
                                   ),
-                                  if (_register)
-                                    Text(
-                                      t.stepOneOfTwo,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
                                 ],
                               ),
                               const SizedBox(height: 8),
@@ -136,34 +208,12 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                               ),
                             ],
-                            if (_register) ...[
-                              const SizedBox(height: 15),
-                              Row(
-                                children: [
-                                  for (final active in [true, false])
-                                    Expanded(
-                                      child: Container(
-                                        height: 5,
-                                        margin: const EdgeInsets.symmetric(
-                                          horizontal: 3,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: active
-                                              ? AppColors.ink
-                                              : AppColors.border,
-                                          borderRadius: BorderRadius.circular(
-                                            4,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ],
                             const SizedBox(height: 8),
                             if (_register) ...[
                               _label(t.fullName),
                               _field(
+                                controller: _name,
+                                validator: (v) => _required(v, t),
                                 hint: t.fullNameHint,
                                 autofillHints: const [AutofillHints.name],
                               ),
@@ -197,6 +247,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                   const SizedBox(width: 9),
                                   Expanded(
                                     child: _field(
+                                      controller: _phone,
+                                      readOnly: _codeStep,
+                                      validator: (v) => _required(v, t),
                                       hint: '010 1234 5678',
                                       keyboardType: TextInputType.phone,
                                       autofillHints: const [
@@ -207,10 +260,37 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ],
                               ),
                             ),
-                            if (_login || _register) ...[
+                            if (_codeStep) ...[
                               const SizedBox(height: 8),
-                              _label(t.passwordLabel),
+                              Text(
+                                t.resetCodeHint,
+                                style: const TextStyle(
+                                  color: AppColors.muted,
+                                  fontSize: 13,
+                                  height: 1.8,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              _label(t.resetCodeLabel),
                               _field(
+                                controller: _code,
+                                validator: (v) => _required(v, t),
+                                keyboardType: TextInputType.number,
+                                hint: '123456',
+                              ),
+                            ],
+                            if (_login || _register || _codeStep) ...[
+                              const SizedBox(height: 8),
+                              _label(
+                                _codeStep
+                                    ? t.newPasswordLabel
+                                    : t.passwordLabel,
+                              ),
+                              _field(
+                                controller: _password,
+                                validator: (v) => _login
+                                    ? _required(v, t)
+                                    : _passwordRule(v, t),
                                 hint: '••••••••',
                                 obscure: _hidden,
                                 autofillHints: [
@@ -297,16 +377,40 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ],
                               ),
                               const SizedBox(height: 18),
-                              const EgyptLocationFields(),
+                              EgyptLocationFields(
+                                onChanged: (g, d) {
+                                  _governorateId = g?.id;
+                                  _districtId = d?.id;
+                                },
+                              ),
+                            ],
+                            if (error != null) ...[
+                              const SizedBox(height: 10),
+                              Semantics(
+                                liveRegion: true,
+                                child: Text(
+                                  error,
+                                  key: const ValueKey('auth-error'),
+                                  style: const TextStyle(
+                                    color: AppColors.red,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.6,
+                                  ),
+                                ),
+                              ),
                             ],
                             const SizedBox(height: 10),
                             _button(
                               _login
                                   ? t.loginAction
                                   : _register
-                                  ? t.continueAction
+                                  ? t.createAccountAction
+                                  : _codeStep
+                                  ? t.resetPasswordAction
                                   : t.sendRecoveryCode,
-                              _submit,
+                              loading ? null : _submit,
+                              loading: loading,
                             ),
                             if (_login) ...[
                               const SizedBox(height: 10),
@@ -381,7 +485,13 @@ class _AuthScreenState extends State<AuthScreen> {
     TextInputType? keyboardType,
     Iterable<String>? autofillHints,
     Widget? suffix,
+    TextEditingController? controller,
+    String? Function(String?)? validator,
+    bool readOnly = false,
   }) => TextFormField(
+    controller: controller,
+    validator: validator,
+    readOnly: readOnly,
     obscureText: obscure,
     keyboardType: keyboardType,
     autofillHints: autofillHints,
@@ -400,13 +510,20 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Widget _button(
     String label,
-    VoidCallback onPressed, {
+    VoidCallback? onPressed, {
     bool outlined = false,
+    bool loading = false,
   }) {
-    final text = Text(
-      label,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
-    );
+    final text = loading
+        ? const SizedBox(
+            width: 22,
+            height: 22,
+            child: CircularProgressIndicator(strokeWidth: 2.5),
+          )
+        : Text(
+            label,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+          );
     return SizedBox(
       width: double.infinity,
       height: 54,

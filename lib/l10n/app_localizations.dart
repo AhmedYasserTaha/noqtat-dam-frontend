@@ -110,12 +110,6 @@ abstract class AppLocalizations {
   /// **'الرئيسية'**
   String get home;
 
-  /// No description provided for @phoneLogin.
-  ///
-  /// In ar, this message translates to:
-  /// **'تسجيل الدخول'**
-  String get phoneLogin;
-
   /// No description provided for @completeProfile.
   ///
   /// In ar, this message translates to:
@@ -128,12 +122,6 @@ abstract class AppLocalizations {
   /// **'الملف الشخصي'**
   String get profile;
 
-  /// No description provided for @bloodRequest.
-  ///
-  /// In ar, this message translates to:
-  /// **'طلب تبرع بالدم'**
-  String get bloodRequest;
-
   /// No description provided for @placeholder.
   ///
   /// In ar, this message translates to:
@@ -145,12 +133,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إعادة المحاولة'**
   String get retry;
-
-  /// No description provided for @empty.
-  ///
-  /// In ar, this message translates to:
-  /// **'لا توجد بيانات'**
-  String get empty;
 
   /// No description provided for @authBrand.
   ///
@@ -224,12 +206,6 @@ abstract class AppLocalizations {
   /// **'عندك حساب؟'**
   String get haveAccount;
 
-  /// No description provided for @stepOneOfTwo.
-  ///
-  /// In ar, this message translates to:
-  /// **'الخطوة 1 من 2'**
-  String get stepOneOfTwo;
-
   /// No description provided for @registerSubtitle.
   ///
   /// In ar, this message translates to:
@@ -257,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @chooseBloodType.
   ///
   /// In ar, this message translates to:
-  /// **'اختار فصيلة دمك'**
+  /// **'اختار فصيلة دمك.'**
   String get chooseBloodType;
 
   /// No description provided for @governorateLabel.
@@ -265,18 +241,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'المحافظة'**
   String get governorateLabel;
-
-  /// No description provided for @governorateHint.
-  ///
-  /// In ar, this message translates to:
-  /// **'اكتب محافظتك'**
-  String get governorateHint;
-
-  /// No description provided for @continueAction.
-  ///
-  /// In ar, this message translates to:
-  /// **'كمّل'**
-  String get continueAction;
 
   /// No description provided for @recoverySubtitle.
   ///
@@ -296,23 +260,11 @@ abstract class AppLocalizations {
   /// **'افتكرت كلمة السر؟'**
   String get rememberPassword;
 
-  /// No description provided for @requiredField.
-  ///
-  /// In ar, this message translates to:
-  /// **'من فضلك كمّل البيانات'**
-  String get requiredField;
-
   /// No description provided for @invalidPhone.
   ///
   /// In ar, this message translates to:
   /// **'اكتب رقم موبايل مصري صحيح'**
   String get invalidPhone;
-
-  /// No description provided for @passwordTooShort.
-  ///
-  /// In ar, this message translates to:
-  /// **'كلمة السر لازم تكون 8 حروف على الأقل'**
-  String get passwordTooShort;
 
   /// No description provided for @showPassword.
   ///
@@ -380,12 +332,6 @@ abstract class AppLocalizations {
   /// **'إغلاق'**
   String get closeLocations;
 
-  /// No description provided for @mapTab.
-  ///
-  /// In ar, this message translates to:
-  /// **'الخريطة'**
-  String get mapTab;
-
   /// No description provided for @myRequestsTab.
   ///
   /// In ar, this message translates to:
@@ -404,59 +350,11 @@ abstract class AppLocalizations {
   /// **'إنشاء طلب دم'**
   String get createRequestAction;
 
-  /// No description provided for @readyToDonate.
-  ///
-  /// In ar, this message translates to:
-  /// **'جاهز تتبرع تاني'**
-  String get readyToDonate;
-
-  /// No description provided for @donationHistoryDemo.
-  ///
-  /// In ar, this message translates to:
-  /// **'آخر تبرع من 4 شهور · 3 تبرعات سابقة'**
-  String get donationHistoryDemo;
-
-  /// No description provided for @closestUrgentRequest.
-  ///
-  /// In ar, this message translates to:
-  /// **'عاجل جدًا · أقرب طلب ليك'**
-  String get closestUrgentRequest;
-
-  /// No description provided for @threeHoursLeft.
-  ///
-  /// In ar, this message translates to:
-  /// **'باقي 3 ساعات'**
-  String get threeHoursLeft;
-
-  /// No description provided for @threeBagsNeeded.
-  ///
-  /// In ar, this message translates to:
-  /// **'3 أكياس دم مطلوبة'**
-  String get threeBagsNeeded;
-
-  /// No description provided for @mansouraHospitalDistance.
-  ///
-  /// In ar, this message translates to:
-  /// **'مستشفى المنصورة الجامعي · 2.4 كم'**
-  String get mansouraHospitalDistance;
-
   /// No description provided for @hospitalVerified.
   ///
   /// In ar, this message translates to:
   /// **'موثّق من المستشفى'**
   String get hospitalVerified;
-
-  /// No description provided for @oneOfThreeCollected.
-  ///
-  /// In ar, this message translates to:
-  /// **'اتجمع 1 من 3'**
-  String get oneOfThreeCollected;
-
-  /// No description provided for @twoOnTheWay.
-  ///
-  /// In ar, this message translates to:
-  /// **'2 في الطريق'**
-  String get twoOnTheWay;
 
   /// No description provided for @iWillDonate.
   ///
@@ -482,24 +380,6 @@ abstract class AppLocalizations {
   /// **'تبرّع'**
   String get donateAction;
 
-  /// No description provided for @demoDonorName.
-  ///
-  /// In ar, this message translates to:
-  /// **'محمد أحمد'**
-  String get demoDonorName;
-
-  /// No description provided for @twoHoursAgo.
-  ///
-  /// In ar, this message translates to:
-  /// **'من ساعتين'**
-  String get twoHoursAgo;
-
-  /// No description provided for @demoDonationPost.
-  ///
-  /// In ar, this message translates to:
-  /// **'النهاردة تبرعت بالدم لأول مرة، والإحساس مش بيتوصف. لو بتفكر تتبرع متترددش!'**
-  String get demoDonationPost;
-
   /// No description provided for @filterAll.
   ///
   /// In ar, this message translates to:
@@ -518,77 +398,17 @@ abstract class AppLocalizations {
   /// **'قريب مني'**
   String get filterNearby;
 
-  /// No description provided for @mansouraCity.
-  ///
-  /// In ar, this message translates to:
-  /// **'المنصورة'**
-  String get mansouraCity;
-
-  /// No description provided for @demoFeedLabel.
-  ///
-  /// In ar, this message translates to:
-  /// **'معاينة التصميم · بيانات تجريبية'**
-  String get demoFeedLabel;
-
   /// No description provided for @notificationsTitle.
   ///
   /// In ar, this message translates to:
   /// **'الإشعارات'**
   String get notificationsTitle;
 
-  /// No description provided for @noDemoNotifications.
-  ///
-  /// In ar, this message translates to:
-  /// **'مفيش إشعارات في المعاينة دي.'**
-  String get noDemoNotifications;
-
-  /// No description provided for @demoDonationNotice.
-  ///
-  /// In ar, this message translates to:
-  /// **'ده طلب تجريبي لعرض التصميم. مش هيتم تسجيل تعهّد بالتبرع.'**
-  String get demoDonationNotice;
-
-  /// No description provided for @demoShareText.
-  ///
-  /// In ar, this message translates to:
-  /// **'طلب تجريبي: 3 أكياس O- في مستشفى المنصورة الجامعي. للمعاينة فقط، مش طلب تبرع حقيقي.'**
-  String get demoShareText;
-
   /// No description provided for @requestCopied.
   ///
   /// In ar, this message translates to:
-  /// **'تم نسخ نص الطلب التجريبي'**
+  /// **'تم نسخ نص الطلب'**
   String get requestCopied;
-
-  /// No description provided for @twoBagsTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'كيسين دم'**
-  String get twoBagsTitle;
-
-  /// No description provided for @talkhaHospitalDistance.
-  ///
-  /// In ar, this message translates to:
-  /// **'مستشفى طلخا العام · 11 كم'**
-  String get talkhaHospitalDistance;
-
-  /// No description provided for @plateletsTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'كيس صفائح دموية'**
-  String get plateletsTitle;
-
-  /// No description provided for @salamHospitalDistance.
-  ///
-  /// In ar, this message translates to:
-  /// **'مستشفى السلام · 5 كم'**
-  String get salamHospitalDistance;
-
-  /// No description provided for @matchingFeaturedRequest.
-  ///
-  /// In ar, this message translates to:
-  /// **'الطلب المميز فوق مطابق لفصيلتك التجريبية O-'**
-  String get matchingFeaturedRequest;
 
   /// No description provided for @staticAccountPreview.
   ///
@@ -614,24 +434,6 @@ abstract class AppLocalizations {
   /// **'ملغية'**
   String get requestCancelled;
 
-  /// No description provided for @demoUniversityHospital.
-  ///
-  /// In ar, this message translates to:
-  /// **'مستشفى المنصورة الجامعي'**
-  String get demoUniversityHospital;
-
-  /// No description provided for @demoTalkhaHospital.
-  ///
-  /// In ar, this message translates to:
-  /// **'مستشفى طلخا العام'**
-  String get demoTalkhaHospital;
-
-  /// No description provided for @demoSalamHospital.
-  ///
-  /// In ar, this message translates to:
-  /// **'مستشفى السلام'**
-  String get demoSalamHospital;
-
   /// No description provided for @requestDateLabel.
   ///
   /// In ar, this message translates to:
@@ -650,89 +452,17 @@ abstract class AppLocalizations {
   /// **'تفاصيل الطلب'**
   String get requestDetails;
 
-  /// No description provided for @demoRequestNotes.
-  ///
-  /// In ar, this message translates to:
-  /// **'طلب تجريبي لعرض احتياج المستشفى لفصيلة الدم. بيانات المكان والتبرعات ليست طلبًا حقيقيًا.'**
-  String get demoRequestNotes;
-
   /// No description provided for @editProfileTitle.
   ///
   /// In ar, this message translates to:
   /// **'تعديل الملف الشخصي'**
   String get editProfileTitle;
 
-  /// No description provided for @localEditNotice.
-  ///
-  /// In ar, this message translates to:
-  /// **'تغيير تجريبي في الواجهة فقط'**
-  String get localEditNotice;
-
-  /// No description provided for @savePreview.
-  ///
-  /// In ar, this message translates to:
-  /// **'حفظ للمعاينة'**
-  String get savePreview;
-
-  /// No description provided for @demoMemberSince.
-  ///
-  /// In ar, this message translates to:
-  /// **'متبرع من يناير 2026'**
-  String get demoMemberSince;
-
-  /// No description provided for @donationsStat.
-  ///
-  /// In ar, this message translates to:
-  /// **'تبرعات سابقة'**
-  String get donationsStat;
-
-  /// No description provided for @requestsStat.
-  ///
-  /// In ar, this message translates to:
-  /// **'طلبات نشطة'**
-  String get requestsStat;
-
-  /// No description provided for @monthsSinceStat.
-  ///
-  /// In ar, this message translates to:
-  /// **'شهور من آخر تبرع'**
-  String get monthsSinceStat;
-
   /// No description provided for @personalInfoTitle.
   ///
   /// In ar, this message translates to:
   /// **'البيانات الشخصية'**
   String get personalInfoTitle;
-
-  /// No description provided for @emailLabel.
-  ///
-  /// In ar, this message translates to:
-  /// **'البريد الإلكتروني'**
-  String get emailLabel;
-
-  /// No description provided for @demoGovernorate.
-  ///
-  /// In ar, this message translates to:
-  /// **'الدقهلية'**
-  String get demoGovernorate;
-
-  /// No description provided for @birthDateLabel.
-  ///
-  /// In ar, this message translates to:
-  /// **'تاريخ الميلاد'**
-  String get birthDateLabel;
-
-  /// No description provided for @genderLabel.
-  ///
-  /// In ar, this message translates to:
-  /// **'النوع'**
-  String get genderLabel;
-
-  /// No description provided for @maleLabel.
-  ///
-  /// In ar, this message translates to:
-  /// **'ذكر'**
-  String get maleLabel;
 
   /// No description provided for @donationInfoTitle.
   ///
@@ -757,12 +487,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'سجل التبرعات'**
   String get donationHistoryTitle;
-
-  /// No description provided for @demoDonationHistory.
-  ///
-  /// In ar, this message translates to:
-  /// **'23/07/2026 · مستشفى المنصورة الجامعي\n12/03/2026 · مستشفى طلخا العام\n08/01/2026 · مستشفى السلام\n\nسجل تجريبي، لا يثبت أهلية التبرع.'**
-  String get demoDonationHistory;
 
   /// No description provided for @settingsTitle.
   ///
@@ -830,46 +554,28 @@ abstract class AppLocalizations {
   /// **'حذف الحساب'**
   String get deleteAccountTitle;
 
-  /// No description provided for @deletePreviewBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'ده تأكيد تجريبي لشكل حذف الحساب. مفيش حساب حقيقي هيتحذف أو بيانات هتتمسح.'**
-  String get deletePreviewBody;
-
   /// No description provided for @keepAccountAction.
   ///
   /// In ar, this message translates to:
   /// **'الاحتفاظ بالحساب'**
   String get keepAccountAction;
 
-  /// No description provided for @confirmPreviewAction.
-  ///
-  /// In ar, this message translates to:
-  /// **'تأكيد المعاينة'**
-  String get confirmPreviewAction;
-
-  /// No description provided for @noAccountDeleted.
-  ///
-  /// In ar, this message translates to:
-  /// **'دي معاينة بس. لم يتم حذف أي حساب أو بيانات.'**
-  String get noAccountDeleted;
-
   /// No description provided for @policyDraftNotice.
   ///
   /// In ar, this message translates to:
-  /// **'مسودة تجريبية لعرض الواجهة، وليست سياسة نهائية أو شروط استخدام سارية. تُراجع وتُحدّث قبل تشغيل الخدمات الفعلية.'**
+  /// **'نص مبدئي وليس سياسة نهائية أو شروطًا قانونية. يُراجع قبل الإطلاق العام.'**
   String get policyDraftNotice;
 
   /// No description provided for @privacyDataTitle.
   ///
   /// In ar, this message translates to:
-  /// **'البيانات في النسخة الحالية'**
+  /// **'البيانات اللي بنحتفظ بيها'**
   String get privacyDataTitle;
 
   /// No description provided for @privacyDataBody.
   ///
   /// In ar, this message translates to:
-  /// **'الملف والطلبات المعروضة بيانات ثابتة للتجربة. تعديل الاسم أو التفضيلات يغيّر الواجهة مؤقتًا ولا يحفظ بيانات حساب على Firebase. تهيئة Firebase موجودة، لكن ميزات الحسابات والطلبات غير مفعّلة.'**
+  /// **'اسمك ورقم موبايلك وفصيلة دمك وموقعك وحالة إتاحتك والطلبات والتعهدات والمنشورات اللي بتعملها بتتخزن على سيرفر التطبيق. رقم التواصل في الطلب بيظهر بس للي بيتعهد بالتبرع. بيانات التبرع هي اللي سجلتها بنفسك.'**
   String get privacyDataBody;
 
   /// No description provided for @privacyContactTitle.
@@ -881,7 +587,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyContactBody.
   ///
   /// In ar, this message translates to:
-  /// **'عند تفعيل الخدمة، يلزم توضيح البيانات التي تُجمع وسبب جمعها ومن يطلع عليها، خصوصًا رقم الهاتف والموقع وفصيلة الدم. لا تستخدم أرقام أشخاص أو بيانات مرضى حقيقية في هذه المعاينة.'**
+  /// **'متكتبش بيانات مريض حقيقية في الطلب. استخدم بس اللي يلزم للتنسيق، زي المستشفى والفصيلة ورقم تواصل.'**
   String get privacyContactBody;
 
   /// No description provided for @privacyControlTitle.
@@ -893,7 +599,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyControlBody.
   ///
   /// In ar, this message translates to:
-  /// **'وسائل طلب الوصول للبيانات وتصحيحها وحذفها، وفترات الاحتفاظ بها، وبيانات مسؤول التواصل ستُحدد قبل الإطلاق. زر حذف الحساب الحالي للعرض فقط.'**
+  /// **'تقدر تعدّل بياناتك وتحذف حسابك من الملف الشخصي. الحذف بيشيل حسابك وطلباتك وتعهداتك من السيرفر.'**
   String get privacyControlBody;
 
   /// No description provided for @termsUseTitle.
@@ -905,7 +611,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsUseBody.
   ///
   /// In ar, this message translates to:
-  /// **'قطره دم مشروع يهدف لتسهيل التواصل حول احتياجات التبرع بالدم. النسخة الحالية تعرض التصميم فقط ولا تؤكد وجود طلبات حقيقية أو متبرعين أو حجوزات.'**
+  /// **'قطره دم بيساعد الناس تتواصل حول احتياجات التبرع بالدم. التطبيق مش بيتحقق من الطلبات ولا المتبرعين ولا التبرعات.'**
   String get termsUseBody;
 
   /// No description provided for @termsAccuracyTitle.
@@ -929,13 +635,13 @@ abstract class AppLocalizations {
   /// No description provided for @termsMedicalBody.
   ///
   /// In ar, this message translates to:
-  /// **'التطبيق ليس جهة طبية ولا بديلًا عن المستشفى. أي تبرع فعلي يُنسّق مع جهة طبية مختصة، وهي التي تقرر الأهلية والفحوص المطلوبة. في الطوارئ تواصل مباشرة مع جهة الرعاية المختصة ولا تعتمد على المعاينة.'**
+  /// **'التطبيق ليس جهة طبية. ولا بيحدد لو حد ينفع يتبرع ولا أي فصيلة مناسبة. الأهلية والفحوص بتقررها الجهة الطبية المختصة في المستشفى. في الطوارئ تواصل مع المستشفى أو الإسعاف مباشرة.'**
   String get termsMedicalBody;
 
   /// No description provided for @aboutBody.
   ///
   /// In ar, this message translates to:
-  /// **'قطره دم بيجمع فكرة طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا، مع دعم الإنجليزية. كل الطلبات والإحصائيات المعروضة حاليًا بيانات تجريبية، والخدمات الفعلية هتتضاف بعد اكتمال الواجهات.'**
+  /// **'قطره دم بيجمع طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا مع دعم الإنجليزية. التطبيق مش بيتحقق من التبرعات ولا بيدّي نصيحة طبية.'**
   String get aboutBody;
 
   /// No description provided for @helpRequestTitle.
@@ -947,7 +653,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpRequestBody.
   ///
   /// In ar, this message translates to:
-  /// **'اضغط علامة +، واختار الفصيلة وعدد الأكياس وتفاصيل المستشفى. زر معاينة الطلب يعرض البيانات قبل تأكيد تجريبي؛ لا يتم نشر أو حفظ الطلب حاليًا.'**
+  /// **'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.'**
   String get helpRequestBody;
 
   /// No description provided for @helpDonateTitle.
@@ -959,7 +665,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpDonateBody.
   ///
   /// In ar, this message translates to:
-  /// **'لا، الأزرار الحالية للعرض والتجربة فقط. مش بيتم تسجيل تعهّد أو إرسال إشعار لأي شخص.'**
+  /// **'اضغط \"هتبرع\" على الطلب علشان تتعهد. هيظهرلك رقم صاحب الطلب علشان تتصل وتتأكد. المستشفى هي اللي تقرر لو ينفع تتبرع. \"تبرعت\" هو تسجيل منك أنت بس.'**
   String get helpDonateBody;
 
   /// No description provided for @helpContactTitle.
@@ -977,7 +683,7 @@ abstract class AppLocalizations {
   /// No description provided for @createRequestSubtitle.
   ///
   /// In ar, this message translates to:
-  /// **'حدّد احتياجك وراجع شكل الطلب قبل المتابعة. دي معاينة للواجهة فقط.'**
+  /// **'حدّد احتياجك وراجع الطلب قبل النشر.'**
   String get createRequestSubtitle;
 
   /// No description provided for @requiredBloodType.
@@ -1085,7 +791,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactPreviewHint.
   ///
   /// In ar, this message translates to:
-  /// **'رقم للعرض في المعاينة فقط، مش هيتم حفظه أو مشاركته.'**
+  /// **'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده.'**
   String get contactPreviewHint;
 
   /// No description provided for @requestNotesLabel.
@@ -1109,7 +815,7 @@ abstract class AppLocalizations {
   /// No description provided for @requestPreviewNotice.
   ///
   /// In ar, this message translates to:
-  /// **'معاينة تجريبية بدون نشر أو إرسال إشعارات. الخانات الفاضية مسموحة حاليًا.'**
+  /// **'راجع البيانات. نشر الطلب بيخليه ظاهر لباقي المستخدمين.'**
   String get requestPreviewNotice;
 
   /// No description provided for @previewNotSpecified.
@@ -1121,7 +827,7 @@ abstract class AppLocalizations {
   /// No description provided for @confirmRequestPreview.
   ///
   /// In ar, this message translates to:
-  /// **'تأكيد المعاينة'**
+  /// **'نشر الطلب'**
   String get confirmRequestPreview;
 
   /// No description provided for @editRequestPreview.
@@ -1133,13 +839,13 @@ abstract class AppLocalizations {
   /// No description provided for @requestPreviewDone.
   ///
   /// In ar, this message translates to:
-  /// **'معاينة الطلب جاهزة'**
+  /// **'تم نشر الطلب'**
   String get requestPreviewDone;
 
   /// No description provided for @requestNotPublished.
   ///
   /// In ar, this message translates to:
-  /// **'دي تجربة لشكل إنشاء الطلب بس. لم يتم نشر أو حفظ الطلب، وطلباتي هتفضل تعرض البيانات التجريبية.'**
+  /// **'طلبك بقى ظاهر. المتبرعين اللي بيتعهدوا هيشوفوا رقم تواصلك. تقدر تديره من طلباتي.'**
   String get requestNotPublished;
 
   /// No description provided for @viewMyRequests.
@@ -1153,6 +859,372 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الرجوع للرئيسية'**
   String get backToHome;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحقل ده مطلوب'**
+  String get fieldRequired;
+
+  /// No description provided for @errInvalidPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب رقم موبايل مصري صحيح، مثلًا 010 1234 5678.'**
+  String get errInvalidPhone;
+
+  /// No description provided for @errWeakPassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة المرور لازم تكون 8 حروف أو أرقام على الأقل.'**
+  String get errWeakPassword;
+
+  /// No description provided for @errPhoneTaken.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الموبايل ده مسجل قبل كده. جرّب تسجّل دخول.'**
+  String get errPhoneTaken;
+
+  /// No description provided for @errWrongCredentials.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الموبايل أو كلمة المرور غلط.'**
+  String get errWrongCredentials;
+
+  /// No description provided for @errInvalidCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكود غلط أو انتهت صلاحيته.'**
+  String get errInvalidCode;
+
+  /// No description provided for @errNeedGovernorate.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّد المحافظة الأول وبعدين جرّب تاني.'**
+  String get errNeedGovernorate;
+
+  /// No description provided for @errTooMany.
+  ///
+  /// In ar, this message translates to:
+  /// **'محاولات كتير. استنى كام دقيقة وجرّب تاني.'**
+  String get errTooMany;
+
+  /// No description provided for @errNetwork.
+  ///
+  /// In ar, this message translates to:
+  /// **'مش قادر أوصل للسيرفر. اتأكد من الإنترنت وجرّب تاني.'**
+  String get errNetwork;
+
+  /// No description provided for @errServer.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصلت مشكلة في السيرفر. جرّب بعد شوية.'**
+  String get errServer;
+
+  /// No description provided for @errNotFound.
+  ///
+  /// In ar, this message translates to:
+  /// **'العنصر ده لم يعد موجودًا.'**
+  String get errNotFound;
+
+  /// No description provided for @errPermission.
+  ///
+  /// In ar, this message translates to:
+  /// **'مش مسموح لك بالإجراء ده.'**
+  String get errPermission;
+
+  /// No description provided for @errUnauthorized.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت الجلسة. سجّل دخول تاني.'**
+  String get errUnauthorized;
+
+  /// No description provided for @errGeneric.
+  ///
+  /// In ar, this message translates to:
+  /// **'ماقدرناش نكمل. راجع البيانات وجرّب تاني.'**
+  String get errGeneric;
+
+  /// No description provided for @chooseLocation.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار المحافظة والمركز.'**
+  String get chooseLocation;
+
+  /// No description provided for @resetCodeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود الاستعادة'**
+  String get resetCodeLabel;
+
+  /// No description provided for @resetCodeHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب الكود اللي وصلك واختار كلمة مرور جديدة.'**
+  String get resetCodeHint;
+
+  /// No description provided for @newPasswordLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة المرور الجديدة'**
+  String get newPasswordLabel;
+
+  /// No description provided for @resetDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تغيير كلمة المرور. سجّل دخول بالجديدة.'**
+  String get resetDone;
+
+  /// No description provided for @resetPasswordAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير كلمة المرور'**
+  String get resetPasswordAction;
+
+  /// No description provided for @createAccountAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء الحساب'**
+  String get createAccountAction;
+
+  /// No description provided for @loading.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري التحميل...'**
+  String get loading;
+
+  /// No description provided for @closestRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'أقرب طلب'**
+  String get closestRequest;
+
+  /// No description provided for @markedAvailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاليًا حاطط نفسك متاح للتبرع'**
+  String get markedAvailable;
+
+  /// No description provided for @markedUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاليًا حاطط نفسك غير متاح'**
+  String get markedUnavailable;
+
+  /// No description provided for @noDonationsRecorded.
+  ///
+  /// In ar, this message translates to:
+  /// **'لسه مفيش تبرعات مسجلة'**
+  String get noDonationsRecorded;
+
+  /// No description provided for @selfReportedCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{تبرع واحد} =2{تبرعان} few{{count} تبرعات} other{{count} تبرعًا}} · من تسجيلك'**
+  String selfReportedCount(int count);
+
+  /// No description provided for @selfReportedLast.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر تبرع {date} · {count, plural, =1{تبرع واحد} =2{تبرعان} few{{count} تبرعات} other{{count} تبرعًا}} · من تسجيلك'**
+  String selfReportedLast(String date, int count);
+
+  /// No description provided for @bagsNeeded.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{مطلوب كيس دم واحد} =2{مطلوب كيسا دم} few{مطلوب {count} أكياس دم} other{مطلوب {count} كيس دم}}'**
+  String bagsNeeded(int count);
+
+  /// No description provided for @collectedOf.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتجمّع {collected} من {needed}'**
+  String collectedOf(int collected, int needed);
+
+  /// No description provided for @onTheWayCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =0{لسه مفيش حد في الطريق} =1{واحد في الطريق} =2{اتنين في الطريق} few{{count} في الطريق} other{{count} في الطريق}}'**
+  String onTheWayCount(int count);
+
+  /// No description provided for @viewPledge.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعهّدي'**
+  String get viewPledge;
+
+  /// No description provided for @chooseLocationChip.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار الموقع'**
+  String get chooseLocationChip;
+
+  /// No description provided for @noNotificationsYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش إشعارات لسه.'**
+  String get noNotificationsYet;
+
+  /// No description provided for @noRequestsYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش طلبات للعرض.'**
+  String get noRequestsYet;
+
+  /// No description provided for @pledgeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكرًا على تعهّدك'**
+  String get pledgeTitle;
+
+  /// No description provided for @phoneCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نسخ الرقم'**
+  String get phoneCopied;
+
+  /// No description provided for @pledgeNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتصل بصاحب الطلب علشان تتأكد من المستشفى والميعاد. المستشفى هي اللي تقرر لو ينفع تتبرع. اضغط \"تبرعت\" بعد ما تتبرع فعلًا: ده تسجيل منك أنت ومحدش بيتحقق منه.'**
+  String get pledgeNote;
+
+  /// No description provided for @iDonated.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبرعت (تسجيل مني)'**
+  String get iDonated;
+
+  /// No description provided for @cancelPledge.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء تعهّدي'**
+  String get cancelPledge;
+
+  /// No description provided for @shareTextBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'مطلوب دم: {bags, plural, =1{كيس واحد} =2{كيسان} few{{bags} أكياس} other{{bags} كيس}} فصيلة {type} في {hospital}، {place}. افتح تطبيق قطره دم للمساعدة.'**
+  String shareTextBody(int bags, String type, String hospital, String place);
+
+  /// No description provided for @deadlinePassed.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهى الموعد'**
+  String get deadlinePassed;
+
+  /// No description provided for @daysLeft.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{باقي يوم} =2{باقي يومان} few{باقي {count} أيام} other{باقي {count} يومًا}}'**
+  String daysLeft(int count);
+
+  /// No description provided for @hoursLeft.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{باقي ساعة} =2{باقي ساعتان} few{باقي {count} ساعات} other{باقي {count} ساعة}}'**
+  String hoursLeft(int count);
+
+  /// No description provided for @minutesLeft.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{باقي دقيقة} =2{باقي دقيقتان} few{باقي {count} دقائق} other{باقي {count} دقيقة}}'**
+  String minutesLeft(int count);
+
+  /// No description provided for @requestMissingFields.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب المستشفى والمركز ورقم تواصل الأول.'**
+  String get requestMissingFields;
+
+  /// No description provided for @requestNeedsDeadline.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار تاريخ ووقت للطلب المجدول.'**
+  String get requestNeedsDeadline;
+
+  /// No description provided for @myRequestsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطلبات اللي نشرتها'**
+  String get myRequestsSubtitle;
+
+  /// No description provided for @markFulfilled.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تغطية الطلب'**
+  String get markFulfilled;
+
+  /// No description provided for @cancelRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الطلب'**
+  String get cancelRequest;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ التعديلات'**
+  String get saveChanges;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الحفظ'**
+  String get profileSaved;
+
+  /// No description provided for @accountSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابك وبيانات التبرع'**
+  String get accountSubtitle;
+
+  /// No description provided for @memberSince.
+  ///
+  /// In ar, this message translates to:
+  /// **'عضو منذ {date}'**
+  String memberSince(String date);
+
+  /// No description provided for @notSet.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير محدد'**
+  String get notSet;
+
+  /// No description provided for @selfReportedTag.
+  ///
+  /// In ar, this message translates to:
+  /// **'من تسجيلك'**
+  String get selfReportedTag;
+
+  /// No description provided for @selfReportedNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'التسجيلات دي منك أنت. مش متحقق منها ولا بتوضح لو ينفع تتبرع.'**
+  String get selfReportedNote;
+
+  /// No description provided for @availabilityHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'بيظهر لأصحاب الطلبات إنك متاح. مش فحص طبي.'**
+  String get availabilityHint;
+
+  /// No description provided for @notificationsHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفضيلك. الإشعارات على الموبايل لسه مش متفعلة.'**
+  String get notificationsHint;
+
+  /// No description provided for @deleteAccountBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'ده هيحذف حسابك وطلباتك وتعهداتك نهائيًا ومش هينفع تتراجع.'**
+  String get deleteAccountBody;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف نهائي'**
+  String get deleteAccountConfirm;
 }
 
 class _AppLocalizationsDelegate

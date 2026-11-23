@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../../core/constants/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_icon.dart';
+import '../../../../core/utils/request_text.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../blood_request/domain/entities/blood_request.dart';
+import '../../domain/entities/home_data.dart';
 
 class FeedCard extends StatelessWidget {
   const FeedCard({
@@ -28,10 +32,27 @@ class FeedCard extends StatelessWidget {
 }
 
 class DonationReadinessCard extends StatelessWidget {
-  const DonationReadinessCard({super.key});
+  const DonationReadinessCard({
+    super.key,
+    required this.readiness,
+    required this.bloodType,
+  });
+  final Readiness readiness;
+  final String bloodType;
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+    final last = readiness.lastDonationAt;
+    final history = readiness.donationsCount == 0 && last == null
+        ? t.noDonationsRecorded
+        : last == null
+        ? t.selfReportedCount(readiness.donationsCount)
+        : t.selfReportedLast(
+            DateFormat.yMMMd(locale).format(last.toLocal()),
+            readiness.donationsCount,
+          );
     return FeedCard(
       padding: const EdgeInsets.all(12),
       child: Row(
@@ -44,10 +65,10 @@ class DonationReadinessCard extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.ink, width: 1.7),
             ),
-            child: const Text(
-              'O-',
+            child: Text(
+              bloodType,
               textDirection: TextDirection.ltr,
-              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+              style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
             ),
           ),
           const SizedBox(width: 12),
@@ -56,20 +77,23 @@ class DonationReadinessCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  t.readyToDonate,
+                  readiness.isAvailable
+                      ? t.markedAvailable
+                      : t.markedUnavailable,
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
                 Text(
-                  t.donationHistoryDemo,
+                  history,
                   style: const TextStyle(fontSize: 11, color: AppColors.muted),
                 ),
               ],
             ),
           ),
-          const AppIcon(AppIcons.check, color: AppColors.ink, size: 22),
+          if (readiness.isAvailable)
+            const AppIcon(AppIcons.check, color: AppColors.ink, size: 22),
         ],
       ),
     );
@@ -79,14 +103,21 @@ class DonationReadinessCard extends StatelessWidget {
 class UrgentRequestCard extends StatelessWidget {
   const UrgentRequestCard({
     super.key,
+    required this.request,
     required this.onDonate,
     required this.onShare,
   });
+  final BloodRequest request;
   final VoidCallback onDonate, onShare;
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
+    final lang = Localizations.localeOf(context).languageCode;
     const muted = Color(0xFFC8BFBD);
+    final pledged = request.myPledge == PledgeStatus.onTheWay;
+    final total = request.bagsNeeded.clamp(1, 12);
+    final done = request.bagsCollected.clamp(0, total);
     return FeedCard(
       dark: true,
       child: Column(
@@ -105,7 +136,7 @@ class UrgentRequestCard extends StatelessWidget {
               const SizedBox(width: 7),
               Expanded(
                 child: Text(
-                  t.closestUrgentRequest,
+                  '${urgencyLabel(t, request.urgency)} · ${t.closestRequest}',
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w800,
@@ -113,31 +144,35 @@ class UrgentRequestCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFF504747)),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  t.threeHoursLeft,
-                  style: const TextStyle(
-                    color: muted,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
+              if (request.deadline != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 9,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: const Color(0xFF504747)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    timeLeftLabel(t, request.deadline!, DateTime.now()),
+                    style: const TextStyle(
+                      color: muted,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
           const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'O-',
+              Text(
+                request.bloodType,
                 textDirection: TextDirection.ltr,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.redOnDark,
                   fontWeight: FontWeight.w900,
                   fontSize: 48,
@@ -150,7 +185,7 @@ class UrgentRequestCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      t.threeBagsNeeded,
+                      t.bagsNeeded(request.bagsNeeded),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 17,
@@ -169,17 +204,19 @@ class UrgentRequestCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            t.mansouraHospitalDistance,
+                            placeLine(request, lang),
                             style: const TextStyle(color: muted, fontSize: 12),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      t.hospitalVerified,
-                      style: const TextStyle(color: muted, fontSize: 12),
-                    ),
+                    if (request.isVerified) ...[
+                      const SizedBox(height: 5),
+                      Text(
+                        t.hospitalVerified,
+                        style: const TextStyle(color: muted, fontSize: 12),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -188,13 +225,15 @@ class UrgentRequestCard extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              for (var index = 0; index < 3; index++)
+              for (var index = 0; index < total; index++)
                 Expanded(
                   child: Container(
                     height: 6,
-                    margin: EdgeInsetsDirectional.only(end: index == 2 ? 0 : 6),
+                    margin: EdgeInsetsDirectional.only(
+                      end: index == total - 1 ? 0 : 6,
+                    ),
                     decoration: BoxDecoration(
-                      color: index == 0
+                      color: index < done
                           ? AppColors.redOnDark
                           : const Color(0xFF403636),
                       borderRadius: BorderRadius.circular(10),
@@ -208,11 +247,11 @@ class UrgentRequestCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                t.oneOfThreeCollected,
+                t.collectedOf(request.bagsCollected, request.bagsNeeded),
                 style: const TextStyle(color: muted, fontSize: 12),
               ),
               Text(
-                t.twoOnTheWay,
+                t.onTheWayCount(request.onTheWayCount),
                 style: const TextStyle(color: muted, fontSize: 12),
               ),
             ],
@@ -224,7 +263,7 @@ class UrgentRequestCard extends StatelessWidget {
                 child: SizedBox(
                   height: 44,
                   child: ElevatedButton(
-                    onPressed: onDonate,
+                    onPressed: request.isMine ? null : onDonate,
                     style: ElevatedButton.styleFrom(elevation: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -235,11 +274,13 @@ class UrgentRequestCard extends StatelessWidget {
                           size: 20,
                         ),
                         const SizedBox(width: 9),
-                        Text(
-                          t.iWillDonate,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w900,
+                        Flexible(
+                          child: Text(
+                            pledged ? t.viewPledge : t.iWillDonate,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
                         ),
                       ],
@@ -275,18 +316,19 @@ class UrgentRequestCard extends StatelessWidget {
 class CompactRequestCard extends StatelessWidget {
   const CompactRequestCard({
     super.key,
-    required this.bloodType,
-    required this.title,
-    required this.subtitle,
+    required this.request,
     required this.onDonate,
-    this.urgent = false,
   });
-  final String bloodType, title, subtitle;
-  final bool urgent;
+  final BloodRequest request;
   final VoidCallback onDonate;
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
+    final lang = Localizations.localeOf(context).languageCode;
+    final urgent = request.urgency == Urgency.critical;
+    final pledged = request.myPledge == PledgeStatus.onTheWay;
+    final label = pledged ? t.viewPledge : t.donateAction;
     return FeedCard(
       padding: const EdgeInsets.all(12),
       child: Row(
@@ -300,7 +342,7 @@ class CompactRequestCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
-              bloodType,
+              request.bloodType,
               textDirection: TextDirection.ltr,
               style: TextStyle(
                 color: urgent ? Colors.white : AppColors.ink,
@@ -315,23 +357,25 @@ class CompactRequestCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  t.bagsNeeded(request.bagsNeeded),
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
                 Text(
-                  subtitle,
+                  '${request.hospitalName} · ${placeLine(request, lang)}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 12, color: AppColors.muted),
                 ),
-                if (urgent)
+                if (request.urgency != Urgency.scheduled)
                   Text(
-                    '● ${t.urgentLabel}',
-                    style: const TextStyle(
+                    '● ${urgencyLabel(t, request.urgency)}',
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w800,
-                      color: AppColors.red,
+                      color: urgent ? AppColors.red : AppColors.ink,
                     ),
                   ),
               ],
@@ -339,29 +383,28 @@ class CompactRequestCard extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           SizedBox(
-            width: 60,
             height: 44,
             child: urgent
                 ? ElevatedButton(
-                    onPressed: onDonate,
+                    onPressed: request.isMine ? null : onDonate,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.ink,
-                      padding: EdgeInsets.zero,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                     ),
                     child: Text(
-                      t.donateAction,
+                      label,
                       style: const TextStyle(fontWeight: FontWeight.w900),
                     ),
                   )
                 : OutlinedButton(
-                    onPressed: onDonate,
+                    onPressed: request.isMine ? null : onDonate,
                     style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.zero,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       foregroundColor: AppColors.ink,
                       side: const BorderSide(color: AppColors.ink),
                     ),
                     child: Text(
-                      t.donateAction,
+                      label,
                       style: const TextStyle(fontWeight: FontWeight.w900),
                     ),
                   ),
@@ -373,10 +416,12 @@ class CompactRequestCard extends StatelessWidget {
 }
 
 class CommunityPostCard extends StatelessWidget {
-  const CommunityPostCard({super.key});
+  const CommunityPostCard({super.key, required this.post});
+  final CommunityPost post;
+
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
     return FeedCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -398,14 +443,16 @@ class CommunityPostCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      t.demoDonorName,
+                      post.authorName,
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     Text(
-                      t.twoHoursAgo,
+                      DateFormat.yMMMd(locale)
+                          .add_jm()
+                          .format(post.createdAt.toLocal()),
                       style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.muted,
@@ -417,10 +464,7 @@ class CommunityPostCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Text(
-            t.demoDonationPost,
-            style: const TextStyle(fontSize: 13, height: 1.6),
-          ),
+          Text(post.text, style: const TextStyle(fontSize: 13, height: 1.6)),
         ],
       ),
     );

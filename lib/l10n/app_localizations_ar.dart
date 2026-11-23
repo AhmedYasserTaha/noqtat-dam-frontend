@@ -16,25 +16,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home => 'الرئيسية';
 
   @override
-  String get phoneLogin => 'تسجيل الدخول';
-
-  @override
   String get completeProfile => 'إكمال الملف الشخصي';
 
   @override
   String get profile => 'الملف الشخصي';
 
   @override
-  String get bloodRequest => 'طلب تبرع بالدم';
-
-  @override
   String get placeholder => 'قريباً';
 
   @override
   String get retry => 'إعادة المحاولة';
-
-  @override
-  String get empty => 'لا توجد بيانات';
 
   @override
   String get authBrand => 'قطره دم';
@@ -73,9 +64,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get haveAccount => 'عندك حساب؟';
 
   @override
-  String get stepOneOfTwo => 'الخطوة 1 من 2';
-
-  @override
   String get registerSubtitle =>
       'بياناتك بتساعدنا نوصّلك بالطلبات المناسبة ليك.';
 
@@ -89,16 +77,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get yourBloodType => 'فصيلة دمك';
 
   @override
-  String get chooseBloodType => 'اختار فصيلة دمك';
+  String get chooseBloodType => 'اختار فصيلة دمك.';
 
   @override
   String get governorateLabel => 'المحافظة';
-
-  @override
-  String get governorateHint => 'اكتب محافظتك';
-
-  @override
-  String get continueAction => 'كمّل';
 
   @override
   String get recoverySubtitle =>
@@ -111,13 +93,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get rememberPassword => 'افتكرت كلمة السر؟';
 
   @override
-  String get requiredField => 'من فضلك كمّل البيانات';
-
-  @override
   String get invalidPhone => 'اكتب رقم موبايل مصري صحيح';
-
-  @override
-  String get passwordTooShort => 'كلمة السر لازم تكون 8 حروف على الأقل';
 
   @override
   String get showPassword => 'إظهار كلمة السر';
@@ -153,9 +129,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get closeLocations => 'إغلاق';
 
   @override
-  String get mapTab => 'الخريطة';
-
-  @override
   String get myRequestsTab => 'طلباتي';
 
   @override
@@ -165,31 +138,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get createRequestAction => 'إنشاء طلب دم';
 
   @override
-  String get readyToDonate => 'جاهز تتبرع تاني';
-
-  @override
-  String get donationHistoryDemo => 'آخر تبرع من 4 شهور · 3 تبرعات سابقة';
-
-  @override
-  String get closestUrgentRequest => 'عاجل جدًا · أقرب طلب ليك';
-
-  @override
-  String get threeHoursLeft => 'باقي 3 ساعات';
-
-  @override
-  String get threeBagsNeeded => '3 أكياس دم مطلوبة';
-
-  @override
-  String get mansouraHospitalDistance => 'مستشفى المنصورة الجامعي · 2.4 كم';
-
-  @override
   String get hospitalVerified => 'موثّق من المستشفى';
-
-  @override
-  String get oneOfThreeCollected => 'اتجمع 1 من 3';
-
-  @override
-  String get twoOnTheWay => '2 في الطريق';
 
   @override
   String get iWillDonate => 'أنا هتبرع';
@@ -204,16 +153,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get donateAction => 'تبرّع';
 
   @override
-  String get demoDonorName => 'محمد أحمد';
-
-  @override
-  String get twoHoursAgo => 'من ساعتين';
-
-  @override
-  String get demoDonationPost =>
-      'النهاردة تبرعت بالدم لأول مرة، والإحساس مش بيتوصف. لو بتفكر تتبرع متترددش!';
-
-  @override
   String get filterAll => 'الكل';
 
   @override
@@ -223,43 +162,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get filterNearby => 'قريب مني';
 
   @override
-  String get mansouraCity => 'المنصورة';
-
-  @override
-  String get demoFeedLabel => 'معاينة التصميم · بيانات تجريبية';
-
-  @override
   String get notificationsTitle => 'الإشعارات';
 
   @override
-  String get noDemoNotifications => 'مفيش إشعارات في المعاينة دي.';
-
-  @override
-  String get demoDonationNotice =>
-      'ده طلب تجريبي لعرض التصميم. مش هيتم تسجيل تعهّد بالتبرع.';
-
-  @override
-  String get demoShareText =>
-      'طلب تجريبي: 3 أكياس O- في مستشفى المنصورة الجامعي. للمعاينة فقط، مش طلب تبرع حقيقي.';
-
-  @override
-  String get requestCopied => 'تم نسخ نص الطلب التجريبي';
-
-  @override
-  String get twoBagsTitle => 'كيسين دم';
-
-  @override
-  String get talkhaHospitalDistance => 'مستشفى طلخا العام · 11 كم';
-
-  @override
-  String get plateletsTitle => 'كيس صفائح دموية';
-
-  @override
-  String get salamHospitalDistance => 'مستشفى السلام · 5 كم';
-
-  @override
-  String get matchingFeaturedRequest =>
-      'الطلب المميز فوق مطابق لفصيلتك التجريبية O-';
+  String get requestCopied => 'تم نسخ نص الطلب';
 
   @override
   String get staticAccountPreview => 'بيانات تجريبية · للعرض فقط';
@@ -274,15 +180,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get requestCancelled => 'ملغية';
 
   @override
-  String get demoUniversityHospital => 'مستشفى المنصورة الجامعي';
-
-  @override
-  String get demoTalkhaHospital => 'مستشفى طلخا العام';
-
-  @override
-  String get demoSalamHospital => 'مستشفى السلام';
-
-  @override
   String get requestDateLabel => 'تاريخ الطلب:';
 
   @override
@@ -292,47 +189,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get requestDetails => 'تفاصيل الطلب';
 
   @override
-  String get demoRequestNotes =>
-      'طلب تجريبي لعرض احتياج المستشفى لفصيلة الدم. بيانات المكان والتبرعات ليست طلبًا حقيقيًا.';
-
-  @override
   String get editProfileTitle => 'تعديل الملف الشخصي';
 
   @override
-  String get localEditNotice => 'تغيير تجريبي في الواجهة فقط';
-
-  @override
-  String get savePreview => 'حفظ للمعاينة';
-
-  @override
-  String get demoMemberSince => 'متبرع من يناير 2026';
-
-  @override
-  String get donationsStat => 'تبرعات سابقة';
-
-  @override
-  String get requestsStat => 'طلبات نشطة';
-
-  @override
-  String get monthsSinceStat => 'شهور من آخر تبرع';
-
-  @override
   String get personalInfoTitle => 'البيانات الشخصية';
-
-  @override
-  String get emailLabel => 'البريد الإلكتروني';
-
-  @override
-  String get demoGovernorate => 'الدقهلية';
-
-  @override
-  String get birthDateLabel => 'تاريخ الميلاد';
-
-  @override
-  String get genderLabel => 'النوع';
-
-  @override
-  String get maleLabel => 'ذكر';
 
   @override
   String get donationInfoTitle => 'بيانات التبرع';
@@ -345,10 +205,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get donationHistoryTitle => 'سجل التبرعات';
-
-  @override
-  String get demoDonationHistory =>
-      '23/07/2026 · مستشفى المنصورة الجامعي\n12/03/2026 · مستشفى طلخا العام\n08/01/2026 · مستشفى السلام\n\nسجل تجريبي، لا يثبت أهلية التبرع.';
 
   @override
   String get settingsTitle => 'الإعدادات';
@@ -385,49 +241,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deleteAccountTitle => 'حذف الحساب';
 
   @override
-  String get deletePreviewBody =>
-      'ده تأكيد تجريبي لشكل حذف الحساب. مفيش حساب حقيقي هيتحذف أو بيانات هتتمسح.';
-
-  @override
   String get keepAccountAction => 'الاحتفاظ بالحساب';
 
   @override
-  String get confirmPreviewAction => 'تأكيد المعاينة';
-
-  @override
-  String get noAccountDeleted => 'دي معاينة بس. لم يتم حذف أي حساب أو بيانات.';
-
-  @override
   String get policyDraftNotice =>
-      'مسودة تجريبية لعرض الواجهة، وليست سياسة نهائية أو شروط استخدام سارية. تُراجع وتُحدّث قبل تشغيل الخدمات الفعلية.';
+      'نص مبدئي وليس سياسة نهائية أو شروطًا قانونية. يُراجع قبل الإطلاق العام.';
 
   @override
-  String get privacyDataTitle => 'البيانات في النسخة الحالية';
+  String get privacyDataTitle => 'البيانات اللي بنحتفظ بيها';
 
   @override
   String get privacyDataBody =>
-      'الملف والطلبات المعروضة بيانات ثابتة للتجربة. تعديل الاسم أو التفضيلات يغيّر الواجهة مؤقتًا ولا يحفظ بيانات حساب على Firebase. تهيئة Firebase موجودة، لكن ميزات الحسابات والطلبات غير مفعّلة.';
+      'اسمك ورقم موبايلك وفصيلة دمك وموقعك وحالة إتاحتك والطلبات والتعهدات والمنشورات اللي بتعملها بتتخزن على سيرفر التطبيق. رقم التواصل في الطلب بيظهر بس للي بيتعهد بالتبرع. بيانات التبرع هي اللي سجلتها بنفسك.';
 
   @override
   String get privacyContactTitle => 'بيانات التواصل والموقع';
 
   @override
   String get privacyContactBody =>
-      'عند تفعيل الخدمة، يلزم توضيح البيانات التي تُجمع وسبب جمعها ومن يطلع عليها، خصوصًا رقم الهاتف والموقع وفصيلة الدم. لا تستخدم أرقام أشخاص أو بيانات مرضى حقيقية في هذه المعاينة.';
+      'متكتبش بيانات مريض حقيقية في الطلب. استخدم بس اللي يلزم للتنسيق، زي المستشفى والفصيلة ورقم تواصل.';
 
   @override
   String get privacyControlTitle => 'حقوق المستخدم والتواصل';
 
   @override
   String get privacyControlBody =>
-      'وسائل طلب الوصول للبيانات وتصحيحها وحذفها، وفترات الاحتفاظ بها، وبيانات مسؤول التواصل ستُحدد قبل الإطلاق. زر حذف الحساب الحالي للعرض فقط.';
+      'تقدر تعدّل بياناتك وتحذف حسابك من الملف الشخصي. الحذف بيشيل حسابك وطلباتك وتعهداتك من السيرفر.';
 
   @override
   String get termsUseTitle => 'الغرض من التطبيق';
 
   @override
   String get termsUseBody =>
-      'قطره دم مشروع يهدف لتسهيل التواصل حول احتياجات التبرع بالدم. النسخة الحالية تعرض التصميم فقط ولا تؤكد وجود طلبات حقيقية أو متبرعين أو حجوزات.';
+      'قطره دم بيساعد الناس تتواصل حول احتياجات التبرع بالدم. التطبيق مش بيتحقق من الطلبات ولا المتبرعين ولا التبرعات.';
 
   @override
   String get termsAccuracyTitle => 'المحتوى والاستخدام المسؤول';
@@ -441,25 +287,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get termsMedicalBody =>
-      'التطبيق ليس جهة طبية ولا بديلًا عن المستشفى. أي تبرع فعلي يُنسّق مع جهة طبية مختصة، وهي التي تقرر الأهلية والفحوص المطلوبة. في الطوارئ تواصل مباشرة مع جهة الرعاية المختصة ولا تعتمد على المعاينة.';
+      'التطبيق ليس جهة طبية. ولا بيحدد لو حد ينفع يتبرع ولا أي فصيلة مناسبة. الأهلية والفحوص بتقررها الجهة الطبية المختصة في المستشفى. في الطوارئ تواصل مع المستشفى أو الإسعاف مباشرة.';
 
   @override
   String get aboutBody =>
-      'قطره دم بيجمع فكرة طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا، مع دعم الإنجليزية. كل الطلبات والإحصائيات المعروضة حاليًا بيانات تجريبية، والخدمات الفعلية هتتضاف بعد اكتمال الواجهات.';
+      'قطره دم بيجمع طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا مع دعم الإنجليزية. التطبيق مش بيتحقق من التبرعات ولا بيدّي نصيحة طبية.';
 
   @override
   String get helpRequestTitle => 'إزاي أعمل طلب؟';
 
   @override
   String get helpRequestBody =>
-      'اضغط علامة +، واختار الفصيلة وعدد الأكياس وتفاصيل المستشفى. زر معاينة الطلب يعرض البيانات قبل تأكيد تجريبي؛ لا يتم نشر أو حفظ الطلب حاليًا.';
+      'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.';
 
   @override
   String get helpDonateTitle => 'هل زر التبرع بيحجز تبرع؟';
 
   @override
   String get helpDonateBody =>
-      'لا، الأزرار الحالية للعرض والتجربة فقط. مش بيتم تسجيل تعهّد أو إرسال إشعار لأي شخص.';
+      'اضغط \"هتبرع\" على الطلب علشان تتعهد. هيظهرلك رقم صاحب الطلب علشان تتصل وتتأكد. المستشفى هي اللي تقرر لو ينفع تتبرع. \"تبرعت\" هو تسجيل منك أنت بس.';
 
   @override
   String get helpContactTitle => 'التواصل مع الدعم';
@@ -469,8 +315,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.';
 
   @override
-  String get createRequestSubtitle =>
-      'حدّد احتياجك وراجع شكل الطلب قبل المتابعة. دي معاينة للواجهة فقط.';
+  String get createRequestSubtitle => 'حدّد احتياجك وراجع الطلب قبل النشر.';
 
   @override
   String get requiredBloodType => 'فصيلة الدم المطلوبة';
@@ -525,7 +370,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get contactPreviewHint =>
-      'رقم للعرض في المعاينة فقط، مش هيتم حفظه أو مشاركته.';
+      'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده.';
 
   @override
   String get requestNotesLabel => 'ملاحظات إضافية';
@@ -538,27 +383,302 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get requestPreviewNotice =>
-      'معاينة تجريبية بدون نشر أو إرسال إشعارات. الخانات الفاضية مسموحة حاليًا.';
+      'راجع البيانات. نشر الطلب بيخليه ظاهر لباقي المستخدمين.';
 
   @override
   String get previewNotSpecified => 'لم يتم التحديد';
 
   @override
-  String get confirmRequestPreview => 'تأكيد المعاينة';
+  String get confirmRequestPreview => 'نشر الطلب';
 
   @override
   String get editRequestPreview => 'تعديل البيانات';
 
   @override
-  String get requestPreviewDone => 'معاينة الطلب جاهزة';
+  String get requestPreviewDone => 'تم نشر الطلب';
 
   @override
   String get requestNotPublished =>
-      'دي تجربة لشكل إنشاء الطلب بس. لم يتم نشر أو حفظ الطلب، وطلباتي هتفضل تعرض البيانات التجريبية.';
+      'طلبك بقى ظاهر. المتبرعين اللي بيتعهدوا هيشوفوا رقم تواصلك. تقدر تديره من طلباتي.';
 
   @override
   String get viewMyRequests => 'عرض طلباتي';
 
   @override
   String get backToHome => 'الرجوع للرئيسية';
+
+  @override
+  String get fieldRequired => 'الحقل ده مطلوب';
+
+  @override
+  String get errInvalidPhone =>
+      'اكتب رقم موبايل مصري صحيح، مثلًا 010 1234 5678.';
+
+  @override
+  String get errWeakPassword =>
+      'كلمة المرور لازم تكون 8 حروف أو أرقام على الأقل.';
+
+  @override
+  String get errPhoneTaken => 'رقم الموبايل ده مسجل قبل كده. جرّب تسجّل دخول.';
+
+  @override
+  String get errWrongCredentials => 'رقم الموبايل أو كلمة المرور غلط.';
+
+  @override
+  String get errInvalidCode => 'الكود غلط أو انتهت صلاحيته.';
+
+  @override
+  String get errNeedGovernorate => 'حدّد المحافظة الأول وبعدين جرّب تاني.';
+
+  @override
+  String get errTooMany => 'محاولات كتير. استنى كام دقيقة وجرّب تاني.';
+
+  @override
+  String get errNetwork =>
+      'مش قادر أوصل للسيرفر. اتأكد من الإنترنت وجرّب تاني.';
+
+  @override
+  String get errServer => 'حصلت مشكلة في السيرفر. جرّب بعد شوية.';
+
+  @override
+  String get errNotFound => 'العنصر ده لم يعد موجودًا.';
+
+  @override
+  String get errPermission => 'مش مسموح لك بالإجراء ده.';
+
+  @override
+  String get errUnauthorized => 'انتهت الجلسة. سجّل دخول تاني.';
+
+  @override
+  String get errGeneric => 'ماقدرناش نكمل. راجع البيانات وجرّب تاني.';
+
+  @override
+  String get chooseLocation => 'اختار المحافظة والمركز.';
+
+  @override
+  String get resetCodeLabel => 'كود الاستعادة';
+
+  @override
+  String get resetCodeHint => 'اكتب الكود اللي وصلك واختار كلمة مرور جديدة.';
+
+  @override
+  String get newPasswordLabel => 'كلمة المرور الجديدة';
+
+  @override
+  String get resetDone => 'تم تغيير كلمة المرور. سجّل دخول بالجديدة.';
+
+  @override
+  String get resetPasswordAction => 'تغيير كلمة المرور';
+
+  @override
+  String get createAccountAction => 'إنشاء الحساب';
+
+  @override
+  String get loading => 'جاري التحميل...';
+
+  @override
+  String get closestRequest => 'أقرب طلب';
+
+  @override
+  String get markedAvailable => 'حاليًا حاطط نفسك متاح للتبرع';
+
+  @override
+  String get markedUnavailable => 'حاليًا حاطط نفسك غير متاح';
+
+  @override
+  String get noDonationsRecorded => 'لسه مفيش تبرعات مسجلة';
+
+  @override
+  String selfReportedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count تبرعًا',
+      few: '$count تبرعات',
+      two: 'تبرعان',
+      one: 'تبرع واحد',
+    );
+    return '$_temp0 · من تسجيلك';
+  }
+
+  @override
+  String selfReportedLast(String date, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count تبرعًا',
+      few: '$count تبرعات',
+      two: 'تبرعان',
+      one: 'تبرع واحد',
+    );
+    return 'آخر تبرع $date · $_temp0 · من تسجيلك';
+  }
+
+  @override
+  String bagsNeeded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مطلوب $count كيس دم',
+      few: 'مطلوب $count أكياس دم',
+      two: 'مطلوب كيسا دم',
+      one: 'مطلوب كيس دم واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String collectedOf(int collected, int needed) {
+    return 'اتجمّع $collected من $needed';
+  }
+
+  @override
+  String onTheWayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count في الطريق',
+      few: '$count في الطريق',
+      two: 'اتنين في الطريق',
+      one: 'واحد في الطريق',
+      zero: 'لسه مفيش حد في الطريق',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get viewPledge => 'تعهّدي';
+
+  @override
+  String get chooseLocationChip => 'اختار الموقع';
+
+  @override
+  String get noNotificationsYet => 'مفيش إشعارات لسه.';
+
+  @override
+  String get noRequestsYet => 'مفيش طلبات للعرض.';
+
+  @override
+  String get pledgeTitle => 'شكرًا على تعهّدك';
+
+  @override
+  String get phoneCopied => 'تم نسخ الرقم';
+
+  @override
+  String get pledgeNote =>
+      'اتصل بصاحب الطلب علشان تتأكد من المستشفى والميعاد. المستشفى هي اللي تقرر لو ينفع تتبرع. اضغط \"تبرعت\" بعد ما تتبرع فعلًا: ده تسجيل منك أنت ومحدش بيتحقق منه.';
+
+  @override
+  String get iDonated => 'تبرعت (تسجيل مني)';
+
+  @override
+  String get cancelPledge => 'إلغاء تعهّدي';
+
+  @override
+  String shareTextBody(int bags, String type, String hospital, String place) {
+    String _temp0 = intl.Intl.pluralLogic(
+      bags,
+      locale: localeName,
+      other: '$bags كيس',
+      few: '$bags أكياس',
+      two: 'كيسان',
+      one: 'كيس واحد',
+    );
+    return 'مطلوب دم: $_temp0 فصيلة $type في $hospital، $place. افتح تطبيق قطره دم للمساعدة.';
+  }
+
+  @override
+  String get deadlinePassed => 'انتهى الموعد';
+
+  @override
+  String daysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'باقي $count يومًا',
+      few: 'باقي $count أيام',
+      two: 'باقي يومان',
+      one: 'باقي يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String hoursLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'باقي $count ساعة',
+      few: 'باقي $count ساعات',
+      two: 'باقي ساعتان',
+      one: 'باقي ساعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String minutesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'باقي $count دقيقة',
+      few: 'باقي $count دقائق',
+      two: 'باقي دقيقتان',
+      one: 'باقي دقيقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get requestMissingFields => 'اكتب المستشفى والمركز ورقم تواصل الأول.';
+
+  @override
+  String get requestNeedsDeadline => 'اختار تاريخ ووقت للطلب المجدول.';
+
+  @override
+  String get myRequestsSubtitle => 'الطلبات اللي نشرتها';
+
+  @override
+  String get markFulfilled => 'تم تغطية الطلب';
+
+  @override
+  String get cancelRequest => 'إلغاء الطلب';
+
+  @override
+  String get saveChanges => 'حفظ التعديلات';
+
+  @override
+  String get profileSaved => 'تم الحفظ';
+
+  @override
+  String get accountSubtitle => 'حسابك وبيانات التبرع';
+
+  @override
+  String memberSince(String date) {
+    return 'عضو منذ $date';
+  }
+
+  @override
+  String get notSet => 'غير محدد';
+
+  @override
+  String get selfReportedTag => 'من تسجيلك';
+
+  @override
+  String get selfReportedNote =>
+      'التسجيلات دي منك أنت. مش متحقق منها ولا بتوضح لو ينفع تتبرع.';
+
+  @override
+  String get availabilityHint => 'بيظهر لأصحاب الطلبات إنك متاح. مش فحص طبي.';
+
+  @override
+  String get notificationsHint =>
+      'تفضيلك. الإشعارات على الموبايل لسه مش متفعلة.';
+
+  @override
+  String get deleteAccountBody =>
+      'ده هيحذف حسابك وطلباتك وتعهداتك نهائيًا ومش هينفع تتراجع.';
+
+  @override
+  String get deleteAccountConfirm => 'حذف نهائي';
 }

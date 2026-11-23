@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../../core/constants/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/failure_message.dart';
 import '../../../../core/widgets/app_icon.dart';
 import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../auth/presentation/cubit/auth_cubit.dart';
+import '../../domain/entities/user_profile.dart';
+import '../cubit/profile_cubit.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,15 +20,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool _available = true;
-  bool _notifications = true;
-  String? _name;
-  String _phone = '010 1234 5678';
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileCubit>().load();
+  }
 
-  Future<void> _edit() async {
+  Future<void> _edit(UserProfile profile) async {
     final t = AppLocalizations.of(context)!;
-    var name = _name ?? t.demoDonorName;
-    var phone = _phone;
+    final cubit = context.read<ProfileCubit>();
+    var name = profile.name;
+    var phone = profile.phone;
     final result = await showModalBottomSheet<(String, String)>(
       context: context,
       isScrollControlled: true,
@@ -47,11 +55,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                t.localEditNotice,
-                style: const TextStyle(fontSize: 12, color: AppColors.muted),
-              ),
               const SizedBox(height: 20),
               TextFormField(
                 initialValue: name,
@@ -69,19 +72,42 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => Navigator.pop(sheetContext, (name, phone)),
-                child: Text(t.savePreview),
+                child: Text(t.saveChanges),
               ),
             ],
           ),
         ),
       ),
     );
-    if (mounted && result != null) {
-      setState(() {
-        _name = result.$1;
-        _phone = result.$2;
-      });
-    }
+    if (result == null || result.$1.trim().isEmpty) return;
+    final ok = await cubit.update(
+      ProfileUpdate(name: result.$1.trim(), phone: result.$2.trim()),
+    );
+    if (!mounted) return;
+    _result(ok, t.profileSaved);
+  }
+
+  void _result(bool ok, String success) {
+    final t = AppLocalizations.of(context)!;
+    final f = context.read<ProfileCubit>().state.actionFailure;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(ok || f == null ? success : failureMessage(t, f))),
+    );
+  }
+
+  Future<void> _toggle(ProfileUpdate update) async {
+    final ok = await context.read<ProfileCubit>().update(update);
+    if (!mounted || ok) return;
+    _result(false, '');
+  }
+
+  void _history(List<DonationRecord> donations) {
+    final t = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+    final body = donations.isEmpty
+        ? t.noDonationsRecorded
+        : '${donations.map((d) => '${DateFormat.yMMMd(locale).format(d.donatedAt.toLocal())} · ${d.hospitalName}').join('\n')}\n\n${t.selfReportedNote}';
+    showPreviewMessage(context, t.donationHistoryTitle, body);
   }
 
   Widget _section(String label) => Padding(
@@ -95,9 +121,30 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
+    final lang = Localizations.localeOf(context).languageCode;
+    final locale = Localizations.localeOf(context).toString();
+    final state = context.watch<ProfileCubit>().state;
+    final profile = state.profile;
+    if (profile == null) {
+      return Center(
+        child: state.status == ProfileStatus.failure
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(failureMessage(t, state.failure!)),
+                  TextButton(
+                    onPressed: () => context.read<ProfileCubit>().load(),
+                    child: Text(t.retry),
+                  ),
+                ],
+              )
+            : const CircularProgressIndicator(),
+      );
+    }
+    final last = profile.lastDonationAt;
     return PreviewPage(
       title: t.myAccountTab,
-      subtitle: t.staticAccountPreview,
+      subtitle: t.accountSubtitle,
       children: [
         PreviewCard(
           child: Column(
@@ -125,14 +172,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _name ?? t.demoDonorName,
+                          profile.name,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
                           ),
                         ),
                         Text(
-                          t.demoMemberSince,
+                          t.memberSince(
+                            DateFormat.yMMM(locale)
+                                .format(profile.createdAt.toLocal()),
+                          ),
                           style: const TextStyle(
                             fontSize: 11,
                             color: AppColors.muted,
@@ -151,10 +201,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: AppColors.red,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Text(
-                      'O-',
+                    child: Text(
+                      profile.bloodType,
                       textDirection: TextDirection.ltr,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
@@ -168,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: double.infinity,
                 height: 40,
                 child: OutlinedButton(
-                  onPressed: _edit,
+                  onPressed: () => _edit(profile),
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(0, 40),
                     textStyle: const TextStyle(
@@ -183,86 +233,24 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            for (final (number, label) in [
-              ('3', t.donationsStat),
-              ('2', t.requestsStat),
-              ('4', t.monthsSinceStat),
-            ])
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: PreviewCard(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 8,
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          number,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: Center(
-                            child: Text(
-                              label,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 10,
-                                color: AppColors.muted,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        ),
         _section(t.personalInfoTitle),
         PreviewCard(
           child: Column(
             children: [
               PreviewRow(
                 label: t.mobileNumber,
-                value: _phone,
+                value: profile.phone,
                 icon: AppIcons.userOutline,
               ),
               PreviewRow(
-                label: t.emailLabel,
-                value: 'donor@example.com',
-                icon: AppIcons.comment,
-              ),
-              PreviewRow(
                 label: t.governorateLabel,
-                value: t.demoGovernorate,
+                value: profile.governorate?.of(lang) ?? t.notSet,
                 icon: AppIcons.locationPin,
               ),
               PreviewRow(
                 label: t.districtLabel,
-                value: t.mansouraCity,
+                value: profile.district?.of(lang) ?? t.notSet,
                 icon: AppIcons.map,
-              ),
-              PreviewRow(
-                label: t.birthDateLabel,
-                value: '12/04/1998',
-                icon: AppIcons.clock,
-              ),
-              PreviewRow(
-                label: t.genderLabel,
-                value: t.maleLabel,
-                icon: AppIcons.userOutline,
               ),
             ],
           ),
@@ -273,31 +261,31 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               PreviewRow(
                 label: t.yourBloodType,
-                value: 'O-',
+                value: profile.bloodType,
                 icon: AppIcons.bloodDropOutline,
               ),
               PreviewRow(
                 label: t.lastDonationLabel,
-                value: '23/07/2026',
+                value: last == null
+                    ? t.notSet
+                    : '${DateFormat.yMMMd(locale).format(last.toLocal())} · ${t.selfReportedTag}',
                 icon: AppIcons.clock,
               ),
               PreviewRow(
                 label: t.availabilityLabel,
-                value: t.localEditNotice,
+                value: t.availabilityHint,
                 icon: AppIcons.heart,
                 trailing: Switch(
-                  value: _available,
-                  onChanged: (value) => setState(() => _available = value),
+                  value: profile.isAvailable,
+                  onChanged: (value) =>
+                      _toggle(ProfileUpdate(isAvailable: value)),
                 ),
               ),
               PreviewRow(
                 label: t.donationHistoryTitle,
                 icon: AppIcons.bloodDropFilled,
-                onTap: () => showPreviewMessage(
-                  context,
-                  t.donationHistoryTitle,
-                  t.demoDonationHistory,
-                ),
+                value: '${profile.donationsCount} · ${t.selfReportedTag}',
+                onTap: () => _history(state.donations),
               ),
             ],
           ),
@@ -308,11 +296,12 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               PreviewRow(
                 label: t.notificationsTitle,
-                value: t.localEditNotice,
+                value: t.notificationsHint,
                 icon: AppIcons.bell,
                 trailing: Switch(
-                  value: _notifications,
-                  onChanged: (value) => setState(() => _notifications = value),
+                  value: profile.notificationsEnabled,
+                  onChanged: (value) =>
+                      _toggle(ProfileUpdate(notificationsEnabled: value)),
                 ),
               ),
               PreviewRow(
@@ -359,7 +348,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         const SizedBox(height: 20),
         OutlinedButton(
-          onPressed: () => context.go('/auth'),
+          onPressed: () => context.read<AuthCubit>().signOut(),
           child: Text(t.logoutAction),
         ),
         TextButton(
@@ -368,7 +357,7 @@ class _ProfilePageState extends State<ProfilePage> {
               context: context,
               builder: (context) => AlertDialog(
                 title: Text(t.deleteAccountTitle),
-                content: Text(t.deletePreviewBody),
+                content: Text(t.deleteAccountBody),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context, false),
@@ -376,17 +365,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   TextButton(
                     onPressed: () => Navigator.pop(context, true),
-                    child: Text(t.confirmPreviewAction),
+                    child: Text(t.deleteAccountConfirm),
                   ),
                 ],
               ),
             );
             if (!context.mounted || confirmed != true) return;
-            await showPreviewMessage(
-              context,
-              t.deleteAccountTitle,
-              t.noAccountDeleted,
-            );
+            final cubit = context.read<ProfileCubit>();
+            final auth = context.read<AuthCubit>();
+            final ok = await cubit.deleteAccount();
+            if (!context.mounted) return;
+            if (ok) {
+              await auth.signOut();
+            } else {
+              _result(false, '');
+            }
           },
           child: Text(
             t.deleteAccountTitle,

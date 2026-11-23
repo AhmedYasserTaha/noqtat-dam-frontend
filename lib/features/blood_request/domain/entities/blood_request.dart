@@ -1,0 +1,149 @@
+import 'package:equatable/equatable.dart';
+
+import '../../../../core/utils/localized_name.dart';
+
+enum Urgency {
+  critical('critical'),
+  within24h('within_24h'),
+  scheduled('scheduled');
+
+  const Urgency(this.api);
+  final String api;
+  static Urgency fromApi(String? v) =>
+      values.firstWhere((u) => u.api == v, orElse: () => Urgency.scheduled);
+}
+
+enum RequestStatus {
+  open,
+  fulfilled,
+  cancelled,
+  expired;
+
+  static RequestStatus fromApi(String? v) =>
+      values.firstWhere((s) => s.name == v, orElse: () => RequestStatus.open);
+}
+
+enum PledgeStatus {
+  onTheWay('on_the_way'),
+  donated('donated'),
+  cancelled('cancelled');
+
+  const PledgeStatus(this.api);
+  final String api;
+  static PledgeStatus? fromApi(String? v) {
+    for (final s in values) {
+      if (s.api == v) return s;
+    }
+    return null;
+  }
+}
+
+class BloodRequest extends Equatable {
+  const BloodRequest({
+    required this.id,
+    required this.authorName,
+    required this.isMine,
+    required this.bloodType,
+    required this.bagsNeeded,
+    required this.bagsCollected,
+    required this.onTheWayCount,
+    required this.hospitalName,
+    required this.urgency,
+    required this.status,
+    required this.isVerified,
+    required this.createdAt,
+    this.governorate,
+    this.district,
+    this.deadline,
+    this.notes,
+    this.contactPhone,
+    this.myPledge,
+  });
+  final int id, bagsNeeded, bagsCollected, onTheWayCount;
+  final String authorName, bloodType, hospitalName;
+  final bool isMine, isVerified;
+  final Urgency urgency;
+  final RequestStatus status;
+  final LocalizedName? governorate, district;
+  final DateTime? deadline;
+  final DateTime createdAt;
+  final String? notes;
+
+  /// Only present for the author and for donors with an active pledge.
+  final String? contactPhone;
+  final PledgeStatus? myPledge;
+
+  bool get hasContact => contactPhone != null;
+
+  @override
+  List<Object?> get props => [
+    id,
+    authorName,
+    isMine,
+    bloodType,
+    bagsNeeded,
+    bagsCollected,
+    onTheWayCount,
+    hospitalName,
+    urgency,
+    status,
+    isVerified,
+    createdAt,
+    governorate,
+    district,
+    deadline,
+    notes,
+    contactPhone,
+    myPledge,
+  ];
+}
+
+class BloodRequestDraft extends Equatable {
+  const BloodRequestDraft({
+    required this.bloodType,
+    required this.bagsNeeded,
+    required this.hospitalName,
+    required this.governorateId,
+    required this.districtId,
+    required this.urgency,
+    required this.contactPhone,
+    this.deadline,
+    this.notes = '',
+  });
+  final String bloodType, hospitalName, governorateId, districtId, contactPhone;
+  final String notes;
+  final int bagsNeeded;
+  final Urgency urgency;
+  final DateTime? deadline;
+  @override
+  List<Object?> get props => [
+    bloodType,
+    bagsNeeded,
+    hospitalName,
+    governorateId,
+    districtId,
+    urgency,
+    contactPhone,
+    deadline,
+    notes,
+  ];
+}
+
+enum RequestFilter {
+  all('all'),
+  urgent('urgent'),
+  myBlood('my_blood'),
+  nearby('nearby');
+
+  const RequestFilter(this.api);
+  final String api;
+}
+
+enum RequestTab {
+  active('active'),
+  completed('completed'),
+  cancelled('cancelled');
+
+  const RequestTab(this.api);
+  final String api;
+}

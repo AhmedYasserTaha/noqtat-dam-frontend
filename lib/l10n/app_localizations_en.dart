@@ -16,25 +16,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home => 'Home';
 
   @override
-  String get phoneLogin => 'Phone login';
-
-  @override
   String get completeProfile => 'Complete profile';
 
   @override
   String get profile => 'Profile';
 
   @override
-  String get bloodRequest => 'Blood request';
-
-  @override
   String get placeholder => 'Coming soon';
 
   @override
   String get retry => 'Retry';
-
-  @override
-  String get empty => 'No data';
 
   @override
   String get authBrand => 'Qatret Dam';
@@ -73,9 +64,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get haveAccount => 'Have an account?';
 
   @override
-  String get stepOneOfTwo => 'Step 1 of 2';
-
-  @override
   String get registerSubtitle =>
       'Your details help us connect you with matching requests.';
 
@@ -89,16 +77,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yourBloodType => 'Your blood type';
 
   @override
-  String get chooseBloodType => 'Choose your blood type';
+  String get chooseBloodType => 'Choose your blood type.';
 
   @override
   String get governorateLabel => 'Governorate';
-
-  @override
-  String get governorateHint => 'Enter your governorate';
-
-  @override
-  String get continueAction => 'Continue';
 
   @override
   String get recoverySubtitle =>
@@ -111,13 +93,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rememberPassword => 'Remember your password?';
 
   @override
-  String get requiredField => 'Please complete this field';
-
-  @override
   String get invalidPhone => 'Enter a valid Egyptian mobile number';
-
-  @override
-  String get passwordTooShort => 'Use at least 8 characters';
 
   @override
   String get showPassword => 'Show password';
@@ -153,9 +129,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get closeLocations => 'Close';
 
   @override
-  String get mapTab => 'Map';
-
-  @override
   String get myRequestsTab => 'My requests';
 
   @override
@@ -165,32 +138,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createRequestAction => 'Create blood request';
 
   @override
-  String get readyToDonate => 'Ready to donate again';
-
-  @override
-  String get donationHistoryDemo => 'Last donated 4 months ago · 3 donations';
-
-  @override
-  String get closestUrgentRequest => 'Critical · Closest request';
-
-  @override
-  String get threeHoursLeft => '3 hours left';
-
-  @override
-  String get threeBagsNeeded => '3 blood bags needed';
-
-  @override
-  String get mansouraHospitalDistance =>
-      'Mansoura University Hospital · 2.4 km';
-
-  @override
   String get hospitalVerified => 'Verified by the hospital';
-
-  @override
-  String get oneOfThreeCollected => '1 of 3 collected';
-
-  @override
-  String get twoOnTheWay => '2 on the way';
 
   @override
   String get iWillDonate => 'I will donate';
@@ -205,16 +153,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get donateAction => 'Donate';
 
   @override
-  String get demoDonorName => 'Mohamed Ahmed';
-
-  @override
-  String get twoHoursAgo => '2 hours ago';
-
-  @override
-  String get demoDonationPost =>
-      'I donated blood for the first time today. It feels incredible. If you are thinking about donating, go for it!';
-
-  @override
   String get filterAll => 'All';
 
   @override
@@ -224,43 +162,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterNearby => 'Near me';
 
   @override
-  String get mansouraCity => 'Mansoura';
-
-  @override
-  String get demoFeedLabel => 'Design preview · Sample data';
-
-  @override
   String get notificationsTitle => 'Notifications';
 
   @override
-  String get noDemoNotifications => 'No notifications in this preview.';
-
-  @override
-  String get demoDonationNotice =>
-      'This is a sample request for the design preview. No donation pledge will be recorded.';
-
-  @override
-  String get demoShareText =>
-      'SAMPLE: 3 O- blood bags at Mansoura University Hospital. Design preview only, not a real donation request.';
-
-  @override
-  String get requestCopied => 'Sample request text copied';
-
-  @override
-  String get twoBagsTitle => 'Two blood bags';
-
-  @override
-  String get talkhaHospitalDistance => 'Talkha General Hospital · 11 km';
-
-  @override
-  String get plateletsTitle => 'Platelet donation';
-
-  @override
-  String get salamHospitalDistance => 'Al Salam Hospital · 5 km';
-
-  @override
-  String get matchingFeaturedRequest =>
-      'The featured request above matches your sample O- blood type';
+  String get requestCopied => 'Request text copied';
 
   @override
   String get staticAccountPreview => 'Sample data · Preview only';
@@ -275,15 +180,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestCancelled => 'Cancelled';
 
   @override
-  String get demoUniversityHospital => 'Mansoura University Hospital';
-
-  @override
-  String get demoTalkhaHospital => 'Talkha General Hospital';
-
-  @override
-  String get demoSalamHospital => 'Al Salam Hospital';
-
-  @override
   String get requestDateLabel => 'Requested on:';
 
   @override
@@ -293,47 +189,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestDetails => 'Request details';
 
   @override
-  String get demoRequestNotes =>
-      'A sample hospital request. Location and donation details do not represent a real request.';
-
-  @override
   String get editProfileTitle => 'Edit profile';
 
   @override
-  String get localEditNotice => 'Preview change only';
-
-  @override
-  String get savePreview => 'Save preview';
-
-  @override
-  String get demoMemberSince => 'Donor since January 2026';
-
-  @override
-  String get donationsStat => 'donations';
-
-  @override
-  String get requestsStat => 'active requests';
-
-  @override
-  String get monthsSinceStat => 'months since donation';
-
-  @override
   String get personalInfoTitle => 'Personal information';
-
-  @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get demoGovernorate => 'Dakahlia';
-
-  @override
-  String get birthDateLabel => 'Date of birth';
-
-  @override
-  String get genderLabel => 'Gender';
-
-  @override
-  String get maleLabel => 'Male';
 
   @override
   String get donationInfoTitle => 'Donation information';
@@ -346,10 +205,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get donationHistoryTitle => 'Donation history';
-
-  @override
-  String get demoDonationHistory =>
-      '23/07/2026 · Mansoura University Hospital\n12/03/2026 · Talkha General Hospital\n08/01/2026 · Al Salam Hospital\n\nSample history; not proof of donation eligibility.';
 
   @override
   String get settingsTitle => 'Settings';
@@ -386,50 +241,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAccountTitle => 'Delete account';
 
   @override
-  String get deletePreviewBody =>
-      'This previews the delete-account confirmation. No actual account or data will be deleted.';
-
-  @override
   String get keepAccountAction => 'Keep account';
 
   @override
-  String get confirmPreviewAction => 'Confirm preview';
-
-  @override
-  String get noAccountDeleted =>
-      'Preview only. No account or data was deleted.';
-
-  @override
   String get policyDraftNotice =>
-      'Draft content for the UI preview, not a final policy or effective terms. Review and update before launching live services.';
+      'Draft text, not a final policy or legal terms. Review it before a public launch.';
 
   @override
-  String get privacyDataTitle => 'Data in this preview';
+  String get privacyDataTitle => 'Data we keep';
 
   @override
   String get privacyDataBody =>
-      'Profiles and requests shown here are sample data. Editing the name or preferences changes the preview temporarily and does not save an account to Firebase. Firebase initialization remains present, but account and request features are not enabled.';
+      'Your name, mobile number, blood type, location, availability and the requests, pledges and posts you create are stored on the app\'s server. A request\'s contact phone is shown only to people who pledge to it. Donation entries are what you reported yourself.';
 
   @override
   String get privacyContactTitle => 'Contact and location data';
 
   @override
   String get privacyContactBody =>
-      'Before enabling live services, specify what data is collected, why, and who can access it, especially phone numbers, location and blood type. Do not enter real patient details or third-party phone numbers in this preview.';
+      'Don\'t enter real patient details in a request. Use only the information needed to coordinate a donation, such as hospital, blood type and a contact number.';
 
   @override
   String get privacyControlTitle => 'User controls and contact';
 
   @override
   String get privacyControlBody =>
-      'Data access, correction and deletion procedures, retention periods and contact details must be defined before launch. The current delete-account button is a UI preview only.';
+      'You can edit your details and delete your account from Profile. Deleting removes your account, requests and pledges from the server.';
 
   @override
   String get termsUseTitle => 'Purpose of the app';
 
   @override
   String get termsUseBody =>
-      'Qatret Dam aims to help people connect around blood donation needs. This version previews the design only and does not confirm real requests, donors or appointments.';
+      'Damy helps people connect around blood donation needs. The app doesn\'t verify requests, donors or donations.';
 
   @override
   String get termsAccuracyTitle => 'Content and responsible use';
@@ -443,25 +287,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsMedicalBody =>
-      'The app is not a healthcare provider or a substitute for a hospital. Actual donations require coordination with qualified medical staff, who determine eligibility and testing. For emergencies, contact appropriate care directly rather than relying on this preview.';
+      'The app is not a healthcare provider. It does not decide whether anyone can donate or which blood type is suitable. Eligibility and testing are decided by qualified medical staff at the hospital. In an emergency, contact the hospital or emergency services directly.';
 
   @override
   String get aboutBody =>
-      'Qatret Dam brings blood requests and donors into one place. The design is Arabic-first with English support. All requests and statistics currently shown are sample data; live services will follow after the UI is completed.';
+      'Damy brings blood requests and donors into one place. It is Arabic-first with English support. It does not verify donations or give medical advice.';
 
   @override
   String get helpRequestTitle => 'How do I create a request?';
 
   @override
   String get helpRequestBody =>
-      'Tap +, choose the blood type, bag count and hospital details, then review and confirm the preview. Requests are not published or saved yet.';
+      'Tap +, choose the blood type, bag count, hospital and urgency, review, then publish. Donors who pledge can see your contact phone. Mark the request fulfilled or cancel it from My requests.';
 
   @override
   String get helpDonateTitle => 'Does Donate reserve a donation?';
 
   @override
   String get helpDonateBody =>
-      'No. Current buttons are for preview only. They do not record pledges or notify anyone.';
+      'Tap \"I will donate\" on a request to pledge. You get the requester\'s phone number and can call to confirm. The hospital decides whether you can donate. \"I donated\" is only your own record.';
 
   @override
   String get helpContactTitle => 'Contact support';
@@ -472,7 +316,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createRequestSubtitle =>
-      'Set the details and review your request. This is a UI preview only.';
+      'Set the details and review your request before publishing.';
 
   @override
   String get requiredBloodType => 'Required blood type';
@@ -527,7 +371,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactPreviewHint =>
-      'Shown in this preview only. It will not be saved or shared.';
+      'Shown only to donors who pledge to this request.';
 
   @override
   String get requestNotesLabel => 'Additional notes';
@@ -540,27 +384,294 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get requestPreviewNotice =>
-      'Preview only: no publishing or notifications. Empty fields are allowed.';
+      'Check the details. Publishing makes this request visible to other users.';
 
   @override
   String get previewNotSpecified => 'Not specified';
 
   @override
-  String get confirmRequestPreview => 'Confirm preview';
+  String get confirmRequestPreview => 'Publish request';
 
   @override
   String get editRequestPreview => 'Edit details';
 
   @override
-  String get requestPreviewDone => 'Request preview complete';
+  String get requestPreviewDone => 'Request published';
 
   @override
   String get requestNotPublished =>
-      'This demonstrates the create-request flow only. Nothing was published or saved; My requests still shows sample data.';
+      'Your request is now visible. Donors who pledge will see your contact phone. Manage it from My requests.';
 
   @override
   String get viewMyRequests => 'View my requests';
 
   @override
   String get backToHome => 'Back to Home';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get errInvalidPhone =>
+      'Enter a valid Egyptian mobile number, for example 010 1234 5678.';
+
+  @override
+  String get errWeakPassword => 'Password must be at least 8 characters.';
+
+  @override
+  String get errPhoneTaken =>
+      'This mobile number is already registered. Try logging in.';
+
+  @override
+  String get errWrongCredentials => 'Wrong mobile number or password.';
+
+  @override
+  String get errInvalidCode => 'The code is wrong or has expired.';
+
+  @override
+  String get errNeedGovernorate =>
+      'Set your governorate first, then try again.';
+
+  @override
+  String get errTooMany =>
+      'Too many attempts. Wait a few minutes and try again.';
+
+  @override
+  String get errNetwork =>
+      'Can\'t reach the server. Check your connection and try again.';
+
+  @override
+  String get errServer =>
+      'Something went wrong on the server. Try again later.';
+
+  @override
+  String get errNotFound => 'This item no longer exists.';
+
+  @override
+  String get errPermission => 'You can\'t do this.';
+
+  @override
+  String get errUnauthorized => 'Your session ended. Log in again.';
+
+  @override
+  String get errGeneric =>
+      'Couldn\'t complete that. Check the details and try again.';
+
+  @override
+  String get chooseLocation => 'Choose your governorate and district.';
+
+  @override
+  String get resetCodeLabel => 'Recovery code';
+
+  @override
+  String get resetCodeHint =>
+      'Enter the code you received and choose a new password.';
+
+  @override
+  String get newPasswordLabel => 'New password';
+
+  @override
+  String get resetDone => 'Password changed. Log in with the new password.';
+
+  @override
+  String get resetPasswordAction => 'Change password';
+
+  @override
+  String get createAccountAction => 'Create account';
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
+  String get closestRequest => 'Closest request';
+
+  @override
+  String get markedAvailable => 'You are marked as available to donate';
+
+  @override
+  String get markedUnavailable => 'You are marked as unavailable';
+
+  @override
+  String get noDonationsRecorded => 'No donations recorded yet';
+
+  @override
+  String selfReportedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count donations',
+      one: '1 donation',
+    );
+    return '$_temp0 · reported by you';
+  }
+
+  @override
+  String selfReportedLast(String date, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count donations',
+      one: '1 donation',
+    );
+    return 'Last donation $date · $_temp0 · reported by you';
+  }
+
+  @override
+  String bagsNeeded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count blood bags needed',
+      one: '1 blood bag needed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String collectedOf(int collected, int needed) {
+    return '$collected of $needed collected';
+  }
+
+  @override
+  String onTheWayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count on the way',
+      one: '1 on the way',
+      zero: 'No one on the way yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get viewPledge => 'My pledge';
+
+  @override
+  String get chooseLocationChip => 'Choose location';
+
+  @override
+  String get noNotificationsYet => 'No notifications yet.';
+
+  @override
+  String get noRequestsYet => 'No requests to show.';
+
+  @override
+  String get pledgeTitle => 'Thank you for pledging';
+
+  @override
+  String get phoneCopied => 'Number copied';
+
+  @override
+  String get pledgeNote =>
+      'Call the requester to confirm the hospital and timing. The hospital decides whether you can donate. Tap \"I donated\" only after you donate: it is your own record and nobody verifies it.';
+
+  @override
+  String get iDonated => 'I donated (my own record)';
+
+  @override
+  String get cancelPledge => 'Cancel my pledge';
+
+  @override
+  String shareTextBody(int bags, String type, String hospital, String place) {
+    String _temp0 = intl.Intl.pluralLogic(
+      bags,
+      locale: localeName,
+      other: '$bags bags',
+      one: '1 bag',
+    );
+    return 'Blood needed: $_temp0 of $type at $hospital, $place. Open the Damy app to help.';
+  }
+
+  @override
+  String get deadlinePassed => 'Deadline passed';
+
+  @override
+  String daysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String hoursLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours left',
+      one: '1 hour left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String minutesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutes left',
+      one: '1 minute left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get requestMissingFields =>
+      'Add the hospital, district and a contact phone first.';
+
+  @override
+  String get requestNeedsDeadline =>
+      'Choose a date and time for a scheduled request.';
+
+  @override
+  String get myRequestsSubtitle => 'Requests you published';
+
+  @override
+  String get markFulfilled => 'Mark as fulfilled';
+
+  @override
+  String get cancelRequest => 'Cancel request';
+
+  @override
+  String get saveChanges => 'Save changes';
+
+  @override
+  String get profileSaved => 'Saved';
+
+  @override
+  String get accountSubtitle => 'Your account and donor details';
+
+  @override
+  String memberSince(String date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get selfReportedTag => 'reported by you';
+
+  @override
+  String get selfReportedNote =>
+      'These entries are your own reports. They are not verified and do not show whether you can donate.';
+
+  @override
+  String get availabilityHint =>
+      'Lets requesters see you as available. Not a medical check.';
+
+  @override
+  String get notificationsHint =>
+      'Your preference. Push notifications are not set up yet.';
+
+  @override
+  String get deleteAccountBody =>
+      'This permanently deletes your account, your requests and your pledges. This can\'t be undone.';
+
+  @override
+  String get deleteAccountConfirm => 'Delete permanently';
 }
