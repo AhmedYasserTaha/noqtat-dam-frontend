@@ -261,4 +261,212 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get matchingFeaturedRequest =>
       'The featured request above matches your sample O- blood type';
+
+  @override
+  String get staticAccountPreview => 'Sample data · Preview only';
+
+  @override
+  String get requestActive => 'Active';
+
+  @override
+  String get requestComplete => 'Completed';
+
+  @override
+  String get requestCancelled => 'Cancelled';
+
+  @override
+  String get demoUniversityHospital => 'Mansoura University Hospital';
+
+  @override
+  String get demoTalkhaHospital => 'Talkha General Hospital';
+
+  @override
+  String get demoSalamHospital => 'Al Salam Hospital';
+
+  @override
+  String get requestDateLabel => 'Requested on:';
+
+  @override
+  String get bagsCollectedLabel => 'bags collected';
+
+  @override
+  String get requestDetails => 'Request details';
+
+  @override
+  String get demoRequestNotes =>
+      'A sample hospital request. Location and donation details do not represent a real request.';
+
+  @override
+  String get editProfileTitle => 'Edit profile';
+
+  @override
+  String get localEditNotice => 'Preview change only';
+
+  @override
+  String get savePreview => 'Save preview';
+
+  @override
+  String get demoMemberSince => 'Donor since January 2026';
+
+  @override
+  String get donationsStat => 'donations';
+
+  @override
+  String get requestsStat => 'active requests';
+
+  @override
+  String get monthsSinceStat => 'months since donation';
+
+  @override
+  String get personalInfoTitle => 'Personal information';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get demoGovernorate => 'Dakahlia';
+
+  @override
+  String get birthDateLabel => 'Date of birth';
+
+  @override
+  String get genderLabel => 'Gender';
+
+  @override
+  String get maleLabel => 'Male';
+
+  @override
+  String get donationInfoTitle => 'Donation information';
+
+  @override
+  String get lastDonationLabel => 'Last donation';
+
+  @override
+  String get availabilityLabel => 'Available to donate';
+
+  @override
+  String get donationHistoryTitle => 'Donation history';
+
+  @override
+  String get demoDonationHistory =>
+      '23/07/2026 · Mansoura University Hospital\n12/03/2026 · Talkha General Hospital\n08/01/2026 · Al Salam Hospital\n\nSample history; not proof of donation eligibility.';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get languageLabel => 'App language';
+
+  @override
+  String get languagePreviewBody =>
+      'The interface supports Arabic and English. In-app language switching will be added later.';
+
+  @override
+  String get supportAndLegalTitle => 'Support and information';
+
+  @override
+  String get privacyTitle => 'Privacy policy';
+
+  @override
+  String get termsTitle => 'Terms and conditions';
+
+  @override
+  String get aboutTitle => 'About the app';
+
+  @override
+  String get helpTitle => 'Help and FAQ';
+
+  @override
+  String get versionLabel => 'App version';
+
+  @override
+  String get logoutAction => 'Log out';
+
+  @override
+  String get deleteAccountTitle => 'Delete account';
+
+  @override
+  String get deletePreviewBody =>
+      'This previews the delete-account confirmation. No actual account or data will be deleted.';
+
+  @override
+  String get keepAccountAction => 'Keep account';
+
+  @override
+  String get confirmPreviewAction => 'Confirm preview';
+
+  @override
+  String get noAccountDeleted =>
+      'Preview only. No account or data was deleted.';
+
+  @override
+  String get policyDraftNotice =>
+      'Draft content for the UI preview, not a final policy or effective terms. Review and update before launching live services.';
+
+  @override
+  String get privacyDataTitle => 'Data in this preview';
+
+  @override
+  String get privacyDataBody =>
+      'Profiles and requests shown here are sample data. Editing the name or preferences changes the preview temporarily and does not save an account to Firebase. Firebase initialization remains present, but account and request features are not enabled.';
+
+  @override
+  String get privacyContactTitle => 'Contact and location data';
+
+  @override
+  String get privacyContactBody =>
+      'Before enabling live services, specify what data is collected, why, and who can access it, especially phone numbers, location and blood type. Do not enter real patient details or third-party phone numbers in this preview.';
+
+  @override
+  String get privacyControlTitle => 'User controls and contact';
+
+  @override
+  String get privacyControlBody =>
+      'Data access, correction and deletion procedures, retention periods and contact details must be defined before launch. The current delete-account button is a UI preview only.';
+
+  @override
+  String get termsUseTitle => 'Purpose of the app';
+
+  @override
+  String get termsUseBody =>
+      'Qatret Dam aims to help people connect around blood donation needs. This version previews the design only and does not confirm real requests, donors or appointments.';
+
+  @override
+  String get termsAccuracyTitle => 'Content and responsible use';
+
+  @override
+  String get termsAccuracyBody =>
+      'For a live service, users should provide accurate details, respect others’ privacy, and avoid misleading requests, abusive content, blood sales or exploitation. Review and reporting procedures must be defined in the final terms.';
+
+  @override
+  String get termsMedicalTitle => 'Hospital coordination';
+
+  @override
+  String get termsMedicalBody =>
+      'The app is not a healthcare provider or a substitute for a hospital. Actual donations require coordination with qualified medical staff, who determine eligibility and testing. For emergencies, contact appropriate care directly rather than relying on this preview.';
+
+  @override
+  String get aboutBody =>
+      'Qatret Dam brings blood requests and donors into one place. The design is Arabic-first with English support. All requests and statistics currently shown are sample data; live services will follow after the UI is completed.';
+
+  @override
+  String get helpRequestTitle => 'How do I create a request?';
+
+  @override
+  String get helpRequestBody =>
+      'Tap + in the navigation bar to open the request page. It is currently a placeholder and does not publish real requests.';
+
+  @override
+  String get helpDonateTitle => 'Does Donate reserve a donation?';
+
+  @override
+  String get helpDonateBody =>
+      'No. Current buttons are for preview only. They do not record pledges or notify anyone.';
+
+  @override
+  String get helpContactTitle => 'Contact support';
+
+  @override
+  String get helpContactBody =>
+      'Official support channels have not been defined yet. Profile email and phone values are examples, not real support contacts.';
 }

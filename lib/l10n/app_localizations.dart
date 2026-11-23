@@ -589,6 +589,390 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الطلب المميز فوق مطابق لفصيلتك التجريبية O-'**
   String get matchingFeaturedRequest;
+
+  /// No description provided for @staticAccountPreview.
+  ///
+  /// In ar, this message translates to:
+  /// **'بيانات تجريبية · للعرض فقط'**
+  String get staticAccountPreview;
+
+  /// No description provided for @requestActive.
+  ///
+  /// In ar, this message translates to:
+  /// **'نشطة'**
+  String get requestActive;
+
+  /// No description provided for @requestComplete.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتملة'**
+  String get requestComplete;
+
+  /// No description provided for @requestCancelled.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغية'**
+  String get requestCancelled;
+
+  /// No description provided for @demoUniversityHospital.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستشفى المنصورة الجامعي'**
+  String get demoUniversityHospital;
+
+  /// No description provided for @demoTalkhaHospital.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستشفى طلخا العام'**
+  String get demoTalkhaHospital;
+
+  /// No description provided for @demoSalamHospital.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستشفى السلام'**
+  String get demoSalamHospital;
+
+  /// No description provided for @requestDateLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الطلب:'**
+  String get requestDateLabel;
+
+  /// No description provided for @bagsCollectedLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكياس تم تجميعها'**
+  String get bagsCollectedLabel;
+
+  /// No description provided for @requestDetails.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الطلب'**
+  String get requestDetails;
+
+  /// No description provided for @demoRequestNotes.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب تجريبي لعرض احتياج المستشفى لفصيلة الدم. بيانات المكان والتبرعات ليست طلبًا حقيقيًا.'**
+  String get demoRequestNotes;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل الملف الشخصي'**
+  String get editProfileTitle;
+
+  /// No description provided for @localEditNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير تجريبي في الواجهة فقط'**
+  String get localEditNotice;
+
+  /// No description provided for @savePreview.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ للمعاينة'**
+  String get savePreview;
+
+  /// No description provided for @demoMemberSince.
+  ///
+  /// In ar, this message translates to:
+  /// **'متبرع من يناير 2026'**
+  String get demoMemberSince;
+
+  /// No description provided for @donationsStat.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبرعات سابقة'**
+  String get donationsStat;
+
+  /// No description provided for @requestsStat.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلبات نشطة'**
+  String get requestsStat;
+
+  /// No description provided for @monthsSinceStat.
+  ///
+  /// In ar, this message translates to:
+  /// **'شهور من آخر تبرع'**
+  String get monthsSinceStat;
+
+  /// No description provided for @personalInfoTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'البيانات الشخصية'**
+  String get personalInfoTitle;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'البريد الإلكتروني'**
+  String get emailLabel;
+
+  /// No description provided for @demoGovernorate.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدقهلية'**
+  String get demoGovernorate;
+
+  /// No description provided for @birthDateLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الميلاد'**
+  String get birthDateLabel;
+
+  /// No description provided for @genderLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'النوع'**
+  String get genderLabel;
+
+  /// No description provided for @maleLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'ذكر'**
+  String get maleLabel;
+
+  /// No description provided for @donationInfoTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بيانات التبرع'**
+  String get donationInfoTitle;
+
+  /// No description provided for @lastDonationLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر تبرع'**
+  String get lastDonationLabel;
+
+  /// No description provided for @availabilityLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'متاح للتبرع'**
+  String get availabilityLabel;
+
+  /// No description provided for @donationHistoryTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجل التبرعات'**
+  String get donationHistoryTitle;
+
+  /// No description provided for @demoDonationHistory.
+  ///
+  /// In ar, this message translates to:
+  /// **'23/07/2026 · مستشفى المنصورة الجامعي\n12/03/2026 · مستشفى طلخا العام\n08/01/2026 · مستشفى السلام\n\nسجل تجريبي، لا يثبت أهلية التبرع.'**
+  String get demoDonationHistory;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعدادات'**
+  String get settingsTitle;
+
+  /// No description provided for @languageLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'لغة التطبيق'**
+  String get languageLabel;
+
+  /// No description provided for @languagePreviewBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'الواجهة متاحة بالعربية والإنجليزية. تغيير اللغة من الإعدادات هيتضاف لاحقًا.'**
+  String get languagePreviewBody;
+
+  /// No description provided for @supportAndLegalTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المساعدة والمعلومات'**
+  String get supportAndLegalTitle;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سياسة الخصوصية'**
+  String get privacyTitle;
+
+  /// No description provided for @termsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشروط والأحكام'**
+  String get termsTitle;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عن التطبيق'**
+  String get aboutTitle;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المساعدة والأسئلة الشائعة'**
+  String get helpTitle;
+
+  /// No description provided for @versionLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'إصدار التطبيق'**
+  String get versionLabel;
+
+  /// No description provided for @logoutAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج'**
+  String get logoutAction;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الحساب'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @deletePreviewBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'ده تأكيد تجريبي لشكل حذف الحساب. مفيش حساب حقيقي هيتحذف أو بيانات هتتمسح.'**
+  String get deletePreviewBody;
+
+  /// No description provided for @keepAccountAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاحتفاظ بالحساب'**
+  String get keepAccountAction;
+
+  /// No description provided for @confirmPreviewAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد المعاينة'**
+  String get confirmPreviewAction;
+
+  /// No description provided for @noAccountDeleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'دي معاينة بس. لم يتم حذف أي حساب أو بيانات.'**
+  String get noAccountDeleted;
+
+  /// No description provided for @policyDraftNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسودة تجريبية لعرض الواجهة، وليست سياسة نهائية أو شروط استخدام سارية. تُراجع وتُحدّث قبل تشغيل الخدمات الفعلية.'**
+  String get policyDraftNotice;
+
+  /// No description provided for @privacyDataTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'البيانات في النسخة الحالية'**
+  String get privacyDataTitle;
+
+  /// No description provided for @privacyDataBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملف والطلبات المعروضة بيانات ثابتة للتجربة. تعديل الاسم أو التفضيلات يغيّر الواجهة مؤقتًا ولا يحفظ بيانات حساب على Firebase. تهيئة Firebase موجودة، لكن ميزات الحسابات والطلبات غير مفعّلة.'**
+  String get privacyDataBody;
+
+  /// No description provided for @privacyContactTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بيانات التواصل والموقع'**
+  String get privacyContactTitle;
+
+  /// No description provided for @privacyContactBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند تفعيل الخدمة، يلزم توضيح البيانات التي تُجمع وسبب جمعها ومن يطلع عليها، خصوصًا رقم الهاتف والموقع وفصيلة الدم. لا تستخدم أرقام أشخاص أو بيانات مرضى حقيقية في هذه المعاينة.'**
+  String get privacyContactBody;
+
+  /// No description provided for @privacyControlTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حقوق المستخدم والتواصل'**
+  String get privacyControlTitle;
+
+  /// No description provided for @privacyControlBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'وسائل طلب الوصول للبيانات وتصحيحها وحذفها، وفترات الاحتفاظ بها، وبيانات مسؤول التواصل ستُحدد قبل الإطلاق. زر حذف الحساب الحالي للعرض فقط.'**
+  String get privacyControlBody;
+
+  /// No description provided for @termsUseTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الغرض من التطبيق'**
+  String get termsUseTitle;
+
+  /// No description provided for @termsUseBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'قطره دم مشروع يهدف لتسهيل التواصل حول احتياجات التبرع بالدم. النسخة الحالية تعرض التصميم فقط ولا تؤكد وجود طلبات حقيقية أو متبرعين أو حجوزات.'**
+  String get termsUseBody;
+
+  /// No description provided for @termsAccuracyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المحتوى والاستخدام المسؤول'**
+  String get termsAccuracyTitle;
+
+  /// No description provided for @termsAccuracyBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند إطلاق الخدمة، يجب تقديم بيانات صحيحة واحترام خصوصية الآخرين، وعدم نشر طلبات مضللة أو محتوى مسيء أو بيع الدم أو استغلال المحتاجين. إجراءات المراجعة والإبلاغ ستُوضح ضمن الشروط النهائية.'**
+  String get termsAccuracyBody;
+
+  /// No description provided for @termsMedicalTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'التنسيق مع المستشفى'**
+  String get termsMedicalTitle;
+
+  /// No description provided for @termsMedicalBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'التطبيق ليس جهة طبية ولا بديلًا عن المستشفى. أي تبرع فعلي يُنسّق مع جهة طبية مختصة، وهي التي تقرر الأهلية والفحوص المطلوبة. في الطوارئ تواصل مباشرة مع جهة الرعاية المختصة ولا تعتمد على المعاينة.'**
+  String get termsMedicalBody;
+
+  /// No description provided for @aboutBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'قطره دم بيجمع فكرة طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا، مع دعم الإنجليزية. كل الطلبات والإحصائيات المعروضة حاليًا بيانات تجريبية، والخدمات الفعلية هتتضاف بعد اكتمال الواجهات.'**
+  String get aboutBody;
+
+  /// No description provided for @helpRequestTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزاي أعمل طلب؟'**
+  String get helpRequestTitle;
+
+  /// No description provided for @helpRequestBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط علامة + من شريط التنقّل لفتح صفحة إنشاء الطلب. الصفحة حاليًا مؤقتة ولا تنشر طلبات فعلية.'**
+  String get helpRequestBody;
+
+  /// No description provided for @helpDonateTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل زر التبرع بيحجز تبرع؟'**
+  String get helpDonateTitle;
+
+  /// No description provided for @helpDonateBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا، الأزرار الحالية للعرض والتجربة فقط. مش بيتم تسجيل تعهّد أو إرسال إشعار لأي شخص.'**
+  String get helpDonateBody;
+
+  /// No description provided for @helpContactTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'التواصل مع الدعم'**
+  String get helpContactTitle;
+
+  /// No description provided for @helpContactBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.'**
+  String get helpContactBody;
 }
 
 class _AppLocalizationsDelegate

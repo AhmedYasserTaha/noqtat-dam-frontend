@@ -260,4 +260,211 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get matchingFeaturedRequest =>
       'الطلب المميز فوق مطابق لفصيلتك التجريبية O-';
+
+  @override
+  String get staticAccountPreview => 'بيانات تجريبية · للعرض فقط';
+
+  @override
+  String get requestActive => 'نشطة';
+
+  @override
+  String get requestComplete => 'مكتملة';
+
+  @override
+  String get requestCancelled => 'ملغية';
+
+  @override
+  String get demoUniversityHospital => 'مستشفى المنصورة الجامعي';
+
+  @override
+  String get demoTalkhaHospital => 'مستشفى طلخا العام';
+
+  @override
+  String get demoSalamHospital => 'مستشفى السلام';
+
+  @override
+  String get requestDateLabel => 'تاريخ الطلب:';
+
+  @override
+  String get bagsCollectedLabel => 'أكياس تم تجميعها';
+
+  @override
+  String get requestDetails => 'تفاصيل الطلب';
+
+  @override
+  String get demoRequestNotes =>
+      'طلب تجريبي لعرض احتياج المستشفى لفصيلة الدم. بيانات المكان والتبرعات ليست طلبًا حقيقيًا.';
+
+  @override
+  String get editProfileTitle => 'تعديل الملف الشخصي';
+
+  @override
+  String get localEditNotice => 'تغيير تجريبي في الواجهة فقط';
+
+  @override
+  String get savePreview => 'حفظ للمعاينة';
+
+  @override
+  String get demoMemberSince => 'متبرع من يناير 2026';
+
+  @override
+  String get donationsStat => 'تبرعات سابقة';
+
+  @override
+  String get requestsStat => 'طلبات نشطة';
+
+  @override
+  String get monthsSinceStat => 'شهور من آخر تبرع';
+
+  @override
+  String get personalInfoTitle => 'البيانات الشخصية';
+
+  @override
+  String get emailLabel => 'البريد الإلكتروني';
+
+  @override
+  String get demoGovernorate => 'الدقهلية';
+
+  @override
+  String get birthDateLabel => 'تاريخ الميلاد';
+
+  @override
+  String get genderLabel => 'النوع';
+
+  @override
+  String get maleLabel => 'ذكر';
+
+  @override
+  String get donationInfoTitle => 'بيانات التبرع';
+
+  @override
+  String get lastDonationLabel => 'آخر تبرع';
+
+  @override
+  String get availabilityLabel => 'متاح للتبرع';
+
+  @override
+  String get donationHistoryTitle => 'سجل التبرعات';
+
+  @override
+  String get demoDonationHistory =>
+      '23/07/2026 · مستشفى المنصورة الجامعي\n12/03/2026 · مستشفى طلخا العام\n08/01/2026 · مستشفى السلام\n\nسجل تجريبي، لا يثبت أهلية التبرع.';
+
+  @override
+  String get settingsTitle => 'الإعدادات';
+
+  @override
+  String get languageLabel => 'لغة التطبيق';
+
+  @override
+  String get languagePreviewBody =>
+      'الواجهة متاحة بالعربية والإنجليزية. تغيير اللغة من الإعدادات هيتضاف لاحقًا.';
+
+  @override
+  String get supportAndLegalTitle => 'المساعدة والمعلومات';
+
+  @override
+  String get privacyTitle => 'سياسة الخصوصية';
+
+  @override
+  String get termsTitle => 'الشروط والأحكام';
+
+  @override
+  String get aboutTitle => 'عن التطبيق';
+
+  @override
+  String get helpTitle => 'المساعدة والأسئلة الشائعة';
+
+  @override
+  String get versionLabel => 'إصدار التطبيق';
+
+  @override
+  String get logoutAction => 'تسجيل الخروج';
+
+  @override
+  String get deleteAccountTitle => 'حذف الحساب';
+
+  @override
+  String get deletePreviewBody =>
+      'ده تأكيد تجريبي لشكل حذف الحساب. مفيش حساب حقيقي هيتحذف أو بيانات هتتمسح.';
+
+  @override
+  String get keepAccountAction => 'الاحتفاظ بالحساب';
+
+  @override
+  String get confirmPreviewAction => 'تأكيد المعاينة';
+
+  @override
+  String get noAccountDeleted => 'دي معاينة بس. لم يتم حذف أي حساب أو بيانات.';
+
+  @override
+  String get policyDraftNotice =>
+      'مسودة تجريبية لعرض الواجهة، وليست سياسة نهائية أو شروط استخدام سارية. تُراجع وتُحدّث قبل تشغيل الخدمات الفعلية.';
+
+  @override
+  String get privacyDataTitle => 'البيانات في النسخة الحالية';
+
+  @override
+  String get privacyDataBody =>
+      'الملف والطلبات المعروضة بيانات ثابتة للتجربة. تعديل الاسم أو التفضيلات يغيّر الواجهة مؤقتًا ولا يحفظ بيانات حساب على Firebase. تهيئة Firebase موجودة، لكن ميزات الحسابات والطلبات غير مفعّلة.';
+
+  @override
+  String get privacyContactTitle => 'بيانات التواصل والموقع';
+
+  @override
+  String get privacyContactBody =>
+      'عند تفعيل الخدمة، يلزم توضيح البيانات التي تُجمع وسبب جمعها ومن يطلع عليها، خصوصًا رقم الهاتف والموقع وفصيلة الدم. لا تستخدم أرقام أشخاص أو بيانات مرضى حقيقية في هذه المعاينة.';
+
+  @override
+  String get privacyControlTitle => 'حقوق المستخدم والتواصل';
+
+  @override
+  String get privacyControlBody =>
+      'وسائل طلب الوصول للبيانات وتصحيحها وحذفها، وفترات الاحتفاظ بها، وبيانات مسؤول التواصل ستُحدد قبل الإطلاق. زر حذف الحساب الحالي للعرض فقط.';
+
+  @override
+  String get termsUseTitle => 'الغرض من التطبيق';
+
+  @override
+  String get termsUseBody =>
+      'قطره دم مشروع يهدف لتسهيل التواصل حول احتياجات التبرع بالدم. النسخة الحالية تعرض التصميم فقط ولا تؤكد وجود طلبات حقيقية أو متبرعين أو حجوزات.';
+
+  @override
+  String get termsAccuracyTitle => 'المحتوى والاستخدام المسؤول';
+
+  @override
+  String get termsAccuracyBody =>
+      'عند إطلاق الخدمة، يجب تقديم بيانات صحيحة واحترام خصوصية الآخرين، وعدم نشر طلبات مضللة أو محتوى مسيء أو بيع الدم أو استغلال المحتاجين. إجراءات المراجعة والإبلاغ ستُوضح ضمن الشروط النهائية.';
+
+  @override
+  String get termsMedicalTitle => 'التنسيق مع المستشفى';
+
+  @override
+  String get termsMedicalBody =>
+      'التطبيق ليس جهة طبية ولا بديلًا عن المستشفى. أي تبرع فعلي يُنسّق مع جهة طبية مختصة، وهي التي تقرر الأهلية والفحوص المطلوبة. في الطوارئ تواصل مباشرة مع جهة الرعاية المختصة ولا تعتمد على المعاينة.';
+
+  @override
+  String get aboutBody =>
+      'قطره دم بيجمع فكرة طلبات الدم والمتبرعين في مكان واحد. التصميم عربي أولًا، مع دعم الإنجليزية. كل الطلبات والإحصائيات المعروضة حاليًا بيانات تجريبية، والخدمات الفعلية هتتضاف بعد اكتمال الواجهات.';
+
+  @override
+  String get helpRequestTitle => 'إزاي أعمل طلب؟';
+
+  @override
+  String get helpRequestBody =>
+      'اضغط علامة + من شريط التنقّل لفتح صفحة إنشاء الطلب. الصفحة حاليًا مؤقتة ولا تنشر طلبات فعلية.';
+
+  @override
+  String get helpDonateTitle => 'هل زر التبرع بيحجز تبرع؟';
+
+  @override
+  String get helpDonateBody =>
+      'لا، الأزرار الحالية للعرض والتجربة فقط. مش بيتم تسجيل تعهّد أو إرسال إشعار لأي شخص.';
+
+  @override
+  String get helpContactTitle => 'التواصل مع الدعم';
+
+  @override
+  String get helpContactBody =>
+      'قنوات الدعم الرسمية لم تُحدد بعد. بيانات البريد والهاتف في البروفايل أمثلة وليست جهة دعم حقيقية.';
 }

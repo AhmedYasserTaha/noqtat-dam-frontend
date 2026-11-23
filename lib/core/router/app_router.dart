@@ -9,10 +9,28 @@ import '../../features/auth/presentation/pages/complete_profile_page.dart';
 import '../../features/home_feed/presentation/pages/home_feed_page.dart';
 import '../../features/blood_request/presentation/pages/blood_request_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/profile/presentation/pages/info_page.dart';
+import '../../features/blood_request/presentation/pages/my_requests_page.dart';
 
 GoRouter createRouter() => GoRouter(
   initialLocation: '/auth',
   routes: [
+    GoRoute(
+      path: '/privacy',
+      builder: (context, state) => const InfoPage(kind: ProfileInfo.privacy),
+    ),
+    GoRoute(
+      path: '/terms',
+      builder: (context, state) => const InfoPage(kind: ProfileInfo.terms),
+    ),
+    GoRoute(
+      path: '/about',
+      builder: (context, state) => const InfoPage(kind: ProfileInfo.about),
+    ),
+    GoRoute(
+      path: '/help',
+      builder: (context, state) => const InfoPage(kind: ProfileInfo.help),
+    ),
     GoRoute(path: '/auth', builder: (context, state) => const AuthPage()),
     GoRoute(
       path: '/auth/register',
@@ -38,9 +56,7 @@ GoRouter createRouter() => GoRouter(
         ),
         GoRoute(
           path: '/requests',
-          builder: (context, state) => PendingTabPage(
-            title: AppLocalizations.of(context)!.myRequestsTab,
-          ),
+          builder: (context, state) => const MyRequestsPage(),
         ),
         GoRoute(
           path: '/profile',

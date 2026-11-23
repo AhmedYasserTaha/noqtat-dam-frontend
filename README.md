@@ -11,7 +11,12 @@ retained for future feature implementation.
 
 - Login, registration and password-recovery forms without validation or required fields.
 - Home preview, sample cards, filters and independent bottom navigation.
-- Placeholder map, my requests, profile, create-request and complete-profile pages.
+- Static my-requests tabs (active/completed/cancelled) with preview detail sheets.
+- Profile with sample personal/donation details, donation history, temporary name
+  and phone edits, local availability/notification toggles and logout navigation.
+- Privacy/terms draft pages, help/FAQ, app information and a simulated delete-account
+  confirmation. No real deletion or profile writes. Policy text is preview copy.
+- Placeholder map, create-request and complete-profile pages.
 - White theme, bundled Cairo fonts, project SVG icons, Arabic RTL and English.
 - Offline governorate/district selectors. Data source, license and revision:
   assets/data/egypt/README.md.
