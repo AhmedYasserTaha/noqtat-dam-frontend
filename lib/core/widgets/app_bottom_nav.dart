@@ -5,7 +5,7 @@ import '../constants/app_icons.dart';
 import '../theme/app_colors.dart';
 import 'app_icon.dart';
 
-enum AppNavDestination { home, map, requests, profile }
+enum AppNavDestination { home, requests, profile }
 
 /// Presentation only: routing is supplied by the surrounding app shell.
 class AppBottomNav extends StatelessWidget {
@@ -44,13 +44,6 @@ class AppBottomNav extends StatelessWidget {
                     t.home,
                     AppIcons.homeOutline,
                     AppIcons.homeFilled,
-                  ),
-                  _item(
-                    context,
-                    AppNavDestination.map,
-                    t.mapTab,
-                    AppIcons.locationPin,
-                    AppIcons.locationPin,
                   ),
                   Expanded(
                     child: Center(

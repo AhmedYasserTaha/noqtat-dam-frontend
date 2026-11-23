@@ -19,7 +19,7 @@ retained for future feature implementation.
 - Create-request UI with blood type, bag count, hospital, location, urgency,
   optional date/time, phone and notes. Review/edit/confirm flow is local only;
   confirmation does not publish, save, notify or change the static request list.
-- Placeholder map and complete-profile pages.
+- Placeholder complete-profile page. The map tab is currently removed.
 - White theme, bundled Cairo fonts, project SVG icons, Arabic RTL and English.
 - Offline governorate/district selectors. Data source, license and revision:
   assets/data/egypt/README.md.

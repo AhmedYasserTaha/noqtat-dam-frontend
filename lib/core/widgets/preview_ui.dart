@@ -84,10 +84,13 @@ class PreviewRow extends StatelessWidget {
         trailing ??
         (onTap == null
             ? null
-            : const AppIcon(
-                AppIcons.arrowBackRtl,
-                color: AppColors.muted,
-                size: 17,
+            : Transform.flip(
+                flipX: Directionality.of(context) == TextDirection.rtl,
+                child: const AppIcon(
+                  AppIcons.arrowBackRtl,
+                  color: AppColors.muted,
+                  size: 17,
+                ),
               )),
     onTap: onTap,
   );

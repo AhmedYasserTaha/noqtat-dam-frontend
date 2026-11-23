@@ -34,10 +34,6 @@ void main() {
           routes: [
             GoRoute(path: '/', builder: (_, state) => const HomeFeedPage()),
             GoRoute(
-              path: '/map',
-              builder: (_, state) => const PendingTabPage(title: 'الخريطة'),
-            ),
-            GoRoute(
               path: '/requests',
               builder: (_, state) => const PendingTabPage(title: 'طلباتي'),
             ),
@@ -99,12 +95,7 @@ void main() {
       findsOneWidget,
     );
 
-    await tester.tap(find.text('الخريطة'));
-    await tester.pumpAndSettle();
-    expect(
-      tester.widget<AppBottomNav>(find.byType(AppBottomNav)).selected,
-      AppNavDestination.map,
-    );
+    expect(find.text('الخريطة'), findsNothing);
     await tester.tap(find.text('طلباتي'));
     await tester.pumpAndSettle();
     expect(

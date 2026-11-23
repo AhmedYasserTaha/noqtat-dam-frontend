@@ -1,7 +1,6 @@
 import 'package:go_router/go_router.dart';
 
 import 'app_shell.dart';
-import '../../l10n/app_localizations.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
@@ -49,11 +48,6 @@ GoRouter createRouter() => GoRouter(
           AppShell(location: state.uri.path, child: child),
       routes: [
         GoRoute(path: '/', builder: (context, state) => const HomeFeedPage()),
-        GoRoute(
-          path: '/map',
-          builder: (context, state) =>
-              PendingTabPage(title: AppLocalizations.of(context)!.mapTab),
-        ),
         GoRoute(
           path: '/requests',
           builder: (context, state) => const MyRequestsPage(),

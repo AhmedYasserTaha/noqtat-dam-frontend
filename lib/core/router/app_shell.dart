@@ -8,7 +8,7 @@ class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.child, required this.location});
   final Widget child;
   final String location;
-  static const paths = ['/', '/map', '/requests', '/profile'];
+  static const paths = ['/', '/requests', '/profile'];
 
   @override
   Widget build(BuildContext context) {
