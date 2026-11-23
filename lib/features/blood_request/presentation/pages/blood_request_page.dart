@@ -87,7 +87,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
           children: [
             Text(
               t.reviewRequestTitle,
-              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 8),
             Text(
@@ -98,7 +98,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                 height: 1.8,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             PreviewCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,7 +118,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                           textDirection: TextDirection.ltr,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 26,
+                            fontSize: 22,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -131,7 +131,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                             Text(
                               '$_bags ${t.bagsNeededLabel}',
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 17,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
@@ -189,7 +189,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => Navigator.pop(sheetContext, true),
               child: Text(t.confirmRequestPreview),
@@ -222,7 +222,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
       appBar: AppBar(
         title: Text(
           t.createRequestAction,
-          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
         ),
         leading: IconButton(
           tooltip: MaterialLocalizations.of(context).backButtonTooltip,
@@ -292,7 +292,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                                 ),
                             ],
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
                               Expanded(
@@ -311,7 +311,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                                     : null,
                                 icon: const Text(
                                   '−',
-                                  style: TextStyle(fontSize: 28),
+                                  style: TextStyle(fontSize: 22),
                                 ),
                               ),
                               SizedBox(
@@ -320,7 +320,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                                   '$_bags',
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                    fontSize: 24,
+                                    fontSize: 17,
                                     fontWeight: FontWeight.w900,
                                   ),
                                 ),
@@ -541,11 +541,11 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                 child: AppIcon(AppIcons.check, color: Colors.white, size: 40),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 18),
             Text(
               t.requestPreviewDone,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 12),
             Text(

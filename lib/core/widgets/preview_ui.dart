@@ -5,8 +5,13 @@ import '../theme/app_colors.dart';
 import 'app_icon.dart';
 
 class PreviewCard extends StatelessWidget {
-  const PreviewCard({super.key, required this.child});
+  const PreviewCard({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(12),
+  });
   final Widget child;
+  final EdgeInsets padding;
   @override
   Widget build(BuildContext context) => Material(
     color: Colors.white,
@@ -15,7 +20,7 @@ class PreviewCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
     ),
     clipBehavior: Clip.antiAlias,
-    child: Padding(padding: const EdgeInsets.all(16), child: child),
+    child: Padding(padding: padding, child: child),
   );
 }
 
@@ -34,18 +39,18 @@ class PreviewPage extends StatelessWidget {
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 512),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 4),
           Text(
             subtitle,
             style: const TextStyle(fontSize: 11, color: AppColors.muted),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 14),
           ...children,
         ],
       ),
@@ -78,6 +83,12 @@ class PreviewRow extends StatelessWidget {
         ? null
         : Text(
             value!,
+            textDirection: RegExp(r'^[+0-9A-Za-z]').hasMatch(value!)
+                ? TextDirection.ltr
+                : Directionality.of(context),
+            textAlign: Directionality.of(context) == TextDirection.rtl
+                ? TextAlign.right
+                : TextAlign.left,
             style: const TextStyle(fontSize: 12, color: AppColors.muted),
           ),
     trailing:

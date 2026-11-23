@@ -34,18 +34,18 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 12),
             Text(
               message,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 13,
                 height: 1.8,
                 color: AppColors.muted,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(AppLocalizations.of(context)!.closeLocations),
@@ -115,7 +115,7 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                     t.authBrand,
                     style: const TextStyle(
                       fontWeight: FontWeight.w900,
-                      fontSize: 25,
+                      fontSize: 21,
                     ),
                   ),
                 ),
@@ -190,7 +190,7 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                     .showSnackBar(SnackBar(content: Text(t.requestCopied)));
               },
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 10),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -208,7 +208,7 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                           color: _filter == index
                               ? Colors.white
                               : AppColors.muted,
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w700,
                         ),
                         shape: const StadiumBorder(),
@@ -232,7 +232,7 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                 urgent: true,
                 onDonate: () => _notice(t.donateAction, t.demoDonationNotice),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
             ],
             if (_filter == 0) ...[
               const CommunityPostCard(),

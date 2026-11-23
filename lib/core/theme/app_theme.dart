@@ -20,10 +20,25 @@ abstract final class AppTheme {
       outline: AppColors.border,
     ),
     textTheme: const TextTheme(
+      bodyLarge: AppTextStyles.body,
       bodyMedium: AppTextStyles.body,
       titleLarge: AppTextStyles.title,
       labelLarge: AppTextStyles.label,
       headlineLarge: AppTextStyles.hero,
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.surface,
+      foregroundColor: AppColors.ink,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      toolbarHeight: 52,
+      titleTextStyle: AppTextStyles.title,
+    ),
+    listTileTheme: const ListTileThemeData(
+      dense: true,
+      minVerticalPadding: 6,
+      minTileHeight: 54,
+      horizontalTitleGap: 12,
     ),
     cardTheme: CardThemeData(
       shape: RoundedRectangleBorder(
@@ -34,7 +49,8 @@ abstract final class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.red,
         foregroundColor: AppColors.surface,
-        minimumSize: const Size(0, 52),
+        minimumSize: const Size(0, 48),
+        textStyle: AppTextStyles.label,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadii.button),
         ),
@@ -42,7 +58,8 @@ abstract final class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(0, 52),
+        minimumSize: const Size(0, 48),
+        textStyle: AppTextStyles.label,
         side: const BorderSide(color: AppColors.border),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadii.button),

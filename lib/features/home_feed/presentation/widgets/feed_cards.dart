@@ -10,7 +10,7 @@ class FeedCard extends StatelessWidget {
     super.key,
     required this.child,
     this.dark = false,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.all(12),
   });
   final Widget child;
   final bool dark;
@@ -20,7 +20,7 @@ class FeedCard extends StatelessWidget {
     padding: padding,
     decoration: BoxDecoration(
       color: dark ? AppColors.ink : Colors.white,
-      borderRadius: BorderRadius.circular(dark ? 28 : 20),
+      borderRadius: BorderRadius.circular(dark ? 22 : 16),
       border: dark ? null : Border.all(color: AppColors.border),
     ),
     child: child,
@@ -37,8 +37,8 @@ class DonationReadinessCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: 38,
+            height: 38,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -58,7 +58,7 @@ class DonationReadinessCard extends StatelessWidget {
                 Text(
                   t.readyToDonate,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -130,7 +130,7 @@ class UrgentRequestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -140,8 +140,8 @@ class UrgentRequestCard extends StatelessWidget {
                 style: TextStyle(
                   color: AppColors.redOnDark,
                   fontWeight: FontWeight.w900,
-                  fontSize: 64,
-                  height: 1.25,
+                  fontSize: 48,
+                  height: 1.15,
                 ),
               ),
               const SizedBox(width: 14),
@@ -153,7 +153,7 @@ class UrgentRequestCard extends StatelessWidget {
                       t.threeBagsNeeded,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 17,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -185,7 +185,7 @@ class UrgentRequestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
           Row(
             children: [
               for (var index = 0; index < 3; index++)
@@ -217,12 +217,12 @@ class UrgentRequestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(
                 child: SizedBox(
-                  height: 50,
+                  height: 44,
                   child: ElevatedButton(
                     onPressed: onDonate,
                     style: ElevatedButton.styleFrom(elevation: 0),
@@ -238,7 +238,7 @@ class UrgentRequestCard extends StatelessWidget {
                         Text(
                           t.iWillDonate,
                           style: const TextStyle(
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -249,8 +249,8 @@ class UrgentRequestCard extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               SizedBox(
-                height: 50,
-                width: 50,
+                height: 44,
+                width: 44,
                 child: OutlinedButton(
                   onPressed: onShare,
                   style: OutlinedButton.styleFrom(
@@ -292,8 +292,8 @@ class CompactRequestCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: 38,
+            height: 38,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: urgent ? AppColors.red : const Color(0xFFF2ECE9),
@@ -304,7 +304,7 @@ class CompactRequestCard extends StatelessWidget {
               textDirection: TextDirection.ltr,
               style: TextStyle(
                 color: urgent ? Colors.white : AppColors.ink,
-                fontSize: 20,
+                fontSize: 17,
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -317,7 +317,7 @@ class CompactRequestCard extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 13,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -400,7 +400,7 @@ class CommunityPostCard extends StatelessWidget {
                     Text(
                       t.demoDonorName,
                       style: const TextStyle(
-                        fontSize: 15,
+                        fontSize: 13,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -419,7 +419,7 @@ class CommunityPostCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             t.demoDonationPost,
-            style: const TextStyle(fontSize: 14, height: 1.85),
+            style: const TextStyle(fontSize: 13, height: 1.6),
           ),
         ],
       ),

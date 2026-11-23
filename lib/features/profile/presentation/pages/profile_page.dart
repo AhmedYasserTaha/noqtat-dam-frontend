@@ -85,10 +85,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _section(String label) => Padding(
-    padding: const EdgeInsets.only(top: 22, bottom: 10),
+    padding: const EdgeInsets.only(top: 16, bottom: 8),
     child: Text(
       label,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
     ),
   );
 
@@ -102,65 +102,88 @@ class _ProfilePageState extends State<ProfilePage> {
         PreviewCard(
           child: Column(
             children: [
-              Container(
-                width: 76,
-                height: 76,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF6EEEB),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: const Center(
-                  child: AppIcon(
-                    AppIcons.userFilled,
-                    color: AppColors.red,
-                    size: 36,
+              Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF6EEEB),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: const Center(
+                      child: AppIcon(
+                        AppIcons.userFilled,
+                        color: AppColors.red,
+                        size: 23,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                _name ?? t.demoDonorName,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              Text(
-                t.demoMemberSince,
-                style: const TextStyle(fontSize: 12, color: AppColors.muted),
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.red,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Text(
-                  'O-',
-                  textDirection: TextDirection.ltr,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _name ?? t.demoDonorName,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        Text(
+                          t.demoMemberSince,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: AppColors.muted,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.red,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      'O-',
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
+                height: 40,
                 child: OutlinedButton(
                   onPressed: _edit,
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(0, 40),
+                    textStyle: const TextStyle(
+                      fontFamily: 'Cairo',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                   child: Text(t.editProfileTitle),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Row(
           children: [
             for (final (number, label) in [
@@ -172,22 +195,32 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: PreviewCard(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 8,
+                    ),
                     child: Column(
                       children: [
                         Text(
                           number,
                           style: const TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.w900,
                             color: AppColors.red,
                           ),
                         ),
-                        Text(
-                          label,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: AppColors.muted,
+                        SizedBox(
+                          height: 30,
+                          child: Center(
+                            child: Text(
+                              label,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: AppColors.muted,
+                              ),
+                            ),
                           ),
                         ),
                       ],

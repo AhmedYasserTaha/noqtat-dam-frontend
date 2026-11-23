@@ -111,7 +111,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                         textDirection: TextDirection.ltr,
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontSize: 22,
+                          fontSize: 17,
                           color: request.status == 0
                               ? Colors.white
                               : AppColors.ink,

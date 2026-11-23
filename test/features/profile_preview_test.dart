@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'dart:ui' as ui;
+
 import 'package:damy/core/router/app_router.dart';
 import 'package:damy/core/theme/app_theme.dart';
 import 'package:damy/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -12,20 +17,41 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
+      final fonts = FontLoader('Cairo');
+      for (final weight in ['Regular', 'SemiBold', 'Bold', 'Black']) {
+        fonts.addFont(rootBundle.load('assets/fonts/Cairo-$weight.ttf'));
+      }
+      await fonts.load();
       final router = createRouter();
       addTearDown(router.dispose);
+      final previewKey = GlobalKey();
       await tester.pumpWidget(
-        MaterialApp.router(
-          routerConfig: router,
-          theme: AppTheme.light,
-          locale: const Locale('ar'),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
+        RepaintBoundary(
+          key: previewKey,
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: router,
+            theme: AppTheme.light,
+            locale: const Locale('ar'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
         ),
       );
       router.go('/profile');
       await tester.pumpAndSettle();
       expect(find.text('محمد أحمد'), findsOneWidget);
+      await tester.runAsync(() async {
+        final boundary =
+            previewKey.currentContext!.findRenderObject()!
+                as RenderRepaintBoundary;
+        final image = await boundary.toImage();
+        final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+        final file = File('build/profile-preview.png');
+        await file.parent.create(recursive: true);
+        await file.writeAsBytes(bytes!.buffer.asUint8List());
+        image.dispose();
+      });
       await tester.tap(find.text('تعديل الملف الشخصي'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextFormField).first, 'أحمد علي');

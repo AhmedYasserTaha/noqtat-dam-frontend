@@ -45,7 +45,7 @@ class InfoPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
         ),
       ),
       body: Align(
@@ -53,7 +53,7 @@ class InfoPage extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 512),
           child: ListView(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(18),
             children: [
               Container(
                 padding: const EdgeInsets.all(14),
@@ -72,7 +72,7 @@ class InfoPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
               for (final (heading, body) in sections) ...[
                 Text(
                   heading,
@@ -86,11 +86,11 @@ class InfoPage extends StatelessWidget {
                   body,
                   style: const TextStyle(
                     fontSize: 14,
-                    height: 2,
+                    height: 1.75,
                     color: AppColors.muted,
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 18),
               ],
             ],
           ),
