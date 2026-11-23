@@ -47,10 +47,10 @@ dependencies:
   get_it: ^9.3.0
   fpdart: ^1.2.0
   equatable: ^3.0.0
+  alice: ^1.0.0
+  alice_dio: 1.0.7
   dio: ^5.11.1
   flutter_secure_storage: ^11.2.0
-  talker_flutter: 5.2.0
-  talker_dio_logger: 5.2.0
 
 dev_dependencies:
   flutter_test:
@@ -82,3 +82,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/Cairo-Black.ttf
           weight: 900
+
+dependency_overrides:
+  alice:
+    path: third_party/alice

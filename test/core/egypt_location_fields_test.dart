@@ -1,5 +1,10 @@
 import 'package:damy/core/theme/app_theme.dart';
 import 'package:damy/core/utils/egypt_locations.dart';
+import 'package:damy/core/di/injection.dart';
+import 'package:damy/core/storage/token_store.dart';
+
+import '../helpers/fake_backend.dart';
+
 import 'package:damy/core/widgets/egypt_location_fields.dart';
 import 'package:damy/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +15,10 @@ void main() {
     tester,
   ) async {
     final selections = <String?>[];
+    final backend = FakeBackend();
+    final tokens = MemoryTokenStore();
+    configureDependencies(tokens: tokens, api: backend.client(tokens));
+    addTearDown(getIt.reset);
     await tester.runAsync(() => EgyptLocations.load());
     await tester.pumpWidget(
       MaterialApp(
@@ -67,6 +76,15 @@ void main() {
     expect(find.text('مركز المنصورة'), findsNothing);
     expect(find.text('اختار المركز أو القسم'), findsOneWidget);
     expect(selections.last, isNull);
+    expect(backend.callsTo('GET /locations/governorates'), hasLength(1));
+    expect(
+      backend.callsTo('GET /locations/governorates/EG12/districts'),
+      hasLength(1),
+    );
+    expect(
+      backend.callsTo('GET /locations/governorates/EG01/districts'),
+      hasLength(1),
+    );
     expect(tester.takeException(), isNull);
   });
 }

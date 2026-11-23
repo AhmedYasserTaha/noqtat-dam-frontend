@@ -52,7 +52,7 @@ String? authRedirect(AuthState auth, String path) {
 }
 
 GoRouter createRouter(AuthCubit auth, Listenable refresh) => GoRouter(
-  navigatorKey: ApiChecker.navigatorKey,
+  navigatorKey: ApiChecker.navigatorKey(),
   initialLocation: '/splash',
   refreshListenable: refresh,
   redirect: (context, state) => authRedirect(auth.state, state.uri.path),

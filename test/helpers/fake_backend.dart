@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:damy/core/network/api_client.dart';
@@ -22,6 +23,37 @@ class RecordedCall {
 /// In-process stand-in for the backend: the real ApiClient, repositories and
 /// cubits run, only the network is replaced.
 class FakeBackend implements HttpClientAdapter {
+  FakeBackend() {
+    List<Map<String, dynamic>> locations(String file) =>
+        (jsonDecode(
+          File('assets/data/egypt/$file.json').readAsStringSync(),
+        ) as List<dynamic>).map((row) {
+          final json = row as Map<String, dynamic>;
+          final name = json['name'] as Map<String, dynamic>;
+          final parent = json['parent'] as Map<String, dynamic>?;
+          return <String, dynamic>{
+            'id': json['id'],
+            'ar': name['local'],
+            'en': name['en'],
+            if (parent != null) 'governorateId': parent['id'],
+          };
+        }).toList();
+    on(
+      'GET /locations/governorates',
+      (_) => FakeReply(locations('governorates')),
+    );
+    final districts = locations('districts');
+    for (final governorate in locations('governorates')) {
+      final id = governorate['id'];
+      on(
+        'GET /locations/governorates/$id/districts',
+        (_) => FakeReply(
+          districts.where((d) => d['governorateId'] == id).toList(),
+        ),
+      );
+    }
+  }
+
   final Map<String, FakeReply Function(RequestOptions)> routes = {};
   final List<RecordedCall> calls = [];
 

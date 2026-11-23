@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
+import '../di/injection.dart';
+import '../network/locations_api.dart';
 import '../utils/egypt_locations.dart';
 
 class EgyptLocationFields extends StatefulWidget {
@@ -14,25 +16,28 @@ class EgyptLocationFields extends StatefulWidget {
 }
 
 class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
-  late Future<EgyptLocations> _data;
+  late final LocationsApi _locations;
+  late Future<List<EgyptLocation>> _data;
+  Future<List<EgyptLocation>>? _districts;
   EgyptLocation? _governorate;
   EgyptLocation? _district;
 
   @override
   void initState() {
     super.initState();
-    _data = EgyptLocations.load();
+    _locations = getIt<LocationsApi>();
+    _data = _locations.governorates();
   }
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    return FutureBuilder<EgyptLocations>(
+    return FutureBuilder<List<EgyptLocation>>(
       future: _data,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return TextButton(
-            onPressed: () => setState(() => _data = EgyptLocations.load()),
+            onPressed: () => setState(() => _data = _locations.governorates()),
             child: Text(t.retry),
           );
         }
@@ -51,7 +56,7 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                       final selected = await _pick(
                         context,
                         t.selectGovernorate,
-                        data.governorates,
+                        data,
                       );
                       if (!mounted ||
                           selected == null ||
@@ -61,30 +66,54 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                       setState(() {
                         _governorate = selected;
                         _district = null;
+                        _districts = _locations.districts(selected.id);
                       });
                       widget.onChanged?.call(_governorate, null);
                     },
             ),
             const SizedBox(height: 16),
-            _field(
-              key: ValueKey('district-${_governorate?.id}'),
-              label: t.districtLabel,
-              hint: _governorate == null
-                  ? t.chooseGovernorateFirst
-                  : t.selectDistrict,
-              value: _district,
-              onTap: data == null || _governorate == null
-                  ? null
-                  : () async {
-                      final selected = await _pick(
-                        context,
-                        t.selectDistrict,
-                        data.districtsOf(_governorate!.id),
-                      );
-                      if (!mounted || selected == null) return;
-                      setState(() => _district = selected);
-                      widget.onChanged?.call(_governorate, _district);
-                    },
+            FutureBuilder<List<EgyptLocation>>(
+              future: _districts,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return TextButton(
+                    onPressed: () => setState(() {
+                      _districts = _locations.districts(_governorate!.id);
+                    }),
+                    child: Text(t.retry),
+                  );
+                }
+                final items = snapshot.connectionState == ConnectionState.done
+                    ? snapshot.data
+                    : null;
+                return _field(
+                  key: ValueKey('district-${_governorate?.id}'),
+                  label: t.districtLabel,
+                  hint: _governorate == null
+                      ? t.chooseGovernorateFirst
+                      : items == null
+                      ? t.loadingLocations
+                      : t.selectDistrict,
+                  value: _district,
+                  onTap: items == null || _governorate == null
+                      ? null
+                      : () async {
+                          final governorateId = _governorate!.id;
+                          final selected = await _pick(
+                            context,
+                            t.selectDistrict,
+                            items,
+                          );
+                          if (!mounted ||
+                              selected == null ||
+                              _governorate?.id != governorateId) {
+                            return;
+                          }
+                          setState(() => _district = selected);
+                          widget.onChanged?.call(_governorate, _district);
+                        },
+                );
+              },
             ),
           ],
         );

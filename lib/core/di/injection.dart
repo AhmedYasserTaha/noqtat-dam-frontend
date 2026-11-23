@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 
+import '../network/locations_api.dart';
+
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/data/repositories_impl/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
@@ -37,6 +39,8 @@ void configureDependencies({TokenStore? tokens, ApiClient? api}) {
     ..registerSingleton<ApiClient>(
       api ?? ApiClient(baseUrl: apiBaseUrl, tokens: store),
     );
+
+  getIt.registerLazySingleton(() => LocationsApi(getIt<ApiClient>()));
 
   // auth
   getIt

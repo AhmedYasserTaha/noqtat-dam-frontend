@@ -1,39 +1,61 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:talker_dio_logger/talker_dio_logger.dart';
-import 'package:talker_flutter/talker_flutter.dart';
+import 'package:flutter/foundation.dart';
+import 'package:alice/alice.dart';
+import 'package:alice/model/alice_configuration.dart';
+import 'package:alice_dio/alice_dio_adapter.dart';
+import 'package:dio/dio.dart';
 
-/// Standard network inspector, available during development only.
-abstract final class ApiChecker {
-  static final navigatorKey = GlobalKey<NavigatorState>();
-  static Talker? _talker;
+enum AppEnvironment { dev, staging, prod }
 
-  static bool get isActive => _talker != null;
+class ApiChecker {
+  static bool isEnabled = kDebugMode;
 
-  static void init() {
-    if (!kDebugMode || _talker != null) return;
-    _talker = TalkerFlutter.init(
-      settings: TalkerSettings(useConsoleLogs: false),
+  static final _fallbackNavigatorKey = GlobalKey<NavigatorState>();
+  static GlobalKey<NavigatorState>? _appNavigatorKey;
+  static Alice? _alice;
+  static AliceDioAdapter? _adapter;
+
+  static void init({
+    required AppEnvironment environment,
+    GlobalKey<NavigatorState>? navigatorKey,
+    bool? enableInspector,
+  }) {
+    _appNavigatorKey = navigatorKey ?? _appNavigatorKey;
+    if (!kDebugMode || !(enableInspector ?? isEnabled) || _alice != null) {
+      return;
+    }
+
+    _alice = Alice(
+      configuration: AliceConfiguration(
+        showNotification: false,
+        // The floating button opens Alice without requiring device sensors.
+        showInspectorOnShake: false,
+        directionality: TextDirection.ltr,
+      ),
     );
+    if (navigatorKey != null) {
+      _alice!.setNavigatorKey(navigatorKey);
+    }
+    _adapter = AliceDioAdapter();
+    _alice!.addAdapter(_adapter!);
   }
 
   static void attachToDio(Dio dio) {
-    if (_talker == null || dio.interceptors.any((i) => i is TalkerDioLogger)) {
-      return;
+    if (!kDebugMode) return;
+    if (_adapter != null && !dio.interceptors.contains(_adapter)) {
+      dio.interceptors.add(_adapter!);
     }
-    dio.interceptors.add(TalkerDioLogger(talker: _talker));
   }
 
-  static void open() {
-    final navigator = navigatorKey.currentState;
-    final talker = _talker;
-    if (navigator == null || talker == null) return;
-    navigator.push<void>(
-      MaterialPageRoute(
-        builder: (_) =>
-            TalkerScreen(talker: talker, appBarTitle: 'API Checker'),
-      ),
-    );
+  static GlobalKey<NavigatorState>? navigatorKey() =>
+      _appNavigatorKey ?? _alice?.getNavigatorKey() ?? _fallbackNavigatorKey;
+
+  static void openInspector() {
+    if (!kDebugMode) return;
+    _alice?.showInspector();
   }
+
+  static void openAlice() => openInspector();
+
+  static bool get isActive => kDebugMode && _alice != null;
 }
