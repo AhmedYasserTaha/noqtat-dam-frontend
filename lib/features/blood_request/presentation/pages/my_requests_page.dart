@@ -88,7 +88,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
               ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
         for (final request in requests.where((r) => r.status == _tab)) ...[
           PreviewCard(
             child: Column(
@@ -97,14 +97,14 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                 Row(
                   children: [
                     Container(
-                      width: 54,
-                      height: 54,
+                      width: 40,
+                      height: 40,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: request.status == 0
                             ? AppColors.red
                             : const Color(0xFFF5F0ED),
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         request.type,
@@ -118,7 +118,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,14 +126,14 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                           Text(
                             request.title,
                             style: const TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w900,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             statusLabels[request.status],
                             style: const TextStyle(
-                              fontSize: 12,
+                              fontSize: 11,
                               color: AppColors.red,
                               fontWeight: FontWeight.w700,
                             ),
@@ -143,37 +143,73 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
-                PreviewRow(label: request.hospital, icon: AppIcons.locationPin),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const AppIcon(
+                      AppIcons.locationPin,
+                      color: AppColors.muted,
+                      size: 15,
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        request.hospital,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.muted,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Text(
                   '${t.requestDateLabel} ${request.date}',
-                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
+                  style: const TextStyle(fontSize: 11, color: AppColors.muted),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
                 LinearProgressIndicator(
                   value: request.collected / request.total,
-                  minHeight: 6,
+                  minHeight: 4,
                   borderRadius: BorderRadius.circular(8),
                   backgroundColor: AppColors.border,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  '${request.collected} / ${request.total} · ${t.bagsCollectedLabel}',
-                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
-                ),
-                const SizedBox(height: 14),
-                OutlinedButton(
-                  onPressed: () => showPreviewMessage(
-                    context,
-                    t.requestDetails,
-                    '${request.title}\n${request.hospital}\n${t.demoRequestNotes}\n\n${t.staticAccountPreview}',
-                  ),
-                  child: Text(t.requestDetails),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${request.collected} / ${request.total} · ${t.bagsCollectedLabel}',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: AppColors.muted,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size(0, 36),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        textStyle: const TextStyle(
+                          fontFamily: 'Cairo',
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      onPressed: () => showPreviewMessage(
+                        context,
+                        t.requestDetails,
+                        '${request.title}\n${request.hospital}\n${t.demoRequestNotes}\n\n${t.staticAccountPreview}',
+                      ),
+                      child: Text(t.requestDetails),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 10),
         ],
         ElevatedButton(
           onPressed: () => context.push('/blood-request'),
