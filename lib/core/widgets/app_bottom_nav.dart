@@ -24,7 +24,7 @@ class AppBottomNav extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     return SafeArea(
       top: false,
-      minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      minimum: const EdgeInsets.fromLTRB(20, 0, 20, 8),
       child: Center(
         heightFactor: 1,
         child: ConstrainedBox(
@@ -32,10 +32,10 @@ class AppBottomNav extends StatelessWidget {
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: AppColors.ink,
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(22),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               child: Row(
                 children: [
                   _item(
@@ -56,21 +56,21 @@ class AppBottomNav extends StatelessWidget {
                     child: Center(
                       heightFactor: 1,
                       child: SizedBox(
-                        width: 54,
-                        height: 54,
+                        width: 46,
+                        height: 46,
                         child: IconButton(
                           tooltip: t.createRequestAction,
                           style: IconButton.styleFrom(
                             backgroundColor: AppColors.red,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(19),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                           onPressed: onCreate,
                           icon: const AppIcon(
                             AppIcons.plus,
                             color: Colors.white,
-                            size: 28,
+                            size: 24,
                           ),
                         ),
                       ),
@@ -117,17 +117,17 @@ class AppBottomNav extends StatelessWidget {
           onTap: () => onSelected(destination),
           borderRadius: BorderRadius.circular(20),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                AppIcon(active ? activeIcon : icon, color: color, size: 23),
-                const SizedBox(height: 3),
+                AppIcon(active ? activeIcon : icon, color: color, size: 20),
+                const SizedBox(height: 2),
                 Text(
                   label,
                   maxLines: 1,
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 10,
                     fontWeight: FontWeight.w700,
                     color: color,
                   ),
