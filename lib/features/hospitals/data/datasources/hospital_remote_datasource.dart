@@ -7,7 +7,7 @@ class HospitalRemoteDataSource {
   final ApiClient api;
 
   Future<List<HospitalModel>> inGovernorate(String governorateId) async => [
-    for (final item in await api.getList(
+    for (final item in await api.getAll(
       ApiConstants.hospitals,
       query: {'governorateId': governorateId},
     ))

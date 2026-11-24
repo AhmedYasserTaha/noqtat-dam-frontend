@@ -35,8 +35,8 @@ class ProfileRemoteDataSource {
       );
 
   Future<List<DonationRecord>> donations() async {
-    // The endpoint returns a bare JSON array.
-    final list = await api.getList(ApiConstants.donations);
+    // Pages through the list; also accepts the legacy bare array.
+    final list = await api.getAll(ApiConstants.donations);
     return [for (final j in list) donationFromJson(j as Json)];
   }
 

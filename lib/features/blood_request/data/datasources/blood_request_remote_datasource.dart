@@ -50,10 +50,9 @@ class BloodRequestRemoteDataSource {
   );
 
   Future<List<DonorPledge>> pledges(int requestId) async => [
-    for (final p in await api.getList(ApiConstants.requestPledges(requestId)))
+    for (final p in await api.getAll(ApiConstants.requestPledges(requestId)))
       DonorPledge(
         donorName: (p as Json)['donorName'] as String? ?? '',
-        donorPhone: (p['donorPhone'] as String?)?.trim(),
         bloodType: p['bloodType'] as String? ?? '',
         status:
             PledgeStatus.fromApi(p['status'] as String?) ??

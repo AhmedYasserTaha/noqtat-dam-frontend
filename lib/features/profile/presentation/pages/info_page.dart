@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/di/injection.dart';
+import '../../../content/data/content_remote_datasource.dart';
+import '../../../content/presentation/content_cubit.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -8,10 +13,32 @@ enum ProfileInfo { privacy, terms, about, help }
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key, required this.kind});
   final ProfileInfo kind;
+
+  String get _slug => switch (kind) {
+    ProfileInfo.privacy => 'privacy',
+    ProfileInfo.terms => 'terms',
+    ProfileInfo.about => 'about',
+    ProfileInfo.help => 'faq',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) =>
+          ContentCubit(getIt<ContentRemoteDataSource>())..load(_slug),
+      child: _InfoView(kind: kind),
+    );
+  }
+}
+
+class _InfoView extends StatelessWidget {
+  const _InfoView({required this.kind});
+  final ProfileInfo kind;
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    final (title, sections) = switch (kind) {
+    final remote = context.watch<ContentCubit>().state;
+    var (title, sections) = switch (kind) {
       ProfileInfo.privacy => (
         t.privacyTitle,
         [
@@ -41,6 +68,14 @@ class InfoPage extends StatelessWidget {
         ],
       ),
     };
+    var notice = kind == ProfileInfo.privacy || kind == ProfileInfo.terms
+        ? t.policyDraftNotice
+        : t.staticAccountPreview;
+    if (remote != null) {
+      title = remote.title;
+      sections = [for (final s in remote.sections) (s.heading, s.body)];
+      notice = remote.isDraft ? (remote.notice ?? t.policyDraftNotice) : '';
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -55,23 +90,22 @@ class InfoPage extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(18),
             children: [
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF7F2EF),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Text(
-                  kind == ProfileInfo.privacy || kind == ProfileInfo.terms
-                      ? t.policyDraftNotice
-                      : t.staticAccountPreview,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    height: 1.8,
-                    color: AppColors.muted,
+              if (notice.isNotEmpty)
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF7F2EF),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Text(
+                    notice,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      height: 1.8,
+                      color: AppColors.muted,
+                    ),
                   ),
                 ),
-              ),
               const SizedBox(height: 18),
               for (final (heading, body) in sections) ...[
                 Text(

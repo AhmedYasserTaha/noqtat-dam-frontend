@@ -13,7 +13,7 @@ class LocationsApi {
       _load(ApiConstants.districts(governorateId));
 
   Future<List<EgyptLocation>> _load(String path) async {
-    final rows = await api.getList(path);
+    final rows = await api.getAll(path);
     return rows.map((row) {
       final json = row as Map<String, dynamic>;
       return EgyptLocation(
