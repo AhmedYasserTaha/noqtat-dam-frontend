@@ -1463,13 +1463,13 @@ abstract class AppLocalizations {
   /// No description provided for @openHospitalInMaps.
   ///
   /// In ar, this message translates to:
-  /// **'روح للمستشفى في الخرائط'**
+  /// **'عرض موقع المستشفى'**
   String get openHospitalInMaps;
 
   /// No description provided for @searchHospitalInMaps.
   ///
   /// In ar, this message translates to:
-  /// **'دوّر عليها في الخرائط'**
+  /// **'البحث عن موقع المستشفى'**
   String get searchHospitalInMaps;
 
   /// No description provided for @hospitalLocationUnreviewed.
@@ -1517,7 +1517,7 @@ abstract class AppLocalizations {
   /// No description provided for @selfReportedBanner.
   ///
   /// In ar, this message translates to:
-  /// **'{count} قالوا إنهم تبرعوا. لو استلمت منهم الدم فعلًا، زوّد عدد الأكياس بالزرار + تحت.'**
+  /// **'{count, plural, =1{متبرع واحد سجّل إنه تبرّع لطلبك.} =2{متبرعين سجّلوا إنهم تبرّعوا لطلبك.} few{{count} متبرعين سجّلوا إنهم تبرّعوا لطلبك.} other{{count} متبرع سجّلوا إنهم تبرّعوا لطلبك.}}'**
   String selfReportedBanner(int count);
 
   /// No description provided for @coveredHint.

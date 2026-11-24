@@ -796,10 +796,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseFromHospitalList => 'Choose from the hospital list';
 
   @override
-  String get openHospitalInMaps => 'Go to the hospital in Maps';
+  String get openHospitalInMaps => 'View hospital location';
 
   @override
-  String get searchHospitalInMaps => 'Search for it in Maps';
+  String get searchHospitalInMaps => 'Find hospital location';
 
   @override
   String get hospitalLocationUnreviewed =>
@@ -831,7 +831,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String selfReportedBanner(int count) {
-    return '$count say they donated. If you received their blood, raise the bag count with + below.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count donors reported donating to your request.',
+      one: 'One donor reported donating to your request.',
+    );
+    return '$_temp0';
   }
 
   @override

@@ -314,49 +314,67 @@ class _RequestDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _DetailsSection(
-            tint: true,
+            padding: const EdgeInsets.all(12),
             child: Row(
               children: [
                 Container(
-                  width: 58,
-                  height: 58,
+                  width: 48,
+                  height: 52,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: AppColors.red,
+                    color: AppColors.red.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
                     request.bloodType,
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
+                      color: AppColors.red,
+                      fontSize: 21,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        t.bagsNeeded(request.bagsNeeded),
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: open
+                                ? const Color(0xFFEDF7F0)
+                                : const Color(0xFFF2F2F2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            request.status == RequestStatus.fulfilled
+                                ? t.requestComplete
+                                : request.status == RequestStatus.cancelled
+                                ? t.requestCancelled
+                                : t.requestActive,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                              color: open
+                                  ? const Color(0xFF287447)
+                                  : AppColors.muted,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        request.status == RequestStatus.fulfilled
-                            ? t.requestComplete
-                            : request.status == RequestStatus.cancelled
-                            ? t.requestCancelled
-                            : t.requestActive,
+                        t.bagsNeeded(request.bagsNeeded),
                         style: const TextStyle(
-                          fontSize: 12,
-                          color: AppColors.muted,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     ],
@@ -385,6 +403,8 @@ class _RequestDetails extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 HospitalMapButton(
+                  showLocationNote: false,
+                  showCredit: false,
                   location: request.hospitalLocation,
                   searchQuery:
                       '${request.hospitalName} ${placeLine(request, lang)}',
@@ -547,15 +567,25 @@ class _RequestDetails extends StatelessWidget {
 }
 
 class _DetailsSection extends StatelessWidget {
-  const _DetailsSection({required this.child, this.tint = false});
+  const _DetailsSection({
+    required this.child,
+    this.padding = const EdgeInsets.all(16),
+  });
   final Widget child;
-  final bool tint;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(16),
+    padding: padding,
     decoration: BoxDecoration(
-      color: tint ? AppColors.red.withValues(alpha: 0.04) : Colors.white,
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.05),
+          blurRadius: 14,
+          offset: const Offset(0, 4),
+        ),
+      ],
       border: Border.all(color: AppColors.ink.withValues(alpha: 0.09)),
       borderRadius: BorderRadius.circular(18),
     ),
@@ -592,8 +622,15 @@ class _PledgesList extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: AppColors.ink.withValues(alpha: 0.025),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
             ),
             child: ListTile(
               dense: true,
@@ -621,6 +658,10 @@ class _PledgesList extends StatelessWidget {
               ),
               trailing: p.donorPhone?.isNotEmpty == true
                   ? IconButton.filledTonal(
+                      style: IconButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.red,
+                      ),
                       tooltip: t.callRequester,
                       icon: const Icon(Icons.phone_outlined, size: 20),
                       onPressed: () async {

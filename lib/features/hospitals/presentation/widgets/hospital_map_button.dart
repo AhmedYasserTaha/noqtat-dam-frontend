@@ -15,9 +15,13 @@ class HospitalMapButton extends StatelessWidget {
     super.key,
     required this.location,
     required this.searchQuery,
+    this.showLocationNote = true,
+    this.showCredit = true,
   });
   final HospitalLocation? location;
   final String searchQuery;
+  final bool showLocationNote;
+  final bool showCredit;
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +64,11 @@ class HospitalMapButton extends StatelessWidget {
                 icon: icon,
                 label: Text(label),
               ),
-        if (place != null && place.creditsOpenStreetMap) ...[
+        if (showCredit && place != null && place.creditsOpenStreetMap) ...[
           const SizedBox(height: 6),
           const OsmCredit(),
         ],
-        if (note != null) ...[
+        if (showLocationNote && note != null) ...[
           const SizedBox(height: 6),
           Text(
             note,

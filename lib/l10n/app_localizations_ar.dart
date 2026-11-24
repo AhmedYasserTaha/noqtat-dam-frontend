@@ -802,10 +802,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chooseFromHospitalList => 'اختار من قائمة المستشفيات';
 
   @override
-  String get openHospitalInMaps => 'روح للمستشفى في الخرائط';
+  String get openHospitalInMaps => 'عرض موقع المستشفى';
 
   @override
-  String get searchHospitalInMaps => 'دوّر عليها في الخرائط';
+  String get searchHospitalInMaps => 'البحث عن موقع المستشفى';
 
   @override
   String get hospitalLocationUnreviewed =>
@@ -837,7 +837,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String selfReportedBanner(int count) {
-    return '$count قالوا إنهم تبرعوا. لو استلمت منهم الدم فعلًا، زوّد عدد الأكياس بالزرار + تحت.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count متبرع سجّلوا إنهم تبرّعوا لطلبك.',
+      few: '$count متبرعين سجّلوا إنهم تبرّعوا لطلبك.',
+      two: 'متبرعين سجّلوا إنهم تبرّعوا لطلبك.',
+      one: 'متبرع واحد سجّل إنه تبرّع لطلبك.',
+    );
+    return '$_temp0';
   }
 
   @override
