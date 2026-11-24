@@ -342,6 +342,8 @@
   "locationDeniedForever": "الموقع متقفل للتطبيق. اختار منطقتك بدلها أو اسمح بيه من إعدادات الموبايل.",
   "locationServiceOff": "الموقع مقفول على الموبايل. اختار منطقتك بدلها.",
   "locationFailed": "معرفتش أحدد موقعك. اختار منطقتك بدلها.",
-  "distanceNote": "المسافة خط مستقيم لنقطة المستشفى. المستشفيات من غير نقطة بتيجي في الآخر.",
-  "@distanceApprox": {"placeholders": {"km": {"type": "String"}}}
+    "@distanceApprox": {"placeholders": {"km": {"type": "String"}}},
+  "distanceApproxUnreviewed": "تقريبًا {km} كم (خط مستقيم، الموقع غير مراجع)",
+  "distanceNote": "المسافة خط مستقيم لنقطة المستشفى على الخريطة. النقط دي من بيانات خرائط تطوعية ومش متراجعة، فاتأكد من مكان المستشفى قبل ما تروح. المستشفيات من غير نقطة بتيجي في الآخر.",
+  "@distanceApproxUnreviewed": {"placeholders": {"km": {"type": "String"}}}
 }
