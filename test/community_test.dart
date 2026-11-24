@@ -220,7 +220,7 @@ void main() {
     final b = FakeBackend();
     stubHome(b, unread: 2);
     b.on(
-      'GET /me/notifications',
+      'GET /notifications',
       (_) => FakeReply({
         'items': [
           {
@@ -237,7 +237,7 @@ void main() {
         'nextBefore': null,
       }),
     );
-    b.on('POST /me/notifications/read', (_) => FakeReply({'ok': true}));
+    b.on('POST /notifications/read', (_) => FakeReply({'ok': true}));
     await _boot(tester, b);
     expect(find.byKey(const Key('bell-badge')), findsOneWidget);
     await tester.tap(find.byKey(const Key('bell-badge')));
@@ -246,7 +246,7 @@ void main() {
     await tester.tap(find.byKey(const Key('notification-7')));
     await tester.pumpAndSettle();
     expect(
-      (b.callsTo('POST /me/notifications/read').single.body as Map)['ids'],
+      (b.callsTo('POST /notifications/read').single.body as Map)['ids'],
       [7],
     );
   });
@@ -288,28 +288,30 @@ void main() {
   ) async {
     final b = FakeBackend();
     stubHome(b);
-    b.on('PATCH /me', (_) => FakeReply(meJson()));
+    b.on('PATCH /fcm-token', (_) => FakeReply(meJson()));
     await _boot(tester, b);
-    final patches = b.callsTo('PATCH /me');
+    final patches = b.callsTo('PATCH /fcm-token');
     expect(
       patches.any((c) => (c.body as Map)['fcmToken'] == 'device-token-1'),
       isTrue,
     );
     expect(patches, hasLength(1));
+    // Session validation also supplies the home profile; no second GET /profile.
+    expect(b.callsTo('GET /profile'), hasLength(1));
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pumpAndSettle();
-    expect(b.callsTo('PATCH /me'), hasLength(2));
+    expect(b.callsTo('PATCH /fcm-token'), hasLength(2));
 
     await tester.tap(find.text(t.myAccountTab).last);
     await tester.pumpAndSettle();
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pumpAndSettle();
-    expect(b.callsTo('PATCH /me'), hasLength(2));
+    expect(b.callsTo('PATCH /fcm-token'), hasLength(2));
 
     await tester.tap(find.text(t.home).last);
     await tester.pumpAndSettle();
-    expect(b.callsTo('PATCH /me'), hasLength(3));
+    expect(b.callsTo('PATCH /fcm-token'), hasLength(3));
   });
 }

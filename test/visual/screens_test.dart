@@ -42,8 +42,8 @@ void main() {
       needed: 2,
       collected: 0,
     );
-    backend.on('GET /me', (_) => FakeReply(meJson()));
-    backend.on('GET /me/donations', (_) => FakeReply(<Object?>[]));
+    backend.on('GET /profile', (_) => FakeReply(meJson()));
+    backend.on('GET /profile/donations', (_) => FakeReply(<Object?>[]));
     backend.on(
       'GET /home',
       (_) => FakeReply({

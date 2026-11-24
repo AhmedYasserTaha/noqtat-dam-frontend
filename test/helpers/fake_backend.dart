@@ -181,8 +181,8 @@ void stubHome(
   int unread = 0,
 }) {
   final list = requests ?? [requestJson(id: 8, hospital: 'مستشفى المنصورة')];
-  b.on('GET /me', (_) => FakeReply(meJson()));
-  b.on('GET /me/donations', (_) => FakeReply(<Object?>[]));
+  b.on('GET /profile', (_) => FakeReply(meJson()));
+  b.on('GET /profile/donations', (_) => FakeReply(<Object?>[]));
   b.on(
     'GET /home',
     (_) => FakeReply({

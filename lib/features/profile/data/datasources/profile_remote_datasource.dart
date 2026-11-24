@@ -10,12 +10,12 @@ class ProfileRemoteDataSource {
   final TokenStore tokens;
 
   Future<UserProfileModel> get() async =>
-      UserProfileModel.fromJson(await api.get(ApiConstants.me));
+      UserProfileModel.fromJson(await api.get(ApiConstants.profile));
 
   Future<UserProfileModel> update(ProfileUpdate u) async =>
       UserProfileModel.fromJson(
         await api.patch(
-          ApiConstants.me,
+          ApiConstants.profile,
           body: {
             if (u.name != null) 'name': u.name,
             if (u.phone != null) 'phone': u.phone,
@@ -35,7 +35,7 @@ class ProfileRemoteDataSource {
   }
 
   Future<void> deleteAccount() async {
-    await api.delete(ApiConstants.me);
+    await api.delete(ApiConstants.profile);
     await tokens.clear();
   }
 }

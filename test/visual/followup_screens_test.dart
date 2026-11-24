@@ -67,7 +67,7 @@ void main() {
       return FakeReply(mine());
     });
     backend.on(
-      'GET /me/notifications',
+      'GET /notifications',
       (_) => FakeReply({
         'items': [
           {
@@ -102,7 +102,7 @@ void main() {
         'nextBefore': null,
       }),
     );
-    backend.on('POST /me/notifications/read', (_) => FakeReply({'ok': true}));
+    backend.on('POST /notifications/read', (_) => FakeReply({'ok': true}));
     final tokens = MemoryTokenStore('saved');
     configureDependencies(tokens: tokens, api: backend.client(tokens));
 

@@ -33,7 +33,7 @@ class PushRegistrar {
     _refresh = null;
     if (_token == null) return;
     try {
-      await _api.patch(ApiConstants.me, body: {'fcmToken': null});
+      await _api.patch(ApiConstants.fcmToken, body: {'fcmToken': null});
     } catch (_) {
       // Best effort: an expired session cannot clear it either.
     }
@@ -42,7 +42,7 @@ class PushRegistrar {
 
   Future<void> _send(String token) async {
     try {
-      await _api.patch(ApiConstants.me, body: {'fcmToken': token});
+      await _api.patch(ApiConstants.fcmToken, body: {'fcmToken': token});
       _token = token;
     } catch (_) {
       // Retried at the next sign-in or token refresh.

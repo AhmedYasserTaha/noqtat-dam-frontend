@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import '../network/locations_api.dart';
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
+import '../../features/profile/data/models/user_profile_model.dart';
 import '../../features/auth/data/repositories_impl/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/usecases/auth_usecases.dart';
@@ -74,7 +75,14 @@ void configureDependencies({
 
   // auth
   getIt
-    ..registerLazySingleton(() => AuthRemoteDataSource(getIt(), getIt()))
+    ..registerLazySingleton(
+      () => AuthRemoteDataSource(
+        getIt(),
+        getIt(),
+        onSessionRestored: (json) =>
+            getIt<ProfileCubit>().seed(UserProfileModel.fromJson(json)),
+      ),
+    )
     ..registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt()))
     ..registerLazySingleton(() => RegisterUser(getIt()))
     ..registerLazySingleton(() => LoginUser(getIt()))

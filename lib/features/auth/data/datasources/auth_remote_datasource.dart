@@ -5,9 +5,10 @@ import '../../domain/entities/auth_user.dart';
 import '../models/auth_user_model.dart';
 
 class AuthRemoteDataSource {
-  AuthRemoteDataSource(this.api, this.tokens);
+  AuthRemoteDataSource(this.api, this.tokens, {this.onSessionRestored});
   final ApiClient api;
   final TokenStore tokens;
+  final void Function(Json user)? onSessionRestored;
 
   Stream<void> get sessionExpired => api.onUnauthorized;
 
@@ -41,7 +42,10 @@ class AuthRemoteDataSource {
   Future<AuthUserModel?> restore() async {
     if (await tokens.read() == null) return null;
     try {
-      return AuthUserModel.fromJson(await api.get(ApiConstants.me));
+      final json = await api.get(ApiConstants.profile);
+      final user = AuthUserModel.fromJson(json);
+      onSessionRestored?.call(json);
+      return user;
     } on ApiException catch (e) {
       if (e.failure.code == 'unauthorized') {
         await tokens.clear();

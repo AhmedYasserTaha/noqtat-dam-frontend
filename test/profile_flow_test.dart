@@ -39,12 +39,12 @@ void main() {
 
   testWidgets('availability toggle patches the server', (tester) async {
     final (backend, _) = await boot(tester);
-    backend.on('PATCH /me', (_) => FakeReply(meJson(isAvailable: false)));
+    backend.on('PATCH /profile', (_) => FakeReply(meJson(isAvailable: false)));
     await tester.tap(find.text(t.myAccountTab).last);
     await tester.pumpAndSettle();
     await tester.tap(find.byType(Switch).first);
     await tester.pumpAndSettle();
-    expect(backend.callsTo('PATCH /me').single.body, {'isAvailable': false});
+    expect(backend.callsTo('PATCH /profile').single.body, {'isAvailable': false});
   });
 
   testWidgets('logout clears the token and returns to login', (tester) async {
@@ -59,11 +59,11 @@ void main() {
     expect(await tokens.read(), isNull);
   });
 
-  testWidgets('delete account calls DELETE /me then returns to login', (
+  testWidgets('delete account calls DELETE /profile then returns to login', (
     tester,
   ) async {
     final (backend, tokens) = await boot(tester);
-    backend.on('DELETE /me', (_) => FakeReply({'ok': true}));
+    backend.on('DELETE /profile', (_) => FakeReply({'ok': true}));
     await tester.tap(find.text(t.myAccountTab).last);
     await tester.pumpAndSettle();
     final del = find.widgetWithText(TextButton, t.deleteAccountTitle);
@@ -72,7 +72,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(t.deleteAccountConfirm));
     await tester.pumpAndSettle();
-    expect(backend.callsTo('DELETE /me'), hasLength(1));
+    expect(backend.callsTo('DELETE /profile'), hasLength(1));
     expect(find.text(t.welcomeBack), findsOneWidget);
     expect(await tokens.read(), isNull);
   });

@@ -53,14 +53,20 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GetDonationHistory _history;
   final DeleteAccount _delete;
 
-  Future<void> load() async {
+  /// The session restore response already contains the full profile.
+  void seed(UserProfile profile) =>
+      emit(ProfileState(status: ProfileStatus.ready, profile: profile));
+
+  Future<void> load({bool reuseExisting = false}) async {
     if (state.profile == null) emit(const ProfileState());
-    final result = await _get(const NoParams());
-    if (isClosed) return;
-    result.fold(
-      (f) => emit(state.copyWith(status: ProfileStatus.failure, failure: f)),
-      (p) => emit(state.copyWith(status: ProfileStatus.ready, profile: p)),
-    );
+    if (!reuseExisting || state.profile == null) {
+      final result = await _get(const NoParams());
+      if (isClosed) return;
+      result.fold(
+        (f) => emit(state.copyWith(status: ProfileStatus.failure, failure: f)),
+        (p) => emit(state.copyWith(status: ProfileStatus.ready, profile: p)),
+      );
+    }
     final history = await _history(const NoParams());
     if (isClosed) return;
     history.fold((_) {}, (d) => emit(state.copyWith(donations: d)));

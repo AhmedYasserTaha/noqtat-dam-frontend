@@ -151,23 +151,23 @@ void main() {
 
   group('profile and session', () {
     test('update sends only what changed', () async {
-      backend.on('PATCH /me', (_) => FakeReply(meJson(isAvailable: false)));
+      backend.on('PATCH /profile', (_) => FakeReply(meJson(isAvailable: false)));
       final repo = ProfileRepositoryImpl(ProfileRemoteDataSource(api, tokens));
       final p = (await repo.update(const ProfileUpdate(isAvailable: false)))
           .getOrElse((_) => throw StateError('failed'));
       expect(p.isAvailable, isFalse);
-      expect(backend.callsTo('PATCH /me').single.body, {'isAvailable': false});
+      expect(backend.callsTo('PATCH /profile').single.body, {'isAvailable': false});
     });
 
     test('deleting the account clears the stored token', () async {
-      backend.on('DELETE /me', (_) => FakeReply({'ok': true}));
+      backend.on('DELETE /profile', (_) => FakeReply({'ok': true}));
       final repo = ProfileRepositoryImpl(ProfileRemoteDataSource(api, tokens));
       expect((await repo.deleteAccount()).isRight(), isTrue);
       expect(await tokens.read(), isNull);
     });
 
     test('a failed delete keeps the token', () async {
-      backend.on('DELETE /me', (_) => FakeReply({'error': 'x'}, 500));
+      backend.on('DELETE /profile', (_) => FakeReply({'error': 'x'}, 500));
       final repo = ProfileRepositoryImpl(ProfileRemoteDataSource(api, tokens));
       expect((await repo.deleteAccount()).isLeft(), isTrue);
       expect(await tokens.read(), 'tok');
@@ -176,7 +176,7 @@ void main() {
     test(
       '401 on a request that carried a token signals session expiry',
       () async {
-        backend.on('GET /me', (_) => FakeReply({'error': 'unauthorized'}, 401));
+        backend.on('GET /profile', (_) => FakeReply({'error': 'unauthorized'}, 401));
         final expired = api.onUnauthorized.first;
         await ProfileRepositoryImpl(ProfileRemoteDataSource(api, tokens)).get();
         await expired.timeout(const Duration(seconds: 1));

@@ -12,11 +12,12 @@ abstract final class ApiConstants {
   static const forgotPassword = '/auth/forgot-password';
   static const resetPassword = '/auth/reset-password';
 
-  // Account and notifications (also used to register/clear the FCM token).
-  static const me = '/me';
-  static const donations = '/me/donations';
-  static const notifications = '/me/notifications';
-  static const notificationsRead = '/me/notifications/read';
+  // Account and notifications.
+  static const profile = '/profile';
+  static const fcmToken = '/fcm-token';
+  static const donations = '/profile/donations';
+  static const notifications = '/notifications';
+  static const notificationsRead = '/notifications/read';
 
   // Locations and hospitals.
   static const governorates = '/locations/governorates';

@@ -37,7 +37,7 @@ class _HomeFeedPageState extends State<HomeFeedPage>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) getIt<PushRegistrar>().onSignedIn();
     });
-    context.read<ProfileCubit>().load();
+    context.read<ProfileCubit>().load(reuseExisting: true);
     context.read<FeedCubit>().load();
   }
 

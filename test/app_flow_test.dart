@@ -110,7 +110,7 @@ void main() {
 
   testWidgets('an expired saved token falls back to login', (tester) async {
     final backend = FakeBackend()
-      ..on('GET /me', (_) => FakeReply({'error': 'unauthorized'}, 401));
+      ..on('GET /profile', (_) => FakeReply({'error': 'unauthorized'}, 401));
     await _boot(tester, backend, token: 'old');
     expect(find.text('أهلاً بيك تاني'), findsOneWidget);
   });
