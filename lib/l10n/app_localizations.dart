@@ -1622,10 +1622,16 @@ abstract class AppLocalizations {
   /// **'معرفتش أحدد موقعك. اختار منطقتك بدلها.'**
   String get locationFailed;
 
+  /// No description provided for @distanceApproxUnreviewed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقريبًا {km} كم (خط مستقيم، الموقع غير مراجع)'**
+  String distanceApproxUnreviewed(String km);
+
   /// No description provided for @distanceNote.
   ///
   /// In ar, this message translates to:
-  /// **'المسافة خط مستقيم لنقطة المستشفى. المستشفيات من غير نقطة بتيجي في الآخر.'**
+  /// **'المسافة خط مستقيم لنقطة المستشفى على الخريطة. النقط دي من بيانات خرائط تطوعية ومش متراجعة، فاتأكد من مكان المستشفى قبل ما تروح. المستشفيات من غير نقطة بتيجي في الآخر.'**
   String get distanceNote;
 }
 
