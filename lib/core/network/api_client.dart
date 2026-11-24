@@ -74,6 +74,8 @@ class ApiClient {
       _send('POST', path, body: body ?? const {});
   Future<Json> patch(String path, {Object? body}) =>
       _send('PATCH', path, body: body ?? const {});
+  Future<Json> put(String path, {Object? body}) =>
+      _send('PUT', path, body: body ?? const {});
   Future<Json> delete(String path) => _send('DELETE', path);
 
   /// For endpoints that return a JSON array (locations).

@@ -680,4 +680,103 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deleteAccountConfirm => 'حذف نهائي';
+
+  @override
+  String get createChoiceTitle => 'إنت عاوز تنشر إيه؟';
+
+  @override
+  String get createPostOption => 'بوست';
+
+  @override
+  String get createPostHint =>
+      'كلام عادي للمجتمع، والناس تقدر تعمل لايك أو ديس لايك.';
+
+  @override
+  String get createRequestOption => 'طلب دم';
+
+  @override
+  String get createRequestHint => 'طلب محتاج متبرعين بفصيلة معينة في مستشفى.';
+
+  @override
+  String get newPostTitle => 'بوست جديد';
+
+  @override
+  String get newPostField => 'اكتب بوستك';
+
+  @override
+  String get newPostPublish => 'نشر البوست';
+
+  @override
+  String get newPostEmpty => 'اكتب حاجة الأول.';
+
+  @override
+  String get newPostWarning =>
+      'متكتبش بيانات مريض أو أرقام تليفونات في البوست.';
+
+  @override
+  String get postPublished => 'تم نشر البوست.';
+
+  @override
+  String get likeAction => 'لايك';
+
+  @override
+  String get dislikeAction => 'ديس لايك';
+
+  @override
+  String get reportAction => 'إبلاغ';
+
+  @override
+  String get deletePostAction => 'حذف البوست';
+
+  @override
+  String get postDeleted => 'اتحذف البوست.';
+
+  @override
+  String get reportTitle => 'سبب الإبلاغ';
+
+  @override
+  String get reportSpam => 'إعلان أو سبام';
+
+  @override
+  String get reportFake => 'محتوى مزيف';
+
+  @override
+  String get reportAbusive => 'مسيء';
+
+  @override
+  String get reportSensitive => 'فيه بيانات حساسة';
+
+  @override
+  String get reportOther => 'سبب آخر';
+
+  @override
+  String get reportDone =>
+      'تم الإبلاغ وهنخفي ده عنك. المراجعة بتتم يدويًا من صاحب التطبيق، ومفيش إخفاء تلقائي للباقي.';
+
+  @override
+  String get loadMore => 'عرض المزيد';
+
+  @override
+  String get loadMoreFailed => 'تعذر تحميل المزيد.';
+
+  @override
+  String get pledgesTitle => 'المتبرعون المتعهدون';
+
+  @override
+  String get pledgesEmpty => 'لسه محدش اتعهد.';
+
+  @override
+  String get pledgeOnTheWay => 'في الطريق';
+
+  @override
+  String get pledgeDonated => 'قال إنه تبرع';
+
+  @override
+  String get notificationsEmpty => 'مفيش إشعارات لسه.';
+
+  @override
+  String get markAllRead => 'تعليم الكل كمقروء';
+
+  @override
+  String get shareFailedCopied => 'اتنسخ النص لأن المشاركة مش متاحة.';
 }

@@ -13,6 +13,7 @@ import '../../features/blood_request/domain/repositories/blood_request_repositor
 import '../../features/blood_request/domain/usecases/blood_request_usecases.dart';
 import '../../features/blood_request/presentation/cubit/blood_request_cubit.dart';
 import '../../features/blood_request/presentation/cubit/my_requests_cubit.dart';
+import '../../features/blood_request/presentation/cubit/pledges_cubit.dart';
 import '../../features/home_feed/data/datasources/feed_remote_datasource.dart';
 import '../../features/home_feed/data/repositories_impl/feed_repository_impl.dart';
 import '../../features/home_feed/domain/repositories/feed_repository.dart';
@@ -23,6 +24,19 @@ import '../../features/profile/data/repositories_impl/profile_repository_impl.da
 import '../../features/profile/domain/repositories/profile_repository.dart';
 import '../../features/profile/domain/usecases/profile_usecases.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
+import '../../features/community/data/datasources/community_remote_datasource.dart';
+import '../../features/community/data/repositories_impl/community_repository_impl.dart';
+import '../../features/community/domain/repositories/community_repository.dart';
+import '../../features/community/domain/usecases/community_usecases.dart';
+import '../../features/community/presentation/cubit/create_post_cubit.dart';
+import '../../features/notifications/data/datasources/notifications_remote_datasource.dart';
+import '../../features/notifications/data/repositories_impl/notifications_repository_impl.dart';
+import '../../features/notifications/domain/repositories/notifications_repository.dart';
+import '../../features/notifications/domain/usecases/notifications_usecases.dart';
+import '../../features/notifications/presentation/cubit/notifications_cubit.dart';
+import '../utils/push_registrar.dart';
+import '../utils/push_service.dart';
+import '../utils/share_service.dart';
 import '../config/api_config.dart';
 import '../network/api_client.dart';
 import '../storage/token_store.dart';
@@ -31,7 +45,12 @@ final GetIt getIt = GetIt.instance;
 
 /// Registers everything. Pass [tokens] / [api] in tests to avoid platform
 /// plugins and real network calls.
-void configureDependencies({TokenStore? tokens, ApiClient? api}) {
+void configureDependencies({
+  TokenStore? tokens,
+  ApiClient? api,
+  ShareService? share,
+  PushService? push,
+}) {
   getIt.allowReassignment = true; // tests re-run this with fakes
   final store = tokens ?? SecureTokenStore();
   getIt
@@ -41,6 +60,10 @@ void configureDependencies({TokenStore? tokens, ApiClient? api}) {
     );
 
   getIt.registerLazySingleton(() => LocationsApi(getIt<ApiClient>()));
+
+  getIt
+    ..registerSingleton<PushService>(push ?? const NoopPushService())
+    ..registerLazySingleton(() => PushRegistrar(getIt(), getIt()));
 
   // auth
   getIt
@@ -61,6 +84,7 @@ void configureDependencies({TokenStore? tokens, ApiClient? api}) {
         signOutUseCase: getIt(),
         requestReset: getIt(),
         resetPasswordUseCase: getIt(),
+        beforeSignOut: () => getIt<PushRegistrar>().beforeSignOut(),
       ),
     );
 
@@ -90,6 +114,8 @@ void configureDependencies({TokenStore? tokens, ApiClient? api}) {
     ..registerLazySingleton(() => PledgeToDonate(getIt()))
     ..registerLazySingleton(() => ReportDonated(getIt()))
     ..registerLazySingleton(() => CancelPledge(getIt()))
+    ..registerLazySingleton(() => GetRequestPledges(getIt()))
+    ..registerFactory(() => PledgesCubit(getIt()))
     ..registerFactory(() => BloodRequestCubit(getIt()))
     ..registerLazySingleton(() => MyRequestsCubit(getIt(), getIt()));
 
@@ -99,7 +125,41 @@ void configureDependencies({TokenStore? tokens, ApiClient? api}) {
     ..registerLazySingleton<FeedRepository>(() => FeedRepositoryImpl(getIt()))
     ..registerLazySingleton(() => GetHome(getIt()))
     ..registerLazySingleton(() => GetFeed(getIt()))
+    ..registerLazySingleton(() => GetPosts(getIt()))
     ..registerLazySingleton(
-      () => FeedCubit(getIt(), getIt(), getIt(), getIt(), getIt()),
+      () => FeedCubit(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     );
+
+  // community posts
+  getIt
+    ..registerSingleton<ShareService>(share ?? const SharePlusShareService())
+    ..registerLazySingleton(() => CommunityRemoteDataSource(getIt()))
+    ..registerLazySingleton<CommunityRepository>(
+      () => CommunityRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton(() => CreatePost(getIt()))
+    ..registerLazySingleton(() => ReactToPost(getIt()))
+    ..registerLazySingleton(() => DeletePost(getIt()))
+    ..registerLazySingleton(() => ReportContent(getIt()))
+    ..registerFactory(() => CreatePostCubit(getIt()));
+
+  // notifications inbox
+  getIt
+    ..registerLazySingleton(() => NotificationsRemoteDataSource(getIt()))
+    ..registerLazySingleton<NotificationsRepository>(
+      () => NotificationsRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton(() => GetNotifications(getIt()))
+    ..registerLazySingleton(() => MarkNotificationsRead(getIt()))
+    ..registerFactory(() => NotificationsCubit(getIt(), getIt()));
 }

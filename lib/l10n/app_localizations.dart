@@ -1225,6 +1225,198 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حذف نهائي'**
   String get deleteAccountConfirm;
+
+  /// No description provided for @createChoiceTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنت عاوز تنشر إيه؟'**
+  String get createChoiceTitle;
+
+  /// No description provided for @createPostOption.
+  ///
+  /// In ar, this message translates to:
+  /// **'بوست'**
+  String get createPostOption;
+
+  /// No description provided for @createPostHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلام عادي للمجتمع، والناس تقدر تعمل لايك أو ديس لايك.'**
+  String get createPostHint;
+
+  /// No description provided for @createRequestOption.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب دم'**
+  String get createRequestOption;
+
+  /// No description provided for @createRequestHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب محتاج متبرعين بفصيلة معينة في مستشفى.'**
+  String get createRequestHint;
+
+  /// No description provided for @newPostTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بوست جديد'**
+  String get newPostTitle;
+
+  /// No description provided for @newPostField.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب بوستك'**
+  String get newPostField;
+
+  /// No description provided for @newPostPublish.
+  ///
+  /// In ar, this message translates to:
+  /// **'نشر البوست'**
+  String get newPostPublish;
+
+  /// No description provided for @newPostEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب حاجة الأول.'**
+  String get newPostEmpty;
+
+  /// No description provided for @newPostWarning.
+  ///
+  /// In ar, this message translates to:
+  /// **'متكتبش بيانات مريض أو أرقام تليفونات في البوست.'**
+  String get newPostWarning;
+
+  /// No description provided for @postPublished.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نشر البوست.'**
+  String get postPublished;
+
+  /// No description provided for @likeAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'لايك'**
+  String get likeAction;
+
+  /// No description provided for @dislikeAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'ديس لايك'**
+  String get dislikeAction;
+
+  /// No description provided for @reportAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'إبلاغ'**
+  String get reportAction;
+
+  /// No description provided for @deletePostAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف البوست'**
+  String get deletePostAction;
+
+  /// No description provided for @postDeleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتحذف البوست.'**
+  String get postDeleted;
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبب الإبلاغ'**
+  String get reportTitle;
+
+  /// No description provided for @reportSpam.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعلان أو سبام'**
+  String get reportSpam;
+
+  /// No description provided for @reportFake.
+  ///
+  /// In ar, this message translates to:
+  /// **'محتوى مزيف'**
+  String get reportFake;
+
+  /// No description provided for @reportAbusive.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسيء'**
+  String get reportAbusive;
+
+  /// No description provided for @reportSensitive.
+  ///
+  /// In ar, this message translates to:
+  /// **'فيه بيانات حساسة'**
+  String get reportSensitive;
+
+  /// No description provided for @reportOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبب آخر'**
+  String get reportOther;
+
+  /// No description provided for @reportDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الإبلاغ وهنخفي ده عنك. المراجعة بتتم يدويًا من صاحب التطبيق، ومفيش إخفاء تلقائي للباقي.'**
+  String get reportDone;
+
+  /// No description provided for @loadMore.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض المزيد'**
+  String get loadMore;
+
+  /// No description provided for @loadMoreFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل المزيد.'**
+  String get loadMoreFailed;
+
+  /// No description provided for @pledgesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المتبرعون المتعهدون'**
+  String get pledgesTitle;
+
+  /// No description provided for @pledgesEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لسه محدش اتعهد.'**
+  String get pledgesEmpty;
+
+  /// No description provided for @pledgeOnTheWay.
+  ///
+  /// In ar, this message translates to:
+  /// **'في الطريق'**
+  String get pledgeOnTheWay;
+
+  /// No description provided for @pledgeDonated.
+  ///
+  /// In ar, this message translates to:
+  /// **'قال إنه تبرع'**
+  String get pledgeDonated;
+
+  /// No description provided for @notificationsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش إشعارات لسه.'**
+  String get notificationsEmpty;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعليم الكل كمقروء'**
+  String get markAllRead;
+
+  /// No description provided for @shareFailedCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتنسخ النص لأن المشاركة مش متاحة.'**
+  String get shareFailedCopied;
 }
 
 class _AppLocalizationsDelegate

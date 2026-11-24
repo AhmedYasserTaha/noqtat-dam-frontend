@@ -106,9 +106,11 @@ class UrgentRequestCard extends StatelessWidget {
     required this.request,
     required this.onDonate,
     required this.onShare,
+    this.onReport,
   });
   final BloodRequest request;
   final VoidCallback onDonate, onShare;
+  final VoidCallback? onReport;
 
   @override
   Widget build(BuildContext context) {
@@ -305,6 +307,15 @@ class UrgentRequestCard extends StatelessWidget {
                   ),
                 ),
               ),
+              if (onReport != null)
+                PopupMenuButton<String>(
+                  key: Key('urgent-menu-${request.id}'),
+                  iconColor: Colors.white,
+                  onSelected: (_) => onReport!(),
+                  itemBuilder: (_) => [
+                    PopupMenuItem(value: 'report', child: Text(t.reportAction)),
+                  ],
+                ),
             ],
           ),
         ],
@@ -318,9 +329,12 @@ class CompactRequestCard extends StatelessWidget {
     super.key,
     required this.request,
     required this.onDonate,
+    this.onShare,
+    this.onReport,
   });
   final BloodRequest request;
   final VoidCallback onDonate;
+  final VoidCallback? onShare, onReport;
 
   @override
   Widget build(BuildContext context) {
@@ -409,6 +423,19 @@ class CompactRequestCard extends StatelessWidget {
                     ),
                   ),
           ),
+          if (onShare != null || (onReport != null && !request.isMine))
+            PopupMenuButton<String>(
+              key: Key('request-menu-${request.id}'),
+              padding: EdgeInsets.zero,
+              onSelected: (v) =>
+                  v == 'share' ? onShare?.call() : onReport?.call(),
+              itemBuilder: (_) => [
+                if (onShare != null)
+                  PopupMenuItem(value: 'share', child: Text(t.shareRequest)),
+                if (onReport != null && !request.isMine)
+                  PopupMenuItem(value: 'report', child: Text(t.reportAction)),
+              ],
+            ),
         ],
       ),
     );
@@ -416,11 +443,20 @@ class CompactRequestCard extends StatelessWidget {
 }
 
 class CommunityPostCard extends StatelessWidget {
-  const CommunityPostCard({super.key, required this.post});
+  const CommunityPostCard({
+    super.key,
+    required this.post,
+    this.onReact,
+    this.onReport,
+    this.onDelete,
+  });
   final CommunityPost post;
+  final ValueChanged<PostReaction>? onReact;
+  final VoidCallback? onReport, onDelete;
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context).toString();
     return FeedCard(
       child: Column(
@@ -461,12 +497,118 @@ class CommunityPostCard extends StatelessWidget {
                   ],
                 ),
               ),
+              if (post.isMine ? onDelete != null : onReport != null)
+                PopupMenuButton<String>(
+                  key: Key('post-menu-${post.id}'),
+                  padding: EdgeInsets.zero,
+                  onSelected: (v) =>
+                      v == 'delete' ? onDelete?.call() : onReport?.call(),
+                  itemBuilder: (_) => [
+                    if (post.isMine)
+                      PopupMenuItem(
+                        value: 'delete',
+                        child: Text(t.deletePostAction),
+                      )
+                    else
+                      PopupMenuItem(
+                        value: 'report',
+                        child: Text(t.reportAction),
+                      ),
+                  ],
+                ),
             ],
           ),
           const SizedBox(height: 12),
           Text(post.text, style: const TextStyle(fontSize: 13, height: 1.6)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              _ReactionButton(
+                key: Key('like-${post.id}'),
+                icon: post.myReaction == PostReaction.like
+                    ? Icons.thumb_up
+                    : Icons.thumb_up_outlined,
+                label: t.likeAction,
+                count: post.likes,
+                selected: post.myReaction == PostReaction.like,
+                onTap: onReact == null
+                    ? null
+                    : () => onReact!(PostReaction.like),
+              ),
+              const SizedBox(width: 8),
+              _ReactionButton(
+                key: Key('dislike-${post.id}'),
+                icon: post.myReaction == PostReaction.dislike
+                    ? Icons.thumb_down
+                    : Icons.thumb_down_outlined,
+                label: t.dislikeAction,
+                count: post.dislikes,
+                selected: post.myReaction == PostReaction.dislike,
+                onTap: onReact == null
+                    ? null
+                    : () => onReact!(PostReaction.dislike),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
+}
+
+class _ReactionButton extends StatelessWidget {
+  const _ReactionButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.count,
+    required this.selected,
+    required this.onTap,
+  });
+  final IconData icon;
+  final String label;
+  final int count;
+  final bool selected;
+  final VoidCallback? onTap;
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    selected: selected,
+    label: label,
+    child: InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: onTap,
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 44, minWidth: 64),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: selected ? AppColors.ink : Colors.transparent,
+          border: Border.all(
+            color: selected ? AppColors.ink : AppColors.border,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 18,
+              color: selected ? Colors.white : AppColors.ink,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '$count',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 13,
+                color: selected ? Colors.white : AppColors.ink,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

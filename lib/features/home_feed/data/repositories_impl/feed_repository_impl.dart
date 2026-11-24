@@ -15,6 +15,12 @@ class FeedRepositoryImpl implements FeedRepository {
   Future<Either<Failure, HomeData>> home() => safeCall(remote.home);
 
   @override
-  Future<Either<Failure, List<BloodRequest>>> feed(FeedQuery query) =>
-      safeCall(() => remote.feed(query));
+  Future<Either<Failure, PagedList<BloodRequest>>> feed(
+    FeedQuery query, {
+    String? cursor,
+  }) => safeCall(() => remote.feed(query, cursor: cursor));
+
+  @override
+  Future<Either<Failure, PagedList<CommunityPost>>> posts({String? before}) =>
+      safeCall(() => remote.posts(before: before));
 }

@@ -1,5 +1,6 @@
 import '../../../../core/network/api_client.dart';
 import '../../domain/entities/blood_request.dart';
+import '../../domain/entities/donor_pledge.dart';
 import '../models/blood_request_model.dart';
 
 class BloodRequestRemoteDataSource {
@@ -42,6 +43,18 @@ class BloodRequestRemoteDataSource {
       },
     ),
   );
+
+  Future<List<DonorPledge>> pledges(int requestId) async => [
+    for (final p in await api.getList('/requests/$requestId/pledges'))
+      DonorPledge(
+        donorName: (p as Json)['donorName'] as String? ?? '',
+        bloodType: p['bloodType'] as String? ?? '',
+        status:
+            PledgeStatus.fromApi(p['status'] as String?) ??
+            PledgeStatus.onTheWay,
+        updatedAt: DateTime.parse(p['updatedAt'] as String),
+      ),
+  ];
 
   Future<BloodRequestModel> pledge(int id) async =>
       BloodRequestModel.fromJson(await api.post('/requests/$id/pledge'));

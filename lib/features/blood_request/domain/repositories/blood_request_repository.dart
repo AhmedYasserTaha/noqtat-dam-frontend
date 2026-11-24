@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../entities/blood_request.dart';
+import '../entities/donor_pledge.dart';
 
 abstract interface class BloodRequestRepository {
   Future<Either<Failure, BloodRequest>> create(BloodRequestDraft draft);
@@ -14,6 +15,9 @@ abstract interface class BloodRequestRepository {
     RequestStatus? status,
   });
   Future<Either<Failure, BloodRequest>> pledge(int id);
+
+  /// Author only: who pledged and their self-reported status.
+  Future<Either<Failure, List<DonorPledge>>> pledges(int requestId);
 
   /// The donor's own statement that they donated. Not verified by anyone.
   Future<Either<Failure, BloodRequest>> reportDonated(int id);

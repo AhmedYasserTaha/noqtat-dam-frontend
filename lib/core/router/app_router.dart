@@ -12,6 +12,11 @@ import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/auth_state.dart';
 
 import 'app_shell.dart';
+import '../../features/notifications/presentation/cubit/notifications_cubit.dart';
+import '../../features/notifications/presentation/pages/notifications_page.dart';
+import '../../features/community/presentation/cubit/create_post_cubit.dart';
+import '../../features/community/presentation/pages/create_hub_page.dart';
+import '../../features/community/presentation/pages/new_post_page.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
@@ -111,6 +116,24 @@ GoRouter createRouter(AuthCubit auth, Listenable refresh) => GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => getIt<BloodRequestCubit>(),
         child: const BloodRequestPage(),
+      ),
+    ),
+    GoRoute(
+      path: '/create',
+      builder: (context, state) => const CreateHubPage(),
+    ),
+    GoRoute(
+      path: '/new-post',
+      builder: (context, state) => BlocProvider(
+        create: (_) => getIt<CreatePostCubit>(),
+        child: const NewPostPage(),
+      ),
+    ),
+    GoRoute(
+      path: '/notifications',
+      builder: (context, state) => BlocProvider(
+        create: (_) => getIt<NotificationsCubit>(),
+        child: const NotificationsPageView(),
       ),
     ),
   ],

@@ -76,7 +76,9 @@ void main() {
     backend.on(
       'GET /requests/mine',
       (_) => FakeReply({
-        'items': [requestJson(id: 20, isMine: true, hospital: 'مستشفى الاختبار')],
+        'items': [
+          requestJson(id: 20, isMine: true, hospital: 'مستشفى الاختبار'),
+        ],
         'nextBefore': null,
       }),
     );
@@ -139,6 +141,9 @@ void main() {
 
     // create request, full happy path with the location picker
     await tester.tap(find.byTooltip(t.createRequestAction).first);
+    await tester.pumpAndSettle();
+    await shot('06b-create-choice');
+    await tester.tap(find.byKey(const Key('create-choice-request')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('AB+'));
     await tester.tap(find.byTooltip(t.increaseBags));
