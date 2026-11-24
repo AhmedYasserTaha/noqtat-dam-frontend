@@ -283,7 +283,9 @@ void main() {
     expect(find.text(t.pledgeOnTheWay), findsOneWidget);
   });
 
-  testWidgets('push token is sent after sign-in', (tester) async {
+  testWidgets('push token is sent on home entry and every home resume', (
+    tester,
+  ) async {
     final b = FakeBackend();
     stubHome(b);
     b.on('PATCH /me', (_) => FakeReply(meJson()));
@@ -293,5 +295,21 @@ void main() {
       patches.any((c) => (c.body as Map)['fcmToken'] == 'device-token-1'),
       isTrue,
     );
+    expect(patches, hasLength(1));
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(b.callsTo('PATCH /me'), hasLength(2));
+
+    await tester.tap(find.text(t.myAccountTab).last);
+    await tester.pumpAndSettle();
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(b.callsTo('PATCH /me'), hasLength(2));
+
+    await tester.tap(find.text(t.home).last);
+    await tester.pumpAndSettle();
+    expect(b.callsTo('PATCH /me'), hasLength(3));
   });
 }

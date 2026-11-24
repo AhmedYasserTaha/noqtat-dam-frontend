@@ -1,3 +1,4 @@
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../blood_request/data/datasources/blood_request_remote_datasource.dart';
 import '../../../blood_request/data/models/blood_request_model.dart';
@@ -10,7 +11,7 @@ class FeedRemoteDataSource {
   final ApiClient api;
 
   Future<HomeData> home() async {
-    final j = await api.get('/home');
+    final j = await api.get(ApiConstants.home);
     final r = j['readiness'] as Json;
     final urgent = j['closestUrgentRequest'];
     return HomeData(
@@ -34,7 +35,7 @@ class FeedRemoteDataSource {
 
   Future<PagedList<BloodRequest>> feed(FeedQuery q, {String? cursor}) async {
     final body = await api.get(
-      '/requests',
+      ApiConstants.requests,
       query: {
         'filter': q.filter.api,
         'governorateId': q.governorateId,
@@ -49,7 +50,7 @@ class FeedRemoteDataSource {
   }
 
   Future<PagedList<CommunityPost>> posts({String? before}) async {
-    final body = await api.get('/posts', query: {'before': before});
+    final body = await api.get(ApiConstants.posts, query: {'before': before});
     final next = body['nextBefore'];
     return PagedList([
       for (final p in body['items'] as List<dynamic>)

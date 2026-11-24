@@ -1,3 +1,4 @@
+import '../constants/api_constants.dart';
 import '../utils/egypt_locations.dart';
 import 'api_client.dart';
 
@@ -6,11 +7,10 @@ class LocationsApi {
   final ApiClient api;
 
   Future<List<EgyptLocation>> governorates() =>
-      _load('/locations/governorates');
+      _load(ApiConstants.governorates);
 
-  Future<List<EgyptLocation>> districts(String governorateId) => _load(
-    '/locations/governorates/${Uri.encodeComponent(governorateId)}/districts',
-  );
+  Future<List<EgyptLocation>> districts(String governorateId) =>
+      _load(ApiConstants.districts(governorateId));
 
   Future<List<EgyptLocation>> _load(String path) async {
     final rows = await api.getList(path);

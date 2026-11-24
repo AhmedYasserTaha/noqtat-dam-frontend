@@ -1,3 +1,4 @@
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/storage/token_store.dart';
 import '../../domain/entities/auth_user.dart';
@@ -17,7 +18,7 @@ class AuthRemoteDataSource {
 
   Future<AuthUserModel> register(RegisterData d) async => _session(
     await api.post(
-      '/auth/register',
+      ApiConstants.register,
       body: {
         'name': d.name,
         'phone': d.phone,
@@ -30,14 +31,17 @@ class AuthRemoteDataSource {
   );
 
   Future<AuthUserModel> login(String phone, String password) async => _session(
-    await api.post('/auth/login', body: {'phone': phone, 'password': password}),
+    await api.post(
+      ApiConstants.login,
+      body: {'phone': phone, 'password': password},
+    ),
   );
 
   /// `null` when there is no token. A rejected token is cleared.
   Future<AuthUserModel?> restore() async {
     if (await tokens.read() == null) return null;
     try {
-      return AuthUserModel.fromJson(await api.get('/me'));
+      return AuthUserModel.fromJson(await api.get(ApiConstants.me));
     } on ApiException catch (e) {
       if (e.failure.code == 'unauthorized') {
         await tokens.clear();
@@ -50,11 +54,11 @@ class AuthRemoteDataSource {
   Future<void> logout() => tokens.clear();
 
   Future<void> requestPasswordReset(String phone) =>
-      api.post('/auth/forgot-password', body: {'phone': phone});
+      api.post(ApiConstants.forgotPassword, body: {'phone': phone});
 
   Future<void> resetPassword(String phone, String code, String password) =>
       api.post(
-        '/auth/reset-password',
+        ApiConstants.resetPassword,
         body: {'phone': phone, 'code': code, 'newPassword': password},
       );
 }

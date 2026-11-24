@@ -1,3 +1,4 @@
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/storage/token_store.dart';
 import '../../domain/entities/user_profile.dart';
@@ -9,12 +10,12 @@ class ProfileRemoteDataSource {
   final TokenStore tokens;
 
   Future<UserProfileModel> get() async =>
-      UserProfileModel.fromJson(await api.get('/me'));
+      UserProfileModel.fromJson(await api.get(ApiConstants.me));
 
   Future<UserProfileModel> update(ProfileUpdate u) async =>
       UserProfileModel.fromJson(
         await api.patch(
-          '/me',
+          ApiConstants.me,
           body: {
             if (u.name != null) 'name': u.name,
             if (u.phone != null) 'phone': u.phone,
@@ -29,12 +30,12 @@ class ProfileRemoteDataSource {
 
   Future<List<DonationRecord>> donations() async {
     // The endpoint returns a bare JSON array.
-    final list = await api.getList('/me/donations');
+    final list = await api.getList(ApiConstants.donations);
     return [for (final j in list) donationFromJson(j as Json)];
   }
 
   Future<void> deleteAccount() async {
-    await api.delete('/me');
+    await api.delete(ApiConstants.me);
     await tokens.clear();
   }
 }

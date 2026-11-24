@@ -43,7 +43,7 @@ import '../../features/hospitals/domain/repositories/hospital_repository.dart';
 import '../../features/hospitals/domain/usecases/get_hospitals.dart';
 import '../../features/hospitals/presentation/cubit/hospital_list_cubit.dart';
 import '../utils/maps_launcher.dart';
-import '../config/api_config.dart';
+import '../constants/api_constants.dart';
 import '../network/api_client.dart';
 import '../storage/token_store.dart';
 
@@ -63,7 +63,7 @@ void configureDependencies({
   getIt
     ..registerSingleton<TokenStore>(store)
     ..registerSingleton<ApiClient>(
-      api ?? ApiClient(baseUrl: apiBaseUrl, tokens: store),
+      api ?? ApiClient(baseUrl: ApiConstants.baseUrl, tokens: store),
     );
 
   getIt.registerLazySingleton(() => LocationsApi(getIt<ApiClient>()));

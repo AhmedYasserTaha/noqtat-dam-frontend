@@ -13,6 +13,7 @@ import '../../../profile/domain/entities/user_profile.dart';
 import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/utils/share_service.dart';
+import '../../../../core/utils/push_registrar.dart';
 import '../../domain/entities/home_data.dart';
 import '../cubit/feed_cubit.dart';
 import '../widgets/feed_cards.dart';
@@ -25,14 +26,34 @@ class HomeFeedPage extends StatefulWidget {
   State<HomeFeedPage> createState() => _HomeFeedPageState();
 }
 
-class _HomeFeedPageState extends State<HomeFeedPage> {
+class _HomeFeedPageState extends State<HomeFeedPage>
+    with WidgetsBindingObserver {
   static const _filters = RequestFilter.values;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) getIt<PushRegistrar>().onSignedIn();
+    });
     context.read<ProfileCubit>().load();
     context.read<FeedCubit>().load();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed &&
+        mounted &&
+        ModalRoute.of(context)?.isCurrent == true) {
+      getIt<PushRegistrar>().onSignedIn();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   Future<void> _donate(BloodRequest r) async {

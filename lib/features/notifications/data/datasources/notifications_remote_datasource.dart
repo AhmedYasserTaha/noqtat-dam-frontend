@@ -1,3 +1,4 @@
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
 import '../../domain/entities/app_notification.dart';
 
@@ -6,7 +7,10 @@ class NotificationsRemoteDataSource {
   final ApiClient api;
 
   Future<NotificationsPage> list({int? before}) async {
-    final j = await api.get('/me/notifications', query: {'before': before});
+    final j = await api.get(
+      ApiConstants.notifications,
+      query: {'before': before},
+    );
     return NotificationsPage(
       [
         for (final n in j['items'] as List<dynamic>)
@@ -27,7 +31,7 @@ class NotificationsRemoteDataSource {
 
   Future<void> markRead({List<int>? ids}) async {
     await api.post(
-      '/me/notifications/read',
+      ApiConstants.notificationsRead,
       body: ids == null ? {'all': true} : {'ids': ids},
     );
   }

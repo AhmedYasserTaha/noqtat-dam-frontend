@@ -1,3 +1,4 @@
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
 import '../models/hospital_model.dart';
 
@@ -7,7 +8,7 @@ class HospitalRemoteDataSource {
 
   Future<List<HospitalModel>> inGovernorate(String governorateId) async => [
     for (final item in await api.getList(
-      '/hospitals',
+      ApiConstants.hospitals,
       query: {'governorateId': governorateId},
     ))
       HospitalModel.fromJson(item as Map<String, dynamic>),

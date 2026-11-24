@@ -1,3 +1,4 @@
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
 import '../../domain/entities/blood_request.dart';
 import '../../domain/entities/donor_pledge.dart';
@@ -10,7 +11,7 @@ class BloodRequestRemoteDataSource {
   Future<BloodRequestModel> create(BloodRequestDraft d) async =>
       BloodRequestModel.fromJson(
         await api.post(
-          '/requests',
+          ApiConstants.requests,
           body: {
             'bloodType': d.bloodType,
             'bagsNeeded': d.bagsNeeded,
@@ -27,7 +28,10 @@ class BloodRequestRemoteDataSource {
       );
 
   Future<List<BloodRequestModel>> mine(RequestTab tab) async {
-    final body = await api.get('/requests/mine', query: {'tab': tab.api});
+    final body = await api.get(
+      ApiConstants.myRequests,
+      query: {'tab': tab.api},
+    );
     return parseList(body);
   }
 
@@ -37,7 +41,7 @@ class BloodRequestRemoteDataSource {
     RequestStatus? status,
   }) async => BloodRequestModel.fromJson(
     await api.patch(
-      '/requests/$id',
+      ApiConstants.request(id),
       body: {
         if (bagsCollected != null) 'bagsCollected': bagsCollected,
         if (status != null) 'status': status.name,
@@ -46,7 +50,7 @@ class BloodRequestRemoteDataSource {
   );
 
   Future<List<DonorPledge>> pledges(int requestId) async => [
-    for (final p in await api.getList('/requests/$requestId/pledges'))
+    for (final p in await api.getList(ApiConstants.requestPledges(requestId)))
       DonorPledge(
         donorName: (p as Json)['donorName'] as String? ?? '',
         bloodType: p['bloodType'] as String? ?? '',
@@ -57,12 +61,16 @@ class BloodRequestRemoteDataSource {
       ),
   ];
 
-  Future<BloodRequestModel> pledge(int id) async =>
-      BloodRequestModel.fromJson(await api.post('/requests/$id/pledge'));
+  Future<BloodRequestModel> pledge(int id) async => BloodRequestModel.fromJson(
+    await api.post(ApiConstants.requestPledge(id)),
+  );
 
   Future<BloodRequestModel> setPledge(int id, PledgeStatus status) async =>
       BloodRequestModel.fromJson(
-        await api.patch('/requests/$id/pledge', body: {'status': status.api}),
+        await api.patch(
+          ApiConstants.requestPledge(id),
+          body: {'status': status.api},
+        ),
       );
 
   static List<BloodRequestModel> parseList(Json body) => [
