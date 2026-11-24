@@ -375,6 +375,8 @@ class UrgentRequestCard extends StatelessWidget {
   }
 }
 
+String _km(double d) => d < 10 ? d.toStringAsFixed(1) : d.round().toString();
+
 class CompactRequestCard extends StatelessWidget {
   const CompactRequestCard({
     super.key,
@@ -441,11 +443,11 @@ class CompactRequestCard extends StatelessWidget {
                 ),
                 if (distanceKm != null)
                   Text(
-                    t.distanceApprox(
-                      distanceKm! < 10
-                          ? distanceKm!.toStringAsFixed(1)
-                          : distanceKm!.round().toString(),
-                    ),
+                    // Pins are volunteer-edited map data; say so unless a
+                    // reviewer confirmed this one.
+                    (request.hospitalLocation?.isVerified ?? false)
+                        ? t.distanceApprox(_km(distanceKm!))
+                        : t.distanceApproxUnreviewed(_km(distanceKm!)),
                     key: const Key('distance-label'),
                     style: const TextStyle(
                       fontSize: 12,
