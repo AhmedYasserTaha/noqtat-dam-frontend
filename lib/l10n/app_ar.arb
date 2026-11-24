@@ -316,6 +316,8 @@
   "searchHospitalInMaps": "دوّر عليها في الخرائط",
   "hospitalLocationUnreviewed": "مكان المستشفى لسه متراجعش، اتأكد منه في الخرائط.",
   "hospitalTypedByHand": "اسم المستشفى مكتوب بإيد صاحب الطلب، واتأكد إن نتيجة الخرائط هي المستشفى الصح.",
-  "hospitalDataCredit": "مواقع المستشفيات من بيانات © مساهمي OpenStreetMap (رخصة ODbL).",
+  "hospitalDataCredit": "مواقع المستشفيات من بيانات © مساهمي {osm} (رخصة ODbL).",
+  "@hospitalDataCredit": {"placeholders": {"osm": {"type": "String"}}},
+  "hospitalListFailed": "مقدرناش نجيب قائمة المستشفيات دلوقتي، اكتب اسم المستشفى.",
   "mapsOpenFailed": "مقدرناش نفتح الخرائط"
 }

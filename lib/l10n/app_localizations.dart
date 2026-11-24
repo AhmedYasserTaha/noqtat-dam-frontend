@@ -1487,8 +1487,14 @@ abstract class AppLocalizations {
   /// No description provided for @hospitalDataCredit.
   ///
   /// In ar, this message translates to:
-  /// **'مواقع المستشفيات من بيانات © مساهمي OpenStreetMap (رخصة ODbL).'**
-  String get hospitalDataCredit;
+  /// **'مواقع المستشفيات من بيانات © مساهمي {osm} (رخصة ODbL).'**
+  String hospitalDataCredit(String osm);
+
+  /// No description provided for @hospitalListFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'مقدرناش نجيب قائمة المستشفيات دلوقتي، اكتب اسم المستشفى.'**
+  String get hospitalListFailed;
 
   /// No description provided for @mapsOpenFailed.
   ///

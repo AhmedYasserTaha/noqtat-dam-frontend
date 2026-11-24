@@ -7,6 +7,7 @@ import '../../../../core/utils/egypt_locations.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/hospital.dart';
 import '../cubit/hospital_list_cubit.dart';
+import 'osm_credit.dart';
 
 /// Hospital input for the create-request form. When the reviewed directory has
 /// hospitals for the chosen governorate the user picks one (the request then
@@ -126,6 +127,15 @@ class _HospitalFieldState extends State<HospitalField> {
               controller: widget.controller,
               decoration: InputDecoration(hintText: t.hospitalNameHint),
             ),
+            if (state.status == HospitalListStatus.failure)
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Text(
+                  t.hospitalListFailed,
+                  key: const ValueKey('hospital-list-failed'),
+                  style: const TextStyle(fontSize: 11, color: AppColors.muted),
+                ),
+              ),
             if (listed)
               Align(
                 alignment: AlignmentDirectional.centerStart,
@@ -229,13 +239,11 @@ class _HospitalPickerState extends State<_HospitalPicker> {
               onTap: () =>
                   Navigator.pop(context, const _HospitalChoice.other()),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: Text(
-                t.hospitalDataCredit,
-                style: const TextStyle(fontSize: 11, color: AppColors.muted),
+            if (widget.hospitals.any((h) => h.creditsOpenStreetMap))
+              const Padding(
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 12),
+                child: OsmCredit(),
               ),
-            ),
           ],
         ),
       ),

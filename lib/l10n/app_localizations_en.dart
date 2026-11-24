@@ -810,8 +810,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The requester typed the hospital name. Make sure the Maps result is the right hospital.';
 
   @override
-  String get hospitalDataCredit =>
-      'Hospital locations: © OpenStreetMap contributors (ODbL).';
+  String hospitalDataCredit(String osm) {
+    return 'Hospital locations: © $osm contributors (ODbL).';
+  }
+
+  @override
+  String get hospitalListFailed =>
+      'Could not load the hospital list. Type the hospital name.';
 
   @override
   String get mapsOpenFailed => 'Could not open Maps';

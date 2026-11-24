@@ -816,8 +816,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'اسم المستشفى مكتوب بإيد صاحب الطلب، واتأكد إن نتيجة الخرائط هي المستشفى الصح.';
 
   @override
-  String get hospitalDataCredit =>
-      'مواقع المستشفيات من بيانات © مساهمي OpenStreetMap (رخصة ODbL).';
+  String hospitalDataCredit(String osm) {
+    return 'مواقع المستشفيات من بيانات © مساهمي $osm (رخصة ODbL).';
+  }
+
+  @override
+  String get hospitalListFailed =>
+      'مقدرناش نجيب قائمة المستشفيات دلوقتي، اكتب اسم المستشفى.';
 
   @override
   String get mapsOpenFailed => 'مقدرناش نفتح الخرائط';

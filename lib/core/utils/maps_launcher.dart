@@ -10,7 +10,13 @@ abstract interface class MapsLauncher {
   /// Searches Maps for free text. Used only for hospitals typed by hand, whose
   /// position was never reviewed.
   Future<bool> search(String query);
+
+  /// Opens a web page (used for the OpenStreetMap copyright/licence page).
+  Future<bool> openLink(Uri uri);
 }
+
+/// Where OpenStreetMap asks credit links to point.
+final osmCopyrightUri = Uri.https('www.openstreetmap.org', '/copyright');
 
 Uri mapsCoordinatesUri(double latitude, double longitude) => Uri.https(
   'www.google.com',
@@ -30,6 +36,9 @@ class UrlLauncherMapsLauncher implements MapsLauncher {
 
   @override
   Future<bool> search(String query) => _open(mapsSearchUri(query));
+
+  @override
+  Future<bool> openLink(Uri uri) => _open(uri);
 
   Future<bool> _open(Uri uri) async {
     try {

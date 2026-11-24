@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/maps_launcher.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/hospital.dart';
+import 'osm_credit.dart';
 
 /// Opens the hospital in Google Maps. With a directory [location] it opens the
 /// exact coordinates. Without one (old request, name typed by hand) it only
@@ -59,12 +60,9 @@ class HospitalMapButton extends StatelessWidget {
                 icon: icon,
                 label: Text(label),
               ),
-        if (exact) ...[
-          SizedBox(height: note == null ? 6 : 2),
-          Text(
-            t.hospitalDataCredit,
-            style: const TextStyle(fontSize: 11, color: AppColors.muted),
-          ),
+        if (place != null && place.creditsOpenStreetMap) ...[
+          const SizedBox(height: 6),
+          const OsmCredit(),
         ],
         if (note != null) ...[
           const SizedBox(height: 6),

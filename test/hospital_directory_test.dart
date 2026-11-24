@@ -25,6 +25,12 @@ class FakeMaps implements MapsLauncher {
   }
 
   @override
+  Future<bool> openLink(Uri uri) async {
+    opened.add('link:$uri');
+    return ok;
+  }
+
+  @override
   Future<bool> search(String query) async {
     opened.add('search:$query');
     return ok;
@@ -37,6 +43,7 @@ Map<String, dynamic> hospitalJson(
   int id,
   String name, {
   bool verified = false,
+  bool osm = true,
 }) => {
   'id': id,
   'name': name,
@@ -45,6 +52,7 @@ Map<String, dynamic> hospitalJson(
   'latitude': 31.04,
   'longitude': 31.38,
   'isVerified': verified,
+  'dataCredit': osm ? 'openstreetmap' : null,
 };
 
 Future<FakeMaps> _boot(
@@ -53,6 +61,7 @@ Future<FakeMaps> _boot(
   Widget body, {
   FakeMaps? maps,
 }) async {
+  await tester.pumpWidget(const SizedBox());
   final tokens = MemoryTokenStore('saved');
   final fake = maps ?? FakeMaps();
   configureDependencies(
@@ -77,6 +86,50 @@ Future<FakeMaps> _boot(
 }
 
 void main() {
+  testWidgets(
+    'credit for an OSM-sourced location links to the OSM copyright page',
+    (tester) async {
+      final maps = await _boot(
+        tester,
+        FakeBackend(),
+        const HospitalMapButton(
+          location: HospitalLocation(
+            latitude: 31.04,
+            longitude: 31.38,
+            isVerified: false,
+            creditsOpenStreetMap: true,
+          ),
+          searchQuery: 'x',
+        ),
+      );
+      final credit = find.byKey(const ValueKey('osm-credit'));
+      expect(credit, findsOneWidget);
+      final rich = tester.widget<Text>(credit).textSpan! as TextSpan;
+      final link = rich.children!.whereType<TextSpan>().firstWhere(
+        (s) => s.text == 'OpenStreetMap',
+      );
+      (link.recognizer! as dynamic).onTap();
+      await tester.pumpAndSettle();
+      expect(maps.opened, ['link:https://www.openstreetmap.org/copyright']);
+    },
+  );
+
+  testWidgets('no OSM credit when a non-OSM source is shown', (tester) async {
+    await _boot(
+      tester,
+      FakeBackend(),
+      const HospitalMapButton(
+        location: HospitalLocation(
+          latitude: 31.04,
+          longitude: 31.38,
+          isVerified: true,
+        ),
+        searchQuery: 'x',
+      ),
+    );
+    expect(find.byKey(const ValueKey('osm-credit')), findsNothing);
+  });
+
   test('Maps URLs use the official format and need no API key', () {
     expect(
       mapsCoordinatesUri(31.04, 31.38).toString(),
@@ -148,7 +201,7 @@ void main() {
       ),
     );
     expect(find.text(t.hospitalLocationUnreviewed), findsOneWidget);
-    expect(find.text(t.hospitalDataCredit), findsOneWidget);
+    expect(find.byKey(const ValueKey('osm-credit')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('hospital-map-button')));
     await tester.pumpAndSettle();
     expect(maps.opened, ['coords:31.04,31.38']);
@@ -164,7 +217,7 @@ void main() {
       maps: FakeMaps(ok: false),
     );
     expect(find.text(t.hospitalTypedByHand), findsOneWidget);
-    expect(find.text(t.hospitalDataCredit), findsNothing);
+    expect(find.byKey(const ValueKey('osm-credit')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('hospital-map-button')));
     await tester.pumpAndSettle();
     expect(maps.opened, ['search:مستشفى س المنصورة']);
@@ -198,7 +251,7 @@ void main() {
     });
     await tester.tap(find.byKey(const ValueKey('request-hospital-picker')));
     await tester.pumpAndSettle();
-    expect(find.text(t.hospitalDataCredit), findsOneWidget);
+    expect(find.byKey(const ValueKey('osm-credit')), findsOneWidget);
     await tester.tap(find.widgetWithText(ListTile, 'مستشفى الأطفال'));
     await tester.pumpAndSettle();
     expect(controller.text, 'مستشفى الأطفال');
@@ -253,6 +306,7 @@ void main() {
     );
     expect(find.byKey(const ValueKey('request-hospital')), findsOneWidget);
     expect(find.byKey(const ValueKey('request-hospital-picker')), findsNothing);
+    expect(find.byKey(const ValueKey('hospital-list-failed')), findsNothing);
     await getIt.reset();
 
     final failing = FakeBackend();
@@ -267,6 +321,7 @@ void main() {
       ),
     );
     expect(find.byKey(const ValueKey('request-hospital')), findsOneWidget);
+    expect(find.byKey(const ValueKey('hospital-list-failed')), findsOneWidget);
     await getIt.reset();
 
     // No governorate yet: typing is available and nothing is requested.

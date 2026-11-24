@@ -9,6 +9,7 @@ class HospitalModel extends Hospital {
     required super.longitude,
     required super.isVerified,
     super.districtId,
+    super.creditsOpenStreetMap,
   });
 
   factory HospitalModel.fromJson(Map<String, dynamic> j) => HospitalModel(
@@ -19,6 +20,7 @@ class HospitalModel extends Hospital {
     latitude: (j['latitude'] as num).toDouble(),
     longitude: (j['longitude'] as num).toDouble(),
     isVerified: j['isVerified'] as bool? ?? false,
+    creditsOpenStreetMap: j['dataCredit'] == 'openstreetmap',
   );
 
   /// `hospitalLocation` on a blood request, or null when it has none.
@@ -30,6 +32,7 @@ class HospitalModel extends Hospital {
       latitude: lat.toDouble(),
       longitude: lng.toDouble(),
       isVerified: j['isVerified'] as bool? ?? false,
+      creditsOpenStreetMap: j['dataCredit'] == 'openstreetmap',
     );
   }
 }
