@@ -281,13 +281,18 @@ class UrgentRequestCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                t.collectedOf(request.bagsCollected, request.bagsNeeded),
-                style: const TextStyle(color: muted, fontSize: 12),
+              Flexible(
+                child: Text(
+                  t.collectedOf(request.bagsCollected, request.bagsNeeded),
+                  style: const TextStyle(color: muted, fontSize: 12),
+                ),
               ),
-              Text(
-                t.onTheWayCount(request.onTheWayCount),
-                style: const TextStyle(color: muted, fontSize: 12),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  t.onTheWayCount(request.onTheWayCount),
+                  style: const TextStyle(color: muted, fontSize: 12),
+                ),
               ),
             ],
           ),
