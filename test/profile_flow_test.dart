@@ -1,4 +1,5 @@
 import 'package:damy/app.dart';
+import 'package:damy/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:damy/core/di/injection.dart';
 import 'package:damy/core/storage/token_store.dart';
 import 'package:damy/l10n/app_localizations.dart';
@@ -26,6 +27,30 @@ void main() {
     await tester.pumpAndSettle();
     return (backend, tokens);
   }
+
+  testWidgets('profile language switches interface and API header', (
+    tester,
+  ) async {
+    final (backend, _) = await boot(tester);
+    await tester.tap(find.text(t.myAccountTab).last);
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text(t.languageLabel), 200);
+    await tester.tap(find.text(t.languageLabel));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('English'));
+    await tester.pumpAndSettle();
+    expect(find.text('App language'), findsOneWidget);
+    expect(
+      Directionality.of(tester.element(find.text('App language'))),
+      TextDirection.ltr,
+    );
+    getIt<ProfileCubit>().load();
+    await tester.pumpAndSettle();
+    expect(
+      backend.callsTo('GET /profile').last.headers['accept-language'],
+      'en',
+    );
+  });
 
   testWidgets('profile shows server data and no invented fields', (
     tester,

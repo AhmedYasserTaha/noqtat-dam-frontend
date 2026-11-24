@@ -19,13 +19,30 @@ import 'features/profile/presentation/cubit/profile_cubit.dart';
 import 'l10n/app_localizations.dart';
 
 class DamyApp extends StatefulWidget {
-  const DamyApp({super.key, this.locale = const Locale('ar')});
+  const DamyApp({
+    super.key,
+    this.locale = const Locale('ar'),
+    this.onLocaleChanged,
+  });
   final Locale locale;
+  final ValueChanged<Locale>? onLocaleChanged;
+  static void setLocale(BuildContext context, Locale locale) {
+    context.findAncestorStateOfType<_DamyAppState>()?._setLocale(locale);
+  }
+
   @override
   State<DamyApp> createState() => _DamyAppState();
 }
 
 class _DamyAppState extends State<DamyApp> {
+  late Locale _locale = widget.locale;
+
+  void _setLocale(Locale locale) {
+    getIt<ApiClient>().languageCode = locale.languageCode;
+    setState(() => _locale = locale);
+    widget.onLocaleChanged?.call(locale);
+  }
+
   late final AuthCubit _auth = getIt<AuthCubit>();
   late final RouterRefresh _refresh = RouterRefresh(_auth.stream);
   late final GoRouter _router = createRouter(_auth, _refresh);
@@ -47,6 +64,7 @@ class _DamyAppState extends State<DamyApp> {
   void didUpdateWidget(covariant DamyApp oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.locale != widget.locale) {
+      _locale = widget.locale;
       getIt<ApiClient>().languageCode = widget.locale.languageCode;
     }
   }
@@ -73,7 +91,7 @@ class _DamyAppState extends State<DamyApp> {
           child: child ?? const SizedBox.shrink(),
         ),
         theme: AppTheme.light,
-        locale: widget.locale,
+        locale: _locale,
         supportedLocales: AppLocalizations.supportedLocales,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,

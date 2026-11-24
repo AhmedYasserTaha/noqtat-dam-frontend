@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
+import '../../../../app.dart';
+
 import '../../../../core/constants/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/failure_message.dart';
@@ -367,11 +369,46 @@ class _ProfilePageState extends State<ProfilePage> {
                     ? 'العربية'
                     : 'English',
                 icon: AppIcons.settings,
-                onTap: () => showPreviewMessage(
-                  context,
-                  t.languageLabel,
-                  t.languagePreviewBody,
-                ),
+                onTap: () async {
+                  final selected = await showModalBottomSheet<String>(
+                    context: context,
+                    showDragHandle: true,
+                    useSafeArea: true,
+                    builder: (sheetContext) => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            t.languageLabel,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        for (final option in const {
+                          'ar': 'العربية',
+                          'en': 'English',
+                        }.entries)
+                          ListTile(
+                            title: Text(option.value),
+                            trailing: lang == option.key
+                                ? const Icon(
+                                    Icons.check_rounded,
+                                    color: AppColors.red,
+                                  )
+                                : null,
+                            onTap: () =>
+                                Navigator.pop(sheetContext, option.key),
+                          ),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
+                  );
+                  if (!context.mounted || selected == null) return;
+                  DamyApp.setLocale(context, Locale(selected));
+                },
               ),
             ],
           ),
