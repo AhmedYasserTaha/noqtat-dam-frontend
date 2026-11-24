@@ -35,7 +35,8 @@ class PostsCubit extends Cubit<PostsState> {
       (page) => emit(
         PostsState(
           items: {
-            for (final p in [...previous, ...page.items]) p.id: p,
+            for (final p in [...previous, ...page.items])
+              if (p.isMine) p.id: p,
           }.values.toList(),
           next: page.next,
         ),

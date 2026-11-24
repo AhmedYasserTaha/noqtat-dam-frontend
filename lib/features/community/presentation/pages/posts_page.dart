@@ -43,15 +43,15 @@ class PostsPage extends StatelessWidget {
                     onPressed: () => cubit.load(more: state.next != null),
                     child: Text(t.retry),
                   ),
-                ] else if (state.items.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Text(t.postsEmpty, textAlign: TextAlign.center),
-                  )
-                else if (state.next != null)
+                ] else if (state.next != null)
                   TextButton(
                     onPressed: () => cubit.load(more: true),
                     child: Text(t.loadMore),
+                  )
+                else if (state.items.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Text(t.postsEmpty, textAlign: TextAlign.center),
                   ),
               ],
             ),

@@ -23,12 +23,15 @@ void main() {
         if (++attempts == 1) return FakeReply({'error': 'unavailable'}, 503);
         if (options.queryParameters['before'] == '2') {
           return FakeReply({
-            'items': [postJson(id: 1, text: 'Second page')],
+            'items': [postJson(id: 1, text: 'Second page', isMine: true)],
             'nextBefore': null,
           });
         }
         return FakeReply({
-          'items': [postJson(id: 2, text: 'First page')],
+          'items': [
+            postJson(id: 2, text: 'First page', isMine: true),
+            postJson(id: 3, text: 'Someone else'),
+          ],
           'nextBefore': 2,
         });
       });
@@ -46,6 +49,7 @@ void main() {
       await tester.tap(find.text(t.retry));
       await tester.pumpAndSettle();
       expect(find.text('First page'), findsOneWidget);
+      expect(find.text('Someone else'), findsNothing);
       await tester.tap(find.text(t.loadMore));
       await tester.pumpAndSettle();
       expect(find.text('Second page'), findsOneWidget);
