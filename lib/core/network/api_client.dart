@@ -26,11 +26,9 @@ abstract final class ApiErrorCodes {
   static const needGovernorate = 'need_governorate';
   static const tooManyAttempts = 'too_many_attempts';
   static const invalid = 'invalid';
-  static const alreadyPledged = 'already_pledged';
 
   static String fromMessage(String? message) {
     final m = (message ?? '').toLowerCase();
-    if (m.contains('already pledged')) return alreadyPledged;
     if (m.contains('invalid phone') || m.contains('invalid contactphone')) {
       return invalidPhone;
     }
@@ -48,23 +46,29 @@ abstract final class ApiErrorCodes {
 }
 
 class ApiClient {
-  ApiClient({required String baseUrl, required this.tokens, Dio? dio})
-    : _dio =
-          dio ??
-          Dio(
-            BaseOptions(
-              baseUrl: baseUrl,
-              connectTimeout: const Duration(seconds: 10),
-              receiveTimeout: const Duration(seconds: 20),
-              headers: {'accept': 'application/json'},
-            ),
-          ) {
+  ApiClient({
+    required String baseUrl,
+    required this.tokens,
+    Dio? dio,
+    this.languageCode = 'ar',
+  }) : _dio =
+           dio ??
+           Dio(
+             BaseOptions(
+               baseUrl: baseUrl,
+               connectTimeout: const Duration(seconds: 10),
+               receiveTimeout: const Duration(seconds: 20),
+               headers: {'accept': 'application/json'},
+             ),
+           ) {
     ApiChecker.attachToDio(_dio);
   }
 
   final Dio _dio;
   final TokenStore tokens;
-  String languageCode = 'ar';
+
+  /// Sent as `Accept-Language` so the backend localizes errors and content.
+  final String languageCode;
   final _unauthorized = StreamController<void>.broadcast();
 
   /// Fires when the server rejects a request that carried a session token
@@ -88,6 +92,34 @@ class ApiClient {
   }) async {
     final data = await _request('GET', path, query: query);
     return data is List ? data : throw const ApiException(UnexpectedFailure());
+  }
+
+  /// Loads every item of a list endpoint. Follows `nextCursor` (page size
+  /// [pageSize]) and also accepts the legacy bare-array reply, so it works
+  /// against both old and new backends. Stops after [maxPages] as a guard.
+  Future<List<dynamic>> getAll(
+    String path, {
+    Map<String, Object?>? query,
+    int pageSize = 50,
+    int maxPages = 100,
+  }) async {
+    final items = <dynamic>[];
+    String? cursor;
+    for (var page = 0; page < maxPages; page++) {
+      final data = await _request(
+        'GET',
+        path,
+        query: {...?query, 'limit': pageSize, 'cursor': cursor},
+      );
+      if (data is List) return data; // legacy backend: complete array
+      if (data is! Map<String, dynamic> || data['items'] is! List) {
+        throw const ApiException(UnexpectedFailure());
+      }
+      items.addAll(data['items'] as List);
+      cursor = data['nextCursor'] as String?;
+      if (data['hasMore'] != true || cursor == null) return items;
+    }
+    return items;
   }
 
   Future<Json> _send(
