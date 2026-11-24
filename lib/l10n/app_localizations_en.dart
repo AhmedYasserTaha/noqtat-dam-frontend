@@ -862,4 +862,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nearbyNeedsArea => 'Set your area to see requests near you.';
+
+  @override
+  String get sortByDistance => 'Closest to me first';
+
+  @override
+  String get sortByDistanceOn => 'Sorted by distance';
+
+  @override
+  String get sortByDistanceOff => 'Back to default order';
+
+  @override
+  String distanceApprox(String km) {
+    return 'About $km km away (straight line)';
+  }
+
+  @override
+  String get locationDenied =>
+      'Location permission was not given. Pick your area instead.';
+
+  @override
+  String get locationDeniedForever =>
+      'Location is blocked for this app. Pick your area instead, or allow it in phone settings.';
+
+  @override
+  String get locationServiceOff =>
+      'Location is turned off on the phone. Pick your area instead.';
+
+  @override
+  String get locationFailed =>
+      'Could not get your location. Pick your area instead.';
+
+  @override
+  String get distanceNote =>
+      'Distance is a straight line to the hospital pin. Hospitals without a pin go last.';
 }
