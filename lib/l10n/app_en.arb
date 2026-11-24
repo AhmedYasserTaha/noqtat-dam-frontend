@@ -248,5 +248,15 @@
   "showAllRequests": "Show all requests",
   "changeMyArea": "Change my area",
   "noRequestsRefresh": "Refresh",
-  "nearbyNeedsArea": "Set your area to see requests near you."
+  "nearbyNeedsArea": "Set your area to see requests near you.",
+  "sortByDistance": "Closest to me first",
+  "sortByDistanceOn": "Sorted by distance",
+  "sortByDistanceOff": "Back to default order",
+  "distanceApprox": "About {km} km away (straight line)",
+  "@distanceApprox": {"placeholders": {"km": {"type": "String"}}},
+  "locationDenied": "Location permission was not given. Pick your area instead.",
+  "locationDeniedForever": "Location is blocked for this app. Pick your area instead, or allow it in phone settings.",
+  "locationServiceOff": "Location is turned off on the phone. Pick your area instead.",
+  "locationFailed": "Could not get your location. Pick your area instead.",
+  "distanceNote": "Distance is a straight line to the hospital pin. Hospitals without a pin go last."
 }
