@@ -819,5 +819,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not load the hospital list. Type the hospital name.';
 
   @override
+  String hospitalOtherDistrict(String district) {
+    return 'This hospital is listed in $district, which differs from the district you chose. Check the district before posting.';
+  }
+
+  @override
+  String get thisIsYourRequest => 'This is your request';
+
+  @override
   String get mapsOpenFailed => 'Could not open Maps';
 }

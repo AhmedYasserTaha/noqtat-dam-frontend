@@ -1,6 +1,7 @@
 import 'package:damy/core/di/injection.dart';
 import 'package:damy/core/storage/token_store.dart';
 import 'package:damy/core/theme/app_theme.dart';
+import 'package:damy/core/utils/egypt_locations.dart';
 import 'package:damy/core/utils/maps_launcher.dart';
 import 'package:damy/features/blood_request/data/datasources/blood_request_remote_datasource.dart';
 import 'package:damy/features/blood_request/data/models/blood_request_model.dart';
@@ -44,11 +45,12 @@ Map<String, dynamic> hospitalJson(
   String name, {
   bool verified = false,
   bool osm = true,
+  String? district,
 }) => {
   'id': id,
   'name': name,
   'governorateId': 'EG01',
-  'districtId': null,
+  'districtId': district,
   'latitude': 31.04,
   'longitude': 31.38,
   'isVerified': verified,
@@ -86,6 +88,74 @@ Future<FakeMaps> _boot(
 }
 
 void main() {
+  testWidgets('field warns when the hospital is in another district', (
+    tester,
+  ) async {
+    await tester.runAsync(() => EgyptLocations.load());
+    final backend = FakeBackend();
+    backend.on(
+      'GET /hospitals',
+      (_) => FakeReply([
+        hospitalJson(1, 'مستشفى السنبلاوين العام', district: 'EG1205'),
+      ]),
+    );
+    await _boot(
+      tester,
+      backend,
+      HospitalField(
+        governorateId: 'EG12',
+        districtId: 'EG1212',
+        controller: TextEditingController(),
+        onSelected: (_) {},
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('request-hospital-picker')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ListTile, 'مستشفى السنبلاوين العام'));
+    await tester.pumpAndSettle();
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await tester.pump();
+    expect(
+      find.byKey(const ValueKey('hospital-district-warning')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('no district warning when districts match', (tester) async {
+    await tester.runAsync(() => EgyptLocations.load());
+    final backend = FakeBackend();
+    backend.on(
+      'GET /hospitals',
+      (_) => FakeReply([
+        hospitalJson(1, 'مستشفى السنبلاوين العام', district: 'EG1205'),
+      ]),
+    );
+    await _boot(
+      tester,
+      backend,
+      HospitalField(
+        governorateId: 'EG12',
+        districtId: 'EG1205',
+        controller: TextEditingController(),
+        onSelected: (_) {},
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('request-hospital-picker')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ListTile, 'مستشفى السنبلاوين العام'));
+    await tester.pumpAndSettle();
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await tester.pump();
+    expect(
+      find.byKey(const ValueKey('hospital-district-warning')),
+      findsNothing,
+    );
+  });
+
   testWidgets(
     'credit for an OSM-sourced location links to the OSM copyright page',
     (tester) async {

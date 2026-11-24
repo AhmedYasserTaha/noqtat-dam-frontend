@@ -234,5 +234,8 @@
   "hospitalDataCredit": "Hospital locations: © {osm} contributors (ODbL).",
   "@hospitalDataCredit": {"placeholders": {"osm": {"type": "String"}}},
   "hospitalListFailed": "Could not load the hospital list. Type the hospital name.",
+  "hospitalOtherDistrict": "This hospital is listed in {district}, which differs from the district you chose. Check the district before posting.",
+  "@hospitalOtherDistrict": {"placeholders": {"district": {"type": "String"}}},
+  "thisIsYourRequest": "This is your request",
   "mapsOpenFailed": "Could not open Maps"
 }

@@ -17,10 +17,15 @@ class HospitalField extends StatefulWidget {
   const HospitalField({
     super.key,
     required this.governorateId,
+    this.districtId,
     required this.controller,
     required this.onSelected,
   });
   final String? governorateId;
+
+  /// The district the user chose for the request. Used only to warn when the
+  /// picked hospital is registered in a different district.
+  final String? districtId;
   final TextEditingController controller;
   final ValueChanged<Hospital?> onSelected;
 
@@ -94,60 +99,117 @@ class _HospitalFieldState extends State<HospitalField> {
         final listed =
             state.status == HospitalListStatus.loaded && hospitals.isNotEmpty;
         if (listed && !_typing) {
-          return Semantics(
-            button: true,
-            child: InkWell(
-              key: const ValueKey('request-hospital-picker'),
-              onTap: () => _choose(hospitals),
-              borderRadius: BorderRadius.circular(14),
-              child: InputDecorator(
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 13,
-                  ),
-                ),
-                child: Text(
-                  _selected?.name ?? t.chooseHospital,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: _selected == null ? AppColors.muted : AppColors.ink,
-                  ),
-                ),
-              ),
-            ),
+          final picked = _selected;
+          final mismatch =
+              picked?.districtId != null &&
+              widget.districtId != null &&
+              picked!.districtId != widget.districtId;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _picker(t, hospitals),
+              if (mismatch) _DistrictWarning(districtId: picked.districtId!),
+            ],
           );
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              key: const ValueKey('request-hospital'),
-              controller: widget.controller,
-              decoration: InputDecoration(hintText: t.hospitalNameHint),
+        return _typingField(t, listed, state);
+      },
+    );
+  }
+
+  Widget _picker(AppLocalizations t, List<Hospital> hospitals) {
+    return Semantics(
+      button: true,
+      child: InkWell(
+        key: const ValueKey('request-hospital-picker'),
+        onTap: () => _choose(hospitals),
+        borderRadius: BorderRadius.circular(14),
+        child: InputDecorator(
+          decoration: const InputDecoration(
+            suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+          ),
+          child: Text(
+            _selected?.name ?? t.chooseHospital,
+            style: TextStyle(
+              fontSize: 14,
+              color: _selected == null ? AppColors.muted : AppColors.ink,
             ),
-            if (state.status == HospitalListStatus.failure)
-              Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: Text(
-                  t.hospitalListFailed,
-                  key: const ValueKey('hospital-list-failed'),
-                  style: const TextStyle(fontSize: 11, color: AppColors.muted),
-                ),
-              ),
-            if (listed)
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: TextButton(
-                  onPressed: () {
-                    widget.controller.clear();
-                    setState(() => _typing = false);
-                  },
-                  child: Text(t.chooseFromHospitalList),
-                ),
-              ),
-          ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _typingField(
+    AppLocalizations t,
+    bool listed,
+    HospitalListState state,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextField(
+          key: const ValueKey('request-hospital'),
+          controller: widget.controller,
+          decoration: InputDecoration(hintText: t.hospitalNameHint),
+        ),
+        if (state.status == HospitalListStatus.failure)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(
+              t.hospitalListFailed,
+              key: const ValueKey('hospital-list-failed'),
+              style: const TextStyle(fontSize: 11, color: AppColors.muted),
+            ),
+          ),
+        if (listed)
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              onPressed: () {
+                widget.controller.clear();
+                setState(() => _typing = false);
+              },
+              child: Text(t.chooseFromHospitalList),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+/// The picked hospital is registered in another district than the one chosen
+/// for the request. The user decides; nothing is changed silently.
+class _DistrictWarning extends StatelessWidget {
+  const _DistrictWarning({required this.districtId});
+  final String districtId;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    final lang = Localizations.localeOf(context).languageCode;
+    return FutureBuilder<EgyptLocations>(
+      future: EgyptLocations.load(),
+      builder: (context, snapshot) {
+        final data = snapshot.data;
+        if (data == null) return const SizedBox.shrink();
+        final name = data.districts
+            .where((d) => d.id == districtId)
+            .map((d) => d.name(lang))
+            .firstOrNull;
+        if (name == null) return const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsets.only(top: 6),
+          child: Text(
+            t.hospitalOtherDistrict(name),
+            key: const ValueKey('hospital-district-warning'),
+            style: const TextStyle(
+              fontSize: 11,
+              color: AppColors.red,
+              height: 1.7,
+            ),
+          ),
         );
       },
     );

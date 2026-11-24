@@ -1496,6 +1496,18 @@ abstract class AppLocalizations {
   /// **'مقدرناش نجيب قائمة المستشفيات دلوقتي، اكتب اسم المستشفى.'**
   String get hospitalListFailed;
 
+  /// No description provided for @hospitalOtherDistrict.
+  ///
+  /// In ar, this message translates to:
+  /// **'المستشفى دي مسجلة في {district}، غير القسم اللي اخترته. اتأكد من القسم قبل ما تنشر.'**
+  String hospitalOtherDistrict(String district);
+
+  /// No description provided for @thisIsYourRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'ده طلبك'**
+  String get thisIsYourRequest;
+
   /// No description provided for @mapsOpenFailed.
   ///
   /// In ar, this message translates to:

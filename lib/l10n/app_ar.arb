@@ -319,5 +319,8 @@
   "hospitalDataCredit": "مواقع المستشفيات من بيانات © مساهمي {osm} (رخصة ODbL).",
   "@hospitalDataCredit": {"placeholders": {"osm": {"type": "String"}}},
   "hospitalListFailed": "مقدرناش نجيب قائمة المستشفيات دلوقتي، اكتب اسم المستشفى.",
+  "hospitalOtherDistrict": "المستشفى دي مسجلة في {district}، غير القسم اللي اخترته. اتأكد من القسم قبل ما تنشر.",
+  "@hospitalOtherDistrict": {"placeholders": {"district": {"type": "String"}}},
+  "thisIsYourRequest": "ده طلبك",
   "mapsOpenFailed": "مقدرناش نفتح الخرائط"
 }

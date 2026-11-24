@@ -424,6 +424,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                           _label(t.hospitalNameLabel),
                           HospitalField(
                             governorateId: _governorateId,
+                            districtId: _districtId,
                             controller: _hospital,
                             onSelected: (hospital) =>
                                 _hospitalId = hospital?.id,

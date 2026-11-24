@@ -196,6 +196,31 @@ class UrgentRequestCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Row(
+                      key: const ValueKey('urgent-hospital'),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.local_hospital_outlined,
+                          color: muted,
+                          size: 15,
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            request.hospitalName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const AppIcon(
@@ -258,6 +283,16 @@ class UrgentRequestCard extends StatelessWidget {
               ),
             ],
           ),
+          if ((request.notes ?? '').trim().isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              request.notes!.trim(),
+              key: const ValueKey('urgent-notes'),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: muted, fontSize: 12, height: 1.6),
+            ),
+          ],
           const SizedBox(height: 10),
           Row(
             children: [
@@ -266,7 +301,11 @@ class UrgentRequestCard extends StatelessWidget {
                   height: 44,
                   child: ElevatedButton(
                     onPressed: request.isMine ? null : onDonate,
-                    style: ElevatedButton.styleFrom(elevation: 0),
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      disabledBackgroundColor: const Color(0xFF403636),
+                      disabledForegroundColor: Colors.white,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -278,7 +317,11 @@ class UrgentRequestCard extends StatelessWidget {
                         const SizedBox(width: 9),
                         Flexible(
                           child: Text(
-                            pledged ? t.viewPledge : t.iWillDonate,
+                            request.isMine
+                                ? t.thisIsYourRequest
+                                : pledged
+                                ? t.viewPledge
+                                : t.iWillDonate,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w900,

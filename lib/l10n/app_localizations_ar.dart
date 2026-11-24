@@ -825,5 +825,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'مقدرناش نجيب قائمة المستشفيات دلوقتي، اكتب اسم المستشفى.';
 
   @override
+  String hospitalOtherDistrict(String district) {
+    return 'المستشفى دي مسجلة في $district، غير القسم اللي اخترته. اتأكد من القسم قبل ما تنشر.';
+  }
+
+  @override
+  String get thisIsYourRequest => 'ده طلبك';
+
+  @override
   String get mapsOpenFailed => 'مقدرناش نفتح الخرائط';
 }
