@@ -894,6 +894,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not get your location. Pick your area instead.';
 
   @override
+  String distanceApproxUnreviewed(String km) {
+    return 'About $km km (straight line, pin not reviewed)';
+  }
+
+  @override
   String get distanceNote =>
-      'Distance is a straight line to the hospital pin. Hospitals without a pin go last.';
+      'Straight-line distance to the hospital\'s pin on the map. Pins are from volunteer map data and are not reviewed, so confirm the hospital\'s location before you go. Hospitals without a pin go last.';
 }
