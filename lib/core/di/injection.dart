@@ -43,6 +43,7 @@ import '../../features/hospitals/data/repositories_impl/hospital_repository_impl
 import '../../features/hospitals/domain/repositories/hospital_repository.dart';
 import '../../features/hospitals/domain/usecases/get_hospitals.dart';
 import '../../features/hospitals/presentation/cubit/hospital_list_cubit.dart';
+import '../utils/device_location.dart';
 import '../utils/maps_launcher.dart';
 import '../constants/api_constants.dart';
 import '../network/api_client.dart';
@@ -57,6 +58,7 @@ void configureDependencies({
   ApiClient? api,
   ShareService? share,
   MapsLauncher? maps,
+  DeviceLocation? location,
   PushService? push,
 }) {
   getIt.allowReassignment = true; // tests re-run this with fakes
@@ -168,6 +170,9 @@ void configureDependencies({
   // community posts
   getIt
     ..registerSingleton<ShareService>(share ?? const SharePlusShareService())
+    ..registerSingleton<DeviceLocation>(
+      location ?? const GeolocatorDeviceLocation(),
+    )
     ..registerSingleton<MapsLauncher>(maps ?? const UrlLauncherMapsLauncher())
     ..registerLazySingleton(() => CommunityRemoteDataSource(getIt()))
     ..registerLazySingleton<CommunityRepository>(

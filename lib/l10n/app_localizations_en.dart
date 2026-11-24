@@ -298,7 +298,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpRequestBody =>
-      'Tap +, choose the blood type, bag count, hospital and urgency, review, then publish. Donors who pledge can see your contact phone. Mark the request fulfilled or cancel it from My requests.';
+      'Tap +, choose the blood type, bag count, hospital and urgency, review, then publish. Donors who pledge can see your contact phone and can call you or open a WhatsApp chat. Mark the request fulfilled or cancel it from My requests.';
 
   @override
   String get helpDonateTitle => 'Does Donate reserve a donation?';
@@ -370,7 +370,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactPreviewHint =>
-      'Shown only to donors who pledge to this request.';
+      'Shown only to donors who pledge to this request. They can call you or open a WhatsApp chat with this number.';
 
   @override
   String get requestNotesLabel => 'Additional notes';
@@ -862,4 +862,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nearbyNeedsArea => 'Set your area to see requests near you.';
+
+  @override
+  String get sortByDistance => 'Closest to me first';
+
+  @override
+  String get sortByDistanceOn => 'Sorted by distance';
+
+  @override
+  String get sortByDistanceOff => 'Back to default order';
+
+  @override
+  String distanceApprox(String km) {
+    return 'About $km km away (straight line)';
+  }
+
+  @override
+  String get locationDenied =>
+      'Location permission was not given. Pick your area instead.';
+
+  @override
+  String get locationDeniedForever =>
+      'Location is blocked for this app. Pick your area instead, or allow it in phone settings.';
+
+  @override
+  String get locationServiceOff =>
+      'Location is turned off on the phone. Pick your area instead.';
+
+  @override
+  String get locationFailed =>
+      'Could not get your location. Pick your area instead.';
+
+  @override
+  String distanceApproxUnreviewed(String km) {
+    return 'About $km km (straight line, pin not reviewed)';
+  }
+
+  @override
+  String get distanceNote =>
+      'Straight-line distance to the hospital\'s pin on the map. Pins are from volunteer map data and are not reviewed, so confirm the hospital\'s location before you go. Hospitals without a pin go last.';
 }

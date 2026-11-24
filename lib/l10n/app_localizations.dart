@@ -653,7 +653,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpRequestBody.
   ///
   /// In ar, this message translates to:
-  /// **'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.'**
+  /// **'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك وممكن يتصلوا بيك أو يفتحوا محادثة واتساب. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.'**
   String get helpRequestBody;
 
   /// No description provided for @helpDonateTitle.
@@ -791,7 +791,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactPreviewHint.
   ///
   /// In ar, this message translates to:
-  /// **'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده.'**
+  /// **'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده، وممكن يتصلوا بيك أو يفتحوا محادثة واتساب على الرقم ده.'**
   String get contactPreviewHint;
 
   /// No description provided for @requestNotesLabel.
@@ -1573,6 +1573,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حدد منطقتك عشان تشوف الطلبات القريبة منك.'**
   String get nearbyNeedsArea;
+
+  /// No description provided for @sortByDistance.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأقرب ليا الأول'**
+  String get sortByDistance;
+
+  /// No description provided for @sortByDistanceOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'مترتب بالمسافة'**
+  String get sortByDistanceOn;
+
+  /// No description provided for @sortByDistanceOff.
+  ///
+  /// In ar, this message translates to:
+  /// **'رجوع للترتيب العادي'**
+  String get sortByDistanceOff;
+
+  /// No description provided for @distanceApprox.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقريبًا {km} كم (خط مستقيم)'**
+  String distanceApprox(String km);
+
+  /// No description provided for @locationDenied.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش إذن للموقع. اختار منطقتك بدلها.'**
+  String get locationDenied;
+
+  /// No description provided for @locationDeniedForever.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموقع متقفل للتطبيق. اختار منطقتك بدلها أو اسمح بيه من إعدادات الموبايل.'**
+  String get locationDeniedForever;
+
+  /// No description provided for @locationServiceOff.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموقع مقفول على الموبايل. اختار منطقتك بدلها.'**
+  String get locationServiceOff;
+
+  /// No description provided for @locationFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'معرفتش أحدد موقعك. اختار منطقتك بدلها.'**
+  String get locationFailed;
+
+  /// No description provided for @distanceApproxUnreviewed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقريبًا {km} كم (خط مستقيم، الموقع غير مراجع)'**
+  String distanceApproxUnreviewed(String km);
+
+  /// No description provided for @distanceNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'المسافة خط مستقيم لنقطة المستشفى على الخريطة. النقط دي من بيانات خرائط تطوعية ومش متراجعة، فاتأكد من مكان المستشفى قبل ما تروح. المستشفيات من غير نقطة بتيجي في الآخر.'**
+  String get distanceNote;
 }
 
 class _AppLocalizationsDelegate

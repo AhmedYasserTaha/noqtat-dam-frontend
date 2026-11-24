@@ -298,7 +298,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get helpRequestBody =>
-      'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.';
+      'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك وممكن يتصلوا بيك أو يفتحوا محادثة واتساب. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.';
 
   @override
   String get helpDonateTitle => 'هل زر التبرع بيحجز تبرع؟';
@@ -369,7 +369,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get contactPreviewHint =>
-      'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده.';
+      'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده، وممكن يتصلوا بيك أو يفتحوا محادثة واتساب على الرقم ده.';
 
   @override
   String get requestNotesLabel => 'ملاحظات إضافية';
@@ -867,4 +867,41 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nearbyNeedsArea => 'حدد منطقتك عشان تشوف الطلبات القريبة منك.';
+
+  @override
+  String get sortByDistance => 'الأقرب ليا الأول';
+
+  @override
+  String get sortByDistanceOn => 'مترتب بالمسافة';
+
+  @override
+  String get sortByDistanceOff => 'رجوع للترتيب العادي';
+
+  @override
+  String distanceApprox(String km) {
+    return 'تقريبًا $km كم (خط مستقيم)';
+  }
+
+  @override
+  String get locationDenied => 'مفيش إذن للموقع. اختار منطقتك بدلها.';
+
+  @override
+  String get locationDeniedForever =>
+      'الموقع متقفل للتطبيق. اختار منطقتك بدلها أو اسمح بيه من إعدادات الموبايل.';
+
+  @override
+  String get locationServiceOff =>
+      'الموقع مقفول على الموبايل. اختار منطقتك بدلها.';
+
+  @override
+  String get locationFailed => 'معرفتش أحدد موقعك. اختار منطقتك بدلها.';
+
+  @override
+  String distanceApproxUnreviewed(String km) {
+    return 'تقريبًا $km كم (خط مستقيم، الموقع غير مراجع)';
+  }
+
+  @override
+  String get distanceNote =>
+      'المسافة خط مستقيم لنقطة المستشفى على الخريطة. النقط دي من بيانات خرائط تطوعية ومش متراجعة، فاتأكد من مكان المستشفى قبل ما تروح. المستشفيات من غير نقطة بتيجي في الآخر.';
 }

@@ -375,6 +375,8 @@ class UrgentRequestCard extends StatelessWidget {
   }
 }
 
+String _km(double d) => d < 10 ? d.toStringAsFixed(1) : d.round().toString();
+
 class CompactRequestCard extends StatelessWidget {
   const CompactRequestCard({
     super.key,
@@ -382,10 +384,15 @@ class CompactRequestCard extends StatelessWidget {
     required this.onDonate,
     this.onShare,
     this.onReport,
+    this.distanceKm,
   });
   final BloodRequest request;
   final VoidCallback onDonate;
   final VoidCallback? onShare, onReport;
+
+  /// Straight-line distance from the phone to the hospital pin, only set after
+  /// the user opted in to sorting by distance.
+  final double? distanceKm;
 
   @override
   Widget build(BuildContext context) {
@@ -434,6 +441,19 @@ class CompactRequestCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 12, color: AppColors.muted),
                 ),
+                if (distanceKm != null)
+                  Text(
+                    // Pins are volunteer-edited map data; say so unless a
+                    // reviewer confirmed this one.
+                    (request.hospitalLocation?.isVerified ?? false)
+                        ? t.distanceApprox(_km(distanceKm!))
+                        : t.distanceApproxUnreviewed(_km(distanceKm!)),
+                    key: const Key('distance-label'),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.muted,
+                    ),
+                  ),
                 if (request.urgency != Urgency.scheduled)
                   Text(
                     '● ${urgencyLabel(t, request.urgency)}',
