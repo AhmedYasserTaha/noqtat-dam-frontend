@@ -139,17 +139,10 @@ class AppBottomNav extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
+                  Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: active
-                          ? AppColors.red.withValues(alpha: .08)
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(9),
                     ),
                     child: AppIcon(
                       active ? activeIcon : icon,
