@@ -298,7 +298,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpRequestBody =>
-      'Tap +, choose the blood type, bag count, hospital and urgency, review, then publish. Donors who pledge can see your contact phone. Mark the request fulfilled or cancel it from My requests.';
+      'Tap +, choose the blood type, bag count, hospital and urgency, review, then publish. Donors who pledge can see your contact phone and can call you or open a WhatsApp chat. Mark the request fulfilled or cancel it from My requests.';
 
   @override
   String get helpDonateTitle => 'Does Donate reserve a donation?';
@@ -370,7 +370,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactPreviewHint =>
-      'Shown only to donors who pledge to this request.';
+      'Shown only to donors who pledge to this request. They can call you or open a WhatsApp chat with this number.';
 
   @override
   String get requestNotesLabel => 'Additional notes';
