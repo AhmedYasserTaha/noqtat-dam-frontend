@@ -250,7 +250,7 @@ void main() {
     ]);
   });
 
-  testWidgets('author sees who pledged, without phone numbers', (tester) async {
+  testWidgets('author sees pledge contact supplied by the API', (tester) async {
     final b = FakeBackend();
     stubHome(b);
     b.on(
@@ -265,6 +265,7 @@ void main() {
       (_) => FakeReply([
         {
           'donorId': 3,
+          'donorPhone': '01012345678',
           'donorName': 'كريم',
           'bloodType': 'O-',
           'status': 'on_the_way',
@@ -280,6 +281,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('كريم'), findsOneWidget);
     expect(find.text(t.pledgeOnTheWay), findsOneWidget);
+    expect(find.text('01012345678'), findsOneWidget);
+    expect(find.text(t.callRequester), findsOneWidget);
+    expect(find.byType(BottomSheet), findsNothing);
+    expect(find.widgetWithText(AppBar, t.requestDetails), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('01012345678'), findsNothing);
   });
 
   testWidgets(

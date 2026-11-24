@@ -37,6 +37,33 @@ void main() {
     expect(find.text('01012345678'), findsOneWidget);
   });
 
+  testWidgets('donations API runs only when donation history is opened', (
+    tester,
+  ) async {
+    final (backend, _) = await boot(tester);
+    backend.on(
+      'GET /profile/donations',
+      (_) => FakeReply([
+        {
+          'requestId': 7,
+          'donatedAt': '2026-11-01T10:00:00.000Z',
+          'bloodType': 'O+',
+          'hospitalName': 'History hospital',
+        },
+      ]),
+    );
+    expect(backend.callsTo('GET /profile/donations'), isEmpty);
+    await tester.tap(find.text(t.myAccountTab).last);
+    await tester.pumpAndSettle();
+    expect(backend.callsTo('GET /profile/donations'), isEmpty);
+    await tester.scrollUntilVisible(find.text(t.donationHistoryTitle), 200);
+    await tester.tap(find.text(t.donationHistoryTitle));
+    await tester.pumpAndSettle();
+    expect(backend.callsTo('GET /profile/donations'), hasLength(1));
+    expect(find.textContaining('History hospital'), findsOneWidget);
+    expect(find.textContaining(t.staticAccountPreview), findsNothing);
+  });
+
   testWidgets('availability toggle patches the server', (tester) async {
     final (backend, _) = await boot(tester);
     backend.on('PATCH /profile', (_) => FakeReply(meJson(isAvailable: false)));
@@ -44,7 +71,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byType(Switch).first);
     await tester.pumpAndSettle();
-    expect(backend.callsTo('PATCH /profile').single.body, {'isAvailable': false});
+    expect(backend.callsTo('PATCH /profile').single.body, {
+      'isAvailable': false,
+    });
   });
 
   testWidgets('logout clears the token and returns to login', (tester) async {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/di/injection.dart';
+import '../../../../core/utils/maps_launcher.dart';
+import '../../../home_feed/presentation/widgets/pledge_sheet.dart' show callUri;
 import '../cubit/pledges_cubit.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,20 +35,22 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
 
   void _details(BuildContext context, BloodRequest r) {
     final cubit = context.read<MyRequestsCubit>();
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (_) => MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: cubit),
-          BlocProvider(create: (_) => getIt<PledgesCubit>()..load(r.id)),
-        ],
-        child: _RequestDetails(request: r),
+    Navigator.of(context, rootNavigator: true).push<void>(
+      MaterialPageRoute(
+        builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: cubit),
+            BlocProvider(create: (_) => getIt<PledgesCubit>()..load(r.id)),
+          ],
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              leading: const BackButton(),
+              title: Text(AppLocalizations.of(context)!.requestDetails),
+            ),
+            body: SafeArea(child: _RequestDetails(request: r)),
+          ),
+        ),
       ),
     );
   }
@@ -282,7 +286,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
 class _RequestDetails extends StatelessWidget {
   const _RequestDetails({required this.request});
 
-  /// The request as it was when the sheet opened. The sheet shows the fresh
+  /// The request as it was when the page opened. The page shows the fresh
   /// copy from the list (after a confirmation, for example).
   final BloodRequest request;
 
@@ -304,126 +308,241 @@ class _RequestDetails extends StatelessWidget {
     final cubit = context.read<MyRequestsCubit>();
     final open = request.status == RequestStatus.open;
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            '${request.bloodType} · ${t.bagsNeeded(request.bagsNeeded)}',
-            textDirection: TextDirection.ltr,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '${request.hospitalName}\n${placeLine(request, lang)}',
-            style: const TextStyle(color: AppColors.muted, height: 1.7),
-          ),
-          const SizedBox(height: 10),
-          HospitalMapButton(
-            location: request.hospitalLocation,
-            searchQuery: '${request.hospitalName} ${placeLine(request, lang)}',
-          ),
-          if ((request.notes ?? '').isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(request.notes!),
-          ],
-          const SizedBox(height: 8),
-          Text(
-            t.onTheWayCount(request.onTheWayCount),
-            style: const TextStyle(color: AppColors.muted, fontSize: 12),
-          ),
-          const SizedBox(height: 12),
-          if (open && request.selfReportedDonatedCount > 0) ...[
-            Text(
-              t.selfReportedBanner(request.selfReportedDonatedCount),
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.red,
-                fontWeight: FontWeight.w700,
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 8),
-          ],
-          if (open && request.isCovered) ...[
-            Text(
-              t.coveredHint,
-              key: const Key('covered-hint'),
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.muted,
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 8),
-          ],
-          const _PledgesList(),
-          if (open) ...[
-            const SizedBox(height: 16),
-            Row(
+          _DetailsSection(
+            child: Row(
               children: [
-                Expanded(
+                Container(
+                  width: 58,
+                  height: 58,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.red,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   child: Text(
-                    t.bagsCollectedLabel,
-                    style: const TextStyle(fontWeight: FontWeight.w800),
+                    request.bloodType,
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
                 ),
-                IconButton(
-                  tooltip: t.decreaseBags,
-                  onPressed: request.bagsCollected > 0
-                      ? () {
-                          cubit.setBagsCollected(
-                            request.id,
-                            request.bagsCollected - 1,
-                          );
-                        }
-                      : null,
-                  icon: const Text('−', style: TextStyle(fontSize: 22)),
-                ),
-                Text(
-                  '${request.bagsCollected}',
-                  style: const TextStyle(fontWeight: FontWeight.w900),
-                ),
-                IconButton(
-                  tooltip: t.increaseBags,
-                  onPressed: request.bagsCollected < request.bagsNeeded
-                      ? () {
-                          cubit.setBagsCollected(
-                            request.id,
-                            request.bagsCollected + 1,
-                          );
-                        }
-                      : null,
-                  icon: const AppIcon(AppIcons.plus, color: AppColors.red),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        t.bagsNeeded(request.bagsNeeded),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        '${request.bagsCollected} / ${request.bagsNeeded} · ${t.bagsCollectedLabel}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.muted,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: request.bagsNeeded > 0
+                              ? (request.bagsCollected / request.bagsNeeded)
+                                    .clamp(0.0, 1.0)
+                              : 0,
+                          minHeight: 5,
+                          color: AppColors.red,
+                          backgroundColor: AppColors.red.withValues(
+                            alpha: 0.08,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () {
-                cubit.setStatus(request.id, RequestStatus.fulfilled);
-                Navigator.pop(context);
-              },
-              child: Text(t.markFulfilled),
+          ),
+          const SizedBox(height: 12),
+          _DetailsSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  t.hospitalNameLabel,
+                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '${request.hospitalName}\n${placeLine(request, lang)}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    height: 1.7,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                HospitalMapButton(
+                  location: request.hospitalLocation,
+                  searchQuery:
+                      '${request.hospitalName} ${placeLine(request, lang)}',
+                ),
+                if ((request.notes ?? '').isNotEmpty) ...[
+                  const Divider(height: 24),
+                  Text(
+                    t.requestNotesLabel,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.muted,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    request.notes!,
+                    style: const TextStyle(fontSize: 13, height: 1.6),
+                  ),
+                ],
+              ],
             ),
-            const SizedBox(height: 8),
-            OutlinedButton(
-              onPressed: () {
-                cubit.setStatus(request.id, RequestStatus.cancelled);
-                Navigator.pop(context);
-              },
-              child: Text(t.cancelRequest),
+          ),
+          const SizedBox(height: 12),
+          _DetailsSection(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const _PledgesList(),
+                const Divider(height: 24),
+                Text(
+                  t.onTheWayCount(request.onTheWayCount),
+                  style: const TextStyle(color: AppColors.muted, fontSize: 12),
+                ),
+                const SizedBox(height: 12),
+                if (open && request.selfReportedDonatedCount > 0) ...[
+                  Text(
+                    t.selfReportedBanner(request.selfReportedDonatedCount),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.red,
+                      fontWeight: FontWeight.w700,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+                if (open && request.isCovered) ...[
+                  Text(
+                    t.coveredHint,
+                    key: const Key('covered-hint'),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.muted,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ],
+            ),
+          ),
+          if (open) ...[
+            const SizedBox(height: 12),
+            _DetailsSection(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          t.bagsCollectedLabel,
+                          style: const TextStyle(fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: t.decreaseBags,
+                        onPressed: request.bagsCollected > 0
+                            ? () {
+                                cubit.setBagsCollected(
+                                  request.id,
+                                  request.bagsCollected - 1,
+                                );
+                              }
+                            : null,
+                        icon: const Text('−', style: TextStyle(fontSize: 22)),
+                      ),
+                      Text(
+                        '${request.bagsCollected}',
+                        style: const TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                      IconButton(
+                        tooltip: t.increaseBags,
+                        onPressed: request.bagsCollected < request.bagsNeeded
+                            ? () {
+                                cubit.setBagsCollected(
+                                  request.id,
+                                  request.bagsCollected + 1,
+                                );
+                              }
+                            : null,
+                        icon: const AppIcon(
+                          AppIcons.plus,
+                          color: AppColors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      cubit.setStatus(request.id, RequestStatus.fulfilled);
+                      Navigator.pop(context);
+                    },
+                    child: Text(t.markFulfilled),
+                  ),
+                  const SizedBox(height: 8),
+                  OutlinedButton(
+                    onPressed: () {
+                      cubit.setStatus(request.id, RequestStatus.cancelled);
+                      Navigator.pop(context);
+                    },
+                    child: Text(t.cancelRequest),
+                  ),
+                ],
+              ),
             ),
           ],
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(t.closeLocations),
-          ),
         ],
       ),
     );
   }
+}
+
+class _DetailsSection extends StatelessWidget {
+  const _DetailsSection({required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(color: AppColors.ink.withValues(alpha: 0.09)),
+      borderRadius: BorderRadius.circular(18),
+    ),
+    child: child,
+  );
 }
 
 /// Who pledged on this request. Statuses are the donors' own statements;
@@ -454,12 +573,38 @@ class _PledgesList extends StatelessWidget {
             dense: true,
             contentPadding: EdgeInsets.zero,
             title: Text(p.donorName),
-            subtitle: Text(
-              p.status == PledgeStatus.donated
-                  ? t.pledgeDonated
-                  : p.status == PledgeStatus.onTheWay
-                  ? t.pledgeOnTheWay
-                  : t.cancelPledge,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  p.status == PledgeStatus.donated
+                      ? t.pledgeDonated
+                      : p.status == PledgeStatus.onTheWay
+                      ? t.pledgeOnTheWay
+                      : t.cancelPledge,
+                ),
+                if (p.donorPhone?.isNotEmpty == true)
+                  Wrap(
+                    spacing: 8,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Text(p.donorPhone!, textDirection: TextDirection.ltr),
+                      TextButton.icon(
+                        icon: const Icon(Icons.phone_outlined, size: 16),
+                        label: Text(t.callRequester),
+                        onPressed: () async {
+                          final opened = await getIt<MapsLauncher>().openLink(
+                            callUri(p.donorPhone!),
+                          );
+                          if (!context.mounted || opened) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(t.contactOpenFailed)),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+              ],
             ),
             trailing: Text(p.bloodType, textDirection: TextDirection.ltr),
           ),

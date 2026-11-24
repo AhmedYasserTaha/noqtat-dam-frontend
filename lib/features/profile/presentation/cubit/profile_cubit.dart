@@ -67,9 +67,22 @@ class ProfileCubit extends Cubit<ProfileState> {
         (p) => emit(state.copyWith(status: ProfileStatus.ready, profile: p)),
       );
     }
+  }
+
+  /// Donation history is fetched only when its view is opened.
+  Future<bool> loadHistory() async {
     final history = await _history(const NoParams());
-    if (isClosed) return;
-    history.fold((_) {}, (d) => emit(state.copyWith(donations: d)));
+    if (isClosed) return false;
+    return history.fold(
+      (failure) {
+        emit(state.copyWith(actionFailure: failure));
+        return false;
+      },
+      (donations) {
+        emit(state.copyWith(donations: donations));
+        return true;
+      },
+    );
   }
 
   /// Returns true when the server accepted the change.

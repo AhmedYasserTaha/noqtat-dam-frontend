@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -20,6 +21,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool _loadingHistory = false;
+
   @override
   void initState() {
     super.initState();
@@ -101,12 +104,55 @@ class _ProfilePageState extends State<ProfilePage> {
     _result(false, '');
   }
 
+  Future<void> _openHistory() async {
+    if (_loadingHistory) return;
+    setState(() => _loadingHistory = true);
+    final cubit = context.read<ProfileCubit>();
+    final loaded = await cubit.loadHistory();
+    if (!mounted) return;
+    setState(() => _loadingHistory = false);
+    if (!loaded) {
+      _result(false, '');
+      return;
+    }
+    _history(cubit.state.donations);
+  }
+
   void _history(List<DonationRecord> donations) {
     final t = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context).toString();
-    final body = donations.isEmpty
+    final preview = kDebugMode && donations.isEmpty;
+    final arabic = Localizations.localeOf(context).languageCode == 'ar';
+    final records = preview
+        ? [
+            DonationRecord(
+              requestId: 101,
+              donatedAt: DateTime.now().subtract(const Duration(days: 30)),
+              bloodType: 'O+',
+              hospitalName: arabic
+                  ? 'مستشفى المنصورة الجامعي'
+                  : 'Mansoura University Hospital',
+            ),
+            DonationRecord(
+              requestId: 102,
+              donatedAt: DateTime.now().subtract(const Duration(days: 150)),
+              bloodType: 'O+',
+              hospitalName: arabic
+                  ? 'مستشفى طلخا العام'
+                  : 'Talkha General Hospital',
+            ),
+            DonationRecord(
+              requestId: 103,
+              donatedAt: DateTime.now().subtract(const Duration(days: 270)),
+              bloodType: 'O+',
+              hospitalName: arabic ? 'مستشفى السلام' : 'Al Salam Hospital',
+            ),
+          ]
+        : donations;
+    final body = records.isEmpty
         ? t.noDonationsRecorded
-        : '${donations.map((d) => '${DateFormat.yMMMd(locale).format(d.donatedAt.toLocal())} · ${d.hospitalName}').join('\n')}\n\n${t.selfReportedNote}';
+        : '${preview ? '${t.staticAccountPreview}\n\n' : ''}'
+              '${records.map((d) => '${DateFormat.yMMMd(locale).format(d.donatedAt.toLocal())} · ${d.bloodType}\n${d.hospitalName}').join('\n\n')}\n\n${t.selfReportedNote}';
     showPreviewMessage(context, t.donationHistoryTitle, body);
   }
 
@@ -290,7 +336,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 label: t.donationHistoryTitle,
                 icon: AppIcons.bloodDropFilled,
                 value: '${profile.donationsCount} · ${t.selfReportedTag}',
-                onTap: () => _history(state.donations),
+                onTap: _loadingHistory ? null : _openHistory,
+                trailing: _loadingHistory
+                    ? const SizedBox.square(
+                        dimension: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : null,
               ),
             ],
           ),

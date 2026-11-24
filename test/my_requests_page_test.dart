@@ -123,12 +123,13 @@ void main() {
       expect(find.text(t.pledgeDonated), findsOneWidget);
       expect(backend.callsTo('PATCH /requests/1'), isEmpty);
 
+      await tester.ensureVisible(find.byTooltip(t.increaseBags));
       await tester.tap(find.byTooltip(t.increaseBags));
       await tester.pumpAndSettle();
       expect(backend.callsTo('PATCH /requests/1').single.body, {
         'bagsCollected': 2,
       });
-      // the sheet stays open and shows the new number
+      // The details page stays open and shows the new number.
       expect(find.text('2'), findsWidgets);
       await tester.tap(find.byTooltip(t.decreaseBags));
       await tester.pumpAndSettle();
