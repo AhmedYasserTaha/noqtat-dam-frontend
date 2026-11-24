@@ -89,7 +89,8 @@ void main() {
     );
     await tester.pumpWidget(RepaintBoundary(key: key, child: const DamyApp()));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(t.donateAction).first);
+    await tester.ensureVisible(find.text(t.iWillDonate).first);
+    await tester.tap(find.text(t.iWillDonate).first);
     await tester.pumpAndSettle();
     await shot(tester, key, 'contact-pledge-sheet');
     await tester.tap(find.byKey(const ValueKey('contact-call')));
@@ -101,6 +102,31 @@ void main() {
       'link:https://wa.me/201099998888',
     ]);
     expect(find.text('01099998888'), findsOneWidget); // copy button stays
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('multiple urgent requests scroll horizontally', (tester) async {
+    await fonts(tester);
+    final backend = FakeBackend();
+    stubHome(
+      backend,
+      requests: [
+        requestJson(id: 11, hospital: 'Urgent one'),
+        requestJson(id: 12, hospital: 'Urgent two'),
+      ],
+    );
+    final tokens = MemoryTokenStore('saved');
+    configureDependencies(tokens: tokens, api: backend.client(tokens));
+    await tester.pumpWidget(const DamyApp());
+    await tester.pumpAndSettle();
+    final strip = find.byKey(const Key('urgent-requests-scroll'));
+    await tester.ensureVisible(strip);
+    final before = tester.getTopLeft(find.text('Urgent two')).dx;
+    await tester.drag(strip, const Offset(400, 0));
+    await tester.pumpAndSettle();
+    expect(tester.getTopLeft(find.text('Urgent two')).dx, greaterThan(before));
+    expect(find.text('Urgent one'), findsOneWidget);
+    expect(find.text('Urgent two'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

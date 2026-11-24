@@ -35,6 +35,13 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
   ({double lat, double lon})? _position;
   bool _sortByDistance = false;
   bool _locating = false;
+  final _urgentIndex = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    _urgentIndex.dispose();
+    super.dispose();
+  }
 
   Future<void> _toggleDistance() async {
     final t = AppLocalizations.of(context)!;
@@ -231,11 +238,17 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
     final home = feed.home;
     final city = profile?.district?.of(lang) ?? profile?.governorate?.of(lang);
     final selected = _filters.indexOf(feed.query.filter);
-    final urgent = feed.query.filter == RequestFilter.all
-        ? home?.closestUrgent
-        : null;
-    // The featured urgent request is also in the list; skip the duplicate.
-    var list = feed.requests.where((r) => r.id != urgent?.id).toList();
+    final urgentRequests = feed.query.filter == RequestFilter.all
+        ? <int, BloodRequest>{
+            if (home?.closestUrgent case final request?) request.id: request,
+            for (final request in feed.requests)
+              if (request.urgency == Urgency.critical &&
+                  request.status == RequestStatus.open)
+                request.id: request,
+          }.values.toList()
+        : <BloodRequest>[];
+    final urgentIds = urgentRequests.map((r) => r.id).toSet();
+    var list = feed.requests.where((r) => !urgentIds.contains(r.id)).toList();
     if (_sortByDistance && _position != null) {
       // Stable: requests without a hospital pin keep their order, at the end.
       final indexed = [for (var i = 0; i < list.length; i++) (i, list[i])];
@@ -254,7 +267,8 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
         constraints: const BoxConstraints(maxWidth: 512),
         child: NotificationListener<ScrollNotification>(
           onNotification: (n) {
-            if (n.metrics.extentAfter < 300) {
+            if (n.metrics.axis == Axis.vertical &&
+                n.metrics.extentAfter < 300) {
               final f = context.read<FeedCubit>();
               if (f.state.loadMoreFailure == null) f.loadMore();
             }
@@ -267,176 +281,310 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
             },
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
-              children: [
-                HomeHeader(
-                  city: city,
-                  unreadNotifications: home?.unreadNotifications ?? 0,
-                  onChooseLocation: _chooseLocation,
-                  onNotifications: () => context.push('/notifications'),
-                ),
-                const SizedBox(height: 12),
-                if (home != null && profile != null) ...[
-                  DonationReadinessCard(
-                    readiness: home.readiness,
-                    bloodType: profile.bloodType,
-                  ),
-                  const SizedBox(height: 12),
-                ],
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var index = 0; index < _filters.length; index++)
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(end: 8),
-                          child: ChoiceChip(
-                            label: Text(filterLabels[index]),
-                            selected: selected == index,
-                            showCheckmark: false,
-                            selectedColor: AppColors.ink,
-                            backgroundColor: Colors.white,
-                            labelStyle: TextStyle(
-                              color: selected == index
-                                  ? Colors.white
-                                  : AppColors.muted,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            shape: const StadiumBorder(),
-                            side: BorderSide(
-                              color: selected == index
-                                  ? AppColors.ink
-                                  : AppColors.border,
-                            ),
-                            onSelected: (_) => context.read<FeedCubit>().load(
-                              FeedQuery(filter: _filters[index]),
-                            ),
+              padding: const EdgeInsets.only(top: 10, bottom: 20),
+              children:
+                  <Widget>[
+                        HomeHeader(
+                          city: city,
+                          unreadNotifications: home?.unreadNotifications ?? 0,
+                          onChooseLocation: _chooseLocation,
+                          onNotifications: () => context.push('/notifications'),
+                        ),
+                        const SizedBox(height: 12),
+                        if (home != null && profile != null) ...[
+                          DonationReadinessCard(
+                            readiness: home.readiness,
+                            bloodType: profile.bloodType,
+                          ),
+                          const SizedBox(height: 12),
+                        ],
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              for (
+                                var index = 0;
+                                index < _filters.length;
+                                index++
+                              )
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    end: 8,
+                                  ),
+                                  child: ChoiceChip(
+                                    label: Text(filterLabels[index]),
+                                    selected: selected == index,
+                                    showCheckmark: false,
+                                    selectedColor: AppColors.ink,
+                                    backgroundColor: Colors.white,
+                                    labelStyle: TextStyle(
+                                      color: selected == index
+                                          ? Colors.white
+                                          : AppColors.muted,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    shape: const StadiumBorder(),
+                                    side: BorderSide(
+                                      color: selected == index
+                                          ? AppColors.ink
+                                          : AppColors.border,
+                                    ),
+                                    onSelected: (_) =>
+                                        context.read<FeedCubit>().load(
+                                          FeedQuery(filter: _filters[index]),
+                                        ),
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                if (urgent != null) ...[
-                  UrgentRequestCard(
-                    request: urgent,
-                    onDonate: () => _donate(urgent),
-                    onShare: () => _share(urgent),
-                    onViewMine: () => context.push('/requests'),
-                    onReport: urgent.isMine
-                        ? null
-                        : () => _report(ReportTarget.request, urgent.id),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-                if (list.length > 1 || _sortByDistance)
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: TextButton.icon(
-                      key: const Key('sort-distance'),
-                      onPressed: _locating ? null : _toggleDistance,
-                      icon: _locating
-                          ? const SizedBox(
-                              width: 14,
-                              height: 14,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : Icon(
-                              _sortByDistance
-                                  ? Icons.near_me_rounded
-                                  : Icons.near_me_outlined,
-                              size: 18,
+                        const SizedBox(height: 10),
+                        if (urgentRequests.isNotEmpty) ...[
+                          LayoutBuilder(
+                            key: const Key('urgent-edge-to-edge'),
+                            builder: (context, constraints) =>
+                                NotificationListener<ScrollNotification>(
+                                  onNotification: (notification) {
+                                    if (notification.metrics.axis ==
+                                        Axis.horizontal) {
+                                      final step =
+                                          (constraints.maxWidth - 32) * 0.94 +
+                                          10;
+                                      _urgentIndex.value =
+                                          (notification.metrics.pixels / step)
+                                              .round()
+                                              .clamp(
+                                                0,
+                                                urgentRequests.length - 1,
+                                              );
+                                    }
+                                    return false;
+                                  },
+                                  child: SingleChildScrollView(
+                                    key: const Key('urgent-requests-scroll'),
+                                    scrollDirection: Axis.horizontal,
+                                    padding: const EdgeInsetsDirectional.only(
+                                      start: 16,
+                                      end: 16,
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        for (final urgent in urgentRequests)
+                                          Padding(
+                                            padding: EdgeInsetsDirectional.only(
+                                              end:
+                                                  urgentRequests.length > 1 &&
+                                                      urgent.id !=
+                                                          urgentRequests.last.id
+                                                  ? 10
+                                                  : 0,
+                                            ),
+                                            child: SizedBox(
+                                              width:
+                                                  (constraints.maxWidth - 32) *
+                                                  (urgentRequests.length > 1
+                                                      ? 0.94
+                                                      : 1),
+                                              child: UrgentRequestCard(
+                                                request: urgent,
+                                                onDonate: () => _donate(urgent),
+                                                onShare: () => _share(urgent),
+                                                onViewMine: () =>
+                                                    context.push('/requests'),
+                                                onReport: urgent.isMine
+                                                    ? null
+                                                    : () => _report(
+                                                        ReportTarget.request,
+                                                        urgent.id,
+                                                      ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                          ),
+                          if (urgentRequests.length > 1)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: ValueListenableBuilder<int>(
+                                valueListenable: _urgentIndex,
+                                builder: (context, selected, _) => Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    for (
+                                      var i = 0;
+                                      i < urgentRequests.length;
+                                      i++
+                                    )
+                                      AnimatedContainer(
+                                        key: Key('urgent-dot-$i'),
+                                        duration: const Duration(
+                                          milliseconds: 180,
+                                        ),
+                                        width:
+                                            i ==
+                                                selected.clamp(
+                                                  0,
+                                                  urgentRequests.length - 1,
+                                                )
+                                            ? 16
+                                            : 6,
+                                        height: 6,
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 3,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color:
+                                              i ==
+                                                  selected.clamp(
+                                                    0,
+                                                    urgentRequests.length - 1,
+                                                  )
+                                              ? AppColors.red
+                                              : AppColors.border,
+                                          borderRadius: BorderRadius.circular(
+                                            4,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
                             ),
-                      label: Text(
-                        _sortByDistance
-                            ? '${t.sortByDistanceOn} · ${t.sortByDistanceOff}'
-                            : t.sortByDistance,
-                      ),
-                    ),
-                  ),
-                if (_sortByDistance)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 6),
-                    child: Text(
-                      t.distanceNote,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: AppColors.muted,
-                      ),
-                    ),
-                  ),
-                const SizedBox(height: 8),
-                if (feed.status == FeedStatus.loading && feed.home == null)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                    child: Center(child: CircularProgressIndicator()),
-                  )
-                else if (feed.status == FeedStatus.failure)
-                  _message(
-                    failureMessage(t, feed.failure!),
-                    action: TextButton(
-                      onPressed: () => context.read<FeedCubit>().load(),
-                      child: Text(t.retry),
-                    ),
-                  )
-                else ...[
-                  if (list.isEmpty && urgent == null)
-                    _emptyState(t, feed.query.filter, profile),
-                  for (final r in list) ...[
-                    CompactRequestCard(
-                      request: r,
-                      distanceKm: _sortByDistance ? _distanceTo(r) : null,
-                      onDonate: () => _donate(r),
-                      onShare: () => _share(r),
-                      onReport: () => _report(ReportTarget.request, r.id),
-                    ),
-                    const SizedBox(height: 10),
-                  ],
-                  if (feed.query.filter == RequestFilter.all)
-                    for (final post in feed.posts) ...[
-                      CommunityPostCard(
-                        post: post,
-                        onReact: (r) =>
-                            context.read<FeedCubit>().react(post.id, r),
-                        onReport: () => _report(ReportTarget.post, post.id),
-                        onDelete: () async {
-                          if (await context.read<FeedCubit>().deletePost(
-                                post.id,
-                              ) &&
-                              mounted) {
-                            _snack(t.postDeleted);
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  if (feed.loadMoreFailure != null)
-                    _message(
-                      t.loadMoreFailed,
-                      action: TextButton(
-                        key: const Key('load-more-retry'),
-                        onPressed: () => context.read<FeedCubit>().loadMore(),
-                        child: Text(t.retry),
-                      ),
-                    )
-                  else if (feed.loadingMore)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Center(child: CircularProgressIndicator()),
-                    )
-                  else if (feed.hasMore &&
-                      (feed.query.filter == RequestFilter.all ||
-                          feed.requestsNext != null))
-                    Center(
-                      child: TextButton(
-                        key: const Key('load-more'),
-                        onPressed: () => context.read<FeedCubit>().loadMore(),
-                        child: Text(t.loadMore),
-                      ),
-                    ),
-                ],
-              ],
+                          const SizedBox(height: 10),
+                        ],
+                        if (list.length > 1 || _sortByDistance)
+                          Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: TextButton.icon(
+                              key: const Key('sort-distance'),
+                              onPressed: _locating ? null : _toggleDistance,
+                              icon: _locating
+                                  ? const SizedBox(
+                                      width: 14,
+                                      height: 14,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : Icon(
+                                      _sortByDistance
+                                          ? Icons.near_me_rounded
+                                          : Icons.near_me_outlined,
+                                      size: 18,
+                                    ),
+                              label: Text(
+                                _sortByDistance
+                                    ? '${t.sortByDistanceOn} · ${t.sortByDistanceOff}'
+                                    : t.sortByDistance,
+                              ),
+                            ),
+                          ),
+                        if (_sortByDistance)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 6),
+                            child: Text(
+                              t.distanceNote,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: AppColors.muted,
+                              ),
+                            ),
+                          ),
+                        const SizedBox(height: 8),
+                        if (feed.status == FeedStatus.loading &&
+                            feed.home == null)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 30),
+                            child: Center(child: CircularProgressIndicator()),
+                          )
+                        else if (feed.status == FeedStatus.failure)
+                          _message(
+                            failureMessage(t, feed.failure!),
+                            action: TextButton(
+                              onPressed: () => context.read<FeedCubit>().load(),
+                              child: Text(t.retry),
+                            ),
+                          )
+                        else ...[
+                          if (list.isEmpty && urgentRequests.isEmpty)
+                            _emptyState(t, feed.query.filter, profile),
+                          for (final r in list) ...[
+                            CompactRequestCard(
+                              request: r,
+                              distanceKm: _sortByDistance
+                                  ? _distanceTo(r)
+                                  : null,
+                              onDonate: () => _donate(r),
+                              onShare: () => _share(r),
+                              onReport: () =>
+                                  _report(ReportTarget.request, r.id),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                          if (feed.query.filter == RequestFilter.all)
+                            for (final post in feed.posts) ...[
+                              CommunityPostCard(
+                                post: post,
+                                onReact: (r) =>
+                                    context.read<FeedCubit>().react(post.id, r),
+                                onReport: () =>
+                                    _report(ReportTarget.post, post.id),
+                                onDelete: () async {
+                                  if (await context
+                                          .read<FeedCubit>()
+                                          .deletePost(post.id) &&
+                                      mounted) {
+                                    _snack(t.postDeleted);
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          if (feed.loadMoreFailure != null)
+                            _message(
+                              t.loadMoreFailed,
+                              action: TextButton(
+                                key: const Key('load-more-retry'),
+                                onPressed: () =>
+                                    context.read<FeedCubit>().loadMore(),
+                                child: Text(t.retry),
+                              ),
+                            )
+                          else if (feed.loadingMore)
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              child: Center(child: CircularProgressIndicator()),
+                            )
+                          else if (feed.hasMore &&
+                              (feed.query.filter == RequestFilter.all ||
+                                  feed.requestsNext != null))
+                            Center(
+                              child: TextButton(
+                                key: const Key('load-more'),
+                                onPressed: () =>
+                                    context.read<FeedCubit>().loadMore(),
+                                child: Text(t.loadMore),
+                              ),
+                            ),
+                        ],
+                      ]
+                      .map(
+                        (child) => child.key == const Key('urgent-edge-to-edge')
+                            ? child
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: child,
+                              ),
+                      )
+                      .toList(),
             ),
           ),
         ),
