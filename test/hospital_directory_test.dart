@@ -318,6 +318,7 @@ void main() {
     );
     expect(backend.callsTo('GET /hospitals').single.query, {
       'governorateId': 'EG01',
+      'limit': 50,
     });
     await tester.tap(find.byKey(const ValueKey('request-hospital-picker')));
     await tester.pumpAndSettle();
