@@ -154,7 +154,30 @@ Map<String, dynamic> meJson({bool isAvailable = true}) => {
 };
 
 /// Routes that make a signed-in home screen load.
-void stubHome(FakeBackend b, {List<Map<String, dynamic>>? requests}) {
+Map<String, dynamic> postJson({
+  int id = 1,
+  String text = 'بوست تجريبي',
+  bool isMine = false,
+  int likes = 0,
+  int dislikes = 0,
+  String? myReaction,
+}) => {
+  'id': id,
+  'authorName': 'منى',
+  'text': text,
+  'isMine': isMine,
+  'likes': likes,
+  'dislikes': dislikes,
+  'myReaction': myReaction,
+  'createdAt': '2026-11-21T10:00:00.000Z',
+};
+
+void stubHome(
+  FakeBackend b, {
+  List<Map<String, dynamic>>? requests,
+  List<Map<String, dynamic>> posts = const [],
+  int unread = 0,
+}) {
   final list = requests ?? [requestJson(id: 8, hospital: 'مستشفى المنصورة')];
   b.on('GET /me', (_) => FakeReply(meJson()));
   b.on('GET /me/donations', (_) => FakeReply(<Object?>[]));
@@ -169,8 +192,12 @@ void stubHome(FakeBackend b, {List<Map<String, dynamic>>? requests}) {
       },
       'closestUrgentRequest': null,
       'requests': list,
-      'posts': <Object?>[],
+      'posts': posts,
+      'unreadNotifications': unread,
     }),
   );
-  b.on('GET /requests', (_) => FakeReply({'items': list, 'nextBefore': null}));
+  b.on(
+    'GET /requests',
+    (_) => FakeReply({'items': list, 'nextBefore': null, 'nextCursor': null}),
+  );
 }

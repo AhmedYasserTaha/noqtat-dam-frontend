@@ -673,4 +673,104 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountConfirm => 'Delete permanently';
+
+  @override
+  String get createChoiceTitle => 'What do you want to publish?';
+
+  @override
+  String get createPostOption => 'Post';
+
+  @override
+  String get createPostHint =>
+      'A normal community post. People can like or dislike it.';
+
+  @override
+  String get createRequestOption => 'Blood request';
+
+  @override
+  String get createRequestHint => 'Needs donors of a blood type at a hospital.';
+
+  @override
+  String get newPostTitle => 'New post';
+
+  @override
+  String get newPostField => 'Write your post';
+
+  @override
+  String get newPostPublish => 'Publish post';
+
+  @override
+  String get newPostEmpty => 'Write something first.';
+
+  @override
+  String get newPostWarning =>
+      'Do not write patient details or phone numbers in a post.';
+
+  @override
+  String get postPublished => 'Post published.';
+
+  @override
+  String get likeAction => 'Like';
+
+  @override
+  String get dislikeAction => 'Dislike';
+
+  @override
+  String get reportAction => 'Report';
+
+  @override
+  String get deletePostAction => 'Delete post';
+
+  @override
+  String get postDeleted => 'Post deleted.';
+
+  @override
+  String get reportTitle => 'Why are you reporting this?';
+
+  @override
+  String get reportSpam => 'Spam';
+
+  @override
+  String get reportFake => 'Fake content';
+
+  @override
+  String get reportAbusive => 'Abusive';
+
+  @override
+  String get reportSensitive => 'Contains private information';
+
+  @override
+  String get reportOther => 'Other';
+
+  @override
+  String get reportDone =>
+      'Reported and hidden for you. The app owner reviews reports by hand; nothing is hidden for others automatically.';
+
+  @override
+  String get loadMore => 'Load more';
+
+  @override
+  String get loadMoreFailed => 'Could not load more.';
+
+  @override
+  String get pledgesTitle => 'Donors who pledged';
+
+  @override
+  String get pledgesEmpty => 'No pledges yet.';
+
+  @override
+  String get pledgeOnTheWay => 'On the way';
+
+  @override
+  String get pledgeDonated => 'Says donated';
+
+  @override
+  String get notificationsEmpty => 'No notifications yet.';
+
+  @override
+  String get markAllRead => 'Mark all read';
+
+  @override
+  String get shareFailedCopied =>
+      'Copied the text because sharing is unavailable.';
 }

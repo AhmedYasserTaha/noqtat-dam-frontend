@@ -18,7 +18,7 @@ class AppShell extends StatelessWidget {
       bottomNavigationBar: AppBottomNav(
         selected: AppNavDestination.values[index < 0 ? 0 : index],
         onSelected: (destination) => context.go(paths[destination.index]),
-        onCreate: () => context.push('/blood-request'),
+        onCreate: () => context.push('/create'),
       ),
     );
   }

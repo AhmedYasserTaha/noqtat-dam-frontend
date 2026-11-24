@@ -272,5 +272,37 @@
         "type": "String"
       }
     }
-  }
+  },
+  "createChoiceTitle": "إنت عاوز تنشر إيه؟",
+  "createPostOption": "بوست",
+  "createPostHint": "كلام عادي للمجتمع، والناس تقدر تعمل لايك أو ديس لايك.",
+  "createRequestOption": "طلب دم",
+  "createRequestHint": "طلب محتاج متبرعين بفصيلة معينة في مستشفى.",
+  "newPostTitle": "بوست جديد",
+  "newPostField": "اكتب بوستك",
+  "newPostPublish": "نشر البوست",
+  "newPostEmpty": "اكتب حاجة الأول.",
+  "newPostWarning": "متكتبش بيانات مريض أو أرقام تليفونات في البوست.",
+  "postPublished": "تم نشر البوست.",
+  "likeAction": "لايك",
+  "dislikeAction": "ديس لايك",
+  "reportAction": "إبلاغ",
+  "deletePostAction": "حذف البوست",
+  "postDeleted": "اتحذف البوست.",
+  "reportTitle": "سبب الإبلاغ",
+  "reportSpam": "إعلان أو سبام",
+  "reportFake": "محتوى مزيف",
+  "reportAbusive": "مسيء",
+  "reportSensitive": "فيه بيانات حساسة",
+  "reportOther": "سبب آخر",
+  "reportDone": "تم الإبلاغ وهنخفي ده عنك. المراجعة بتتم يدويًا من صاحب التطبيق، ومفيش إخفاء تلقائي للباقي.",
+  "loadMore": "عرض المزيد",
+  "loadMoreFailed": "تعذر تحميل المزيد.",
+  "pledgesTitle": "المتبرعون المتعهدون",
+  "pledgesEmpty": "لسه محدش اتعهد.",
+  "pledgeOnTheWay": "في الطريق",
+  "pledgeDonated": "قال إنه تبرع",
+  "notificationsEmpty": "مفيش إشعارات لسه.",
+  "markAllRead": "تعليم الكل كمقروء",
+  "shareFailedCopied": "اتنسخ النص لأن المشاركة مش متاحة."
 }

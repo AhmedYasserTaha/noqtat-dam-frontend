@@ -1,6 +1,8 @@
 import '../../../../core/network/api_client.dart';
 import '../../../blood_request/data/datasources/blood_request_remote_datasource.dart';
 import '../../../blood_request/data/models/blood_request_model.dart';
+import '../../../blood_request/domain/entities/blood_request.dart';
+import '../../../community/data/models/community_post_model.dart';
 import '../../domain/entities/home_data.dart';
 
 class FeedRemoteDataSource {
@@ -24,25 +26,34 @@ class FeedRemoteDataSource {
           : BloodRequestModel.fromJson(urgent as Json),
       posts: [
         for (final p in j['posts'] as List<dynamic>)
-          CommunityPost(
-            id: (p as Json)['id'] as int,
-            authorName: p['authorName'] as String? ?? '',
-            text: p['text'] as String? ?? '',
-            createdAt: DateTime.parse(p['createdAt'] as String),
-          ),
+          communityPostFromJson(p as Json),
       ],
+      unreadNotifications: j['unreadNotifications'] as int? ?? 0,
     );
   }
 
-  Future<List<BloodRequestModel>> feed(FeedQuery q) async =>
-      BloodRequestRemoteDataSource.parseList(
-        await api.get(
-          '/requests',
-          query: {
-            'filter': q.filter.api,
-            'governorateId': q.governorateId,
-            'districtId': q.districtId,
-          },
-        ),
-      );
+  Future<PagedList<BloodRequest>> feed(FeedQuery q, {String? cursor}) async {
+    final body = await api.get(
+      '/requests',
+      query: {
+        'filter': q.filter.api,
+        'governorateId': q.governorateId,
+        'districtId': q.districtId,
+        'cursor': cursor,
+      },
+    );
+    return PagedList(
+      BloodRequestRemoteDataSource.parseList(body),
+      body['nextCursor'] as String?,
+    );
+  }
+
+  Future<PagedList<CommunityPost>> posts({String? before}) async {
+    final body = await api.get('/posts', query: {'before': before});
+    final next = body['nextBefore'];
+    return PagedList([
+      for (final p in body['items'] as List<dynamic>)
+        communityPostFromJson(p as Json),
+    ], next?.toString());
+  }
 }

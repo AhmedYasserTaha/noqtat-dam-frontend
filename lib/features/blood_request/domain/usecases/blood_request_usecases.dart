@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../entities/blood_request.dart';
+import '../entities/donor_pledge.dart';
 import '../repositories/blood_request_repository.dart';
 
 class CreateBloodRequest implements UseCase<BloodRequest, BloodRequestDraft> {
@@ -57,4 +58,12 @@ class CancelPledge implements UseCase<BloodRequest, int> {
   @override
   Future<Either<Failure, BloodRequest>> call(int id) =>
       repository.cancelPledge(id);
+}
+
+class GetRequestPledges implements UseCase<List<DonorPledge>, int> {
+  GetRequestPledges(this.repository);
+  final BloodRequestRepository repository;
+  @override
+  Future<Either<Failure, List<DonorPledge>>> call(int requestId) =>
+      repository.pledges(requestId);
 }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../../../../core/di/injection.dart';
+import '../cubit/pledges_cubit.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -36,8 +40,11 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (_) => BlocProvider.value(
-        value: cubit,
+      builder: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: cubit),
+          BlocProvider(create: (_) => getIt<PledgesCubit>()..load(r.id)),
+        ],
         child: _RequestDetails(request: r),
       ),
     );
@@ -290,6 +297,8 @@ class _RequestDetails extends StatelessWidget {
             t.onTheWayCount(request.onTheWayCount),
             style: const TextStyle(color: AppColors.muted, fontSize: 12),
           ),
+          const SizedBox(height: 12),
+          const _PledgesList(),
           if (open) ...[
             const SizedBox(height: 16),
             Row(
@@ -355,6 +364,48 @@ class _RequestDetails extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Who pledged on this request. Statuses are the donors' own statements;
+/// nothing here is verified.
+class _PledgesList extends StatelessWidget {
+  const _PledgesList();
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    final s = context.watch<PledgesCubit>().state;
+    if (s.loading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.pledgesTitle,
+          style: const TextStyle(fontWeight: FontWeight.w900),
+        ),
+        if (s.items.isEmpty)
+          Text(
+            t.pledgesEmpty,
+            style: const TextStyle(color: AppColors.muted, fontSize: 12),
+          ),
+        for (final p in s.items)
+          ListTile(
+            dense: true,
+            contentPadding: EdgeInsets.zero,
+            title: Text(p.donorName),
+            subtitle: Text(
+              p.status == PledgeStatus.donated
+                  ? t.pledgeDonated
+                  : p.status == PledgeStatus.onTheWay
+                  ? t.pledgeOnTheWay
+                  : t.cancelPledge,
+            ),
+            trailing: Text(p.bloodType, textDirection: TextDirection.ltr),
+          ),
+      ],
     );
   }
 }

@@ -19,8 +19,11 @@ class AuthCubit extends Cubit<AuthState> {
     required this.signOutUseCase,
     required this.requestReset,
     required this.resetPasswordUseCase,
+    this.beforeSignOut,
   }) : super(const AuthState());
 
+  /// Runs while the session is still valid (e.g. to clear the push token).
+  final Future<void> Function()? beforeSignOut;
   final AuthRepository repository;
   final RestoreSession restoreSession;
   final LoginUser loginUser;
@@ -62,6 +65,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signOut() async {
+    await beforeSignOut?.call();
     await signOutUseCase(const NoParams());
     if (isClosed) return;
     emit(const AuthState(status: AuthStatus.unauthenticated));

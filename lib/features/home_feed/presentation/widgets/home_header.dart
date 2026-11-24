@@ -11,11 +11,13 @@ class HomeHeader extends StatelessWidget {
     required this.city,
     required this.onChooseLocation,
     required this.onNotifications,
+    this.unreadNotifications = 0,
   });
 
   final String? city;
   final VoidCallback onChooseLocation;
   final VoidCallback onNotifications;
+  final int unreadNotifications;
 
   @override
   Widget build(BuildContext context) {
@@ -102,10 +104,15 @@ class HomeHeader extends StatelessWidget {
                 ),
                 backgroundColor: Colors.white,
               ),
-              icon: const AppIcon(
-                AppIcons.bell,
-                color: AppColors.ink,
-                size: 20,
+              icon: Badge(
+                key: const Key('bell-badge'),
+                isLabelVisible: unreadNotifications > 0,
+                label: Text('$unreadNotifications'),
+                child: const AppIcon(
+                  AppIcons.bell,
+                  color: AppColors.ink,
+                  size: 20,
+                ),
               ),
             ),
           ),

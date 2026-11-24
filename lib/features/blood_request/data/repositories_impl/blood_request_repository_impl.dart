@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/utils/safe_call.dart';
 import '../../domain/entities/blood_request.dart';
+import '../../domain/entities/donor_pledge.dart';
 import '../../domain/repositories/blood_request_repository.dart';
 import '../datasources/blood_request_remote_datasource.dart';
 
@@ -26,6 +27,10 @@ class BloodRequestRepositoryImpl implements BloodRequestRepository {
   }) => safeCall(
     () => remote.update(id, bagsCollected: bagsCollected, status: status),
   );
+
+  @override
+  Future<Either<Failure, List<DonorPledge>>> pledges(int requestId) =>
+      safeCall(() => remote.pledges(requestId));
 
   @override
   Future<Either<Failure, BloodRequest>> pledge(int id) =>

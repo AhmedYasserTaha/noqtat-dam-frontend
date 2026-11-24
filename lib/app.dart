@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/di/injection.dart';
+import 'core/utils/push_registrar.dart';
+import 'core/utils/push_service.dart';
 import 'core/network/api_checker.dart';
 import 'core/widgets/api_checker_widget.dart';
 import 'core/router/app_router.dart';
@@ -30,7 +34,13 @@ class _DamyAppState extends State<DamyApp> {
   void initState() {
     super.initState();
     _auth.start();
+    // A push while the app is open: refresh the feed (and its bell badge).
+    _foreground = getIt<PushService>().foregroundMessages.listen(
+      (_) => getIt<FeedCubit>().load(),
+    );
   }
+
+  StreamSubscription<void>? _foreground;
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
@@ -42,28 +52,34 @@ class _DamyAppState extends State<DamyApp> {
     ],
     child: BlocListener<AuthCubit, AuthState>(
       listenWhen: (a, b) =>
-          a.status != b.status && b.status == AuthStatus.unauthenticated,
-      // Drop the previous account's data when the session ends.
-      listener: (context, _) => getIt<ProfileCubit>().reset(),
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: _router,
-        builder: (context, child) => ApiCheckerWidget(
-          isActive: ApiChecker.isActive,
-          onPressed: ApiChecker.openInspector,
-          child: child ?? const SizedBox.shrink(),
+          a.status != b.status && b.status == AuthStatus.authenticated,
+      listener: (context, _) => getIt<PushRegistrar>().onSignedIn(),
+      child: BlocListener<AuthCubit, AuthState>(
+        listenWhen: (a, b) =>
+            a.status != b.status && b.status == AuthStatus.unauthenticated,
+        // Drop the previous account's data when the session ends.
+        listener: (context, _) => getIt<ProfileCubit>().reset(),
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: _router,
+          builder: (context, child) => ApiCheckerWidget(
+            isActive: ApiChecker.isActive,
+            onPressed: ApiChecker.openInspector,
+            child: child ?? const SizedBox.shrink(),
+          ),
+          theme: AppTheme.light,
+          locale: widget.locale,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
         ),
-        theme: AppTheme.light,
-        locale: widget.locale,
-        supportedLocales: AppLocalizations.supportedLocales,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
       ),
     ),
   );
 
   @override
   void dispose() {
+    _foreground?.cancel();
     _router.dispose();
     _refresh.dispose();
     super.dispose();

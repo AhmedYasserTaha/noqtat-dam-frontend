@@ -16,6 +16,19 @@ REST API (Node/Express/PostgreSQL).
   the donor's own record. Nothing in the app verifies a donation.
 - Create request, My requests (active / completed / cancelled), and the author's
   controls: bags collected, mark fulfilled, cancel.
+- Create button asks: normal post or blood request. Posts show as regular cards
+  with explicit like / dislike (tap again to undo). Authors can delete their post.
+- Share a request through the system share sheet (`share_plus`). The text has
+  no phone number.
+- Report a request or post (5 reasons). It is hidden **for the reporter only**;
+  there is no moderation service, the app owner reviews reports by hand.
+- Feed pagination (load more, with retry that keeps what is already loaded).
+- Notifications inbox (bell badge): new request in your governorate, someone
+  pledged, a donor self-reported, request closed.
+- Request authors see who pledged (name, blood type, status; no phone numbers).
+- Push client: asks permission, sends the device token to the backend after
+  sign-in, clears it before sign-out. The backend only sends once it has a
+  Firebase service account.
 - Profile: edit name/phone, availability and notification preferences, donation
   history (self-reported), logout, delete account.
 
@@ -77,6 +90,10 @@ E2E_API_URL=http://127.0.0.1:3000 E2E_SMS_LOG=/path/to/server.log flutter test t
 
 ## Not done / not verified
 
-No push notifications (FCM), SMS provider, hosting or HTTPS setup. Not run on a
-real device or on iOS. Pagination (`before` cursor) is not used by the UI yet.
+- Push (FCM) was never run on a real device. Backend needs the Firebase service
+  account in its `.env`. iOS also needs an APNs key uploaded in Firebase and the
+  Push capability in Xcode; none of that is set up.
+- SMS password-reset needs a paid provider on the backend; still dev-log only.
+- Not run on iOS or on a real Android device. Hosting/HTTPS not set up.
+- Reports are not moderated automatically.
 Application ID: com.codex.dammak.

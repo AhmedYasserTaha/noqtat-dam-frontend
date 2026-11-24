@@ -13,10 +13,18 @@ class GetHome implements UseCase<HomeData, NoParams> {
   Future<Either<Failure, HomeData>> call(NoParams p) => repository.home();
 }
 
-class GetFeed implements UseCase<List<BloodRequest>, FeedQuery> {
+class GetFeed implements UseCase<PagedList<BloodRequest>, FeedPageParams> {
   GetFeed(this.repository);
   final FeedRepository repository;
   @override
-  Future<Either<Failure, List<BloodRequest>>> call(FeedQuery q) =>
-      repository.feed(q);
+  Future<Either<Failure, PagedList<BloodRequest>>> call(FeedPageParams p) =>
+      repository.feed(p.query, cursor: p.cursor);
+}
+
+class GetPosts implements UseCase<PagedList<CommunityPost>, String?> {
+  GetPosts(this.repository);
+  final FeedRepository repository;
+  @override
+  Future<Either<Failure, PagedList<CommunityPost>>> call(String? before) =>
+      repository.posts(before: before);
 }

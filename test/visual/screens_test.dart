@@ -62,8 +62,12 @@ void main() {
             'authorName': 'محمد',
             'text': 'تبرعت النهارده وحاسس بسعادة كبيرة.',
             'createdAt': '2026-11-23T08:00:00.000Z',
+            'likes': 4,
+            'dislikes': 1,
+            'myReaction': 'like',
           },
         ],
+        'unreadNotifications': 2,
       }),
     );
     backend.on(
@@ -76,7 +80,9 @@ void main() {
     backend.on(
       'GET /requests/mine',
       (_) => FakeReply({
-        'items': [requestJson(id: 20, isMine: true, hospital: 'مستشفى الاختبار')],
+        'items': [
+          requestJson(id: 20, isMine: true, hospital: 'مستشفى الاختبار'),
+        ],
         'nextBefore': null,
       }),
     );
@@ -140,6 +146,10 @@ void main() {
     // create request, full happy path with the location picker
     await tester.tap(find.byTooltip(t.createRequestAction).first);
     await tester.pumpAndSettle();
+    await shot('06b-create-post-tab');
+    await tester.tap(find.byKey(const Key('create-tab-request')));
+    await tester.pumpAndSettle();
+    await shot('06c-create-request-tab');
     await tester.tap(find.text('AB+'));
     await tester.tap(find.byTooltip(t.increaseBags));
     await tester.ensureVisible(find.byKey(const ValueKey('request-hospital')));
