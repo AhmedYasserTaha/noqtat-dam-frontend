@@ -53,6 +53,7 @@ class BloodRequestRemoteDataSource {
     for (final p in await api.getAll(ApiConstants.requestPledges(requestId)))
       DonorPledge(
         donorName: (p as Json)['donorName'] as String? ?? '',
+        donorPhone: (p['donorPhone'] as String?)?.trim(),
         bloodType: p['bloodType'] as String? ?? '',
         status:
             PledgeStatus.fromApi(p['status'] as String?) ??
