@@ -45,6 +45,7 @@ import '../../features/hospitals/domain/usecases/get_hospitals.dart';
 import '../../features/hospitals/presentation/cubit/hospital_list_cubit.dart';
 import '../utils/device_location.dart';
 import '../utils/maps_launcher.dart';
+import '../../features/content/data/content_remote_datasource.dart';
 import '../constants/api_constants.dart';
 import '../network/api_client.dart';
 import '../storage/token_store.dart';
@@ -70,6 +71,9 @@ void configureDependencies({
     );
 
   getIt.registerLazySingleton(() => LocationsApi(getIt<ApiClient>()));
+  getIt.registerLazySingleton(
+    () => ContentRemoteDataSource(getIt<ApiClient>()),
+  );
 
   getIt
     ..registerSingleton<PushService>(push ?? const NoopPushService())
