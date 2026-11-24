@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constants/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/app_icon.dart';
 import '../../../../core/widgets/egypt_location_fields.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/utils/failure_message.dart';
@@ -15,6 +13,7 @@ import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../domain/entities/home_data.dart';
 import '../cubit/feed_cubit.dart';
 import '../widgets/feed_cards.dart';
+import '../widgets/home_header.dart';
 import '../widgets/pledge_sheet.dart';
 
 class HomeFeedPage extends StatefulWidget {
@@ -161,75 +160,11 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
             children: [
-              Row(
-                children: [
-                  const AppIcon(
-                    AppIcons.bloodDropFilled,
-                    color: AppColors.red,
-                    size: 25,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      t.authBrand,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 21,
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: OutlinedButton(
-                      onPressed: _chooseLocation,
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        minimumSize: const Size(0, 44),
-                        foregroundColor: AppColors.ink,
-                        shape: const StadiumBorder(),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const AppIcon(
-                            AppIcons.locationPin,
-                            color: AppColors.ink,
-                            size: 18,
-                          ),
-                          const SizedBox(width: 5),
-                          Flexible(
-                            child: Text(
-                              city ?? t.chooseLocationChip,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  SizedBox(
-                    width: 44,
-                    height: 44,
-                    child: OutlinedButton(
-                      onPressed: () =>
-                          _notice(t.notificationsTitle, t.noNotificationsYet),
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shape: const CircleBorder(),
-                      ),
-                      child: const AppIcon(
-                        AppIcons.bell,
-                        color: AppColors.ink,
-                        size: 21,
-                      ),
-                    ),
-                  ),
-                ],
+              HomeHeader(
+                city: city,
+                onChooseLocation: _chooseLocation,
+                onNotifications: () =>
+                    _notice(t.notificationsTitle, t.noNotificationsYet),
               ),
               const SizedBox(height: 12),
               if (home != null && profile != null) ...[

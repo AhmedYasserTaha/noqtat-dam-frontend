@@ -13,6 +13,7 @@ import '../../features/auth/presentation/cubit/auth_state.dart';
 
 import 'app_shell.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
+import '../../features/auth/presentation/pages/splash_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/complete_profile_page.dart';
@@ -24,6 +25,14 @@ import '../../features/blood_request/presentation/pages/my_requests_page.dart';
 
 /// Re-runs the router redirect whenever the auth state changes.
 class RouterRefresh extends ChangeNotifier {
+  bool splashFinished = false;
+
+  void finishSplash() {
+    if (splashFinished) return;
+    splashFinished = true;
+    notifyListeners();
+  }
+
   RouterRefresh(Stream<dynamic> stream) {
     _sub = stream.listen((_) => notifyListeners());
   }
@@ -51,16 +60,20 @@ String? authRedirect(AuthState auth, String path) {
   return null;
 }
 
-GoRouter createRouter(AuthCubit auth, Listenable refresh) => GoRouter(
+GoRouter createRouter(AuthCubit auth, RouterRefresh refresh) => GoRouter(
   navigatorKey: ApiChecker.navigatorKey(),
   initialLocation: '/splash',
   refreshListenable: refresh,
-  redirect: (context, state) => authRedirect(auth.state, state.uri.path),
+  redirect: (context, state) {
+    if (!refresh.splashFinished) {
+      return state.uri.path == '/splash' ? null : '/splash';
+    }
+    return authRedirect(auth.state, state.uri.path);
+  },
   routes: [
     GoRoute(
       path: '/splash',
-      builder: (context, state) =>
-          const Scaffold(body: Center(child: CircularProgressIndicator())),
+      builder: (context, state) => SplashPage(onFinished: refresh.finishSplash),
     ),
     GoRoute(
       path: '/privacy',
