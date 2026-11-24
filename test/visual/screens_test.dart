@@ -152,11 +152,6 @@ void main() {
     await shot('06c-create-request-tab');
     await tester.tap(find.text('AB+'));
     await tester.tap(find.byTooltip(t.increaseBags));
-    await tester.ensureVisible(find.byKey(const ValueKey('request-hospital')));
-    await tester.enterText(
-      find.byKey(const ValueKey('request-hospital')),
-      'مستشفى الاختبار',
-    );
     await tester.runAsync(() => EgyptLocations.load());
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const ValueKey('governorate')));
@@ -173,6 +168,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('مركز المنصورة'));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('request-hospital')));
+    await tester.enterText(
+      find.byKey(const ValueKey('request-hospital')),
+      'مستشفى الاختبار',
+    );
     await tester.ensureVisible(find.byKey(const ValueKey('request-phone')));
     await tester.enterText(
       find.byKey(const ValueKey('request-phone')),

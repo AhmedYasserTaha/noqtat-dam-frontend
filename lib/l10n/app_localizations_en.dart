@@ -779,4 +779,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get postsEmpty => 'No posts yet';
+
+  @override
+  String get chooseHospital => 'Choose a hospital';
+
+  @override
+  String get searchHospitals => 'Search hospitals';
+
+  @override
+  String get noHospitalsFound => 'No hospital with that name';
+
+  @override
+  String get hospitalNotListed => 'Another hospital, I will type its name';
+
+  @override
+  String get chooseFromHospitalList => 'Choose from the hospital list';
+
+  @override
+  String get openHospitalInMaps => 'Go to the hospital in Maps';
+
+  @override
+  String get searchHospitalInMaps => 'Search for it in Maps';
+
+  @override
+  String get hospitalLocationUnreviewed =>
+      'This hospital\'s location is not reviewed yet. Check it in Maps.';
+
+  @override
+  String get hospitalTypedByHand =>
+      'The requester typed the hospital name. Make sure the Maps result is the right hospital.';
+
+  @override
+  String get mapsOpenFailed => 'Could not open Maps';
 }

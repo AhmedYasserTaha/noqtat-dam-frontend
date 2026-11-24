@@ -14,6 +14,7 @@ import '../../../../core/utils/request_text.dart';
 import '../../../../core/widgets/app_icon.dart';
 import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../hospitals/presentation/widgets/hospital_map_button.dart';
 import '../../domain/entities/blood_request.dart';
 import '../cubit/my_requests_cubit.dart';
 
@@ -289,6 +290,11 @@ class _RequestDetails extends StatelessWidget {
           Text(
             '${request.hospitalName}\n${placeLine(request, lang)}',
             style: const TextStyle(color: AppColors.muted, height: 1.7),
+          ),
+          const SizedBox(height: 10),
+          HospitalMapButton(
+            location: request.hospitalLocation,
+            searchQuery: '${request.hospitalName} ${placeLine(request, lang)}',
           ),
           if ((request.notes ?? '').isNotEmpty) ...[
             const SizedBox(height: 8),

@@ -29,6 +29,15 @@ REST API (Node/Express/PostgreSQL).
 - Push client: asks permission, sends the device token to the backend after
   sign-in, clears it before sign-out. The backend only sends once it has a
   Firebase service account.
+- Hospital directory: the create form lets the requester pick a hospital from the
+  backend's reviewed list for the chosen governorate (the request then carries
+  `hospitalId`), or type the name if it is not listed or the list is empty. Request
+  sheets show "go to the hospital in Maps", which opens Google Maps with the
+  hospital coordinates (Maps URL, no API key). Typed hospitals only get a Maps
+  search with a warning. The directory starts empty: import a reviewed file on the
+  backend (`npm run import:hospitals`). If it comes from OpenStreetMap, ODbL
+  attribution and share-alike apply and the credit must be shown in the app
+  (not added yet).
 - Profile: edit name/phone, availability and notification preferences, donation
   history (self-reported), logout, delete account.
 

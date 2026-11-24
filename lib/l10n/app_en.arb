@@ -221,5 +221,15 @@
   "markAllRead": "Mark all read",
   "shareFailedCopied": "Copied the text because sharing is unavailable.",
   "postsTitle": "Posts",
-  "postsEmpty": "No posts yet"
+  "postsEmpty": "No posts yet",
+  "chooseHospital": "Choose a hospital",
+  "searchHospitals": "Search hospitals",
+  "noHospitalsFound": "No hospital with that name",
+  "hospitalNotListed": "Another hospital, I will type its name",
+  "chooseFromHospitalList": "Choose from the hospital list",
+  "openHospitalInMaps": "Go to the hospital in Maps",
+  "searchHospitalInMaps": "Search for it in Maps",
+  "hospitalLocationUnreviewed": "This hospital's location is not reviewed yet. Check it in Maps.",
+  "hospitalTypedByHand": "The requester typed the hospital name. Make sure the Maps result is the right hospital.",
+  "mapsOpenFailed": "Could not open Maps"
 }

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/utils/localized_name.dart';
+import '../../../hospitals/domain/entities/hospital.dart';
 
 enum Urgency {
   critical('critical'),
@@ -58,6 +59,8 @@ class BloodRequest extends Equatable {
     this.notes,
     this.contactPhone,
     this.myPledge,
+    this.hospitalId,
+    this.hospitalLocation,
   });
   final int id, bagsNeeded, bagsCollected, onTheWayCount;
   final String authorName, bloodType, hospitalName;
@@ -72,6 +75,11 @@ class BloodRequest extends Equatable {
   /// Only present for the author and for donors with an active pledge.
   final String? contactPhone;
   final PledgeStatus? myPledge;
+
+  /// Set when the hospital was picked from the directory; null for old
+  /// requests and hospitals typed by hand.
+  final int? hospitalId;
+  final HospitalLocation? hospitalLocation;
 
   bool get hasContact => contactPhone != null;
 
@@ -95,6 +103,8 @@ class BloodRequest extends Equatable {
     notes,
     contactPhone,
     myPledge,
+    hospitalId,
+    hospitalLocation,
   ];
 }
 
@@ -107,11 +117,13 @@ class BloodRequestDraft extends Equatable {
     required this.districtId,
     required this.urgency,
     required this.contactPhone,
+    this.hospitalId,
     this.deadline,
     this.notes = '',
   });
   final String bloodType, hospitalName, governorateId, districtId, contactPhone;
   final String notes;
+  final int? hospitalId;
   final int bagsNeeded;
   final Urgency urgency;
   final DateTime? deadline;
@@ -124,6 +136,7 @@ class BloodRequestDraft extends Equatable {
     districtId,
     urgency,
     contactPhone,
+    hospitalId,
     deadline,
     notes,
   ];

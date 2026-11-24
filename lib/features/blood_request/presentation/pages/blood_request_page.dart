@@ -11,6 +11,7 @@ import '../../../../core/widgets/app_icon.dart';
 import '../../../../core/widgets/egypt_location_fields.dart';
 import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../hospitals/presentation/widgets/hospital_field.dart';
 import '../../domain/entities/blood_request.dart';
 import '../cubit/blood_request_cubit.dart';
 
@@ -31,6 +32,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   int _bags = 3;
   int _urgency = 0;
   String? _governorate, _district, _governorateId, _districtId;
+  int? _hospitalId;
   DateTime? _deadline;
   bool _finished = false;
 
@@ -228,6 +230,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
         bloodType: _bloodType,
         bagsNeeded: _bags,
         hospitalName: _hospital.text.trim(),
+        hospitalId: _hospitalId,
         governorateId: _governorateId!,
         districtId: _districtId!,
         urgency: Urgency.values[_urgency],
@@ -405,24 +408,25 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          _label(t.hospitalNameLabel),
-                          TextField(
-                            key: const ValueKey('request-hospital'),
-                            controller: _hospital,
-                            decoration: InputDecoration(
-                              hintText: t.hospitalNameHint,
-                            ),
-                          ),
-                          const SizedBox(height: 18),
                           EgyptLocationFields(
                             onChanged: (governorate, district) {
                               final language = Localizations.localeOf(context)
                                   .languageCode;
                               _governorate = governorate?.name(language);
                               _district = district?.name(language);
-                              _governorateId = governorate?.id;
-                              _districtId = district?.id;
+                              setState(() {
+                                _governorateId = governorate?.id;
+                                _districtId = district?.id;
+                              });
                             },
+                          ),
+                          const SizedBox(height: 18),
+                          _label(t.hospitalNameLabel),
+                          HospitalField(
+                            governorateId: _governorateId,
+                            controller: _hospital,
+                            onSelected: (hospital) =>
+                                _hospitalId = hospital?.id,
                           ),
                         ],
                       ),

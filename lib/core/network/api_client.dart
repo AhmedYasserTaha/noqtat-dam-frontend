@@ -79,8 +79,11 @@ class ApiClient {
   Future<Json> delete(String path) => _send('DELETE', path);
 
   /// For endpoints that return a JSON array (locations).
-  Future<List<dynamic>> getList(String path) async {
-    final data = await _request('GET', path);
+  Future<List<dynamic>> getList(
+    String path, {
+    Map<String, Object?>? query,
+  }) async {
+    final data = await _request('GET', path, query: query);
     return data is List ? data : throw const ApiException(UnexpectedFailure());
   }
 

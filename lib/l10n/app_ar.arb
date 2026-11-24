@@ -306,5 +306,15 @@
   "markAllRead": "تعليم الكل كمقروء",
   "shareFailedCopied": "اتنسخ النص لأن المشاركة مش متاحة.",
   "postsTitle": "المنشورات",
-  "postsEmpty": "لا توجد منشورات حتى الآن"
+  "postsEmpty": "لا توجد منشورات حتى الآن",
+  "chooseHospital": "اختار المستشفى",
+  "searchHospitals": "ابحث باسم المستشفى",
+  "noHospitalsFound": "مفيش مستشفى بالاسم ده",
+  "hospitalNotListed": "مستشفى تانية، هكتب اسمها",
+  "chooseFromHospitalList": "اختار من قائمة المستشفيات",
+  "openHospitalInMaps": "روح للمستشفى في الخرائط",
+  "searchHospitalInMaps": "دوّر عليها في الخرائط",
+  "hospitalLocationUnreviewed": "مكان المستشفى لسه متراجعش، اتأكد منه في الخرائط.",
+  "hospitalTypedByHand": "اسم المستشفى مكتوب بإيد صاحب الطلب، واتأكد إن نتيجة الخرائط هي المستشفى الصح.",
+  "mapsOpenFailed": "مقدرناش نفتح الخرائط"
 }

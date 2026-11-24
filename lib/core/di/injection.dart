@@ -37,6 +37,12 @@ import '../../features/notifications/presentation/cubit/notifications_cubit.dart
 import '../utils/push_registrar.dart';
 import '../utils/push_service.dart';
 import '../utils/share_service.dart';
+import '../../features/hospitals/data/datasources/hospital_remote_datasource.dart';
+import '../../features/hospitals/data/repositories_impl/hospital_repository_impl.dart';
+import '../../features/hospitals/domain/repositories/hospital_repository.dart';
+import '../../features/hospitals/domain/usecases/get_hospitals.dart';
+import '../../features/hospitals/presentation/cubit/hospital_list_cubit.dart';
+import '../utils/maps_launcher.dart';
 import '../config/api_config.dart';
 import '../network/api_client.dart';
 import '../storage/token_store.dart';
@@ -49,6 +55,7 @@ void configureDependencies({
   TokenStore? tokens,
   ApiClient? api,
   ShareService? share,
+  MapsLauncher? maps,
   PushService? push,
 }) {
   getIt.allowReassignment = true; // tests re-run this with fakes
@@ -140,9 +147,19 @@ void configureDependencies({
       ),
     );
 
+  // hospital directory
+  getIt
+    ..registerLazySingleton(() => HospitalRemoteDataSource(getIt()))
+    ..registerLazySingleton<HospitalRepository>(
+      () => HospitalRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton(() => GetHospitals(getIt()))
+    ..registerFactory(() => HospitalListCubit(getIt()));
+
   // community posts
   getIt
     ..registerSingleton<ShareService>(share ?? const SharePlusShareService())
+    ..registerSingleton<MapsLauncher>(maps ?? const UrlLauncherMapsLauncher())
     ..registerLazySingleton(() => CommunityRemoteDataSource(getIt()))
     ..registerLazySingleton<CommunityRepository>(
       () => CommunityRepositoryImpl(getIt()),

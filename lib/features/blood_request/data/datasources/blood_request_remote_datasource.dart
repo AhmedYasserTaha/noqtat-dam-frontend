@@ -15,6 +15,7 @@ class BloodRequestRemoteDataSource {
             'bloodType': d.bloodType,
             'bagsNeeded': d.bagsNeeded,
             'hospitalName': d.hospitalName,
+            'hospitalId': ?d.hospitalId,
             'governorateId': d.governorateId,
             'districtId': d.districtId,
             'urgency': d.urgency.api,

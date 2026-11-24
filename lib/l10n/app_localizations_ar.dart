@@ -785,4 +785,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get postsEmpty => 'لا توجد منشورات حتى الآن';
+
+  @override
+  String get chooseHospital => 'اختار المستشفى';
+
+  @override
+  String get searchHospitals => 'ابحث باسم المستشفى';
+
+  @override
+  String get noHospitalsFound => 'مفيش مستشفى بالاسم ده';
+
+  @override
+  String get hospitalNotListed => 'مستشفى تانية، هكتب اسمها';
+
+  @override
+  String get chooseFromHospitalList => 'اختار من قائمة المستشفيات';
+
+  @override
+  String get openHospitalInMaps => 'روح للمستشفى في الخرائط';
+
+  @override
+  String get searchHospitalInMaps => 'دوّر عليها في الخرائط';
+
+  @override
+  String get hospitalLocationUnreviewed =>
+      'مكان المستشفى لسه متراجعش، اتأكد منه في الخرائط.';
+
+  @override
+  String get hospitalTypedByHand =>
+      'اسم المستشفى مكتوب بإيد صاحب الطلب، واتأكد إن نتيجة الخرائط هي المستشفى الصح.';
+
+  @override
+  String get mapsOpenFailed => 'مقدرناش نفتح الخرائط';
 }

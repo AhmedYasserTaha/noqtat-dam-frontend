@@ -1429,6 +1429,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لا توجد منشورات حتى الآن'**
   String get postsEmpty;
+
+  /// No description provided for @chooseHospital.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار المستشفى'**
+  String get chooseHospital;
+
+  /// No description provided for @searchHospitals.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث باسم المستشفى'**
+  String get searchHospitals;
+
+  /// No description provided for @noHospitalsFound.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش مستشفى بالاسم ده'**
+  String get noHospitalsFound;
+
+  /// No description provided for @hospitalNotListed.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستشفى تانية، هكتب اسمها'**
+  String get hospitalNotListed;
+
+  /// No description provided for @chooseFromHospitalList.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار من قائمة المستشفيات'**
+  String get chooseFromHospitalList;
+
+  /// No description provided for @openHospitalInMaps.
+  ///
+  /// In ar, this message translates to:
+  /// **'روح للمستشفى في الخرائط'**
+  String get openHospitalInMaps;
+
+  /// No description provided for @searchHospitalInMaps.
+  ///
+  /// In ar, this message translates to:
+  /// **'دوّر عليها في الخرائط'**
+  String get searchHospitalInMaps;
+
+  /// No description provided for @hospitalLocationUnreviewed.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكان المستشفى لسه متراجعش، اتأكد منه في الخرائط.'**
+  String get hospitalLocationUnreviewed;
+
+  /// No description provided for @hospitalTypedByHand.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المستشفى مكتوب بإيد صاحب الطلب، واتأكد إن نتيجة الخرائط هي المستشفى الصح.'**
+  String get hospitalTypedByHand;
+
+  /// No description provided for @mapsOpenFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'مقدرناش نفتح الخرائط'**
+  String get mapsOpenFailed;
 }
 
 class _AppLocalizationsDelegate

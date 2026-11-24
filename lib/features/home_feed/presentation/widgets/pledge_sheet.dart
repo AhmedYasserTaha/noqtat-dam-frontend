@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/request_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../blood_request/domain/entities/blood_request.dart';
+import '../../../hospitals/presentation/widgets/hospital_map_button.dart';
 
 enum PledgeAction { donated, cancel }
 
@@ -49,6 +50,11 @@ class _PledgeSheet extends StatelessWidget {
             style: const TextStyle(color: AppColors.muted, fontSize: 13),
           ),
           const SizedBox(height: 14),
+          HospitalMapButton(
+            location: request.hospitalLocation,
+            searchQuery: '${request.hospitalName} ${placeLine(request, lang)}',
+          ),
+          const SizedBox(height: 12),
           if (phone != null)
             OutlinedButton.icon(
               key: const ValueKey('contact-phone'),

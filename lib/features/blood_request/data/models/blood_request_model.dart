@@ -1,4 +1,5 @@
 import '../../../../core/utils/localized_name.dart';
+import '../../../hospitals/data/models/hospital_model.dart';
 import '../../domain/entities/blood_request.dart';
 
 class BloodRequestModel extends BloodRequest {
@@ -21,6 +22,8 @@ class BloodRequestModel extends BloodRequest {
     super.notes,
     super.contactPhone,
     super.myPledge,
+    super.hospitalId,
+    super.hospitalLocation,
   });
 
   factory BloodRequestModel.fromJson(Map<String, dynamic> j) =>
@@ -45,5 +48,7 @@ class BloodRequestModel extends BloodRequest {
         notes: j['notes'] as String?,
         contactPhone: j['contactPhone'] as String?,
         myPledge: PledgeStatus.fromApi(j['myPledgeStatus'] as String?),
+        hospitalId: j['hospitalId'] as int?,
+        hospitalLocation: HospitalModel.locationFromJson(j['hospitalLocation']),
       );
 }
