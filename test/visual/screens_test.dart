@@ -62,8 +62,12 @@ void main() {
             'authorName': 'محمد',
             'text': 'تبرعت النهارده وحاسس بسعادة كبيرة.',
             'createdAt': '2026-11-23T08:00:00.000Z',
+            'likes': 4,
+            'dislikes': 1,
+            'myReaction': 'like',
           },
         ],
+        'unreadNotifications': 2,
       }),
     );
     backend.on(
