@@ -21,8 +21,14 @@ void main() {
   test('phone links', () {
     expect(callUri('0109 999-8888').toString(), 'tel:01099998888');
     expect(whatsappUri('01099998888').toString(), 'https://wa.me/201099998888');
-    expect(whatsappUri('+201099998888').toString(), 'https://wa.me/201099998888');
-    expect(whatsappUri('00201099998888').toString(), 'https://wa.me/201099998888');
+    expect(
+      whatsappUri('+201099998888').toString(),
+      'https://wa.me/201099998888',
+    );
+    expect(
+      whatsappUri('00201099998888').toString(),
+      'https://wa.me/201099998888',
+    );
     expect(whatsappUri('123'), isNull);
   });
 
@@ -59,19 +65,28 @@ void main() {
   testWidgets('pledge sheet offers call and WhatsApp', (tester) async {
     final key = await fonts(tester);
     final backend = FakeBackend();
-    stubHome(backend, requests: [requestJson(id: 8, hospital: 'مستشفى المنصورة')]);
+    stubHome(
+      backend,
+      requests: [requestJson(id: 8, hospital: 'مستشفى المنصورة')],
+    );
     backend.on(
       'POST /requests/8/pledge',
-      (_) => FakeReply(requestJson(
-        id: 8,
-        hospital: 'مستشفى المنصورة',
-        contactPhone: '01099998888',
-        myPledgeStatus: 'on_the_way',
-      )),
+      (_) => FakeReply(
+        requestJson(
+          id: 8,
+          hospital: 'مستشفى المنصورة',
+          contactPhone: '01099998888',
+          myPledgeStatus: 'on_the_way',
+        ),
+      ),
     );
     final tokens = MemoryTokenStore('saved');
     final maps = FakeMaps();
-    configureDependencies(tokens: tokens, api: backend.client(tokens), maps: maps);
+    configureDependencies(
+      tokens: tokens,
+      api: backend.client(tokens),
+      maps: maps,
+    );
     await tester.pumpWidget(RepaintBoundary(key: key, child: const DamyApp()));
     await tester.pumpAndSettle();
     await tester.tap(find.text(t.donateAction).first);
@@ -93,11 +108,28 @@ void main() {
     final key = await fonts(tester);
     final backend = FakeBackend();
     stubHome(backend);
+    backend.on(
+      'GET /home',
+      (_) => FakeReply({
+        'readiness': {
+          'isAvailable': true,
+          'lastDonationAt': null,
+          'donationsCount': 0,
+          'selfReported': true,
+        },
+        'closestUrgentRequest': requestJson(id: 9),
+        'requests': [],
+        'posts': [],
+        'unreadNotifications': 0,
+      }),
+    );
     backend.on('GET /requests', (o) {
       final f = o.queryParameters['filter'];
       final empty = f != null && f != 'all';
       return FakeReply({
-        'items': empty ? <Object?>[] : [requestJson(id: 8, hospital: 'مستشفى المنصورة')],
+        'items': empty
+            ? <Object?>[]
+            : [requestJson(id: 8, hospital: 'مستشفى المنصورة')],
         'nextBefore': null,
         'nextCursor': null,
       });

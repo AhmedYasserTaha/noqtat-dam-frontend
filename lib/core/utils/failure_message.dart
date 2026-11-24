@@ -24,6 +24,7 @@ String failureMessage(AppLocalizations t, Failure f) {
     ApiErrorCodes.invalidCode => t.errInvalidCode,
     ApiErrorCodes.needGovernorate => t.errNeedGovernorate,
     ApiErrorCodes.tooManyAttempts => t.errTooMany,
+    ApiErrorCodes.alreadyPledged => t.errAlreadyPledged,
     'unauthorized' => t.errUnauthorized,
     _ => t.errGeneric,
   };

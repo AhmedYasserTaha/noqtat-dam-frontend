@@ -214,6 +214,7 @@
   "loadMore": "Load more",
   "loadMoreFailed": "Could not load more.",
   "pledgesTitle": "Donors who pledged",
+  "errAlreadyPledged": "You already signed up to donate to this request. No need to sign up again.",
   "pledgesEmpty": "No pledges yet.",
   "pledgeOnTheWay": "On the way",
   "pledgeDonated": "Says donated (their own statement)",

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'core/di/injection.dart';
 import 'core/utils/push_service.dart';
 import 'core/network/api_checker.dart';
+import 'core/network/api_client.dart';
 import 'core/widgets/api_checker_widget.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -32,6 +33,7 @@ class _DamyAppState extends State<DamyApp> {
   @override
   void initState() {
     super.initState();
+    getIt<ApiClient>().languageCode = widget.locale.languageCode;
     _auth.start();
     // A push while the app is open: refresh the feed (and its bell badge).
     _foreground = getIt<PushService>().foregroundMessages.listen(
@@ -40,6 +42,14 @@ class _DamyAppState extends State<DamyApp> {
   }
 
   StreamSubscription<void>? _foreground;
+
+  @override
+  void didUpdateWidget(covariant DamyApp oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.locale != widget.locale) {
+      getIt<ApiClient>().languageCode = widget.locale.languageCode;
+    }
+  }
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(

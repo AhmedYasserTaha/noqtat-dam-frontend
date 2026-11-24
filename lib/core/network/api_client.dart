@@ -26,9 +26,11 @@ abstract final class ApiErrorCodes {
   static const needGovernorate = 'need_governorate';
   static const tooManyAttempts = 'too_many_attempts';
   static const invalid = 'invalid';
+  static const alreadyPledged = 'already_pledged';
 
   static String fromMessage(String? message) {
     final m = (message ?? '').toLowerCase();
+    if (m.contains('already pledged')) return alreadyPledged;
     if (m.contains('invalid phone') || m.contains('invalid contactphone')) {
       return invalidPhone;
     }
@@ -62,6 +64,7 @@ class ApiClient {
 
   final Dio _dio;
   final TokenStore tokens;
+  String languageCode = 'ar';
   final _unauthorized = StreamController<void>.broadcast();
 
   /// Fires when the server rejects a request that carried a session token
@@ -118,7 +121,10 @@ class ApiClient {
               },
         options: Options(
           method: method,
-          headers: {if (token != null) 'authorization': 'Bearer $token'},
+          headers: {
+            'accept-language': languageCode,
+            if (token != null) 'authorization': 'Bearer $token',
+          },
         ),
       );
       return response.data;

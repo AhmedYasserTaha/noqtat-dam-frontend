@@ -763,6 +763,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pledgesTitle => 'المتبرعون';
 
   @override
+  String get errAlreadyPledged =>
+      'أنت مسجّل بالفعل للتبرع بهذا الطلب، مش محتاج تسجّل مرة تانية.';
+
+  @override
   String get pledgesEmpty => 'لسه محدش اتعهد.';
 
   @override

@@ -76,7 +76,6 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
         final tab = RequestTab.values.indexOf(state.tab);
         return PreviewPage(
           title: t.myRequestsTab,
-          subtitle: t.myRequestsSubtitle,
           children: [
             Row(
               children: [
@@ -383,79 +382,81 @@ class _RequestDetails extends StatelessWidget {
         children: [
           _DetailsSection(
             padding: const EdgeInsets.all(12),
-            child: Row(
-              children: [
-                Container(
-                  width: 48,
-                  height: 52,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: AppColors.red.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    request.bloodType,
-                    textDirection: TextDirection.ltr,
-                    style: const TextStyle(
-                      color: AppColors.red,
-                      fontSize: 21,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: open
-                                ? const Color(0xFFEDF7F0)
-                                : const Color(0xFFF2F2F2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            request.status == RequestStatus.fulfilled
-                                ? t.requestComplete
-                                : request.status == RequestStatus.cancelled
-                                ? t.requestCancelled
-                                : t.requestActive,
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                              color: open
-                                  ? const Color(0xFF287447)
-                                  : AppColors.muted,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        t.bagsNeeded(request.bagsNeeded),
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          _DetailsSection(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 52,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.red.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        request.bloodType,
+                        textDirection: TextDirection.ltr,
+                        style: const TextStyle(
+                          color: AppColors.red,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: open
+                                    ? const Color(0xFFEDF7F0)
+                                    : const Color(0xFFF2F2F2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                request.status == RequestStatus.fulfilled
+                                    ? t.requestComplete
+                                    : request.status == RequestStatus.cancelled
+                                    ? t.requestCancelled
+                                    : t.requestActive,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  color: open
+                                      ? const Color(0xFF287447)
+                                      : AppColors.muted,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            t.bagsNeeded(request.bagsNeeded),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                  thickness: 0.5,
+                  color: Color(0xFFEDEAEA),
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -480,7 +481,11 @@ class _RequestDetails extends StatelessWidget {
                   ],
                 ),
                 if ((request.notes ?? '').isNotEmpty) ...[
-                  const Divider(height: 16),
+                  const Divider(
+                    height: 16,
+                    thickness: 0.5,
+                    color: Color(0xFFEDEAEA),
+                  ),
                   Text(
                     t.requestNotesLabel,
                     style: const TextStyle(
@@ -611,7 +616,11 @@ class _RequestDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const _PledgesList(),
-                const Divider(height: 16),
+                const Divider(
+                  height: 16,
+                  thickness: 0.5,
+                  color: Color(0xFFEDEAEA),
+                ),
                 Text(
                   t.onTheWayCount(request.onTheWayCount),
                   style: const TextStyle(color: AppColors.muted, fontSize: 12),

@@ -28,7 +28,7 @@ class PreviewPage extends StatelessWidget {
   const PreviewPage({
     super.key,
     required this.title,
-    required this.subtitle,
+    this.subtitle = '',
     required this.children,
   });
   final String title, subtitle;
@@ -45,11 +45,13 @@ class PreviewPage extends StatelessWidget {
             title,
             style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
           ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: const TextStyle(fontSize: 11, color: AppColors.muted),
-          ),
+          if (subtitle.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: const TextStyle(fontSize: 11, color: AppColors.muted),
+            ),
+          ],
           const SizedBox(height: 14),
           ...children,
         ],

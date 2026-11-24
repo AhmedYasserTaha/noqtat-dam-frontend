@@ -299,6 +299,7 @@
   "loadMore": "عرض المزيد",
   "loadMoreFailed": "تعذر تحميل المزيد.",
   "pledgesTitle": "المتبرعون",
+  "errAlreadyPledged": "أنت مسجّل بالفعل للتبرع بهذا الطلب، مش محتاج تسجّل مرة تانية.",
   "pledgesEmpty": "لسه محدش اتعهد.",
   "pledgeOnTheWay": "في الطريق",
   "pledgeDonated": "قال إنه تبرع (إقرار منه)",

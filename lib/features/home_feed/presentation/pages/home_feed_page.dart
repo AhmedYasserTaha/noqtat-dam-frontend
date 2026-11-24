@@ -67,7 +67,10 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        action: SnackBarAction(label: t.changeMyArea, onPressed: _chooseLocation),
+        action: SnackBarAction(
+          label: t.changeMyArea,
+          onPressed: _chooseLocation,
+        ),
       ),
     );
   }
@@ -228,7 +231,9 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
     final home = feed.home;
     final city = profile?.district?.of(lang) ?? profile?.governorate?.of(lang);
     final selected = _filters.indexOf(feed.query.filter);
-    final urgent = home?.closestUrgent;
+    final urgent = feed.query.filter == RequestFilter.all
+        ? home?.closestUrgent
+        : null;
     // The featured urgent request is also in the list; skip the duplicate.
     var list = feed.requests.where((r) => r.id != urgent?.id).toList();
     if (_sortByDistance && _position != null) {
@@ -278,18 +283,6 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                   ),
                   const SizedBox(height: 12),
                 ],
-                if (urgent != null) ...[
-                  UrgentRequestCard(
-                    request: urgent,
-                    onDonate: () => _donate(urgent),
-                    onShare: () => _share(urgent),
-                    onViewMine: () => context.push('/requests'),
-                    onReport: urgent.isMine
-                        ? null
-                        : () => _report(ReportTarget.request, urgent.id),
-                  ),
-                  const SizedBox(height: 10),
-                ],
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -324,6 +317,19 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 10),
+                if (urgent != null) ...[
+                  UrgentRequestCard(
+                    request: urgent,
+                    onDonate: () => _donate(urgent),
+                    onShare: () => _share(urgent),
+                    onViewMine: () => context.push('/requests'),
+                    onReport: urgent.isMine
+                        ? null
+                        : () => _report(ReportTarget.request, urgent.id),
+                  ),
+                  const SizedBox(height: 10),
+                ],
                 if (list.length > 1 || _sortByDistance)
                   Align(
                     alignment: AlignmentDirectional.centerStart,

@@ -21,7 +21,8 @@ Uri callUri(String phone) =>
 Uri? whatsappUri(String phone) {
   var d = phone.replaceAll(RegExp(r'[^\d]'), '');
   if (phone.trim().startsWith('00')) d = d.substring(2);
-  if (d.startsWith('0') && !phone.trim().startsWith('+')) d = '20${d.substring(1)}';
+  if (d.startsWith('0') && !phone.trim().startsWith('+'))
+    d = '20${d.substring(1)}';
   if (d.length < 10 || d.length > 15) return null;
   return Uri.https('wa.me', '/$d');
 }
@@ -36,6 +37,7 @@ Future<PledgeAction?> showPledgeSheet(
   isScrollControlled: true,
   useSafeArea: true,
   backgroundColor: Colors.white,
+  showDragHandle: true,
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
   ),
@@ -52,24 +54,87 @@ class _PledgeSheet extends StatelessWidget {
     final lang = Localizations.localeOf(context).languageCode;
     final phone = request.contactPhone;
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            t.pledgeTitle,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  t.pledgeTitle,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              IconButton(
+                tooltip: t.closeLocations,
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.close_rounded, size: 20),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
-          Text(
-            '${request.hospitalName} · ${placeLine(request, lang)}',
-            style: const TextStyle(color: AppColors.muted, fontSize: 13),
-          ),
-          const SizedBox(height: 14),
-          HospitalMapButton(
-            location: request.hospitalLocation,
-            searchQuery: '${request.hospitalName} ${placeLine(request, lang)}',
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.ink.withValues(alpha: 0.08)),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 48,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.red.withValues(alpha: 0.07),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    request.bloodType,
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.red,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        request.hospitalName,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        placeLine(request, lang),
+                        style: const TextStyle(
+                          color: AppColors.muted,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                HospitalMapButton(
+                  compact: true,
+                  location: request.hospitalLocation,
+                  searchQuery:
+                      '${request.hospitalName} ${placeLine(request, lang)}',
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 12),
           if (phone != null) ...[
@@ -128,27 +193,38 @@ class _PledgeSheet extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 12),
-          Text(
-            t.pledgeNote,
-            style: const TextStyle(
-              color: AppColors.muted,
-              fontSize: 12,
-              height: 1.8,
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF7F7F7),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              t.pledgeNote,
+              style: const TextStyle(
+                color: AppColors.muted,
+                fontSize: 11,
+                height: 1.6,
+              ),
             ),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, PledgeAction.donated),
-            child: Text(t.iDonated),
-          ),
-          const SizedBox(height: 8),
-          TextButton(
-            onPressed: () => Navigator.pop(context, PledgeAction.cancel),
-            child: Text(t.cancelPledge),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(t.closeLocations),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context, PledgeAction.donated),
+                  child: Text(t.iDonated),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(context, PledgeAction.cancel),
+                  child: Text(t.cancelPledge),
+                ),
+              ),
+            ],
           ),
         ],
       ),

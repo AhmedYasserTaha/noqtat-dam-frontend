@@ -1382,6 +1382,12 @@ abstract class AppLocalizations {
   /// **'المتبرعون'**
   String get pledgesTitle;
 
+  /// No description provided for @errAlreadyPledged.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت مسجّل بالفعل للتبرع بهذا الطلب، مش محتاج تسجّل مرة تانية.'**
+  String get errAlreadyPledged;
+
   /// No description provided for @pledgesEmpty.
   ///
   /// In ar, this message translates to:

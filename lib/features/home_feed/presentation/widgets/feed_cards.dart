@@ -529,15 +529,28 @@ class CommunityPostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context).toString();
-    return FeedCard(
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.ink.withValues(alpha: 0.06)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               const CircleAvatar(
-                radius: 18,
-                backgroundColor: Color(0xFFE4D9D4),
+                radius: 16,
+                backgroundColor: Color(0xFFFFF0EE),
                 child: AppIcon(
                   AppIcons.userOutline,
                   color: AppColors.muted,
@@ -553,7 +566,7 @@ class CommunityPostCard extends StatelessWidget {
                       post.authorName,
                       style: const TextStyle(
                         fontSize: 13,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
@@ -589,8 +602,15 @@ class CommunityPostCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 12),
-          Text(post.text, style: const TextStyle(fontSize: 13, height: 1.6)),
+          const SizedBox(height: 8),
+          Text(
+            post.text,
+            style: const TextStyle(
+              fontSize: 13,
+              height: 1.5,
+              color: AppColors.ink,
+            ),
+          ),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -650,13 +670,17 @@ class _ReactionButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
       child: Container(
-        constraints: const BoxConstraints(minHeight: 44, minWidth: 64),
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        constraints: const BoxConstraints(minHeight: 32, minWidth: 48),
+        padding: const EdgeInsets.symmetric(horizontal: 9),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: selected ? AppColors.ink : Colors.transparent,
+          color: selected
+              ? AppColors.red.withValues(alpha: 0.08)
+              : const Color(0xFFF7F7F7),
           border: Border.all(
-            color: selected ? AppColors.ink : AppColors.border,
+            color: selected
+                ? AppColors.red.withValues(alpha: 0.2)
+                : Colors.transparent,
           ),
         ),
         child: Row(
@@ -666,7 +690,7 @@ class _ReactionButton extends StatelessWidget {
             Icon(
               icon,
               size: 18,
-              color: selected ? Colors.white : AppColors.ink,
+              color: selected ? AppColors.red : AppColors.muted,
             ),
             const SizedBox(width: 6),
             Text(
@@ -674,7 +698,7 @@ class _ReactionButton extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 13,
-                color: selected ? Colors.white : AppColors.ink,
+                color: selected ? AppColors.red : AppColors.muted,
               ),
             ),
           ],
