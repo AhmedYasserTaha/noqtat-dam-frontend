@@ -229,6 +229,13 @@ class _HospitalPickerState extends State<_HospitalPicker> {
               onTap: () =>
                   Navigator.pop(context, const _HospitalChoice.other()),
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+              child: Text(
+                t.hospitalDataCredit,
+                style: const TextStyle(fontSize: 11, color: AppColors.muted),
+              ),
+            ),
           ],
         ),
       ),

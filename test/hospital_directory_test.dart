@@ -148,6 +148,7 @@ void main() {
       ),
     );
     expect(find.text(t.hospitalLocationUnreviewed), findsOneWidget);
+    expect(find.text(t.hospitalDataCredit), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('hospital-map-button')));
     await tester.pumpAndSettle();
     expect(maps.opened, ['coords:31.04,31.38']);
@@ -163,6 +164,7 @@ void main() {
       maps: FakeMaps(ok: false),
     );
     expect(find.text(t.hospitalTypedByHand), findsOneWidget);
+    expect(find.text(t.hospitalDataCredit), findsNothing);
     await tester.tap(find.byKey(const ValueKey('hospital-map-button')));
     await tester.pumpAndSettle();
     expect(maps.opened, ['search:مستشفى س المنصورة']);
@@ -196,6 +198,7 @@ void main() {
     });
     await tester.tap(find.byKey(const ValueKey('request-hospital-picker')));
     await tester.pumpAndSettle();
+    expect(find.text(t.hospitalDataCredit), findsOneWidget);
     await tester.tap(find.widgetWithText(ListTile, 'مستشفى الأطفال'));
     await tester.pumpAndSettle();
     expect(controller.text, 'مستشفى الأطفال');

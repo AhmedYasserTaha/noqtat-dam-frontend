@@ -59,6 +59,13 @@ class HospitalMapButton extends StatelessWidget {
                 icon: icon,
                 label: Text(label),
               ),
+        if (exact) ...[
+          SizedBox(height: note == null ? 6 : 2),
+          Text(
+            t.hospitalDataCredit,
+            style: const TextStyle(fontSize: 11, color: AppColors.muted),
+          ),
+        ],
         if (note != null) ...[
           const SizedBox(height: 6),
           Text(

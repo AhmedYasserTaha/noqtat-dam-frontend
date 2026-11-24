@@ -316,5 +316,6 @@
   "searchHospitalInMaps": "دوّر عليها في الخرائط",
   "hospitalLocationUnreviewed": "مكان المستشفى لسه متراجعش، اتأكد منه في الخرائط.",
   "hospitalTypedByHand": "اسم المستشفى مكتوب بإيد صاحب الطلب، واتأكد إن نتيجة الخرائط هي المستشفى الصح.",
+  "hospitalDataCredit": "مواقع المستشفيات من بيانات © مساهمي OpenStreetMap (رخصة ODbL).",
   "mapsOpenFailed": "مقدرناش نفتح الخرائط"
 }

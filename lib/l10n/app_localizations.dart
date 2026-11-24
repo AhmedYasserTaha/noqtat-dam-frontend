@@ -1484,6 +1484,12 @@ abstract class AppLocalizations {
   /// **'اسم المستشفى مكتوب بإيد صاحب الطلب، واتأكد إن نتيجة الخرائط هي المستشفى الصح.'**
   String get hospitalTypedByHand;
 
+  /// No description provided for @hospitalDataCredit.
+  ///
+  /// In ar, this message translates to:
+  /// **'مواقع المستشفيات من بيانات © مساهمي OpenStreetMap (رخصة ODbL).'**
+  String get hospitalDataCredit;
+
   /// No description provided for @mapsOpenFailed.
   ///
   /// In ar, this message translates to:
