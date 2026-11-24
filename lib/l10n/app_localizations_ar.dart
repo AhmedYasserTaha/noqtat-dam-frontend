@@ -867,4 +867,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nearbyNeedsArea => 'حدد منطقتك عشان تشوف الطلبات القريبة منك.';
+
+  @override
+  String get sortByDistance => 'الأقرب ليا الأول';
+
+  @override
+  String get sortByDistanceOn => 'مترتب بالمسافة';
+
+  @override
+  String get sortByDistanceOff => 'رجوع للترتيب العادي';
+
+  @override
+  String distanceApprox(String km) {
+    return 'تقريبًا $km كم (خط مستقيم)';
+  }
+
+  @override
+  String get locationDenied => 'مفيش إذن للموقع. اختار منطقتك بدلها.';
+
+  @override
+  String get locationDeniedForever =>
+      'الموقع متقفل للتطبيق. اختار منطقتك بدلها أو اسمح بيه من إعدادات الموبايل.';
+
+  @override
+  String get locationServiceOff =>
+      'الموقع مقفول على الموبايل. اختار منطقتك بدلها.';
+
+  @override
+  String get locationFailed => 'معرفتش أحدد موقعك. اختار منطقتك بدلها.';
+
+  @override
+  String get distanceNote =>
+      'المسافة خط مستقيم لنقطة المستشفى. المستشفيات من غير نقطة بتيجي في الآخر.';
 }
