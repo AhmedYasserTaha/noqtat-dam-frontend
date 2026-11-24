@@ -129,19 +129,34 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                 ),
               ),
             for (final r in state.items) ...[
-              PreviewCard(
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: AppColors.ink.withValues(alpha: 0.06),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.04),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
                       children: [
                         Container(
-                          width: 40,
-                          height: 40,
+                          width: 46,
+                          height: 48,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: r.status == RequestStatus.open
-                                ? AppColors.red
+                                ? AppColors.red.withValues(alpha: 0.08)
                                 : const Color(0xFFF5F0ED),
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -152,7 +167,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                               fontWeight: FontWeight.w900,
                               fontSize: 17,
                               color: r.status == RequestStatus.open
-                                  ? Colors.white
+                                  ? AppColors.red
                                   : AppColors.ink,
                             ),
                           ),
@@ -180,6 +195,33 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                             ],
                           ),
                         ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 9,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: r.status == RequestStatus.open
+                                ? const Color(0xFFEDF7F0)
+                                : const Color(0xFFF3F3F3),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            r.status == RequestStatus.fulfilled
+                                ? t.requestComplete
+                                : r.status == RequestStatus.cancelled
+                                ? t.requestCancelled
+                                : t.requestActive,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                              color: r.status == RequestStatus.open
+                                  ? const Color(0xFF287447)
+                                  : AppColors.muted,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -202,6 +244,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 6),
                     Text(
                       '${t.requestDateLabel} ${DateFormat.yMMMd(locale).format(r.createdAt.toLocal())}',
                       style: const TextStyle(
@@ -211,7 +254,9 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                     ),
                     const SizedBox(height: 10),
                     LinearProgressIndicator(
-                      value: r.bagsCollected / r.bagsNeeded,
+                      value: r.bagsNeeded > 0
+                          ? (r.bagsCollected / r.bagsNeeded).clamp(0.0, 1.0)
+                          : 0,
                       minHeight: 4,
                       borderRadius: BorderRadius.circular(8),
                       backgroundColor: AppColors.border,
@@ -234,17 +279,33 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
-                            '${r.bagsCollected} / ${r.bagsNeeded} · ${t.bagsCollectedLabel} · ${t.onTheWayCount(r.onTheWayCount)}',
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: AppColors.muted,
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${r.bagsCollected} / ${r.bagsNeeded} · ${t.bagsCollectedLabel}',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: AppColors.muted,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                t.onTheWayCount(r.onTheWayCount),
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.muted,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(width: 8),
-                        OutlinedButton(
-                          style: OutlinedButton.styleFrom(
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: AppColors.red.withValues(
+                              alpha: 0.06,
+                            ),
                             minimumSize: const Size(0, 36),
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             textStyle: const TextStyle(
@@ -254,7 +315,14 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                             ),
                           ),
                           onPressed: () => _details(context, r),
-                          child: Text(t.requestDetails),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(t.requestDetails),
+                              const SizedBox(width: 4),
+                              const Icon(Icons.arrow_forward_ios, size: 12),
+                            ],
+                          ),
                         ),
                       ],
                     ),
