@@ -1538,6 +1538,12 @@ abstract class AppLocalizations {
   /// **'هتأكّد إن {name} تبرّع فعلًا. عدد الأكياس هيزيد من {from} لـ {to}. التأكيد بيتحسب مرة واحدة بس.'**
   String confirmDonationBody(String name, int from, int to);
 
+  /// No description provided for @confirmDonationAlreadyCounted.
+  ///
+  /// In ar, this message translates to:
+  /// **'هتأكّد إن {name} تبرّع. إنت عدّلت العدد بإيدك بعد ما قال إنه تبرّع، فاعتبرناه محسوب والعدد هيفضل {count} من غير زيادة.'**
+  String confirmDonationAlreadyCounted(String name, int count);
+
   /// No description provided for @confirmDonationNoChange.
   ///
   /// In ar, this message translates to:

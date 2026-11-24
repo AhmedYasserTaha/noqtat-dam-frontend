@@ -139,6 +139,51 @@ void main() {
     },
   );
 
+  testWidgets('a donor already counted by the requester edit adds nothing', (
+    tester,
+  ) async {
+    final backend = FakeBackend();
+    backend.on(
+      'GET /requests/mine',
+      (_) => FakeReply({
+        'items': [
+          requestJson(
+            id: 1,
+            isMine: true,
+            needed: 3,
+            collected: 1,
+            selfReported: 1,
+          ),
+        ],
+      }),
+    );
+    backend.on(
+      'GET /requests/1/pledges',
+      (_) => FakeReply([
+        {
+          'donorId': 5,
+          'donorName': 'منى',
+          'bloodType': 'B-',
+          'status': 'donated',
+          'confirmed': false,
+          'addsToCount': false,
+          'createdAt': '2026-11-24T10:00:00.000Z',
+          'updatedAt': '2026-11-24T11:00:00.000Z',
+        },
+      ]),
+    );
+    await open(tester, backend);
+    final t = AppLocalizations.of(tester.element(find.byType(MyRequestsPage)))!;
+    await tester.tap(find.text(t.requestDetails));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('confirm-donation-5')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text(t.confirmDonationAlreadyCounted('منى', 1)),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('a covered open request tells the author to close it', (
     tester,
   ) async {

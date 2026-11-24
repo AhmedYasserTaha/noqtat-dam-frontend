@@ -12,6 +12,7 @@ class DonorPledge extends Equatable {
     required this.status,
     required this.updatedAt,
     this.confirmed = false,
+    this.addsToCount = true,
   });
   final int donorId;
   final String donorName, bloodType;
@@ -21,6 +22,10 @@ class DonorPledge extends Equatable {
   /// The requester confirmed this donation. Without it, a `donated` status is
   /// only the donor's own statement.
   final bool confirmed;
+
+  /// False when the requester already typed a count after this donor's own
+  /// report, so confirming must not add one more.
+  final bool addsToCount;
 
   bool get canConfirm =>
       !confirmed &&
@@ -34,5 +39,6 @@ class DonorPledge extends Equatable {
     status,
     updatedAt,
     confirmed,
+    addsToCount,
   ];
 }

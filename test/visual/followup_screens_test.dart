@@ -34,38 +34,49 @@ void main() {
     await tester.runAsync(() => EgyptLocations.load());
 
     var confirmed = false;
+    var alreadyCounted = false;
     Map<String, dynamic> mine() => requestJson(
       id: 20,
       isMine: true,
       hospital: 'مستشفى المنصورة الجامعي',
       needed: 3,
-      collected: confirmed ? 2 : 1,
-      selfReported: confirmed ? 0 : 2,
+      collected: confirmed ? 1 : 0,
+      selfReported: confirmed ? 1 : 2,
       confirmed: confirmed ? 1 : 0,
     );
     final backend = FakeBackend();
-    stubHome(backend, unread: 3);
+    stubHome(backend, unread: 2);
     backend.on(
       'GET /requests/mine',
       (_) => FakeReply({
         'items': [mine()],
       }),
     );
-    Map<String, dynamic> pledge(int id, String name, bool done) => {
+    Map<String, dynamic> pledge(
+      int id,
+      String name,
+      bool done, [
+      bool adds = true,
+    ]) => {
       'donorId': id,
       'donorName': name,
       'bloodType': 'B-',
       'status': 'donated',
       'confirmed': done,
+      'addsToCount': adds,
       'createdAt': '2026-11-24T10:00:00.000Z',
       'updatedAt': '2026-11-24T11:00:00.000Z',
     };
     backend.on(
       'GET /requests/20/pledges',
-      (_) => FakeReply([pledge(5, 'منى', confirmed), pledge(6, 'كريم', false)]),
+      (_) => FakeReply([
+        pledge(5, 'منى', confirmed),
+        pledge(6, 'كريم', false, !alreadyCounted),
+      ]),
     );
     backend.on('POST /requests/20/pledges/5/confirm', (_) {
       confirmed = true;
+      alreadyCounted = true;
       return FakeReply(mine());
     });
     backend.on(
@@ -86,7 +97,7 @@ void main() {
             'type': 'pledge_update',
             'postId': 20,
             'title': '2 متبرع سجّلوا تبرعهم',
-            'body': 'ده إقرار منهم ومش متحقق منه. أكّد اللي اتأكدت منه عشان العدد يتحدّث، وباقي 2 من 3 (B- · مستشفى المنصورة الجامعي).',
+            'body': 'ده إقرار منهم ومش متحقق منه. أكّد اللي اتأكدت منه عشان العدد يتحدّث، وباقي 3 من 3 (B- · مستشفى المنصورة الجامعي).',
             'read': false,
             'createdAt': '2026-11-24T09:00:00.000Z',
           },
@@ -95,7 +106,7 @@ void main() {
             'type': 'request_status',
             'postId': 20,
             'title': 'لسه محتاج متبرعين؟',
-            'body': 'طلب (B- · مستشفى المنصورة الجامعي) باقي فيه 2 من 3. حدّث عدد الأكياس أو اقفل الطلب لو اتغطى.',
+            'body': 'طلب (B- · مستشفى المنصورة الجامعي) باقي فيه 3 من 3. حدّث عدد الأكياس أو اقفل الطلب لو اتغطى.',
             'read': true,
             'createdAt': '2026-11-23T09:00:00.000Z',
           },
@@ -137,6 +148,9 @@ void main() {
     await tester.tap(find.byKey(const Key('confirm-donation-yes')));
     await shot('5-after-confirm');
     expect(backend.callsTo('POST /requests/20/pledges/5/confirm').length, 1);
+    // donor 6 was already counted by the requester's own manual edit
+    await tester.tap(find.byKey(const Key('confirm-donation-6')));
+    await shot('6-already-counted-dialog');
     expect(tester.takeException(), isNull);
   });
 }

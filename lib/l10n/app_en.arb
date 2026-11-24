@@ -243,6 +243,8 @@
   "confirmDonationTitle": "Confirm donation",
   "confirmDonationBody": "You are confirming that {name} really donated. Bags collected goes from {from} to {to}. Each donor counts once.",
   "@confirmDonationBody": {"placeholders": {"name": {"type": "String"}, "from": {"type": "int"}, "to": {"type": "int"}}},
+  "confirmDonationAlreadyCounted": "You are confirming that {name} donated. You set the count yourself after they reported, so they are treated as already counted and it stays at {count}.",
+  "@confirmDonationAlreadyCounted": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
   "confirmDonationNoChange": "You are confirming that {name} donated. The count already reached the number needed, so it stays at {count}.",
   "@confirmDonationNoChange": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
   "selfReportedBanner": "{count} say they donated. This is their own statement and nobody verifies it. Confirm the ones you checked.",

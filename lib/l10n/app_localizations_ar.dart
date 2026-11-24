@@ -850,6 +850,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String confirmDonationAlreadyCounted(String name, int count) {
+    return 'هتأكّد إن $name تبرّع. إنت عدّلت العدد بإيدك بعد ما قال إنه تبرّع، فاعتبرناه محسوب والعدد هيفضل $count من غير زيادة.';
+  }
+
+  @override
   String confirmDonationNoChange(String name, int count) {
     return 'هتأكّد إن $name تبرّع. العدد وصل للمطلوب فهيفضل $count.';
   }

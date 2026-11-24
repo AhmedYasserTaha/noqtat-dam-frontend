@@ -328,6 +328,8 @@
   "confirmDonationTitle": "تأكيد التبرع",
   "confirmDonationBody": "هتأكّد إن {name} تبرّع فعلًا. عدد الأكياس هيزيد من {from} لـ {to}. التأكيد بيتحسب مرة واحدة بس.",
   "@confirmDonationBody": {"placeholders": {"name": {"type": "String"}, "from": {"type": "int"}, "to": {"type": "int"}}},
+  "confirmDonationAlreadyCounted": "هتأكّد إن {name} تبرّع. إنت عدّلت العدد بإيدك بعد ما قال إنه تبرّع، فاعتبرناه محسوب والعدد هيفضل {count} من غير زيادة.",
+  "@confirmDonationAlreadyCounted": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
   "confirmDonationNoChange": "هتأكّد إن {name} تبرّع. العدد وصل للمطلوب فهيفضل {count}.",
   "@confirmDonationNoChange": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
   "selfReportedBanner": "{count} قالوا إنهم تبرعوا. ده إقرار منهم ومحدش بيتحقق منه، أكّد اللي اتأكدت منه.",

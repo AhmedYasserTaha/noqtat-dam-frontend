@@ -844,6 +844,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String confirmDonationAlreadyCounted(String name, int count) {
+    return 'You are confirming that $name donated. You set the count yourself after they reported, so they are treated as already counted and it stays at $count.';
+  }
+
+  @override
   String confirmDonationNoChange(String name, int count) {
     return 'You are confirming that $name donated. The count already reached the number needed, so it stays at $count.';
   }

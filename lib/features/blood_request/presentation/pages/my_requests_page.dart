@@ -440,13 +440,15 @@ class _PledgesList extends StatelessWidget {
     final mine = context.read<MyRequestsCubit>();
     final pledges = context.read<PledgesCubit>();
     final from = request.bagsCollected;
-    final to = from < request.bagsNeeded ? from + 1 : from;
+    final to = p.addsToCount && from < request.bagsNeeded ? from + 1 : from;
     final yes = await showDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
         title: Text(t.confirmDonationTitle),
         content: Text(
-          to == from
+          !p.addsToCount
+              ? t.confirmDonationAlreadyCounted(p.donorName, from)
+              : to == from
               ? t.confirmDonationNoChange(p.donorName, from)
               : t.confirmDonationBody(p.donorName, from, to),
         ),
