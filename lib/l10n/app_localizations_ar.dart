@@ -836,38 +836,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get mapsOpenFailed => 'مقدرناش نفتح الخرائط';
 
   @override
-  String get confirmDonationAction => 'أكّد التبرع';
-
-  @override
-  String get pledgeConfirmedByYou => 'أكّدت تبرعه';
-
-  @override
-  String confirmDonationChoice(String name, int from, int needed) {
-    return 'هتأكّد إن $name تبرّع فعلًا. عدد الأكياس دلوقتي $from من $needed. قولنا لو إنت حاسبه في الرقم اللي كتبته بإيدك ولا لأ، عشان ميتحسبش مرتين.';
-  }
-
-  @override
-  String confirmDonationAdd(int from, int to) {
-    return 'لأ، ضيفه على العدد (من $from لـ $to)';
-  }
-
-  @override
-  String confirmDonationAlreadyCounted(int from) {
-    return 'أيوه، محسوب في العدد (يفضل $from)';
-  }
-
-  @override
-  String get confirmDonationTitle => 'تأكيد التبرع';
-
-  @override
   String selfReportedBanner(int count) {
-    return '$count قالوا إنهم تبرعوا. ده إقرار منهم ومحدش بيتحقق منه، أكّد اللي اتأكدت منه.';
+    return '$count قالوا إنهم تبرعوا. لو استلمت منهم الدم فعلًا، زوّد عدد الأكياس بالزرار + تحت.';
   }
 
   @override
   String get coveredHint =>
       'العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس.';
-
-  @override
-  String get dialogBack => 'رجوع';
 }

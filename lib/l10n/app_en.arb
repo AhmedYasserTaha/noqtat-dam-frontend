@@ -238,17 +238,7 @@
   "@hospitalOtherDistrict": {"placeholders": {"district": {"type": "String"}}},
   "thisIsYourRequest": "This is your request",
   "mapsOpenFailed": "Could not open Maps",
-  "confirmDonationAction": "Confirm donation",
-  "pledgeConfirmedByYou": "You confirmed",
-  "confirmDonationChoice": "You are confirming that {name} really donated. Bags collected is {from} of {needed}. Tell us whether you already included them in the number you typed, so they are not counted twice.",
-  "@confirmDonationChoice": {"placeholders": {"name": {"type": "String"}, "from": {"type": "int"}, "needed": {"type": "int"}}},
-  "confirmDonationAdd": "No, add to the count ({from} to {to})",
-  "@confirmDonationAdd": {"placeholders": {"from": {"type": "int"}, "to": {"type": "int"}}},
-  "confirmDonationAlreadyCounted": "Yes, already in the count (stays {from})",
-  "@confirmDonationAlreadyCounted": {"placeholders": {"from": {"type": "int"}}},
-  "confirmDonationTitle": "Confirm donation",
-  "selfReportedBanner": "{count} say they donated. This is their own statement and nobody verifies it. Confirm the ones you checked.",
+  "selfReportedBanner": "{count} say they donated. If you received their blood, raise the bag count with + below.",
   "@selfReportedBanner": {"placeholders": {"count": {"type": "int"}}},
-  "coveredHint": "The count is complete. Close the request when you are done so it stops showing to others.",
-  "dialogBack": "Back"
+  "coveredHint": "The count is complete. Close the request when you are done so it stops showing to others."
 }

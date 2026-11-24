@@ -62,7 +62,6 @@ class BloodRequest extends Equatable {
     this.hospitalId,
     this.hospitalLocation,
     this.selfReportedDonatedCount = 0,
-    this.confirmedDonatedCount = 0,
   });
   final int id, bagsNeeded, bagsCollected, onTheWayCount;
   final String authorName, bloodType, hospitalName;
@@ -86,9 +85,6 @@ class BloodRequest extends Equatable {
   /// Donors who said they donated. Their own statement, not verified, and
   /// never added to [bagsCollected] automatically.
   final int selfReportedDonatedCount;
-
-  /// Donors the requester confirmed. Each confirmation adds one bag once.
-  final int confirmedDonatedCount;
 
   bool get hasContact => contactPhone != null;
 
@@ -118,7 +114,6 @@ class BloodRequest extends Equatable {
     hospitalId,
     hospitalLocation,
     selfReportedDonatedCount,
-    confirmedDonatedCount,
   ];
 }
 

@@ -830,38 +830,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapsOpenFailed => 'Could not open Maps';
 
   @override
-  String get confirmDonationAction => 'Confirm donation';
-
-  @override
-  String get pledgeConfirmedByYou => 'You confirmed';
-
-  @override
-  String confirmDonationChoice(String name, int from, int needed) {
-    return 'You are confirming that $name really donated. Bags collected is $from of $needed. Tell us whether you already included them in the number you typed, so they are not counted twice.';
-  }
-
-  @override
-  String confirmDonationAdd(int from, int to) {
-    return 'No, add to the count ($from to $to)';
-  }
-
-  @override
-  String confirmDonationAlreadyCounted(int from) {
-    return 'Yes, already in the count (stays $from)';
-  }
-
-  @override
-  String get confirmDonationTitle => 'Confirm donation';
-
-  @override
   String selfReportedBanner(int count) {
-    return '$count say they donated. This is their own statement and nobody verifies it. Confirm the ones you checked.';
+    return '$count say they donated. If you received their blood, raise the bag count with + below.';
   }
 
   @override
   String get coveredHint =>
       'The count is complete. Close the request when you are done so it stops showing to others.';
-
-  @override
-  String get dialogBack => 'Back';
 }

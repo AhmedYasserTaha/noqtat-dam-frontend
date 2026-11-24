@@ -1514,46 +1514,10 @@ abstract class AppLocalizations {
   /// **'مقدرناش نفتح الخرائط'**
   String get mapsOpenFailed;
 
-  /// No description provided for @confirmDonationAction.
-  ///
-  /// In ar, this message translates to:
-  /// **'أكّد التبرع'**
-  String get confirmDonationAction;
-
-  /// No description provided for @pledgeConfirmedByYou.
-  ///
-  /// In ar, this message translates to:
-  /// **'أكّدت تبرعه'**
-  String get pledgeConfirmedByYou;
-
-  /// No description provided for @confirmDonationChoice.
-  ///
-  /// In ar, this message translates to:
-  /// **'هتأكّد إن {name} تبرّع فعلًا. عدد الأكياس دلوقتي {from} من {needed}. قولنا لو إنت حاسبه في الرقم اللي كتبته بإيدك ولا لأ، عشان ميتحسبش مرتين.'**
-  String confirmDonationChoice(String name, int from, int needed);
-
-  /// No description provided for @confirmDonationAdd.
-  ///
-  /// In ar, this message translates to:
-  /// **'لأ، ضيفه على العدد (من {from} لـ {to})'**
-  String confirmDonationAdd(int from, int to);
-
-  /// No description provided for @confirmDonationAlreadyCounted.
-  ///
-  /// In ar, this message translates to:
-  /// **'أيوه، محسوب في العدد (يفضل {from})'**
-  String confirmDonationAlreadyCounted(int from);
-
-  /// No description provided for @confirmDonationTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'تأكيد التبرع'**
-  String get confirmDonationTitle;
-
   /// No description provided for @selfReportedBanner.
   ///
   /// In ar, this message translates to:
-  /// **'{count} قالوا إنهم تبرعوا. ده إقرار منهم ومحدش بيتحقق منه، أكّد اللي اتأكدت منه.'**
+  /// **'{count} قالوا إنهم تبرعوا. لو استلمت منهم الدم فعلًا، زوّد عدد الأكياس بالزرار + تحت.'**
   String selfReportedBanner(int count);
 
   /// No description provided for @coveredHint.
@@ -1561,12 +1525,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس.'**
   String get coveredHint;
-
-  /// No description provided for @dialogBack.
-  ///
-  /// In ar, this message translates to:
-  /// **'رجوع'**
-  String get dialogBack;
 }
 
 class _AppLocalizationsDelegate

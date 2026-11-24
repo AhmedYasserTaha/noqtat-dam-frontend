@@ -34,16 +34,14 @@ void main() {
     await tester.runAsync(() => EgyptLocations.load());
 
     // The requester typed 1 by hand (Karim was already in that number).
-    var monaConfirmed = false;
-    var karimConfirmed = false;
+    var collected = 1;
     Map<String, dynamic> mine() => requestJson(
       id: 20,
       isMine: true,
       hospital: 'مستشفى المنصورة الجامعي',
       needed: 3,
-      collected: monaConfirmed ? 2 : 1,
-      selfReported: 2 - (monaConfirmed ? 1 : 0) - (karimConfirmed ? 1 : 0),
-      confirmed: (monaConfirmed ? 1 : 0) + (karimConfirmed ? 1 : 0),
+      collected: collected,
+      selfReported: 2,
     );
     final backend = FakeBackend();
     stubHome(backend, unread: 2);
@@ -53,28 +51,19 @@ void main() {
         'items': [mine()],
       }),
     );
-    Map<String, dynamic> pledge(int id, String name, bool done) => {
-      'donorId': id,
+    Map<String, dynamic> pledge(String name) => {
       'donorName': name,
       'bloodType': 'B-',
       'status': 'donated',
-      'confirmed': done,
       'createdAt': '2026-11-24T10:00:00.000Z',
       'updatedAt': '2026-11-24T11:00:00.000Z',
     };
     backend.on(
       'GET /requests/20/pledges',
-      (_) => FakeReply([
-        pledge(5, 'منى', monaConfirmed),
-        pledge(6, 'كريم', karimConfirmed),
-      ]),
+      (_) => FakeReply([pledge('منى'), pledge('كريم')]),
     );
-    backend.on('POST /requests/20/pledges/5/confirm', (_) {
-      monaConfirmed = true;
-      return FakeReply(mine());
-    });
-    backend.on('POST /requests/20/pledges/6/confirm', (_) {
-      karimConfirmed = true;
+    backend.on('PATCH /requests/20', (call) {
+      collected = (call.data as Map)['bagsCollected'] as int;
       return FakeReply(mine());
     });
     backend.on(
@@ -141,17 +130,9 @@ void main() {
     await shot('2-my-requests-card');
     await tester.tap(find.text(t.requestDetails));
     await shot('3-details-sheet');
-    await tester.tap(find.byKey(const Key('confirm-donation-5')));
-    await shot('4-confirm-dialog');
-    await tester.tap(find.byKey(const Key('confirm-donation-add')));
-    await shot('5-after-confirm-add');
-    expect(backend.callsTo('POST /requests/20/pledges/5/confirm').length, 1);
-    // Karim was already inside the number the requester typed
-    await tester.tap(find.byKey(const Key('confirm-donation-6')));
-    await shot('5b-choice-dialog-karim');
-    await tester.tap(find.byKey(const Key('confirm-donation-counted')));
-    await shot('6-after-confirm-already-counted');
-    expect(backend.callsTo('POST /requests/20/pledges/6/confirm').length, 1);
+    await tester.tap(find.byTooltip(t.increaseBags));
+    await shot('4-after-plus');
+    expect(backend.callsTo('PATCH /requests/20').length, 1);
     expect(tester.takeException(), isNull);
   });
 }

@@ -25,7 +25,6 @@ class BloodRequestModel extends BloodRequest {
     super.hospitalId,
     super.hospitalLocation,
     super.selfReportedDonatedCount,
-    super.confirmedDonatedCount,
   });
 
   factory BloodRequestModel.fromJson(Map<String, dynamic> j) =>
@@ -53,6 +52,5 @@ class BloodRequestModel extends BloodRequest {
         hospitalId: j['hospitalId'] as int?,
         hospitalLocation: HospitalModel.locationFromJson(j['hospitalLocation']),
         selfReportedDonatedCount: j['selfReportedDonatedCount'] as int? ?? 0,
-        confirmedDonatedCount: j['confirmedDonatedCount'] as int? ?? 0,
       );
 }

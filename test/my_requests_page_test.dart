@@ -75,17 +75,16 @@ void main() {
   });
 
   testWidgets(
-    'self-reported donors are separate; confirming asks first, then adds one bag once',
+    'self-reported donors never change the count; the requester raises it with +',
     (tester) async {
       final backend = FakeBackend();
-      var confirmed = false;
+      var collected = 1;
       Map<String, dynamic> current() => requestJson(
         id: 1,
         isMine: true,
         needed: 3,
-        collected: confirmed ? 2 : 1,
-        selfReported: confirmed ? 0 : 1,
-        confirmed: confirmed ? 1 : 0,
+        collected: collected,
+        selfReported: 1,
       );
       backend.on(
         'GET /requests/mine',
@@ -97,18 +96,16 @@ void main() {
         'GET /requests/1/pledges',
         (_) => FakeReply([
           {
-            'donorId': 5,
             'donorName': 'منى',
             'bloodType': 'B-',
             'status': 'donated',
-            'confirmed': confirmed,
             'createdAt': '2026-11-24T10:00:00.000Z',
             'updatedAt': '2026-11-24T11:00:00.000Z',
           },
         ]),
       );
-      backend.on('POST /requests/1/pledges/5/confirm', (_) {
-        confirmed = true;
+      backend.on('PATCH /requests/1', (call) {
+        collected = (call.data as Map)['bagsCollected'] as int;
         return FakeReply(current());
       });
       await open(tester, backend);
@@ -121,75 +118,26 @@ void main() {
 
       await tester.tap(find.text(t.requestDetails));
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('confirm-donation-5')));
-      await tester.pumpAndSettle();
-      // nothing is sent until the requester agrees
-      expect(backend.callsTo('POST /requests/1/pledges/5/confirm'), isEmpty);
-      expect(find.text(t.confirmDonationAdd(1, 2)), findsOneWidget);
-      await tester.tap(find.byKey(const Key('confirm-donation-add')));
-      await tester.pumpAndSettle();
+      // the donor is listed, with no confirm button and no dialog
+      expect(find.text('منى'), findsOneWidget);
+      expect(find.text(t.pledgeDonated), findsOneWidget);
+      expect(backend.callsTo('PATCH /requests/1'), isEmpty);
 
-      expect(backend.callsTo('POST /requests/1/pledges/5/confirm').length, 1);
-      expect(
-        backend.callsTo('POST /requests/1/pledges/5/confirm').single.body,
-        {'countMode': 'add'},
-      );
-      // sheet refreshed: new count, confirmed label, no confirm button left
-      expect(find.text(t.pledgeConfirmedByYou), findsOneWidget);
-      expect(find.byKey(const Key('confirm-donation-5')), findsNothing);
-      expect(find.byKey(const Key('self-reported-1')), findsNothing);
+      await tester.tap(find.byTooltip(t.increaseBags));
+      await tester.pumpAndSettle();
+      expect(backend.callsTo('PATCH /requests/1').single.body, {
+        'bagsCollected': 2,
+      });
+      // the sheet stays open and shows the new number
       expect(find.text('2'), findsWidgets);
+      await tester.tap(find.byTooltip(t.decreaseBags));
+      await tester.pumpAndSettle();
+      expect(backend.callsTo('PATCH /requests/1').last.body, {
+        'bagsCollected': 1,
+      });
       expect(tester.takeException(), isNull);
     },
   );
-
-  testWidgets('already-counted answer is sent explicitly and adds nothing', (
-    tester,
-  ) async {
-    final backend = FakeBackend();
-    backend.on(
-      'GET /requests/mine',
-      (_) => FakeReply({
-        'items': [
-          requestJson(
-            id: 1,
-            isMine: true,
-            needed: 3,
-            collected: 1,
-            selfReported: 1,
-          ),
-        ],
-      }),
-    );
-    backend.on(
-      'GET /requests/1/pledges',
-      (_) => FakeReply([
-        {
-          'donorId': 5,
-          'donorName': 'منى',
-          'bloodType': 'B-',
-          'status': 'donated',
-          'confirmed': false,
-          'createdAt': '2026-11-24T10:00:00.000Z',
-          'updatedAt': '2026-11-24T11:00:00.000Z',
-        },
-      ]),
-    );
-    await open(tester, backend);
-    final t = AppLocalizations.of(tester.element(find.byType(MyRequestsPage)))!;
-    await tester.tap(find.text(t.requestDetails));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('confirm-donation-5')));
-    await tester.pumpAndSettle();
-    // nothing is sent until the requester picks one of the two answers
-    expect(backend.callsTo('POST /requests/1/pledges/5/confirm'), isEmpty);
-    expect(find.text(t.confirmDonationAlreadyCounted(1)), findsOneWidget);
-    await tester.tap(find.byKey(const Key('confirm-donation-counted')));
-    await tester.pumpAndSettle();
-    expect(backend.callsTo('POST /requests/1/pledges/5/confirm').single.body, {
-      'countMode': 'already_counted',
-    });
-  });
 
   testWidgets('a covered open request tells the author to close it', (
     tester,

@@ -16,7 +16,6 @@ import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../hospitals/presentation/widgets/hospital_map_button.dart';
 import '../../domain/entities/blood_request.dart';
-import '../../domain/entities/donor_pledge.dart';
 import '../cubit/my_requests_cubit.dart';
 
 class MyRequestsPage extends StatefulWidget {
@@ -359,7 +358,7 @@ class _RequestDetails extends StatelessWidget {
             ),
             const SizedBox(height: 8),
           ],
-          _PledgesList(request: request),
+          const _PledgesList(),
           if (open) ...[
             const SizedBox(height: 16),
             Row(
@@ -378,7 +377,6 @@ class _RequestDetails extends StatelessWidget {
                             request.id,
                             request.bagsCollected - 1,
                           );
-                          Navigator.pop(context);
                         }
                       : null,
                   icon: const Text('−', style: TextStyle(fontSize: 22)),
@@ -395,7 +393,6 @@ class _RequestDetails extends StatelessWidget {
                             request.id,
                             request.bagsCollected + 1,
                           );
-                          Navigator.pop(context);
                         }
                       : null,
                   icon: const AppIcon(AppIcons.plus, color: AppColors.red),
@@ -432,47 +429,7 @@ class _RequestDetails extends StatelessWidget {
 /// Who pledged on this request. Statuses are the donors' own statements;
 /// nothing here is verified.
 class _PledgesList extends StatelessWidget {
-  const _PledgesList({required this.request});
-  final BloodRequest request;
-
-  Future<void> _confirm(BuildContext context, DonorPledge p) async {
-    final t = AppLocalizations.of(context)!;
-    final mine = context.read<MyRequestsCubit>();
-    final pledges = context.read<PledgesCubit>();
-    final from = request.bagsCollected;
-    final to = from < request.bagsNeeded ? from + 1 : from;
-    // The app cannot know whether the count the requester typed already
-    // includes this donor, so the requester says so explicitly.
-    final mode = await showDialog<CountMode>(
-      context: context,
-      builder: (dialog) => AlertDialog(
-        title: Text(t.confirmDonationTitle),
-        content: Text(
-          t.confirmDonationChoice(p.donorName, from, request.bagsNeeded),
-        ),
-        actions: [
-          TextButton(
-            key: const Key('confirm-donation-add'),
-            onPressed: () => Navigator.pop(dialog, CountMode.add),
-            child: Text(t.confirmDonationAdd(from, to)),
-          ),
-          TextButton(
-            key: const Key('confirm-donation-counted'),
-            onPressed: () => Navigator.pop(dialog, CountMode.alreadyCounted),
-            child: Text(t.confirmDonationAlreadyCounted(from)),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(dialog),
-            child: Text(t.dialogBack),
-          ),
-        ],
-      ),
-    );
-    if (mode == null) return;
-    final ok = await mine.confirmDonation(request.id, p.donorId, mode);
-    if (ok) await pledges.load(request.id);
-  }
-
+  const _PledgesList();
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
@@ -498,35 +455,13 @@ class _PledgesList extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(p.donorName),
             subtitle: Text(
-              p.confirmed
-                  ? t.pledgeConfirmedByYou
-                  : p.status == PledgeStatus.donated
+              p.status == PledgeStatus.donated
                   ? t.pledgeDonated
                   : p.status == PledgeStatus.onTheWay
                   ? t.pledgeOnTheWay
                   : t.cancelPledge,
             ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (request.status == RequestStatus.open && p.canConfirm)
-                  TextButton(
-                    key: Key('confirm-donation-${p.donorId}'),
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(0, 32),
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      textStyle: const TextStyle(
-                        fontFamily: 'Cairo',
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    onPressed: () => _confirm(context, p),
-                    child: Text(t.confirmDonationAction),
-                  ),
-                Text(p.bloodType, textDirection: TextDirection.ltr),
-              ],
-            ),
+            trailing: Text(p.bloodType, textDirection: TextDirection.ltr),
           ),
       ],
     );
