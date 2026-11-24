@@ -451,34 +451,36 @@ class _RequestDetails extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           _DetailsSection(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  t.hospitalNameLabel,
-                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  '${request.hospitalName}\n${placeLine(request, lang)}',
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    height: 1.7,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                HospitalMapButton(
-                  showLocationNote: false,
-                  showCredit: false,
-                  location: request.hospitalLocation,
-                  searchQuery:
-                      '${request.hospitalName} ${placeLine(request, lang)}',
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${request.hospitalName}\n${placeLine(request, lang)}',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          height: 1.7,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    HospitalMapButton(
+                      compact: true,
+                      showLocationNote: false,
+                      showCredit: false,
+                      location: request.hospitalLocation,
+                      searchQuery:
+                          '${request.hospitalName} ${placeLine(request, lang)}',
+                    ),
+                  ],
                 ),
                 if ((request.notes ?? '').isNotEmpty) ...[
-                  const Divider(height: 24),
+                  const Divider(height: 16),
                   Text(
                     t.requestNotesLabel,
                     style: const TextStyle(
@@ -496,7 +498,7 @@ class _RequestDetails extends StatelessWidget {
             ),
           ),
           if (open) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
             _DetailsSection(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -570,37 +572,51 @@ class _RequestDetails extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      cubit.setStatus(request.id, RequestStatus.fulfilled);
-                      Navigator.pop(context);
-                    },
-                    child: Text(t.markFulfilled),
-                  ),
-                  const SizedBox(height: 8),
-                  OutlinedButton(
-                    onPressed: () {
-                      cubit.setStatus(request.id, RequestStatus.cancelled);
-                      Navigator.pop(context);
-                    },
-                    child: Text(t.cancelRequest),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            cubit.setStatus(
+                              request.id,
+                              RequestStatus.fulfilled,
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text(t.markFulfilled),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            cubit.setStatus(
+                              request.id,
+                              RequestStatus.cancelled,
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text(t.cancelRequest),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
           ],
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           _DetailsSection(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const _PledgesList(),
-                const Divider(height: 24),
+                const Divider(height: 16),
                 Text(
                   t.onTheWayCount(request.onTheWayCount),
                   style: const TextStyle(color: AppColors.muted, fontSize: 12),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 if (open && request.selfReportedDonatedCount > 0) ...[
                   Text(
                     t.selfReportedBanner(request.selfReportedDonatedCount),
@@ -637,7 +653,7 @@ class _RequestDetails extends StatelessWidget {
 class _DetailsSection extends StatelessWidget {
   const _DetailsSection({
     required this.child,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.all(12),
   });
   final Widget child;
   final EdgeInsets padding;
@@ -679,7 +695,7 @@ class _PledgesList extends StatelessWidget {
           t.pledgesTitle,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         if (s.items.isEmpty)
           Text(
             t.pledgesEmpty,

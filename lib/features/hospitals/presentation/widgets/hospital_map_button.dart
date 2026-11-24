@@ -17,11 +17,13 @@ class HospitalMapButton extends StatelessWidget {
     required this.searchQuery,
     this.showLocationNote = true,
     this.showCredit = true,
+    this.compact = false,
   });
   final HospitalLocation? location;
   final String searchQuery;
   final bool showLocationNote;
   final bool showCredit;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,14 @@ class HospitalMapButton extends StatelessWidget {
           .showSnackBar(SnackBar(content: Text(t.mapsOpenFailed)));
     }
 
+    if (compact) {
+      return IconButton.filledTonal(
+        key: const ValueKey('hospital-map-button'),
+        tooltip: label,
+        onPressed: open,
+        icon: icon,
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
