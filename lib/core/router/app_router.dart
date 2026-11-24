@@ -15,6 +15,9 @@ import 'app_shell.dart';
 import '../../features/notifications/presentation/cubit/notifications_cubit.dart';
 import '../../features/notifications/presentation/pages/notifications_page.dart';
 import '../../features/community/presentation/cubit/create_post_cubit.dart';
+import '../../features/community/presentation/cubit/posts_cubit.dart';
+import '../../features/community/presentation/pages/posts_page.dart';
+import '../../features/home_feed/domain/usecases/feed_usecases.dart';
 import '../../features/community/presentation/pages/create_hub_page.dart';
 import '../../features/community/presentation/pages/new_post_page.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
@@ -140,6 +143,13 @@ GoRouter createRouter(AuthCubit auth, RouterRefresh refresh) => GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => getIt<CreatePostCubit>(),
         child: const NewPostPage(),
+      ),
+    ),
+    GoRoute(
+      path: '/posts',
+      builder: (context, state) => BlocProvider(
+        create: (_) => PostsCubit(getIt<GetPosts>())..load(),
+        child: const PostsPage(),
       ),
     ),
     GoRoute(

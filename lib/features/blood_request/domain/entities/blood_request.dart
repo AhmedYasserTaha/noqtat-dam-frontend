@@ -140,6 +140,7 @@ enum RequestFilter {
 }
 
 enum RequestTab {
+  all('all'),
   active('active'),
   completed('completed'),
   cancelled('cancelled');

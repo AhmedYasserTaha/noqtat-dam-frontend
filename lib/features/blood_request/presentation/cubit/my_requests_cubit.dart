@@ -9,13 +9,15 @@ enum MyRequestsStatus { loading, ready, failure }
 
 class MyRequestsState extends Equatable {
   const MyRequestsState({
-    this.tab = RequestTab.active,
+    this.tab = RequestTab.all,
+    this.hasRequests = false,
     this.status = MyRequestsStatus.loading,
     this.items = const [],
     this.failure,
     this.actionFailure,
   });
   final RequestTab tab;
+  final bool hasRequests;
   final MyRequestsStatus status;
   final List<BloodRequest> items;
   final Failure? failure, actionFailure;
@@ -26,16 +28,25 @@ class MyRequestsState extends Equatable {
     List<BloodRequest>? items,
     Failure? failure,
     Failure? actionFailure,
+    bool? hasRequests,
   }) => MyRequestsState(
     tab: tab ?? this.tab,
     status: status ?? this.status,
     items: items ?? this.items,
     failure: failure,
     actionFailure: actionFailure,
+    hasRequests: hasRequests ?? this.hasRequests,
   );
 
   @override
-  List<Object?> get props => [tab, status, items, failure, actionFailure];
+  List<Object?> get props => [
+    tab,
+    status,
+    items,
+    failure,
+    actionFailure,
+    hasRequests,
+  ];
 }
 
 class MyRequestsCubit extends Cubit<MyRequestsState> {
@@ -50,14 +61,22 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
         tab: next,
         status: MyRequestsStatus.loading,
         items: next == state.tab ? state.items : const [],
+        hasRequests: state.hasRequests,
       ),
     );
     final result = await _mine(next);
     if (isClosed || state.tab != next) return;
     result.fold(
       (f) => emit(state.copyWith(status: MyRequestsStatus.failure, failure: f)),
-      (items) =>
-          emit(state.copyWith(status: MyRequestsStatus.ready, items: items)),
+      (items) => emit(
+        state.copyWith(
+          status: MyRequestsStatus.ready,
+          items: items,
+          hasRequests: next == RequestTab.all
+              ? items.isNotEmpty
+              : state.hasRequests || items.isNotEmpty,
+        ),
+      ),
     );
   }
 

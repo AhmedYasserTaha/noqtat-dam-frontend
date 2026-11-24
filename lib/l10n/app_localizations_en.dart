@@ -773,4 +773,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get shareFailedCopied =>
       'Copied the text because sharing is unavailable.';
+
+  @override
+  String get postsTitle => 'Posts';
+
+  @override
+  String get postsEmpty => 'No posts yet';
 }

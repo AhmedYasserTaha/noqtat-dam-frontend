@@ -219,5 +219,7 @@
   "pledgeDonated": "Says donated",
   "notificationsEmpty": "No notifications yet.",
   "markAllRead": "Mark all read",
-  "shareFailedCopied": "Copied the text because sharing is unavailable."
+  "shareFailedCopied": "Copied the text because sharing is unavailable.",
+  "postsTitle": "Posts",
+  "postsEmpty": "No posts yet"
 }

@@ -27,7 +27,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
   @override
   void initState() {
     super.initState();
-    context.read<MyRequestsCubit>().load();
+    context.read<MyRequestsCubit>().load(RequestTab.all);
   }
 
   void _details(BuildContext context, BloodRequest r) {
@@ -56,6 +56,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
     final lang = Localizations.localeOf(context).languageCode;
     final locale = Localizations.localeOf(context).toString();
     final statusLabels = [
+      t.filterAll,
       t.requestActive,
       t.requestComplete,
       t.requestCancelled,
@@ -74,7 +75,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
           children: [
             Row(
               children: [
-                for (var i = 0; i < 3; i++)
+                for (var i = 0; i < RequestTab.values.length; i++)
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(end: 6),
@@ -243,17 +244,18 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
               ),
               const SizedBox(height: 10),
             ],
-            ElevatedButton(
-              onPressed: () => context.push('/blood-request'),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const AppIcon(AppIcons.plus, color: Colors.white, size: 20),
-                  const SizedBox(width: 8),
-                  Text(t.createRequestAction),
-                ],
+            if (state.status == MyRequestsStatus.ready && !state.hasRequests)
+              ElevatedButton(
+                onPressed: () => context.push('/blood-request'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const AppIcon(AppIcons.plus, color: Colors.white, size: 20),
+                    const SizedBox(width: 8),
+                    Text(t.createRequestAction),
+                  ],
+                ),
               ),
-            ),
           ],
         );
       },

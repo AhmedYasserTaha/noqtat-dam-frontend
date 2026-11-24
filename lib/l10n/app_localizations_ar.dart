@@ -779,4 +779,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shareFailedCopied => 'اتنسخ النص لأن المشاركة مش متاحة.';
+
+  @override
+  String get postsTitle => 'المنشورات';
+
+  @override
+  String get postsEmpty => 'لا توجد منشورات حتى الآن';
 }

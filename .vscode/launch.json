@@ -3,6 +3,7 @@
   "configurations": [
     {
       "name": "Android phone (USB)",
+      "preLaunchTask": "Connect Android phone to local API",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",

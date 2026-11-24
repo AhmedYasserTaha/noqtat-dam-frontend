@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Connect Android phone to local API",
+      "type": "process",
+      "command": "adb",
+      "args": ["reverse", "tcp:3000", "tcp:3000"],
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent", "panel": "dedicated" }
+    }
+  ]
+}

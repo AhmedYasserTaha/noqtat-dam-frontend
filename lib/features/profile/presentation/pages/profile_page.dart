@@ -252,6 +252,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 value: profile.district?.of(lang) ?? t.notSet,
                 icon: AppIcons.map,
               ),
+              PreviewRow(
+                label: t.postsTitle,
+                icon: AppIcons.comment,
+                onTap: () => context.push('/posts'),
+              ),
             ],
           ),
         ),

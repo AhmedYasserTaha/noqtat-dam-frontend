@@ -1417,6 +1417,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اتنسخ النص لأن المشاركة مش متاحة.'**
   String get shareFailedCopied;
+
+  /// No description provided for @postsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المنشورات'**
+  String get postsTitle;
+
+  /// No description provided for @postsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد منشورات حتى الآن'**
+  String get postsEmpty;
 }
 
 class _AppLocalizationsDelegate

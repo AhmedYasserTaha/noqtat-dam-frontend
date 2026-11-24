@@ -304,5 +304,7 @@
   "pledgeDonated": "قال إنه تبرع",
   "notificationsEmpty": "مفيش إشعارات لسه.",
   "markAllRead": "تعليم الكل كمقروء",
-  "shareFailedCopied": "اتنسخ النص لأن المشاركة مش متاحة."
+  "shareFailedCopied": "اتنسخ النص لأن المشاركة مش متاحة.",
+  "postsTitle": "المنشورات",
+  "postsEmpty": "لا توجد منشورات حتى الآن"
 }
