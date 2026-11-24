@@ -276,7 +276,8 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                     ),
                   )
                 else ...[
-                  if (list.isEmpty && urgent == null) _message(t.noRequestsYet),
+                  if (list.isEmpty && urgent == null)
+                    _emptyState(t, feed.query.filter, profile),
                   for (final r in list) ...[
                     CompactRequestCard(
                       request: r,
@@ -333,6 +334,47 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  /// Empty list: say why and offer the next step instead of a dead end.
+  Widget _emptyState(
+    AppLocalizations t,
+    RequestFilter filter,
+    UserProfile? profile,
+  ) {
+    final feedCubit = context.read<FeedCubit>();
+    if (filter == RequestFilter.all) {
+      return _message(
+        t.noRequestsYet,
+        action: TextButton(
+          key: const Key('empty-refresh'),
+          onPressed: () => feedCubit.load(),
+          child: Text(t.noRequestsRefresh),
+        ),
+      );
+    }
+    final needsArea =
+        filter == RequestFilter.nearby && profile?.governorate == null;
+    return _message(
+      needsArea ? t.nearbyNeedsArea : t.noRequestsFiltered,
+      action: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 8,
+        children: [
+          if (needsArea || filter == RequestFilter.nearby)
+            TextButton(
+              key: const Key('empty-change-area'),
+              onPressed: _chooseLocation,
+              child: Text(t.changeMyArea),
+            ),
+          TextButton(
+            key: const Key('empty-show-all'),
+            onPressed: () => feedCubit.load(const FeedQuery()),
+            child: Text(t.showAllRequests),
+          ),
+        ],
       ),
     );
   }

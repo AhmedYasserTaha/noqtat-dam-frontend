@@ -240,5 +240,13 @@
   "mapsOpenFailed": "Could not open Maps",
   "selfReportedBanner": "{count} say they donated. If you received their blood, raise the bag count with + below.",
   "@selfReportedBanner": {"placeholders": {"count": {"type": "int"}}},
-  "coveredHint": "The count is complete. Close the request when you are done so it stops showing to others."
+  "coveredHint": "The count is complete. Close the request when you are done so it stops showing to others.",
+  "callRequester": "Call",
+  "whatsappRequester": "WhatsApp",
+  "contactOpenFailed": "Could not open the app. Copy the number instead.",
+  "noRequestsFiltered": "No requests match this filter right now.",
+  "showAllRequests": "Show all requests",
+  "changeMyArea": "Change my area",
+  "noRequestsRefresh": "Refresh",
+  "nearbyNeedsArea": "Set your area to see requests near you."
 }

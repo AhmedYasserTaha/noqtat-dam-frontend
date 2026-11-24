@@ -1525,6 +1525,54 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس.'**
   String get coveredHint;
+
+  /// No description provided for @callRequester.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتصل'**
+  String get callRequester;
+
+  /// No description provided for @whatsappRequester.
+  ///
+  /// In ar, this message translates to:
+  /// **'واتساب'**
+  String get whatsappRequester;
+
+  /// No description provided for @contactOpenFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'مقدرتش افتح التطبيق. انسخ الرقم بدلها.'**
+  String get contactOpenFailed;
+
+  /// No description provided for @noRequestsFiltered.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش طلبات مطابقة للفلتر ده دلوقتي.'**
+  String get noRequestsFiltered;
+
+  /// No description provided for @showAllRequests.
+  ///
+  /// In ar, this message translates to:
+  /// **'اعرض كل الطلبات'**
+  String get showAllRequests;
+
+  /// No description provided for @changeMyArea.
+  ///
+  /// In ar, this message translates to:
+  /// **'غيّر منطقتي'**
+  String get changeMyArea;
+
+  /// No description provided for @noRequestsRefresh.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديث'**
+  String get noRequestsRefresh;
+
+  /// No description provided for @nearbyNeedsArea.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدد منطقتك عشان تشوف الطلبات القريبة منك.'**
+  String get nearbyNeedsArea;
 }
 
 class _AppLocalizationsDelegate
