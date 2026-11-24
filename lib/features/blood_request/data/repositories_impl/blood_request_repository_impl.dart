@@ -33,6 +33,10 @@ class BloodRequestRepositoryImpl implements BloodRequestRepository {
       safeCall(() => remote.pledges(requestId));
 
   @override
+  Future<Either<Failure, BloodRequest>> confirmDonation(int id, int donorId) =>
+      safeCall(() => remote.confirmDonation(id, donorId));
+
+  @override
   Future<Either<Failure, BloodRequest>> pledge(int id) =>
       safeCall(() => remote.pledge(id));
 

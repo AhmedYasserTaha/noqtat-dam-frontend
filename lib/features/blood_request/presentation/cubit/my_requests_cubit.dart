@@ -50,9 +50,11 @@ class MyRequestsState extends Equatable {
 }
 
 class MyRequestsCubit extends Cubit<MyRequestsState> {
-  MyRequestsCubit(this._mine, this._update) : super(const MyRequestsState());
+  MyRequestsCubit(this._mine, this._update, this._confirm)
+    : super(const MyRequestsState());
   final GetMyRequests _mine;
   final UpdateMyRequest _update;
+  final ConfirmDonation _confirm;
 
   Future<void> load([RequestTab? tab]) async {
     final next = tab ?? state.tab;
@@ -83,6 +85,23 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
   /// Author sets how many bags were actually collected.
   Future<void> setBagsCollected(int id, int bags) =>
       _apply(UpdateRequestParams(id, bagsCollected: bags));
+
+  /// Author confirms one donor really donated. The server adds one bag and
+  /// never closes the request. Returns true when it went through.
+  Future<bool> confirmDonation(int id, int donorId) async {
+    final result = await _confirm(ConfirmDonationParams(id, donorId));
+    if (isClosed) return false;
+    return result.fold(
+      (f) {
+        emit(state.copyWith(actionFailure: f));
+        return false;
+      },
+      (_) {
+        load();
+        return true;
+      },
+    );
+  }
 
   Future<void> setStatus(int id, RequestStatus status) =>
       _apply(UpdateRequestParams(id, status: status));

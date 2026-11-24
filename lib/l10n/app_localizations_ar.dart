@@ -769,7 +769,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pledgeOnTheWay => 'في الطريق';
 
   @override
-  String get pledgeDonated => 'قال إنه تبرع';
+  String get pledgeDonated => 'قال إنه تبرع (إقرار منه)';
 
   @override
   String get notificationsEmpty => 'مفيش إشعارات لسه.';
@@ -834,4 +834,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get mapsOpenFailed => 'مقدرناش نفتح الخرائط';
+
+  @override
+  String get confirmDonationAction => 'أكّد التبرع';
+
+  @override
+  String get pledgeConfirmedByYou => 'أكّدت تبرعه';
+
+  @override
+  String get confirmDonationTitle => 'تأكيد التبرع';
+
+  @override
+  String confirmDonationBody(String name, int from, int to) {
+    return 'هتأكّد إن $name تبرّع فعلًا. عدد الأكياس هيزيد من $from لـ $to. التأكيد بيتحسب مرة واحدة بس.';
+  }
+
+  @override
+  String confirmDonationNoChange(String name, int count) {
+    return 'هتأكّد إن $name تبرّع. العدد وصل للمطلوب فهيفضل $count.';
+  }
+
+  @override
+  String selfReportedBanner(int count) {
+    return '$count قالوا إنهم تبرعوا. ده إقرار منهم ومحدش بيتحقق منه، أكّد اللي اتأكدت منه.';
+  }
+
+  @override
+  String get coveredHint =>
+      'العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس.';
+
+  @override
+  String get dialogBack => 'رجوع';
 }

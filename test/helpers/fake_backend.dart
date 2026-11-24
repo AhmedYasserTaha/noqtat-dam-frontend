@@ -112,6 +112,8 @@ Map<String, dynamic> requestJson({
   String? contactPhone,
   String? myPledgeStatus,
   String status = 'open',
+  int selfReported = 0,
+  int confirmed = 0,
 }) => {
   'id': id,
   'authorId': 2,
@@ -134,6 +136,8 @@ Map<String, dynamic> requestJson({
   'contactVisible': contactPhone != null,
   'contactPhone': contactPhone,
   'myPledgeStatus': myPledgeStatus,
+  'selfReportedDonatedCount': selfReported,
+  'confirmedDonatedCount': confirmed,
   'createdAt': '2026-11-20T10:00:00.000Z',
 };
 

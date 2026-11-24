@@ -216,7 +216,7 @@
   "pledgesTitle": "Donors who pledged",
   "pledgesEmpty": "No pledges yet.",
   "pledgeOnTheWay": "On the way",
-  "pledgeDonated": "Says donated",
+  "pledgeDonated": "Says donated (their own statement)",
   "notificationsEmpty": "No notifications yet.",
   "markAllRead": "Mark all read",
   "shareFailedCopied": "Copied the text because sharing is unavailable.",
@@ -237,5 +237,16 @@
   "hospitalOtherDistrict": "This hospital is listed in {district}, which differs from the district you chose. Check the district before posting.",
   "@hospitalOtherDistrict": {"placeholders": {"district": {"type": "String"}}},
   "thisIsYourRequest": "This is your request",
-  "mapsOpenFailed": "Could not open Maps"
+  "mapsOpenFailed": "Could not open Maps",
+  "confirmDonationAction": "Confirm donation",
+  "pledgeConfirmedByYou": "You confirmed",
+  "confirmDonationTitle": "Confirm donation",
+  "confirmDonationBody": "You are confirming that {name} really donated. Bags collected goes from {from} to {to}. Each donor counts once.",
+  "@confirmDonationBody": {"placeholders": {"name": {"type": "String"}, "from": {"type": "int"}, "to": {"type": "int"}}},
+  "confirmDonationNoChange": "You are confirming that {name} donated. The count already reached the number needed, so it stays at {count}.",
+  "@confirmDonationNoChange": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
+  "selfReportedBanner": "{count} say they donated. This is their own statement and nobody verifies it. Confirm the ones you checked.",
+  "@selfReportedBanner": {"placeholders": {"count": {"type": "int"}}},
+  "coveredHint": "The count is complete. Close the request when you are done so it stops showing to others.",
+  "dialogBack": "Back"
 }

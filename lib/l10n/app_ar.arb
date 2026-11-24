@@ -301,7 +301,7 @@
   "pledgesTitle": "المتبرعون المتعهدون",
   "pledgesEmpty": "لسه محدش اتعهد.",
   "pledgeOnTheWay": "في الطريق",
-  "pledgeDonated": "قال إنه تبرع",
+  "pledgeDonated": "قال إنه تبرع (إقرار منه)",
   "notificationsEmpty": "مفيش إشعارات لسه.",
   "markAllRead": "تعليم الكل كمقروء",
   "shareFailedCopied": "اتنسخ النص لأن المشاركة مش متاحة.",
@@ -322,5 +322,16 @@
   "hospitalOtherDistrict": "المستشفى دي مسجلة في {district}، غير القسم اللي اخترته. اتأكد من القسم قبل ما تنشر.",
   "@hospitalOtherDistrict": {"placeholders": {"district": {"type": "String"}}},
   "thisIsYourRequest": "ده طلبك",
-  "mapsOpenFailed": "مقدرناش نفتح الخرائط"
+  "mapsOpenFailed": "مقدرناش نفتح الخرائط",
+  "confirmDonationAction": "أكّد التبرع",
+  "pledgeConfirmedByYou": "أكّدت تبرعه",
+  "confirmDonationTitle": "تأكيد التبرع",
+  "confirmDonationBody": "هتأكّد إن {name} تبرّع فعلًا. عدد الأكياس هيزيد من {from} لـ {to}. التأكيد بيتحسب مرة واحدة بس.",
+  "@confirmDonationBody": {"placeholders": {"name": {"type": "String"}, "from": {"type": "int"}, "to": {"type": "int"}}},
+  "confirmDonationNoChange": "هتأكّد إن {name} تبرّع. العدد وصل للمطلوب فهيفضل {count}.",
+  "@confirmDonationNoChange": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
+  "selfReportedBanner": "{count} قالوا إنهم تبرعوا. ده إقرار منهم ومحدش بيتحقق منه، أكّد اللي اتأكدت منه.",
+  "@selfReportedBanner": {"placeholders": {"count": {"type": "int"}}},
+  "coveredHint": "العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس.",
+  "dialogBack": "رجوع"
 }

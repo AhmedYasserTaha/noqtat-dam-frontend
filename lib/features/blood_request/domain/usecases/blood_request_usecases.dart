@@ -37,6 +37,19 @@ class UpdateMyRequest implements UseCase<BloodRequest, UpdateRequestParams> {
       repository.update(p.id, bagsCollected: p.bagsCollected, status: p.status);
 }
 
+class ConfirmDonationParams {
+  const ConfirmDonationParams(this.requestId, this.donorId);
+  final int requestId, donorId;
+}
+
+class ConfirmDonation implements UseCase<BloodRequest, ConfirmDonationParams> {
+  ConfirmDonation(this.repository);
+  final BloodRequestRepository repository;
+  @override
+  Future<Either<Failure, BloodRequest>> call(ConfirmDonationParams p) =>
+      repository.confirmDonation(p.requestId, p.donorId);
+}
+
 class PledgeToDonate implements UseCase<BloodRequest, int> {
   PledgeToDonate(this.repository);
   final BloodRequestRepository repository;

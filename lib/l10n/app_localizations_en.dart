@@ -762,7 +762,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pledgeOnTheWay => 'On the way';
 
   @override
-  String get pledgeDonated => 'Says donated';
+  String get pledgeDonated => 'Says donated (their own statement)';
 
   @override
   String get notificationsEmpty => 'No notifications yet.';
@@ -828,4 +828,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapsOpenFailed => 'Could not open Maps';
+
+  @override
+  String get confirmDonationAction => 'Confirm donation';
+
+  @override
+  String get pledgeConfirmedByYou => 'You confirmed';
+
+  @override
+  String get confirmDonationTitle => 'Confirm donation';
+
+  @override
+  String confirmDonationBody(String name, int from, int to) {
+    return 'You are confirming that $name really donated. Bags collected goes from $from to $to. Each donor counts once.';
+  }
+
+  @override
+  String confirmDonationNoChange(String name, int count) {
+    return 'You are confirming that $name donated. The count already reached the number needed, so it stays at $count.';
+  }
+
+  @override
+  String selfReportedBanner(int count) {
+    return '$count say they donated. This is their own statement and nobody verifies it. Confirm the ones you checked.';
+  }
+
+  @override
+  String get coveredHint =>
+      'The count is complete. Close the request when you are done so it stops showing to others.';
+
+  @override
+  String get dialogBack => 'Back';
 }

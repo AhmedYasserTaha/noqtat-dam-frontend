@@ -16,6 +16,7 @@ import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../hospitals/presentation/widgets/hospital_map_button.dart';
 import '../../domain/entities/blood_request.dart';
+import '../../domain/entities/donor_pledge.dart';
 import '../cubit/my_requests_cubit.dart';
 
 class MyRequestsPage extends StatefulWidget {
@@ -213,6 +214,20 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                       backgroundColor: AppColors.border,
                     ),
                     const SizedBox(height: 8),
+                    if (r.status == RequestStatus.open &&
+                        r.selfReportedDonatedCount > 0) ...[
+                      Text(
+                        t.selfReportedBanner(r.selfReportedDonatedCount),
+                        key: Key('self-reported-${r.id}'),
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: AppColors.red,
+                          fontWeight: FontWeight.w700,
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                    ],
                     Row(
                       children: [
                         Expanded(
@@ -267,10 +282,24 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
 /// Author controls: adjust bags collected, mark fulfilled, or cancel.
 class _RequestDetails extends StatelessWidget {
   const _RequestDetails({required this.request});
+
+  /// The request as it was when the sheet opened. The sheet shows the fresh
+  /// copy from the list (after a confirmation, for example).
   final BloodRequest request;
 
   @override
   Widget build(BuildContext context) {
+    final initial = request;
+    final fresh = context.select<MyRequestsCubit, BloodRequest>((c) {
+      for (final r in c.state.items) {
+        if (r.id == initial.id) return r;
+      }
+      return initial;
+    });
+    return _buildDetails(context, fresh);
+  }
+
+  Widget _buildDetails(BuildContext context, BloodRequest request) {
     final t = AppLocalizations.of(context)!;
     final lang = Localizations.localeOf(context).languageCode;
     final cubit = context.read<MyRequestsCubit>();
@@ -306,7 +335,31 @@ class _RequestDetails extends StatelessWidget {
             style: const TextStyle(color: AppColors.muted, fontSize: 12),
           ),
           const SizedBox(height: 12),
-          const _PledgesList(),
+          if (open && request.selfReportedDonatedCount > 0) ...[
+            Text(
+              t.selfReportedBanner(request.selfReportedDonatedCount),
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.red,
+                fontWeight: FontWeight.w700,
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 8),
+          ],
+          if (open && request.isCovered) ...[
+            Text(
+              t.coveredHint,
+              key: const Key('covered-hint'),
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.muted,
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 8),
+          ],
+          _PledgesList(request: request),
           if (open) ...[
             const SizedBox(height: 16),
             Row(
@@ -379,7 +432,42 @@ class _RequestDetails extends StatelessWidget {
 /// Who pledged on this request. Statuses are the donors' own statements;
 /// nothing here is verified.
 class _PledgesList extends StatelessWidget {
-  const _PledgesList();
+  const _PledgesList({required this.request});
+  final BloodRequest request;
+
+  Future<void> _confirm(BuildContext context, DonorPledge p) async {
+    final t = AppLocalizations.of(context)!;
+    final mine = context.read<MyRequestsCubit>();
+    final pledges = context.read<PledgesCubit>();
+    final from = request.bagsCollected;
+    final to = from < request.bagsNeeded ? from + 1 : from;
+    final yes = await showDialog<bool>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: Text(t.confirmDonationTitle),
+        content: Text(
+          to == from
+              ? t.confirmDonationNoChange(p.donorName, from)
+              : t.confirmDonationBody(p.donorName, from, to),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialog, false),
+            child: Text(t.dialogBack),
+          ),
+          TextButton(
+            key: const Key('confirm-donation-yes'),
+            onPressed: () => Navigator.pop(dialog, true),
+            child: Text(t.confirmDonationAction),
+          ),
+        ],
+      ),
+    );
+    if (yes != true) return;
+    final ok = await mine.confirmDonation(request.id, p.donorId);
+    if (ok) await pledges.load(request.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
@@ -405,13 +493,35 @@ class _PledgesList extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(p.donorName),
             subtitle: Text(
-              p.status == PledgeStatus.donated
+              p.confirmed
+                  ? t.pledgeConfirmedByYou
+                  : p.status == PledgeStatus.donated
                   ? t.pledgeDonated
                   : p.status == PledgeStatus.onTheWay
                   ? t.pledgeOnTheWay
                   : t.cancelPledge,
             ),
-            trailing: Text(p.bloodType, textDirection: TextDirection.ltr),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (request.status == RequestStatus.open && p.canConfirm)
+                  TextButton(
+                    key: Key('confirm-donation-${p.donorId}'),
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(0, 32),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      textStyle: const TextStyle(
+                        fontFamily: 'Cairo',
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    onPressed: () => _confirm(context, p),
+                    child: Text(t.confirmDonationAction),
+                  ),
+                Text(p.bloodType, textDirection: TextDirection.ltr),
+              ],
+            ),
           ),
       ],
     );

@@ -119,12 +119,13 @@ void configureDependencies({
     ..registerLazySingleton(() => GetMyRequests(getIt()))
     ..registerLazySingleton(() => UpdateMyRequest(getIt()))
     ..registerLazySingleton(() => PledgeToDonate(getIt()))
+    ..registerLazySingleton(() => ConfirmDonation(getIt()))
     ..registerLazySingleton(() => ReportDonated(getIt()))
     ..registerLazySingleton(() => CancelPledge(getIt()))
     ..registerLazySingleton(() => GetRequestPledges(getIt()))
     ..registerFactory(() => PledgesCubit(getIt()))
     ..registerFactory(() => BloodRequestCubit(getIt()))
-    ..registerLazySingleton(() => MyRequestsCubit(getIt(), getIt()));
+    ..registerLazySingleton(() => MyRequestsCubit(getIt(), getIt(), getIt()));
 
   // feed
   getIt

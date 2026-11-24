@@ -61,6 +61,8 @@ class BloodRequest extends Equatable {
     this.myPledge,
     this.hospitalId,
     this.hospitalLocation,
+    this.selfReportedDonatedCount = 0,
+    this.confirmedDonatedCount = 0,
   });
   final int id, bagsNeeded, bagsCollected, onTheWayCount;
   final String authorName, bloodType, hospitalName;
@@ -81,7 +83,17 @@ class BloodRequest extends Equatable {
   final int? hospitalId;
   final HospitalLocation? hospitalLocation;
 
+  /// Donors who said they donated. Their own statement, not verified, and
+  /// never added to [bagsCollected] automatically.
+  final int selfReportedDonatedCount;
+
+  /// Donors the requester confirmed. Each confirmation adds one bag once.
+  final int confirmedDonatedCount;
+
   bool get hasContact => contactPhone != null;
+
+  /// The requester's own count reached the number needed.
+  bool get isCovered => bagsCollected >= bagsNeeded;
 
   @override
   List<Object?> get props => [
@@ -105,6 +117,8 @@ class BloodRequest extends Equatable {
     myPledge,
     hospitalId,
     hospitalLocation,
+    selfReportedDonatedCount,
+    confirmedDonatedCount,
   ];
 }
 
