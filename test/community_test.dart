@@ -206,7 +206,12 @@ void main() {
     tester,
   ) async {
     final b = FakeBackend();
-    stubHome(b, requests: [requestJson(id: 8, contactPhone: '01099998888')]);
+    stubHome(
+      b,
+      requests: [
+        requestJson(id: 8, contactPhone: '01099998888', urgency: 'within_24h'),
+      ],
+    );
     final share = await _boot(tester, b);
     await tester.tap(find.byKey(const Key('request-menu-8')));
     await tester.pumpAndSettle();
