@@ -325,5 +325,13 @@
   "mapsOpenFailed": "مقدرناش نفتح الخرائط",
   "selfReportedBanner": "{count} قالوا إنهم تبرعوا. لو استلمت منهم الدم فعلًا، زوّد عدد الأكياس بالزرار + تحت.",
   "@selfReportedBanner": {"placeholders": {"count": {"type": "int"}}},
-  "coveredHint": "العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس."
+  "coveredHint": "العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس.",
+  "callRequester": "اتصل",
+  "whatsappRequester": "واتساب",
+  "contactOpenFailed": "مقدرتش افتح التطبيق. انسخ الرقم بدلها.",
+  "noRequestsFiltered": "مفيش طلبات مطابقة للفلتر ده دلوقتي.",
+  "showAllRequests": "اعرض كل الطلبات",
+  "changeMyArea": "غيّر منطقتي",
+  "noRequestsRefresh": "تحديث",
+  "nearbyNeedsArea": "حدد منطقتك عشان تشوف الطلبات القريبة منك."
 }

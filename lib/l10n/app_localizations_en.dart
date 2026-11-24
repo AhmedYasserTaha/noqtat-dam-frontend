@@ -837,4 +837,29 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get coveredHint =>
       'The count is complete. Close the request when you are done so it stops showing to others.';
+
+  @override
+  String get callRequester => 'Call';
+
+  @override
+  String get whatsappRequester => 'WhatsApp';
+
+  @override
+  String get contactOpenFailed =>
+      'Could not open the app. Copy the number instead.';
+
+  @override
+  String get noRequestsFiltered => 'No requests match this filter right now.';
+
+  @override
+  String get showAllRequests => 'Show all requests';
+
+  @override
+  String get changeMyArea => 'Change my area';
+
+  @override
+  String get noRequestsRefresh => 'Refresh';
+
+  @override
+  String get nearbyNeedsArea => 'Set your area to see requests near you.';
 }

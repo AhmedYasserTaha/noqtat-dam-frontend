@@ -843,4 +843,28 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get coveredHint =>
       'العدد اكتمل. اقفل الطلب لو خلصت عشان يبطل يظهر للناس.';
+
+  @override
+  String get callRequester => 'اتصل';
+
+  @override
+  String get whatsappRequester => 'واتساب';
+
+  @override
+  String get contactOpenFailed => 'مقدرتش افتح التطبيق. انسخ الرقم بدلها.';
+
+  @override
+  String get noRequestsFiltered => 'مفيش طلبات مطابقة للفلتر ده دلوقتي.';
+
+  @override
+  String get showAllRequests => 'اعرض كل الطلبات';
+
+  @override
+  String get changeMyArea => 'غيّر منطقتي';
+
+  @override
+  String get noRequestsRefresh => 'تحديث';
+
+  @override
+  String get nearbyNeedsArea => 'حدد منطقتك عشان تشوف الطلبات القريبة منك.';
 }
