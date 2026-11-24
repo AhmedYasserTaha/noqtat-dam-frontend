@@ -94,6 +94,8 @@ void main() {
     final n = top(tester, 'مستشفى بدون موقع');
     expect(m < c && c < n, isTrue);
     expect(find.byKey(const Key('distance-label')), findsNWidgets(2));
+    // both pins are unreviewed: the label must say so
+    expect(find.textContaining('الموقع غير مراجع'), findsNWidgets(2));
     final b = key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
     await tester.runAsync(() async {
       final image = await b.toImage();
