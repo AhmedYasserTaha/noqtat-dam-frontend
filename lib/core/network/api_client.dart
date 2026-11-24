@@ -26,9 +26,11 @@ abstract final class ApiErrorCodes {
   static const needGovernorate = 'need_governorate';
   static const tooManyAttempts = 'too_many_attempts';
   static const invalid = 'invalid';
+  static const alreadyPledged = 'already_pledged';
 
   static String fromMessage(String? message) {
     final m = (message ?? '').toLowerCase();
+    if (m.contains('already pledged')) return alreadyPledged;
     if (m.contains('invalid phone') || m.contains('invalid contactphone')) {
       return invalidPhone;
     }
@@ -46,29 +48,23 @@ abstract final class ApiErrorCodes {
 }
 
 class ApiClient {
-  ApiClient({
-    required String baseUrl,
-    required this.tokens,
-    Dio? dio,
-    this.languageCode = 'ar',
-  }) : _dio =
-           dio ??
-           Dio(
-             BaseOptions(
-               baseUrl: baseUrl,
-               connectTimeout: const Duration(seconds: 10),
-               receiveTimeout: const Duration(seconds: 20),
-               headers: {'accept': 'application/json'},
-             ),
-           ) {
+  ApiClient({required String baseUrl, required this.tokens, Dio? dio})
+    : _dio =
+          dio ??
+          Dio(
+            BaseOptions(
+              baseUrl: baseUrl,
+              connectTimeout: const Duration(seconds: 10),
+              receiveTimeout: const Duration(seconds: 20),
+              headers: {'accept': 'application/json'},
+            ),
+          ) {
     ApiChecker.attachToDio(_dio);
   }
 
   final Dio _dio;
   final TokenStore tokens;
-
-  /// Sent as `Accept-Language` so the backend localizes errors and content.
-  final String languageCode;
+  String languageCode = 'ar';
   final _unauthorized = StreamController<void>.broadcast();
 
   /// Fires when the server rejects a request that carried a session token
