@@ -282,7 +282,7 @@ void main() {
     expect(find.text('كريم'), findsOneWidget);
     expect(find.text(t.pledgeOnTheWay), findsOneWidget);
     expect(find.text('01012345678'), findsOneWidget);
-    expect(find.text(t.callRequester), findsOneWidget);
+    expect(find.byTooltip(t.callRequester), findsOneWidget);
     expect(find.byType(BottomSheet), findsNothing);
     expect(find.widgetWithText(AppBar, t.requestDetails), findsOneWidget);
     await tester.tap(find.byType(BackButton));

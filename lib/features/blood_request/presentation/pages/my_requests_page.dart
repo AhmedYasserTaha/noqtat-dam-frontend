@@ -314,6 +314,7 @@ class _RequestDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _DetailsSection(
+            tint: true,
             child: Row(
               children: [
                 Container(
@@ -348,25 +349,14 @@ class _RequestDetails extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        '${request.bagsCollected} / ${request.bagsNeeded} · ${t.bagsCollectedLabel}',
+                        request.status == RequestStatus.fulfilled
+                            ? t.requestComplete
+                            : request.status == RequestStatus.cancelled
+                            ? t.requestCancelled
+                            : t.requestActive,
                         style: const TextStyle(
                           fontSize: 12,
                           color: AppColors.muted,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: request.bagsNeeded > 0
-                              ? (request.bagsCollected / request.bagsNeeded)
-                                    .clamp(0.0, 1.0)
-                              : 0,
-                          minHeight: 5,
-                          color: AppColors.red,
-                          backgroundColor: AppColors.red.withValues(
-                            alpha: 0.08,
-                          ),
                         ),
                       ),
                     ],
@@ -417,6 +407,100 @@ class _RequestDetails extends StatelessWidget {
               ],
             ),
           ),
+          if (open) ...[
+            const SizedBox(height: 12),
+            _DetailsSection(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          t.bagsCollectedLabel,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: t.decreaseBags,
+                        onPressed: request.bagsCollected > 0
+                            ? () {
+                                cubit.setBagsCollected(
+                                  request.id,
+                                  request.bagsCollected - 1,
+                                );
+                              }
+                            : null,
+                        icon: const Text('−', style: TextStyle(fontSize: 22)),
+                      ),
+                      Text(
+                        '${request.bagsCollected}',
+                        style: const TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                      IconButton(
+                        tooltip: t.increaseBags,
+                        onPressed: request.bagsCollected < request.bagsNeeded
+                            ? () {
+                                cubit.setBagsCollected(
+                                  request.id,
+                                  request.bagsCollected + 1,
+                                );
+                              }
+                            : null,
+                        icon: const AppIcon(
+                          AppIcons.plus,
+                          color: AppColors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: request.bagsNeeded > 0
+                          ? (request.bagsCollected / request.bagsNeeded).clamp(
+                              0.0,
+                              1.0,
+                            )
+                          : 0,
+                      minHeight: 6,
+                      color: AppColors.red,
+                      backgroundColor: AppColors.red.withValues(alpha: 0.08),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    '${request.bagsCollected} / ${request.bagsNeeded}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.muted,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      cubit.setStatus(request.id, RequestStatus.fulfilled);
+                      Navigator.pop(context);
+                    },
+                    child: Text(t.markFulfilled),
+                  ),
+                  const SizedBox(height: 8),
+                  OutlinedButton(
+                    onPressed: () {
+                      cubit.setStatus(request.id, RequestStatus.cancelled);
+                      Navigator.pop(context);
+                    },
+                    child: Text(t.cancelRequest),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: 12),
           _DetailsSection(
             child: Column(
@@ -456,73 +540,6 @@ class _RequestDetails extends StatelessWidget {
               ],
             ),
           ),
-          if (open) ...[
-            const SizedBox(height: 12),
-            _DetailsSection(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          t.bagsCollectedLabel,
-                          style: const TextStyle(fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: t.decreaseBags,
-                        onPressed: request.bagsCollected > 0
-                            ? () {
-                                cubit.setBagsCollected(
-                                  request.id,
-                                  request.bagsCollected - 1,
-                                );
-                              }
-                            : null,
-                        icon: const Text('−', style: TextStyle(fontSize: 22)),
-                      ),
-                      Text(
-                        '${request.bagsCollected}',
-                        style: const TextStyle(fontWeight: FontWeight.w900),
-                      ),
-                      IconButton(
-                        tooltip: t.increaseBags,
-                        onPressed: request.bagsCollected < request.bagsNeeded
-                            ? () {
-                                cubit.setBagsCollected(
-                                  request.id,
-                                  request.bagsCollected + 1,
-                                );
-                              }
-                            : null,
-                        icon: const AppIcon(
-                          AppIcons.plus,
-                          color: AppColors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      cubit.setStatus(request.id, RequestStatus.fulfilled);
-                      Navigator.pop(context);
-                    },
-                    child: Text(t.markFulfilled),
-                  ),
-                  const SizedBox(height: 8),
-                  OutlinedButton(
-                    onPressed: () {
-                      cubit.setStatus(request.id, RequestStatus.cancelled);
-                      Navigator.pop(context);
-                    },
-                    child: Text(t.cancelRequest),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -530,14 +547,15 @@ class _RequestDetails extends StatelessWidget {
 }
 
 class _DetailsSection extends StatelessWidget {
-  const _DetailsSection({required this.child});
+  const _DetailsSection({required this.child, this.tint = false});
   final Widget child;
+  final bool tint;
 
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: tint ? AppColors.red.withValues(alpha: 0.04) : Colors.white,
       border: Border.all(color: AppColors.ink.withValues(alpha: 0.09)),
       borderRadius: BorderRadius.circular(18),
     ),
@@ -561,52 +579,81 @@ class _PledgesList extends StatelessWidget {
       children: [
         Text(
           t.pledgesTitle,
-          style: const TextStyle(fontWeight: FontWeight.w900),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
         ),
+        const SizedBox(height: 12),
         if (s.items.isEmpty)
           Text(
             t.pledgesEmpty,
             style: const TextStyle(color: AppColors.muted, fontSize: 12),
           ),
         for (final p in s.items)
-          ListTile(
-            dense: true,
-            contentPadding: EdgeInsets.zero,
-            title: Text(p.donorName),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  p.status == PledgeStatus.donated
-                      ? t.pledgeDonated
-                      : p.status == PledgeStatus.onTheWay
-                      ? t.pledgeOnTheWay
-                      : t.cancelPledge,
-                ),
-                if (p.donorPhone?.isNotEmpty == true)
-                  Wrap(
-                    spacing: 8,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(p.donorPhone!, textDirection: TextDirection.ltr),
-                      TextButton.icon(
-                        icon: const Icon(Icons.phone_outlined, size: 16),
-                        label: Text(t.callRequester),
-                        onPressed: () async {
-                          final opened = await getIt<MapsLauncher>().openLink(
-                            callUri(p.donorPhone!),
-                          );
-                          if (!context.mounted || opened) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(t.contactOpenFailed)),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-              ],
+          Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColors.ink.withValues(alpha: 0.025),
+              borderRadius: BorderRadius.circular(12),
             ),
-            trailing: Text(p.bloodType, textDirection: TextDirection.ltr),
+            child: ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                p.donorName,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    p.status == PledgeStatus.donated
+                        ? t.pledgeDonated
+                        : p.status == PledgeStatus.onTheWay
+                        ? t.pledgeOnTheWay
+                        : t.cancelPledge,
+                  ),
+                  if (p.donorPhone?.isNotEmpty == true)
+                    Text(p.donorPhone!, textDirection: TextDirection.ltr),
+                ],
+              ),
+              trailing: p.donorPhone?.isNotEmpty == true
+                  ? IconButton.filledTonal(
+                      tooltip: t.callRequester,
+                      icon: const Icon(Icons.phone_outlined, size: 20),
+                      onPressed: () async {
+                        final opened = await getIt<MapsLauncher>().openLink(
+                          callUri(p.donorPhone!),
+                        );
+                        if (!context.mounted || opened) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(t.contactOpenFailed)),
+                        );
+                      },
+                    )
+                  : null,
+              leading: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  p.bloodType,
+                  textDirection: TextDirection.ltr,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.red,
+                  ),
+                ),
+              ),
+            ),
           ),
       ],
     );
