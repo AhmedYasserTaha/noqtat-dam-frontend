@@ -173,7 +173,7 @@ void main() {
     // Open the create screen directly through the router.
     await tester.tap(find.byTooltip('إنشاء طلب دم'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('create-choice-request')));
+    await tester.tap(find.byKey(const Key('create-tab-request')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const ValueKey('request-hospital')));
     await tester.enterText(

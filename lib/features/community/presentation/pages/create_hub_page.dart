@@ -1,41 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_icons.dart';
+import '../../../../core/di/injection.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_icon.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../blood_request/presentation/cubit/blood_request_cubit.dart';
+import '../../../blood_request/presentation/pages/blood_request_page.dart';
+import '../cubit/create_post_cubit.dart';
+import 'new_post_page.dart';
 
-/// First step of creating something: a normal post or a blood request.
+/// The create screen: opens straight on a form, with top tabs to switch
+/// between a normal post and a blood request. Each tab keeps what was typed.
 class CreateHubPage extends StatelessWidget {
   const CreateHubPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(title: Text(t.createChoiceTitle)),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 512),
-          child: ListView(
-            padding: const EdgeInsets.all(16),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<CreatePostCubit>()),
+        BlocProvider(create: (_) => getIt<BloodRequestCubit>()),
+      ],
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+              onPressed: () =>
+                  context.canPop() ? context.pop() : context.go('/'),
+              icon: const AppIcon(AppIcons.arrowBackRtl, color: AppColors.ink),
+            ),
+            title: Text(
+              t.createChoiceTitle,
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+            ),
+            bottom: TabBar(
+              indicatorColor: AppColors.red,
+              labelColor: AppColors.red,
+              unselectedLabelColor: AppColors.muted,
+              labelStyle: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w900,
+              ),
+              tabs: [
+                Tab(
+                  key: const Key('create-tab-post'),
+                  text: t.createPostOption,
+                ),
+                Tab(
+                  key: const Key('create-tab-request'),
+                  text: t.createRequestOption,
+                ),
+              ],
+            ),
+          ),
+          body: const TabBarView(
             children: [
-              _Choice(
-                key: const Key('create-choice-post'),
-                icon: AppIcons.comment,
-                title: t.createPostOption,
-                hint: t.createPostHint,
-                onTap: () => context.pushReplacement('/new-post'),
-              ),
-              const SizedBox(height: 12),
-              _Choice(
-                key: const Key('create-choice-request'),
-                icon: AppIcons.bloodDropFilled,
-                title: t.createRequestOption,
-                hint: t.createRequestHint,
-                onTap: () => context.pushReplacement('/blood-request'),
-              ),
+              _KeepAlive(child: NewPostPage(embedded: true)),
+              _KeepAlive(child: BloodRequestPage(embedded: true)),
             ],
           ),
         ),
@@ -44,58 +71,20 @@ class CreateHubPage extends StatelessWidget {
   }
 }
 
-class _Choice extends StatelessWidget {
-  const _Choice({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.hint,
-    required this.onTap,
-  });
-  final String icon, title, hint;
-  final VoidCallback onTap;
+class _KeepAlive extends StatefulWidget {
+  const _KeepAlive({required this.child});
+  final Widget child;
   @override
-  Widget build(BuildContext context) => Material(
-    color: Colors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(16),
-      side: const BorderSide(color: AppColors.border),
-    ),
-    child: InkWell(
-      borderRadius: BorderRadius.circular(16),
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            AppIcon(icon, color: AppColors.red, size: 30),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    hint,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.muted,
-                      height: 1.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+  State<_KeepAlive> createState() => _KeepAliveState();
+}
+
+class _KeepAliveState extends State<_KeepAlive>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
+  }
 }

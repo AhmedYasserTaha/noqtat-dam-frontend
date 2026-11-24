@@ -146,9 +146,10 @@ void main() {
     // create request, full happy path with the location picker
     await tester.tap(find.byTooltip(t.createRequestAction).first);
     await tester.pumpAndSettle();
-    await shot('06b-create-choice');
-    await tester.tap(find.byKey(const Key('create-choice-request')));
+    await shot('06b-create-post-tab');
+    await tester.tap(find.byKey(const Key('create-tab-request')));
     await tester.pumpAndSettle();
+    await shot('06c-create-request-tab');
     await tester.tap(find.text('AB+'));
     await tester.tap(find.byTooltip(t.increaseBags));
     await tester.ensureVisible(find.byKey(const ValueKey('request-hospital')));

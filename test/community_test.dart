@@ -48,18 +48,26 @@ void main() {
     t = await AppLocalizations.delegate.load(const Locale('ar'));
   });
 
-  testWidgets('create button offers post or blood request', (tester) async {
-    final b = FakeBackend();
-    stubHome(b);
-    await _boot(tester, b);
-    await tester.tap(find.byTooltip(t.createRequestAction));
-    await tester.pumpAndSettle();
-    expect(find.text(t.createPostOption), findsOneWidget);
-    expect(find.text(t.createRequestOption), findsOneWidget);
-    await tester.tap(find.byKey(const Key('create-choice-request')));
-    await tester.pumpAndSettle();
-    expect(find.text(t.reviewRequestTitle), findsWidgets);
-  });
+  testWidgets(
+    'create opens a post form with tabs to switch to a blood request',
+    (tester) async {
+      final b = FakeBackend();
+      stubHome(b);
+      await _boot(tester, b);
+      await tester.tap(find.byTooltip(t.createRequestAction));
+      await tester.pumpAndSettle();
+      // opens directly on the post form, with tabs for both kinds
+      expect(find.byKey(const Key('new-post-field')), findsOneWidget);
+      expect(find.text(t.createRequestOption), findsOneWidget);
+      await tester.tap(find.byKey(const Key('create-tab-request')));
+      await tester.pumpAndSettle();
+      expect(find.text(t.reviewRequestTitle), findsWidgets);
+      // and back: the post tab is still there and keeps what was typed
+      await tester.tap(find.byKey(const Key('create-tab-post')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('new-post-field')), findsOneWidget);
+    },
+  );
 
   testWidgets('a post is published and the feed reloads', (tester) async {
     final b = FakeBackend();
@@ -67,8 +75,6 @@ void main() {
     b.on('POST /posts', (_) => FakeReply(postJson(id: 5, isMine: true), 201));
     await _boot(tester, b);
     await tester.tap(find.byTooltip(t.createRequestAction));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('create-choice-post')));
     await tester.pumpAndSettle();
     // empty text is refused locally
     await tester.tap(find.text(t.newPostPublish));

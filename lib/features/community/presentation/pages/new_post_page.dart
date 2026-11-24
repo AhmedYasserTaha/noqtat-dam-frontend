@@ -10,7 +10,10 @@ import '../../../home_feed/presentation/cubit/feed_cubit.dart';
 import '../cubit/create_post_cubit.dart';
 
 class NewPostPage extends StatefulWidget {
-  const NewPostPage({super.key});
+  const NewPostPage({super.key, this.embedded = false});
+
+  /// True when shown inside the create screen's tabs, which own the app bar.
+  final bool embedded;
   @override
   State<NewPostPage> createState() => _NewPostPageState();
 }
@@ -42,7 +45,7 @@ class _NewPostPageState extends State<NewPostPage> {
       builder: (context, state) {
         final busy = state.status == CreateStatus.submitting;
         return Scaffold(
-          appBar: AppBar(title: Text(t.newPostTitle)),
+          appBar: widget.embedded ? null : AppBar(title: Text(t.newPostTitle)),
           body: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 512),

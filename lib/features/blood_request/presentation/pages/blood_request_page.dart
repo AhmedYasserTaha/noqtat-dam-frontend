@@ -15,7 +15,10 @@ import '../../domain/entities/blood_request.dart';
 import '../cubit/blood_request_cubit.dart';
 
 class BloodRequestPage extends StatefulWidget {
-  const BloodRequestPage({super.key});
+  const BloodRequestPage({super.key, this.embedded = false});
+
+  /// True when shown inside the create screen's tabs, which own the app bar.
+  final bool embedded;
   @override
   State<BloodRequestPage> createState() => _BloodRequestPageState();
 }
@@ -267,17 +270,26 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   Widget _scaffold(BuildContext context, bool submitting) {
     final t = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          t.createRequestAction,
-          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
-        ),
-        leading: IconButton(
-          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-          onPressed: () => context.canPop() ? context.pop() : context.go('/'),
-          icon: const AppIcon(AppIcons.arrowBackRtl, color: AppColors.ink),
-        ),
-      ),
+      appBar: widget.embedded
+          ? null
+          : AppBar(
+              title: Text(
+                t.createRequestAction,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              leading: IconButton(
+                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+                onPressed: () =>
+                    context.canPop() ? context.pop() : context.go('/'),
+                icon: const AppIcon(
+                  AppIcons.arrowBackRtl,
+                  color: AppColors.ink,
+                ),
+              ),
+            ),
       body: _finished
           ? _success(t)
           : Align(
