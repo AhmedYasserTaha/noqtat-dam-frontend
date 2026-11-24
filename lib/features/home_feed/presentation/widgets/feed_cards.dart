@@ -107,10 +107,11 @@ class UrgentRequestCard extends StatelessWidget {
     required this.onDonate,
     required this.onShare,
     this.onReport,
+    this.onViewMine,
   });
   final BloodRequest request;
   final VoidCallback onDonate, onShare;
-  final VoidCallback? onReport;
+  final VoidCallback? onReport, onViewMine;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +124,7 @@ class UrgentRequestCard extends StatelessWidget {
     return FeedCard(
       dark: true,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
@@ -231,7 +233,13 @@ class UrgentRequestCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            placeLine(request, lang),
+                            [
+                                  request.district?.of(lang),
+                                  request.governorate?.of(lang),
+                                ]
+                                .whereType<String>()
+                                .where((e) => e.isNotEmpty)
+                                .join(' \u2022 '),
                             style: const TextStyle(color: muted, fontSize: 12),
                           ),
                         ),
@@ -300,7 +308,7 @@ class UrgentRequestCard extends StatelessWidget {
                 child: SizedBox(
                   height: 44,
                   child: ElevatedButton(
-                    onPressed: request.isMine ? null : onDonate,
+                    onPressed: request.isMine ? onViewMine : onDonate,
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       disabledBackgroundColor: const Color(0xFF403636),
@@ -318,7 +326,7 @@ class UrgentRequestCard extends StatelessWidget {
                         Flexible(
                           child: Text(
                             request.isMine
-                                ? t.thisIsYourRequest
+                                ? t.viewMyRequests
                                 : pledged
                                 ? t.viewPledge
                                 : t.iWillDonate,

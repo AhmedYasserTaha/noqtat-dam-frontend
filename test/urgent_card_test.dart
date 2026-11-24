@@ -6,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'helpers/fake_backend.dart';
 
+int mineTaps = 0;
+
 Future<void> _pump(WidgetTester tester, Map<String, dynamic> json) =>
     tester.pumpWidget(
       MaterialApp(
@@ -18,6 +20,7 @@ Future<void> _pump(WidgetTester tester, Map<String, dynamic> json) =>
               request: BloodRequestModel.fromJson(json),
               onDonate: () {},
               onShare: () {},
+              onViewMine: () => mineTaps++,
             ),
           ),
         ),
@@ -55,8 +58,39 @@ void main() {
       final t = AppLocalizations.of(
         tester.element(find.byType(UrgentRequestCard)),
       )!;
-      expect(find.text(t.thisIsYourRequest), findsOneWidget);
+      expect(find.text(t.viewMyRequests), findsOneWidget);
       expect(find.text(t.iWillDonate), findsNothing);
+      mineTaps = 0;
+      await tester.tap(find.text(t.viewMyRequests));
+      expect(mineTaps, 1);
     },
   );
+
+  testWidgets('urgent card fits its content inside bounded height', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Align(
+          alignment: Alignment.topCenter,
+          child: UrgentRequestCard(
+            request: BloodRequestModel.fromJson(requestJson()),
+            onDonate: () {},
+            onShare: () {},
+          ),
+        ),
+      ),
+    );
+    expect(
+      tester.getSize(find.byType(UrgentRequestCard)).height,
+      lessThan(400),
+    );
+  });
 }

@@ -216,6 +216,7 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                     request: urgent,
                     onDonate: () => _donate(urgent),
                     onShare: () => _share(urgent),
+                    onViewMine: () => context.push('/requests'),
                     onReport: urgent.isMine
                         ? null
                         : () => _report(ReportTarget.request, urgent.id),
