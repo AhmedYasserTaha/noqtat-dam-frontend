@@ -897,6 +897,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get locationFailed => 'معرفتش أحدد موقعك. اختار منطقتك بدلها.';
 
   @override
+  String distanceApproxUnreviewed(String km) {
+    return 'تقريبًا $km كم (خط مستقيم، الموقع غير مراجع)';
+  }
+
+  @override
   String get distanceNote =>
-      'المسافة خط مستقيم لنقطة المستشفى. المستشفيات من غير نقطة بتيجي في الآخر.';
+      'المسافة خط مستقيم لنقطة المستشفى على الخريطة. النقط دي من بيانات خرائط تطوعية ومش متراجعة، فاتأكد من مكان المستشفى قبل ما تروح. المستشفيات من غير نقطة بتيجي في الآخر.';
 }
