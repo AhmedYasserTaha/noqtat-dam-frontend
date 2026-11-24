@@ -125,11 +125,15 @@ void main() {
       await tester.pumpAndSettle();
       // nothing is sent until the requester agrees
       expect(backend.callsTo('POST /requests/1/pledges/5/confirm'), isEmpty);
-      expect(find.text(t.confirmDonationBody('منى', 1, 2)), findsOneWidget);
-      await tester.tap(find.byKey(const Key('confirm-donation-yes')));
+      expect(find.text(t.confirmDonationAdd(1, 2)), findsOneWidget);
+      await tester.tap(find.byKey(const Key('confirm-donation-add')));
       await tester.pumpAndSettle();
 
       expect(backend.callsTo('POST /requests/1/pledges/5/confirm').length, 1);
+      expect(
+        backend.callsTo('POST /requests/1/pledges/5/confirm').single.body,
+        {'countMode': 'add'},
+      );
       // sheet refreshed: new count, confirmed label, no confirm button left
       expect(find.text(t.pledgeConfirmedByYou), findsOneWidget);
       expect(find.byKey(const Key('confirm-donation-5')), findsNothing);
@@ -139,7 +143,7 @@ void main() {
     },
   );
 
-  testWidgets('a donor already counted by the requester edit adds nothing', (
+  testWidgets('already-counted answer is sent explicitly and adds nothing', (
     tester,
   ) async {
     final backend = FakeBackend();
@@ -166,7 +170,6 @@ void main() {
           'bloodType': 'B-',
           'status': 'donated',
           'confirmed': false,
-          'addsToCount': false,
           'createdAt': '2026-11-24T10:00:00.000Z',
           'updatedAt': '2026-11-24T11:00:00.000Z',
         },
@@ -178,10 +181,14 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('confirm-donation-5')));
     await tester.pumpAndSettle();
-    expect(
-      find.text(t.confirmDonationAlreadyCounted('منى', 1)),
-      findsOneWidget,
-    );
+    // nothing is sent until the requester picks one of the two answers
+    expect(backend.callsTo('POST /requests/1/pledges/5/confirm'), isEmpty);
+    expect(find.text(t.confirmDonationAlreadyCounted(1)), findsOneWidget);
+    await tester.tap(find.byKey(const Key('confirm-donation-counted')));
+    await tester.pumpAndSettle();
+    expect(backend.callsTo('POST /requests/1/pledges/5/confirm').single.body, {
+      'countMode': 'already_counted',
+    });
   });
 
   testWidgets('a covered open request tells the author to close it', (

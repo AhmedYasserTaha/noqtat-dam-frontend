@@ -836,22 +836,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pledgeConfirmedByYou => 'You confirmed';
 
   @override
+  String confirmDonationChoice(String name, int from, int needed) {
+    return 'You are confirming that $name really donated. Bags collected is $from of $needed. Tell us whether you already included them in the number you typed, so they are not counted twice.';
+  }
+
+  @override
+  String confirmDonationAdd(int from, int to) {
+    return 'No, add to the count ($from to $to)';
+  }
+
+  @override
+  String confirmDonationAlreadyCounted(int from) {
+    return 'Yes, already in the count (stays $from)';
+  }
+
+  @override
   String get confirmDonationTitle => 'Confirm donation';
-
-  @override
-  String confirmDonationBody(String name, int from, int to) {
-    return 'You are confirming that $name really donated. Bags collected goes from $from to $to. Each donor counts once.';
-  }
-
-  @override
-  String confirmDonationAlreadyCounted(String name, int count) {
-    return 'You are confirming that $name donated. You set the count yourself after they reported, so they are treated as already counted and it stays at $count.';
-  }
-
-  @override
-  String confirmDonationNoChange(String name, int count) {
-    return 'You are confirming that $name donated. The count already reached the number needed, so it stays at $count.';
-  }
 
   @override
   String selfReportedBanner(int count) {

@@ -50,7 +50,6 @@ class BloodRequestRemoteDataSource {
       DonorPledge(
         donorId: p['donorId'] as int? ?? 0,
         confirmed: p['confirmed'] as bool? ?? false,
-        addsToCount: p['addsToCount'] as bool? ?? true,
         donorName: (p as Json)['donorName'] as String? ?? '',
         bloodType: p['bloodType'] as String? ?? '',
         status:
@@ -60,10 +59,16 @@ class BloodRequestRemoteDataSource {
       ),
   ];
 
-  Future<BloodRequestModel> confirmDonation(int id, int donorId) async =>
-      BloodRequestModel.fromJson(
-        await api.post('/requests/$id/pledges/$donorId/confirm'),
-      );
+  Future<BloodRequestModel> confirmDonation(
+    int id,
+    int donorId,
+    CountMode mode,
+  ) async => BloodRequestModel.fromJson(
+    await api.post(
+      '/requests/$id/pledges/$donorId/confirm',
+      body: {'countMode': mode.api},
+    ),
+  );
 
   Future<BloodRequestModel> pledge(int id) async =>
       BloodRequestModel.fromJson(await api.post('/requests/$id/pledge'));

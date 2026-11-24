@@ -38,8 +38,9 @@ class UpdateMyRequest implements UseCase<BloodRequest, UpdateRequestParams> {
 }
 
 class ConfirmDonationParams {
-  const ConfirmDonationParams(this.requestId, this.donorId);
+  const ConfirmDonationParams(this.requestId, this.donorId, this.mode);
   final int requestId, donorId;
+  final CountMode mode;
 }
 
 class ConfirmDonation implements UseCase<BloodRequest, ConfirmDonationParams> {
@@ -47,7 +48,7 @@ class ConfirmDonation implements UseCase<BloodRequest, ConfirmDonationParams> {
   final BloodRequestRepository repository;
   @override
   Future<Either<Failure, BloodRequest>> call(ConfirmDonationParams p) =>
-      repository.confirmDonation(p.requestId, p.donorId);
+      repository.confirmDonation(p.requestId, p.donorId, p.mode);
 }
 
 class PledgeToDonate implements UseCase<BloodRequest, int> {

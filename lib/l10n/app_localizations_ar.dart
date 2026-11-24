@@ -842,22 +842,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pledgeConfirmedByYou => 'أكّدت تبرعه';
 
   @override
+  String confirmDonationChoice(String name, int from, int needed) {
+    return 'هتأكّد إن $name تبرّع فعلًا. عدد الأكياس دلوقتي $from من $needed. قولنا لو إنت حاسبه في الرقم اللي كتبته بإيدك ولا لأ، عشان ميتحسبش مرتين.';
+  }
+
+  @override
+  String confirmDonationAdd(int from, int to) {
+    return 'لأ، ضيفه على العدد (من $from لـ $to)';
+  }
+
+  @override
+  String confirmDonationAlreadyCounted(int from) {
+    return 'أيوه، محسوب في العدد (يفضل $from)';
+  }
+
+  @override
   String get confirmDonationTitle => 'تأكيد التبرع';
-
-  @override
-  String confirmDonationBody(String name, int from, int to) {
-    return 'هتأكّد إن $name تبرّع فعلًا. عدد الأكياس هيزيد من $from لـ $to. التأكيد بيتحسب مرة واحدة بس.';
-  }
-
-  @override
-  String confirmDonationAlreadyCounted(String name, int count) {
-    return 'هتأكّد إن $name تبرّع. إنت عدّلت العدد بإيدك بعد ما قال إنه تبرّع، فاعتبرناه محسوب والعدد هيفضل $count من غير زيادة.';
-  }
-
-  @override
-  String confirmDonationNoChange(String name, int count) {
-    return 'هتأكّد إن $name تبرّع. العدد وصل للمطلوب فهيفضل $count.';
-  }
 
   @override
   String selfReportedBanner(int count) {

@@ -1526,29 +1526,29 @@ abstract class AppLocalizations {
   /// **'أكّدت تبرعه'**
   String get pledgeConfirmedByYou;
 
+  /// No description provided for @confirmDonationChoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'هتأكّد إن {name} تبرّع فعلًا. عدد الأكياس دلوقتي {from} من {needed}. قولنا لو إنت حاسبه في الرقم اللي كتبته بإيدك ولا لأ، عشان ميتحسبش مرتين.'**
+  String confirmDonationChoice(String name, int from, int needed);
+
+  /// No description provided for @confirmDonationAdd.
+  ///
+  /// In ar, this message translates to:
+  /// **'لأ، ضيفه على العدد (من {from} لـ {to})'**
+  String confirmDonationAdd(int from, int to);
+
+  /// No description provided for @confirmDonationAlreadyCounted.
+  ///
+  /// In ar, this message translates to:
+  /// **'أيوه، محسوب في العدد (يفضل {from})'**
+  String confirmDonationAlreadyCounted(int from);
+
   /// No description provided for @confirmDonationTitle.
   ///
   /// In ar, this message translates to:
   /// **'تأكيد التبرع'**
   String get confirmDonationTitle;
-
-  /// No description provided for @confirmDonationBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'هتأكّد إن {name} تبرّع فعلًا. عدد الأكياس هيزيد من {from} لـ {to}. التأكيد بيتحسب مرة واحدة بس.'**
-  String confirmDonationBody(String name, int from, int to);
-
-  /// No description provided for @confirmDonationAlreadyCounted.
-  ///
-  /// In ar, this message translates to:
-  /// **'هتأكّد إن {name} تبرّع. إنت عدّلت العدد بإيدك بعد ما قال إنه تبرّع، فاعتبرناه محسوب والعدد هيفضل {count} من غير زيادة.'**
-  String confirmDonationAlreadyCounted(String name, int count);
-
-  /// No description provided for @confirmDonationNoChange.
-  ///
-  /// In ar, this message translates to:
-  /// **'هتأكّد إن {name} تبرّع. العدد وصل للمطلوب فهيفضل {count}.'**
-  String confirmDonationNoChange(String name, int count);
 
   /// No description provided for @selfReportedBanner.
   ///

@@ -33,16 +33,17 @@ void main() {
     await icons.load();
     await tester.runAsync(() => EgyptLocations.load());
 
-    var confirmed = false;
-    var alreadyCounted = false;
+    // The requester typed 1 by hand (Karim was already in that number).
+    var monaConfirmed = false;
+    var karimConfirmed = false;
     Map<String, dynamic> mine() => requestJson(
       id: 20,
       isMine: true,
       hospital: 'مستشفى المنصورة الجامعي',
       needed: 3,
-      collected: confirmed ? 1 : 0,
-      selfReported: confirmed ? 1 : 2,
-      confirmed: confirmed ? 1 : 0,
+      collected: monaConfirmed ? 2 : 1,
+      selfReported: 2 - (monaConfirmed ? 1 : 0) - (karimConfirmed ? 1 : 0),
+      confirmed: (monaConfirmed ? 1 : 0) + (karimConfirmed ? 1 : 0),
     );
     final backend = FakeBackend();
     stubHome(backend, unread: 2);
@@ -52,31 +53,28 @@ void main() {
         'items': [mine()],
       }),
     );
-    Map<String, dynamic> pledge(
-      int id,
-      String name,
-      bool done, [
-      bool adds = true,
-    ]) => {
+    Map<String, dynamic> pledge(int id, String name, bool done) => {
       'donorId': id,
       'donorName': name,
       'bloodType': 'B-',
       'status': 'donated',
       'confirmed': done,
-      'addsToCount': adds,
       'createdAt': '2026-11-24T10:00:00.000Z',
       'updatedAt': '2026-11-24T11:00:00.000Z',
     };
     backend.on(
       'GET /requests/20/pledges',
       (_) => FakeReply([
-        pledge(5, 'منى', confirmed),
-        pledge(6, 'كريم', false, !alreadyCounted),
+        pledge(5, 'منى', monaConfirmed),
+        pledge(6, 'كريم', karimConfirmed),
       ]),
     );
     backend.on('POST /requests/20/pledges/5/confirm', (_) {
-      confirmed = true;
-      alreadyCounted = true;
+      monaConfirmed = true;
+      return FakeReply(mine());
+    });
+    backend.on('POST /requests/20/pledges/6/confirm', (_) {
+      karimConfirmed = true;
       return FakeReply(mine());
     });
     backend.on(
@@ -97,7 +95,7 @@ void main() {
             'type': 'pledge_update',
             'postId': 20,
             'title': '2 متبرع سجّلوا تبرعهم',
-            'body': 'ده إقرار منهم ومش متحقق منه. أكّد اللي اتأكدت منه عشان العدد يتحدّث، وباقي 3 من 3 (B- · مستشفى المنصورة الجامعي).',
+            'body': 'ده إقرار منهم ومش متحقق منه. أكّد اللي اتأكدت منه عشان العدد يتحدّث، وباقي 2 من 3 (B- · مستشفى المنصورة الجامعي).',
             'read': false,
             'createdAt': '2026-11-24T09:00:00.000Z',
           },
@@ -106,7 +104,7 @@ void main() {
             'type': 'request_status',
             'postId': 20,
             'title': 'لسه محتاج متبرعين؟',
-            'body': 'طلب (B- · مستشفى المنصورة الجامعي) باقي فيه 3 من 3. حدّث عدد الأكياس أو اقفل الطلب لو اتغطى.',
+            'body': 'طلب (B- · مستشفى المنصورة الجامعي) باقي فيه 2 من 3. حدّث عدد الأكياس أو اقفل الطلب لو اتغطى.',
             'read': true,
             'createdAt': '2026-11-23T09:00:00.000Z',
           },
@@ -145,12 +143,15 @@ void main() {
     await shot('3-details-sheet');
     await tester.tap(find.byKey(const Key('confirm-donation-5')));
     await shot('4-confirm-dialog');
-    await tester.tap(find.byKey(const Key('confirm-donation-yes')));
-    await shot('5-after-confirm');
+    await tester.tap(find.byKey(const Key('confirm-donation-add')));
+    await shot('5-after-confirm-add');
     expect(backend.callsTo('POST /requests/20/pledges/5/confirm').length, 1);
-    // donor 6 was already counted by the requester's own manual edit
+    // Karim was already inside the number the requester typed
     await tester.tap(find.byKey(const Key('confirm-donation-6')));
-    await shot('6-already-counted-dialog');
+    await shot('5b-choice-dialog-karim');
+    await tester.tap(find.byKey(const Key('confirm-donation-counted')));
+    await shot('6-after-confirm-already-counted');
+    expect(backend.callsTo('POST /requests/20/pledges/6/confirm').length, 1);
     expect(tester.takeException(), isNull);
   });
 }

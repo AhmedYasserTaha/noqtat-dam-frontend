@@ -20,7 +20,11 @@ abstract interface class BloodRequestRepository {
   Future<Either<Failure, List<DonorPledge>>> pledges(int requestId);
 
   /// Author only: confirms one donor really donated. Adds one bag, once.
-  Future<Either<Failure, BloodRequest>> confirmDonation(int id, int donorId);
+  Future<Either<Failure, BloodRequest>> confirmDonation(
+    int id,
+    int donorId,
+    CountMode mode,
+  );
 
   /// The donor's own statement that they donated. Not verified by anyone.
   Future<Either<Failure, BloodRequest>> reportDonated(int id);

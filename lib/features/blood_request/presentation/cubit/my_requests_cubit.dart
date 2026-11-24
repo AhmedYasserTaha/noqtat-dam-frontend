@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/blood_request.dart';
+import '../../domain/entities/donor_pledge.dart';
 import '../../domain/usecases/blood_request_usecases.dart';
 
 enum MyRequestsStatus { loading, ready, failure }
@@ -88,8 +89,8 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
 
   /// Author confirms one donor really donated. The server adds one bag and
   /// never closes the request. Returns true when it went through.
-  Future<bool> confirmDonation(int id, int donorId) async {
-    final result = await _confirm(ConfirmDonationParams(id, donorId));
+  Future<bool> confirmDonation(int id, int donorId, CountMode mode) async {
+    final result = await _confirm(ConfirmDonationParams(id, donorId, mode));
     if (isClosed) return false;
     return result.fold(
       (f) {

@@ -440,33 +440,36 @@ class _PledgesList extends StatelessWidget {
     final mine = context.read<MyRequestsCubit>();
     final pledges = context.read<PledgesCubit>();
     final from = request.bagsCollected;
-    final to = p.addsToCount && from < request.bagsNeeded ? from + 1 : from;
-    final yes = await showDialog<bool>(
+    final to = from < request.bagsNeeded ? from + 1 : from;
+    // The app cannot know whether the count the requester typed already
+    // includes this donor, so the requester says so explicitly.
+    final mode = await showDialog<CountMode>(
       context: context,
       builder: (dialog) => AlertDialog(
         title: Text(t.confirmDonationTitle),
         content: Text(
-          !p.addsToCount
-              ? t.confirmDonationAlreadyCounted(p.donorName, from)
-              : to == from
-              ? t.confirmDonationNoChange(p.donorName, from)
-              : t.confirmDonationBody(p.donorName, from, to),
+          t.confirmDonationChoice(p.donorName, from, request.bagsNeeded),
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(dialog, false),
-            child: Text(t.dialogBack),
+            key: const Key('confirm-donation-add'),
+            onPressed: () => Navigator.pop(dialog, CountMode.add),
+            child: Text(t.confirmDonationAdd(from, to)),
           ),
           TextButton(
-            key: const Key('confirm-donation-yes'),
-            onPressed: () => Navigator.pop(dialog, true),
-            child: Text(t.confirmDonationAction),
+            key: const Key('confirm-donation-counted'),
+            onPressed: () => Navigator.pop(dialog, CountMode.alreadyCounted),
+            child: Text(t.confirmDonationAlreadyCounted(from)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialog),
+            child: Text(t.dialogBack),
           ),
         ],
       ),
     );
-    if (yes != true) return;
-    final ok = await mine.confirmDonation(request.id, p.donorId);
+    if (mode == null) return;
+    final ok = await mine.confirmDonation(request.id, p.donorId, mode);
     if (ok) await pledges.load(request.id);
   }
 
