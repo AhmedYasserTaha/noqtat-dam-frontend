@@ -653,7 +653,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpRequestBody.
   ///
   /// In ar, this message translates to:
-  /// **'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.'**
+  /// **'اضغط +، واختار الفصيلة وعدد الأكياس والمستشفى ودرجة الاستعجال، راجع وبعدين انشر. المتبرعين اللي بيتعهدوا بيشوفوا رقم تواصلك وممكن يتصلوا بيك أو يفتحوا محادثة واتساب. تقدر تعلّم الطلب إنه اتغطى أو تلغيه من طلباتي.'**
   String get helpRequestBody;
 
   /// No description provided for @helpDonateTitle.
@@ -791,7 +791,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactPreviewHint.
   ///
   /// In ar, this message translates to:
-  /// **'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده.'**
+  /// **'بيظهر بس للمتبرعين اللي بيتعهدوا بالطلب ده، وممكن يتصلوا بيك أو يفتحوا محادثة واتساب على الرقم ده.'**
   String get contactPreviewHint;
 
   /// No description provided for @requestNotesLabel.
