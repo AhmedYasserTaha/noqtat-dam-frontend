@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/device_location.dart';
 import '../../../../core/widgets/egypt_location_fields.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/utils/failure_message.dart';
@@ -28,6 +29,55 @@ class HomeFeedPage extends StatefulWidget {
 
 class _HomeFeedPageState extends State<HomeFeedPage> {
   static const _filters = RequestFilter.values;
+
+  /// Phone position, kept only in memory after the user taps "closest first".
+  /// Never sent to the server.
+  ({double lat, double lon})? _position;
+  bool _sortByDistance = false;
+  bool _locating = false;
+
+  Future<void> _toggleDistance() async {
+    final t = AppLocalizations.of(context)!;
+    if (_sortByDistance) {
+      setState(() => _sortByDistance = false);
+      return;
+    }
+    if (_position != null) {
+      setState(() => _sortByDistance = true);
+      return;
+    }
+    setState(() => _locating = true);
+    final r = await getIt<DeviceLocation>().current();
+    if (!mounted) return;
+    setState(() => _locating = false);
+    if (r.outcome == LocationOutcome.ok) {
+      setState(() {
+        _position = (lat: r.latitude!, lon: r.longitude!);
+        _sortByDistance = true;
+      });
+      return;
+    }
+    final message = switch (r.outcome) {
+      LocationOutcome.denied => t.locationDenied,
+      LocationOutcome.deniedForever => t.locationDeniedForever,
+      LocationOutcome.serviceOff => t.locationServiceOff,
+      _ => t.locationFailed,
+    };
+    // Manual fallback: the existing area picker.
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(label: t.changeMyArea, onPressed: _chooseLocation),
+      ),
+    );
+  }
+
+  double? _distanceTo(BloodRequest r) {
+    final p = _position;
+    final h = r.hospitalLocation;
+    if (p == null || h == null) return null;
+    return distanceKm(p.lat, p.lon, h.latitude, h.longitude);
+  }
 
   @override
   void initState() {
@@ -180,7 +230,20 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
     final selected = _filters.indexOf(feed.query.filter);
     final urgent = home?.closestUrgent;
     // The featured urgent request is also in the list; skip the duplicate.
-    final list = feed.requests.where((r) => r.id != urgent?.id).toList();
+    var list = feed.requests.where((r) => r.id != urgent?.id).toList();
+    if (_sortByDistance && _position != null) {
+      // Stable: requests without a hospital pin keep their order, at the end.
+      final indexed = [for (var i = 0; i < list.length; i++) (i, list[i])];
+      indexed.sort((a, b) {
+        final da = _distanceTo(a.$2), db = _distanceTo(b.$2);
+        if (da == null && db == null) return a.$1.compareTo(b.$1);
+        if (da == null) return 1;
+        if (db == null) return -1;
+        final c = da.compareTo(db);
+        return c != 0 ? c : a.$1.compareTo(b.$1);
+      });
+      list = [for (final e in indexed) e.$2];
+    }
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 512),
@@ -261,6 +324,42 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                     ],
                   ),
                 ),
+                if (list.length > 1 || _sortByDistance)
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: TextButton.icon(
+                      key: const Key('sort-distance'),
+                      onPressed: _locating ? null : _toggleDistance,
+                      icon: _locating
+                          ? const SizedBox(
+                              width: 14,
+                              height: 14,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Icon(
+                              _sortByDistance
+                                  ? Icons.near_me_rounded
+                                  : Icons.near_me_outlined,
+                              size: 18,
+                            ),
+                      label: Text(
+                        _sortByDistance
+                            ? '${t.sortByDistanceOn} · ${t.sortByDistanceOff}'
+                            : t.sortByDistance,
+                      ),
+                    ),
+                  ),
+                if (_sortByDistance)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 6),
+                    child: Text(
+                      t.distanceNote,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: AppColors.muted,
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: 8),
                 if (feed.status == FeedStatus.loading && feed.home == null)
                   const Padding(
@@ -281,6 +380,7 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                   for (final r in list) ...[
                     CompactRequestCard(
                       request: r,
+                      distanceKm: _sortByDistance ? _distanceTo(r) : null,
                       onDonate: () => _donate(r),
                       onShare: () => _share(r),
                       onReport: () => _report(ReportTarget.request, r.id),
