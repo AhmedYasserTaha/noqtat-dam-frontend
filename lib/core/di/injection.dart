@@ -113,6 +113,7 @@ void configureDependencies({
     ..registerLazySingleton(() => UpdateProfile(getIt()))
     ..registerLazySingleton(() => GetDonationHistory(getIt()))
     ..registerLazySingleton(() => DeleteAccount(getIt()))
+    ..registerLazySingleton(() => ChangePassword(getIt()))
     ..registerLazySingleton(
       () => ProfileCubit(getIt(), getIt(), getIt(), getIt()),
     );
@@ -173,6 +174,7 @@ void configureDependencies({
       () => CommunityRepositoryImpl(getIt()),
     )
     ..registerLazySingleton(() => CreatePost(getIt()))
+    ..registerLazySingleton(() => UpdatePost(getIt()))
     ..registerLazySingleton(() => ReactToPost(getIt()))
     ..registerLazySingleton(() => DeletePost(getIt()))
     ..registerLazySingleton(() => ReportContent(getIt()))

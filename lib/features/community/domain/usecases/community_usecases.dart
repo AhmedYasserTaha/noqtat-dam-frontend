@@ -13,6 +13,20 @@ class CreatePost implements UseCase<CommunityPost, String> {
       repository.createPost(text);
 }
 
+class UpdatePostParams {
+  const UpdatePostParams(this.id, this.text);
+  final int id;
+  final String text;
+}
+
+class UpdatePost implements UseCase<CommunityPost, UpdatePostParams> {
+  UpdatePost(this.repository);
+  final CommunityRepository repository;
+  @override
+  Future<Either<Failure, CommunityPost>> call(UpdatePostParams p) =>
+      repository.updatePost(p.id, p.text);
+}
+
 class ReactParams {
   const ReactParams(this.postId, this.reaction);
   final int postId;

@@ -11,6 +11,11 @@ class CommunityRemoteDataSource {
     await api.post(ApiConstants.posts, body: {'text': text}),
   );
 
+  Future<CommunityPost> update(int id, String text) async =>
+      communityPostFromJson(
+        await api.patch(ApiConstants.post(id), body: {'text': text}),
+      );
+
   Future<CommunityPost> react(int id, PostReaction? reaction) async =>
       communityPostFromJson(
         await api.put(

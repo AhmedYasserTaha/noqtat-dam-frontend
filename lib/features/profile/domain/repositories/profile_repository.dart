@@ -10,4 +10,8 @@ abstract interface class ProfileRepository {
 
   /// Deletes the account on the server and clears the local session.
   Future<Either<Failure, Unit>> deleteAccount();
+  Future<Either<Failure, Unit>> changePassword(
+    String currentPassword,
+    String newPassword,
+  );
 }

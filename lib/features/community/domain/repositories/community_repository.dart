@@ -5,6 +5,7 @@ import '../entities/community_post.dart';
 
 abstract interface class CommunityRepository {
   Future<Either<Failure, CommunityPost>> createPost(String text);
+  Future<Either<Failure, CommunityPost>> updatePost(int id, String text);
 
   /// [reaction] null removes the user's reaction.
   Future<Either<Failure, CommunityPost>> react(

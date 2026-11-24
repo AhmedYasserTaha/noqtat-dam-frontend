@@ -69,9 +69,17 @@ class ProfileUpdate extends Equatable {
     this.notificationsEnabled,
     this.governorateId,
     this.districtId,
+    this.bloodType,
+    this.lastDonationAt,
+    this.clearLastDonationAt = false,
+    this.donationsCount,
   });
   final String? name, phone, governorateId, districtId;
   final bool? isAvailable, notificationsEnabled;
+  final String? bloodType;
+  final DateTime? lastDonationAt;
+  final bool clearLastDonationAt;
+  final int? donationsCount;
   @override
   List<Object?> get props => [
     name,
@@ -80,5 +88,9 @@ class ProfileUpdate extends Equatable {
     notificationsEnabled,
     governorateId,
     districtId,
+    bloodType,
+    lastDonationAt,
+    clearLastDonationAt,
+    donationsCount,
   ];
 }

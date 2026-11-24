@@ -245,10 +245,9 @@ void main() {
     expect(find.text('متبرع جديد'), findsOneWidget);
     await tester.tap(find.byKey(const Key('notification-7')));
     await tester.pumpAndSettle();
-    expect(
-      (b.callsTo('POST /notifications/read').single.body as Map)['ids'],
-      [7],
-    );
+    expect((b.callsTo('POST /notifications/read').single.body as Map)['ids'], [
+      7,
+    ]);
   });
 
   testWidgets('author sees who pledged, without phone numbers', (tester) async {
@@ -283,35 +282,42 @@ void main() {
     expect(find.text(t.pledgeOnTheWay), findsOneWidget);
   });
 
-  testWidgets('push token is sent on home entry and every home resume', (
-    tester,
-  ) async {
-    final b = FakeBackend();
-    stubHome(b);
-    b.on('PATCH /fcm-token', (_) => FakeReply(meJson()));
-    await _boot(tester, b);
-    final patches = b.callsTo('PATCH /fcm-token');
-    expect(
-      patches.any((c) => (c.body as Map)['fcmToken'] == 'device-token-1'),
-      isTrue,
-    );
-    expect(patches, hasLength(1));
-    // Session validation also supplies the home profile; no second GET /profile.
-    expect(b.callsTo('GET /profile'), hasLength(1));
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
-    await tester.pumpAndSettle();
-    expect(b.callsTo('PATCH /fcm-token'), hasLength(2));
+  testWidgets(
+    'push token is sent once despite home refresh, resume and navigation',
+    (tester) async {
+      final b = FakeBackend();
+      stubHome(b);
+      b.on('PATCH /fcm-token', (_) => FakeReply(meJson()));
+      await _boot(tester, b);
+      final patches = b.callsTo('PATCH /fcm-token');
+      expect(
+        patches.any((c) => (c.body as Map)['fcmToken'] == 'device-token-1'),
+        isTrue,
+      );
+      expect(patches, hasLength(1));
+      // Session validation also supplies the home profile; no second GET /profile.
+      expect(b.callsTo('GET /profile'), hasLength(1));
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pumpAndSettle();
+      expect(b.callsTo('PATCH /fcm-token'), hasLength(1));
+      await tester.drag(
+        find.byType(RefreshIndicator).first,
+        const Offset(0, 400),
+      );
+      await tester.pumpAndSettle();
+      expect(b.callsTo('PATCH /fcm-token'), hasLength(1));
 
-    await tester.tap(find.text(t.myAccountTab).last);
-    await tester.pumpAndSettle();
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
-    await tester.pumpAndSettle();
-    expect(b.callsTo('PATCH /fcm-token'), hasLength(2));
+      await tester.tap(find.text(t.myAccountTab).last);
+      await tester.pumpAndSettle();
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pumpAndSettle();
+      expect(b.callsTo('PATCH /fcm-token'), hasLength(1));
 
-    await tester.tap(find.text(t.home).last);
-    await tester.pumpAndSettle();
-    expect(b.callsTo('PATCH /fcm-token'), hasLength(3));
-  });
+      await tester.tap(find.text(t.home).last);
+      await tester.pumpAndSettle();
+      expect(b.callsTo('PATCH /fcm-token'), hasLength(1));
+    },
+  );
 }

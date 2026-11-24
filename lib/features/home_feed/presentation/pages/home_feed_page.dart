@@ -26,34 +26,17 @@ class HomeFeedPage extends StatefulWidget {
   State<HomeFeedPage> createState() => _HomeFeedPageState();
 }
 
-class _HomeFeedPageState extends State<HomeFeedPage>
-    with WidgetsBindingObserver {
+class _HomeFeedPageState extends State<HomeFeedPage> {
   static const _filters = RequestFilter.values;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) getIt<PushRegistrar>().onSignedIn();
     });
     context.read<ProfileCubit>().load(reuseExisting: true);
     context.read<FeedCubit>().load();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed &&
-        mounted &&
-        ModalRoute.of(context)?.isCurrent == true) {
-      getIt<PushRegistrar>().onSignedIn();
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   Future<void> _donate(BloodRequest r) async {

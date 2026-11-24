@@ -34,3 +34,17 @@ class DeleteAccount implements UseCase<Unit, NoParams> {
   @override
   Future<Either<Failure, Unit>> call(NoParams p) => repository.deleteAccount();
 }
+
+class ChangePasswordParams {
+  const ChangePasswordParams(this.currentPassword, this.newPassword);
+  final String currentPassword, newPassword;
+}
+
+/// The caller should return to login after a successful password change.
+class ChangePassword implements UseCase<Unit, ChangePasswordParams> {
+  ChangePassword(this.repository);
+  final ProfileRepository repository;
+  @override
+  Future<Either<Failure, Unit>> call(ChangePasswordParams p) =>
+      repository.changePassword(p.currentPassword, p.newPassword);
+}

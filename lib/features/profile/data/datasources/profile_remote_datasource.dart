@@ -19,6 +19,12 @@ class ProfileRemoteDataSource {
           body: {
             if (u.name != null) 'name': u.name,
             if (u.phone != null) 'phone': u.phone,
+            if (u.bloodType != null) 'bloodType': u.bloodType,
+            if (u.clearLastDonationAt || u.lastDonationAt != null)
+              'lastDonationAt': u.clearLastDonationAt
+                  ? null
+                  : u.lastDonationAt!.toUtc().toIso8601String(),
+            if (u.donationsCount != null) 'donationsCount': u.donationsCount,
             if (u.isAvailable != null) 'isAvailable': u.isAvailable,
             if (u.governorateId != null) 'governorateId': u.governorateId,
             if (u.districtId != null) 'districtId': u.districtId,
@@ -36,6 +42,18 @@ class ProfileRemoteDataSource {
 
   Future<void> deleteAccount() async {
     await api.delete(ApiConstants.profile);
+    await tokens.clear();
+  }
+
+  Future<void> changePassword(
+    String currentPassword,
+    String newPassword,
+  ) async {
+    await api.post(
+      ApiConstants.changePassword,
+      body: {'currentPassword': currentPassword, 'newPassword': newPassword},
+    );
+    // A successful password change revokes all existing sessions.
     await tokens.clear();
   }
 }

@@ -26,4 +26,13 @@ class ProfileRepositoryImpl implements ProfileRepository {
     await remote.deleteAccount();
     return unit;
   });
+
+  @override
+  Future<Either<Failure, Unit>> changePassword(
+    String currentPassword,
+    String newPassword,
+  ) => safeCall(() async {
+    await remote.changePassword(currentPassword, newPassword);
+    return unit;
+  });
 }

@@ -15,6 +15,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
       safeCall(() => remote.create(text));
 
   @override
+  Future<Either<Failure, CommunityPost>> updatePost(int id, String text) =>
+      safeCall(() => remote.update(id, text));
+
+  @override
   Future<Either<Failure, CommunityPost>> react(
     int postId,
     PostReaction? reaction,

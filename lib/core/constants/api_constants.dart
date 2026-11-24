@@ -14,6 +14,7 @@ abstract final class ApiConstants {
 
   // Account and notifications.
   static const profile = '/profile';
+  static const changePassword = '/profile/change-password';
   static const fcmToken = '/fcm-token';
   static const donations = '/profile/donations';
   static const notifications = '/notifications';

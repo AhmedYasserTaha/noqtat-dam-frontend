@@ -16,10 +16,15 @@ class PushRegistrar {
   StreamSubscription<String>? _refresh;
   String? _token;
   Future<void>? _registration;
+  final Set<String> _sending = {};
 
-  /// Re-send on every home entry/resume, coalescing overlapping permission prompts.
-  Future<void> onSignedIn() =>
-      _registration ??= _register().whenComplete(() => _registration = null);
+  /// Register once per signed-in app session; Firebase rotations are separate.
+  Future<void> onSignedIn() {
+    if (_token != null) return Future.value();
+    return _registration ??= _register().whenComplete(
+      () => _registration = null,
+    );
+  }
 
   Future<void> _register() async {
     final token = await _push.register();
@@ -41,11 +46,14 @@ class PushRegistrar {
   }
 
   Future<void> _send(String token) async {
+    if (token == _token || !_sending.add(token)) return;
     try {
       await _api.patch(ApiConstants.fcmToken, body: {'fcmToken': token});
       _token = token;
     } catch (_) {
       // Retried at the next sign-in or token refresh.
+    } finally {
+      _sending.remove(token);
     }
   }
 }
