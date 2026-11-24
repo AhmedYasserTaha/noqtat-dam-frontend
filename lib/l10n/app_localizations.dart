@@ -1031,7 +1031,7 @@ abstract class AppLocalizations {
   /// No description provided for @bagsNeeded.
   ///
   /// In ar, this message translates to:
-  /// **'{count, plural, =1{مطلوب كيس دم واحد} =2{مطلوب كيسا دم} few{مطلوب {count} أكياس دم} other{مطلوب {count} كيس دم}}'**
+  /// **'{count, plural, =1{مطلوب كيس دم واحد} =2{مطلوب 2 كيس دم} few{مطلوب {count} أكياس دم} other{مطلوب {count} كيس دم}}'**
   String bagsNeeded(int count);
 
   /// No description provided for @collectedOf.
@@ -1379,7 +1379,7 @@ abstract class AppLocalizations {
   /// No description provided for @pledgesTitle.
   ///
   /// In ar, this message translates to:
-  /// **'المتبرعون المتعهدون'**
+  /// **'المتبرعون'**
   String get pledgesTitle;
 
   /// No description provided for @pledgesEmpty.

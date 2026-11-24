@@ -32,6 +32,8 @@ abstract final class AppTheme {
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       toolbarHeight: 52,
+      centerTitle: false,
+      titleSpacing: 0,
       titleTextStyle: AppTextStyles.title,
     ),
     listTileTheme: const ListTileThemeData(

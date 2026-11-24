@@ -520,7 +520,7 @@ class AppLocalizationsAr extends AppLocalizations {
       locale: localeName,
       other: 'مطلوب $count كيس دم',
       few: 'مطلوب $count أكياس دم',
-      two: 'مطلوب كيسا دم',
+      two: 'مطلوب 2 كيس دم',
       one: 'مطلوب كيس دم واحد',
     );
     return '$_temp0';
@@ -760,7 +760,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loadMoreFailed => 'تعذر تحميل المزيد.';
 
   @override
-  String get pledgesTitle => 'المتبرعون المتعهدون';
+  String get pledgesTitle => 'المتبرعون';
 
   @override
   String get pledgesEmpty => 'لسه محدش اتعهد.';
