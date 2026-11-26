@@ -42,6 +42,18 @@ class _ProfilePageState extends State<ProfilePage> {
     _result(false, '');
   }
 
+  Future<void> _pickLastDonation(UserProfile profile) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: profile.lastDonationAt?.toLocal() ?? DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      await _toggle(ProfileUpdate(lastDonationAt: picked.toUtc()));
+    }
+  }
+
   Widget _section(String label) => Padding(
     padding: const EdgeInsets.only(top: 16, bottom: 8),
     child: Text(
@@ -212,7 +224,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     ? t.notSet
                     : '${DateFormat.yMMMd(locale).format(last.toLocal())} · ${t.selfReportedTag}',
                 icon: AppIcons.clock,
+                onTap: () => _pickLastDonation(profile),
               ),
+              if (last != null)
+                _DonationCountdownCard(
+                  lastDonationAt: last,
+                  lang: lang,
+                ),
               PreviewRow(
                 label: t.availabilityLabel,
                 value: t.availabilityHint,
@@ -364,6 +382,90 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _DonationCountdownCard extends StatelessWidget {
+  const _DonationCountdownCard({
+    required this.lastDonationAt,
+    required this.lang,
+  });
+
+  final DateTime lastDonationAt;
+  final String lang;
+
+  @override
+  Widget build(BuildContext context) {
+    final nextDate = lastDonationAt.toLocal().add(const Duration(days: 60));
+    final remaining = nextDate.difference(DateTime.now()).inDays;
+    final clampedRemaining = remaining.clamp(0, 60);
+    final elapsed = 60 - clampedRemaining;
+    final eligible = remaining <= 0;
+    final statusText = eligible
+        ? (lang == 'ar' ? 'مؤهل للتبرع الآن' : 'Eligible to donate now')
+        : (lang == 'ar'
+            ? 'متبقي $clampedRemaining يوم (كل 60 يوم)'
+            : '$clampedRemaining days left (60-day cycle)');
+    final badgeText = eligible
+        ? (lang == 'ar' ? 'جاهز' : 'Ready')
+        : (lang == 'ar' ? '$elapsed / 60 يوم' : '$elapsed / 60d');
+    return Container(
+      margin: const EdgeInsets.only(top: 6, bottom: 10),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: eligible ? const Color(0xFFF1F8F4) : const Color(0xFFFDF6F5),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: eligible ? const Color(0xFFC8E6D2) : const Color(0xFFF0D9D5),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  lang == 'ar' ? 'التبرع القادم' : 'Next donation',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: eligible ? const Color(0xFF1E8E4E) : AppColors.red,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  badgeText,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            statusText,
+            style: const TextStyle(fontSize: 12, color: AppColors.muted),
+          ),
+          const SizedBox(height: 8),
+          LinearProgressIndicator(
+            value: elapsed / 60,
+            minHeight: 7,
+            borderRadius: BorderRadius.circular(999),
+            color: eligible ? const Color(0xFF1E8E4E) : AppColors.red,
+            backgroundColor: Colors.white,
+          ),
+        ],
+      ),
     );
   }
 }

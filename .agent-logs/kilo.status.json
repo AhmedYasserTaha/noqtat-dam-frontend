@@ -1,9 +1,9 @@
 ﻿{
     "agent":  "kilo",
-    "task":  "In test/profile_flow_test.dart around line 194 (\u0027my requests loads from the API and author can fulfil\u0027): after tapping find.text(t.markFulfilled) and pumping, an AlertDialog confirmation appears; tap find.descendant(of: find.byType(AlertDialog), matching: find.text(t.markFulfilled)) and pumpAndSettle before checking PATCH /requests/20. Do not run shell commands.",
+    "task":  "Create test/donation_countdown_test.dart following test/edit_profile_page_test.dart and test/helpers/fake_backend.dart. Test ProfilePage 60-day donation countdown: 1) when GET /profile returns lastDonationAt = DateTime.now().subtract(const Duration(days: 20)).toIso8601String(), navigating to /profile shows \u0027متبقي 40 يوم\u0027 (or 39/40 via contains) and a LinearProgressIndicator; 2) when lastDonationAt is 70 days ago, shows \u0027مؤهل للتبرع الآن\u0027. Do not run shell commands.",
     "status":  "Done",
     "errorType":  null,
     "exitCode":  0,
-    "started":  "2026-11-26T19:25:10.4587510+02:00",
-    "duration":  "28s"
+    "started":  "2026-11-26T19:32:16.1488008+02:00",
+    "duration":  "39s"
 }

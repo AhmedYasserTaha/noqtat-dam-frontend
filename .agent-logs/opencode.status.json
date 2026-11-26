@@ -1,9 +1,9 @@
 ﻿{
     "agent":  "opencode",
-    "task":  "In lib/features/blood_request/presentation/pages/my_requests_page.dart around lines 595-623: extract a shared async helper _confirmStatus(BuildContext context, MyRequestsCubit cubit, int requestId, RequestStatus status, String label) that shows an AlertDialog(title: Text(label), actions: [TextButton(onPressed: () =\u003e Navigator.pop(dialogContext, false), child: Text(MaterialLocalizations.of(dialogContext).cancelButtonLabel)), ElevatedButton(onPressed: () =\u003e Navigator.pop(dialogContext, true), child: Text(label))]). Only if confirmed == true and context.mounted, call cubit.setStatus(requestId, status) and Navigator.pop(context). Use this helper for both markFulfilled and cancelRequest buttons. Do not edit other files.",
-    "status":  "Done",
+    "task":  "In lib/features/profile/presentation/pages/profile_page.dart: 1) Add _pickLastDonation(UserProfile profile) method that calls showDatePicker(context: context, initialDate: profile.lastDonationAt?.toLocal() ?? DateTime.now(), firstDate: DateTime(2020), lastDate: DateTime.now()) and if picked != null calls _toggle(ProfileUpdate(lastDonationAt: picked.toUtc())). 2) Wire onTap: () =\u003e _pickLastDonation(profile) on the t.lastDonationLabel PreviewRow. 3) Always show _DonationCountdownCard(lastDonationAt: last, lang: lang) even when last == null (accept DateTime? lastDonationAt; if null, show elapsed=60 and statusText = lang == \u0027ar\u0027 ? \u0027مؤهل للتبرع الآن\u0027 : \u0027Eligible to donate now\u0027). Do not edit other files.",
+    "status":  "Running",
     "errorType":  null,
-    "exitCode":  0,
-    "started":  "2026-11-26T19:25:08.7928404+02:00",
-    "duration":  "52s"
+    "exitCode":  null,
+    "started":  "2026-11-26T19:47:41.7594169+02:00",
+    "duration":  "0s"
 }
