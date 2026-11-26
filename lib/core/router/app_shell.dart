@@ -13,12 +13,19 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final index = paths.indexOf(location);
-    return Scaffold(
-      body: SafeArea(bottom: false, child: child),
-      bottomNavigationBar: AppBottomNav(
-        selected: AppNavDestination.values[index < 0 ? 0 : index],
-        onSelected: (destination) => context.go(paths[destination.index]),
-        onCreate: () => context.push('/create'),
+    final onHome = location == '/';
+    return PopScope(
+      canPop: onHome,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && !onHome) context.go('/');
+      },
+      child: Scaffold(
+        body: SafeArea(bottom: false, child: child),
+        bottomNavigationBar: AppBottomNav(
+          selected: AppNavDestination.values[index < 0 ? 0 : index],
+          onSelected: (destination) => context.go(paths[destination.index]),
+          onCreate: () => context.push('/create'),
+        ),
       ),
     );
   }
