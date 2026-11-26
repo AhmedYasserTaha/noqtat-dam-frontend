@@ -5,6 +5,7 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/utils/failure_message.dart';
+import '../../../../core/utils/request_text.dart';
 import '../../../../core/utils/maps_launcher.dart';
 import '../../../home_feed/presentation/widgets/pledge_sheet.dart' show callUri;
 import '../../data/datasources/my_donations_api.dart';
@@ -306,7 +307,9 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.border),
+                      border: Border.all(
+                        color: AppColors.ink.withValues(alpha: 0.06),
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.04),
@@ -321,18 +324,19 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                         Row(
                           children: [
                             Container(
-                              width: 44,
-                              height: 46,
+                              width: 46,
+                              height: 50,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: AppColors.red.withValues(alpha: 0.07),
+                                color: _color(item.status)
+                                    .withValues(alpha: 0.07),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
                                 item.request.bloodType,
                                 textDirection: TextDirection.ltr,
-                                style: const TextStyle(
-                                  color: AppColors.red,
+                                style: TextStyle(
+                                  color: _color(item.status),
                                   fontWeight: FontWeight.w800,
                                   fontSize: 18,
                                 ),
@@ -351,38 +355,105 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  Text(
-                                    DateFormat.yMMMd(locale.toString())
-                                        .format(item.createdAt.toLocal()),
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.muted,
+                                  if (placeLine(
+                                    item.request,
+                                    locale.languageCode,
+                                  ).trim().isNotEmpty)
+                                    Text(
+                                      placeLine(
+                                        item.request,
+                                        locale.languageCode,
+                                      ),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        color: AppColors.muted,
+                                      ),
                                     ),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      const AppIcon(
+                                        AppIcons.clock,
+                                        size: 11,
+                                        color: AppColors.muted,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Flexible(
+                                        child: Text(
+                                          DateFormat.yMMMd(locale.toString())
+                                              .format(item.createdAt.toLocal()),
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                            color: AppColors.muted,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
+                        const Divider(
+                          height: 20,
+                          thickness: 0.5,
+                          color: Color(0xFFEDEAEA),
+                        ),
                         Row(
                           children: [
-                            Expanded(
-                              child: Text(
-                                _status(t, item.status),
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                  color: _color(item.status),
+                            Flexible(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 9,
+                                  vertical: 5,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _color(item.status)
+                                      .withValues(alpha: 0.07),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    AppIcon(
+                                      item.status == PledgeStatus.donated
+                                          ? AppIcons.check
+                                          : item.status ==
+                                                PledgeStatus.cancelled
+                                          ? AppIcons.close
+                                          : AppIcons.clock,
+                                      size: 12,
+                                      color: _color(item.status),
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Flexible(
+                                      child: Text(
+                                        _status(t, item.status),
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                          color: _color(item.status),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
+                            const Spacer(),
                             TextButton(
                               onPressed: _updating != null
                                   ? null
                                   : () => _details(item),
                               style: TextButton.styleFrom(
                                 minimumSize: const Size(0, 36),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
+                                backgroundColor: AppColors.red.withValues(
+                                  alpha: 0.05,
+                                ),
                                 textStyle: const TextStyle(
                                   fontFamily: 'Cairo',
                                   fontSize: 11,
@@ -396,7 +467,17 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                                         strokeWidth: 2,
                                       ),
                                     )
-                                  : Text(t.requestDetails),
+                                  : Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(t.requestDetails),
+                                        const SizedBox(width: 4),
+                                        const Icon(
+                                          Icons.arrow_forward_ios,
+                                          size: 11,
+                                        ),
+                                      ],
+                                    ),
                             ),
                           ],
                         ),
