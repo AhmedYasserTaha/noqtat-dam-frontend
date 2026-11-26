@@ -137,6 +137,7 @@ void main() {
     await shot('04-my-requests');
     await tester.tap(find.text(t.requestDetails));
     await shot('05-request-details');
+    // Request details is a page now: go back to the list.
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
 

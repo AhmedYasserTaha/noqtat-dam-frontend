@@ -48,29 +48,25 @@ abstract final class ApiErrorCodes {
 }
 
 class ApiClient {
-  ApiClient({
-    required String baseUrl,
-    required this.tokens,
-    Dio? dio,
-    this.languageCode = 'ar',
-  }) : _dio =
-           dio ??
-           Dio(
-             BaseOptions(
-               baseUrl: baseUrl,
-               connectTimeout: const Duration(seconds: 10),
-               receiveTimeout: const Duration(seconds: 20),
-               headers: {'accept': 'application/json'},
-             ),
-           ) {
+  ApiClient({required String baseUrl, required this.tokens, Dio? dio})
+    : _dio =
+          dio ??
+          Dio(
+            BaseOptions(
+              baseUrl: baseUrl,
+              connectTimeout: const Duration(seconds: 10),
+              receiveTimeout: const Duration(seconds: 20),
+              headers: {'accept': 'application/json'},
+            ),
+          ) {
     ApiChecker.attachToDio(_dio);
   }
 
   final Dio _dio;
   final TokenStore tokens;
 
-  /// Sent as `Accept-Language` so the backend localizes errors and content.
-  String languageCode;
+  /// Sent as Accept-Language so the backend localizes errors and content.
+  String languageCode = 'ar';
   final _unauthorized = StreamController<void>.broadcast();
 
   /// Fires when the server rejects a request that carried a session token
