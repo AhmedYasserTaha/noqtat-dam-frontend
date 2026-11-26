@@ -127,6 +127,7 @@ class ApiClient {
     Map<String, Object?>? query,
   }) async {
     final data = await _request(method, path, body: body, query: query);
+    if (data == null || data == '') return <String, dynamic>{};
     return data is Map<String, dynamic>
         ? data
         : throw const ApiException(UnexpectedFailure());
@@ -138,8 +139,9 @@ class ApiClient {
     Object? body,
     Map<String, Object?>? query,
   }) async {
-    final token = await tokens.read();
+    String? token;
     try {
+      token = await tokens.read();
       final response = await _dio.request<Object?>(
         path,
         data: body,

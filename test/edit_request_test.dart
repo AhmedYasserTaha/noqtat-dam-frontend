@@ -105,7 +105,7 @@ void main() {
       expect(body, {
         'hospitalName': 'Updated hospital',
         'notes': '',
-        'districtId': null,
+        'districtIds': null,
       });
       expect(backend.callsTo('POST /requests'), isEmpty);
       expect(find.textContaining('Updated hospital'), findsOneWidget);

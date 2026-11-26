@@ -1,0 +1,9 @@
+﻿{
+    "agent":  "cline",
+    "task":  "Read-only audit (DO NOT EDIT ANY FILES): Check test/, lib/l10n/app_ar.arb, lib/l10n/app_en.arb, and assets/. Report: 1) existing tests and test coverage gaps, 2) any missing or mismatched l10n keys between ar and en, 3) unused or missing assets. Cite exact file paths.",
+    "status":  "Failed",
+    "errorType":  "timeout",
+    "exitCode":  "-1",
+    "started":  "2026-11-26T18:31:07.5474881+02:00",
+    "duration":  "188s"
+}

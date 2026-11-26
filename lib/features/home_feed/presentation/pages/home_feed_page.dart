@@ -121,7 +121,7 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
   Future<void> _donate(BloodRequest r) async {
     final feed = context.read<FeedCubit>();
     var current = r;
-    if (r.myPledge != PledgeStatus.onTheWay) {
+    if (r.myPledge == null || r.myPledge == PledgeStatus.cancelled) {
       final pledged = await feed.pledge(r.id);
       if (!mounted) return;
       if (pledged == null) {

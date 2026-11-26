@@ -1,0 +1,9 @@
+﻿{
+    "agent":  "gemini",
+    "task":  "Read-only audit (DO NOT EDIT ANY FILES): Inspect lib/features/community/, lib/features/content/, lib/features/hospitals/, lib/features/notifications/, and lib/features/profile/. Summarize: 1) what each feature does, 2) any bugs, mock/stub screens, TODOs, or incomplete flows, 3) what is missing. Cite exact file paths.",
+    "status":  "Failed",
+    "errorType":  "timeout",
+    "exitCode":  "-1",
+    "started":  "2026-11-26T18:31:48.7950370+02:00",
+    "duration":  "189s"
+}

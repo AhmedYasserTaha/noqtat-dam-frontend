@@ -1,0 +1,9 @@
+﻿{
+    "agent":  "opencode",
+    "task":  "Make these exact 2 fixes: 1) In lib/core/network/api_client.dart: in _send(), if data == null or data == \u0027\u0027, return \u003cString, dynamic\u003e{} instead of throwing UnexpectedFailure; and in _request(), move \u0027final token = await tokens.read();\u0027 inside the try block so storage errors are caught. 2) In lib/features/home_feed/presentation/pages/home_feed_page.dart: in _donate(BloodRequest r), only call feed.pledge(r.id) when r.myPledge == null || r.myPledge == PledgeStatus.cancelled (so PledgeStatus.donated opens the sheet directly without re-pledging). Do not touch other files.",
+    "status":  "Done",
+    "errorType":  null,
+    "exitCode":  0,
+    "started":  "2026-11-26T18:53:13.6852149+02:00",
+    "duration":  "123s"
+}

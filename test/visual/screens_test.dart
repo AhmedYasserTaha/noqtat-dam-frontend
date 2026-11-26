@@ -163,11 +163,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(ListTile, 'الدقهلية'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(t.selectDistrict));
+    await tester.tap(find.text(t.allGovernorateDistricts));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).last, 'المنصورة');
     await tester.pumpAndSettle();
     await tester.tap(find.text('مركز المنصورة'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ElevatedButton, t.saveChanges));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const ValueKey('request-hospital')));
     await tester.enterText(
@@ -198,7 +200,7 @@ void main() {
     expect(body['bloodType'], 'AB+');
     expect(body['bagsNeeded'], 4);
     expect(body['governorateId'], isNotNull);
-    expect(body['districtId'], isNotNull);
+    expect(body['districtIds'], isNotEmpty);
     expect(body['contactPhone'], '01012345678');
     expect(tester.takeException(), isNull);
   });
