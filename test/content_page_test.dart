@@ -86,16 +86,22 @@ void main() {
     await _shot(tester, key, 'content_server');
   });
 
-  testWidgets('falls back to bundled draft text when the API fails', (
+  testWidgets('shows retry without stale bundled policy when the API fails', (
     tester,
   ) async {
     await setup(tester);
-    final backend = FakeBackend();
+    final backend = FakeBackend()
+      ..on(
+        'GET /content/privacy',
+        (_) => FakeReply({'error': 'unavailable'}, 503),
+      );
     final key = GlobalKey();
     await _show(tester, backend, key);
     final t = await AppLocalizations.delegate.load(const Locale('ar'));
     expect(find.text(t.privacyTitle), findsOneWidget);
-    expect(find.text(t.policyDraftNotice), findsOneWidget);
-    await _shot(tester, key, 'content_fallback');
+    expect(find.text(t.policyDraftNotice), findsNothing);
+    expect(find.text(t.errServer), findsOneWidget);
+    expect(find.text(t.retry), findsOneWidget);
+    await _shot(tester, key, 'content_error');
   });
 }
