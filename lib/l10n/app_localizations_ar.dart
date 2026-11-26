@@ -174,10 +174,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get requestActive => 'نشطة';
 
   @override
+  String get requestExpired => 'منتهي';
+
+  @override
   String get requestComplete => 'مكتملة';
 
   @override
-  String get requestCancelled => 'ملغية';
+  String get requestCancelled => 'منتهي';
 
   @override
   String get requestDateLabel => 'تاريخ الطلب:';
@@ -202,6 +205,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get availabilityLabel => 'متاح للتبرع';
+
+  @override
+  String get unavailableNow => 'غير متاح حاليًا';
 
   @override
   String get donationHistoryTitle => 'سجل التبرعات';

@@ -93,6 +93,33 @@ void main() {
     expect(backend.callsTo('GET /profile/donations'), isEmpty);
   });
 
+  testWidgets(
+    'home availability switch saves and preserves state on rejection',
+    (tester) async {
+      final (backend, _) = await boot(tester);
+      var reject = false;
+      backend.on(
+        'PATCH /profile',
+        (_) => reject
+            ? FakeReply({'error': 'failed'}, 500)
+            : FakeReply(meJson(isAvailable: false)),
+      );
+      await tester.tap(find.byKey(const Key('home-availability')));
+      await tester.pumpAndSettle();
+      expect(backend.callsTo('PATCH /profile').single.body, {
+        'isAvailable': false,
+      });
+      expect(find.text(t.unavailableNow), findsOneWidget);
+      expect(getIt<ProfileCubit>().state.profile!.isAvailable, isFalse);
+      reject = true;
+      await tester.tap(find.byKey(const Key('home-availability')));
+      await tester.pumpAndSettle();
+      expect(find.text(t.errServer), findsOneWidget);
+      expect(getIt<ProfileCubit>().state.profile!.isAvailable, isFalse);
+      expect(backend.callsTo('PATCH /profile'), hasLength(2));
+    },
+  );
+
   testWidgets('availability toggle patches the server', (tester) async {
     final (backend, _) = await boot(tester);
     backend.on('PATCH /profile', (_) => FakeReply(meJson(isAvailable: false)));

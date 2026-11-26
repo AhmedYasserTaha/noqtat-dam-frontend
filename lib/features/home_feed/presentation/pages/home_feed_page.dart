@@ -35,6 +35,25 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
   ({double lat, double lon})? _position;
   bool _sortByDistance = false;
   bool _locating = false;
+  bool _updatingAvailability = false;
+
+  Future<void> _setAvailability(bool value) async {
+    if (_updatingAvailability) return;
+    setState(() => _updatingAvailability = true);
+    final cubit = context.read<ProfileCubit>();
+    final ok = await cubit.update(ProfileUpdate(isAvailable: value));
+    if (!mounted) return;
+    setState(() => _updatingAvailability = false);
+    if (!ok && cubit.state.actionFailure != null) {
+      _snack(
+        failureMessage(
+          AppLocalizations.of(context)!,
+          cubit.state.actionFailure!,
+        ),
+      );
+    }
+  }
+
   final _urgentIndex = ValueNotifier<int>(0);
 
   @override
@@ -293,8 +312,10 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
                         const SizedBox(height: 12),
                         if (home != null && profile != null) ...[
                           DonationReadinessCard(
-                            readiness: home.readiness,
+                            isAvailable: profile.isAvailable,
                             bloodType: profile.bloodType,
+                            loading: _updatingAvailability,
+                            onChanged: _setAvailability,
                           ),
                           const SizedBox(height: 12),
                         ],

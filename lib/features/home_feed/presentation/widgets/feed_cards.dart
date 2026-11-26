@@ -34,70 +34,91 @@ class FeedCard extends StatelessWidget {
 class DonationReadinessCard extends StatelessWidget {
   const DonationReadinessCard({
     super.key,
-    required this.readiness,
+    required this.isAvailable,
     required this.bloodType,
+    required this.onChanged,
+    this.loading = false,
   });
-  final Readiness readiness;
+  final bool isAvailable, loading;
   final String bloodType;
+  final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    final locale = Localizations.localeOf(context).toString();
-    final last = readiness.lastDonationAt;
-    final history = readiness.donationsCount == 0 && last == null
-        ? null
-        : last == null
-        ? t.selfReportedCount(readiness.donationsCount)
-        : t.selfReportedLast(
-            DateFormat.yMMMd(locale).format(last.toLocal()),
-            readiness.donationsCount,
-          );
     return FeedCard(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
           Container(
-            width: 38,
-            height: 38,
+            width: 42,
+            height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.ink, width: 1.7),
+              color: AppColors.red.withValues(alpha: 0.07),
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               bloodType,
               textDirection: TextDirection.ltr,
-              style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: AppColors.red,
+              ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  readiness.isAvailable
-                      ? t.markedAvailable
-                      : t.markedUnavailable,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  t.yourBloodType,
+                  style: const TextStyle(fontSize: 11, color: AppColors.muted),
                 ),
-                if (history != null)
-                  Text(
-                    history,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: AppColors.muted,
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isAvailable
+                            ? const Color(0xFF287447)
+                            : AppColors.muted,
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 5),
+                    Flexible(
+                      child: Text(
+                        isAvailable ? t.availabilityLabel : t.unavailableNow,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
-          if (readiness.isAvailable)
-            const AppIcon(AppIcons.check, color: AppColors.ink, size: 22),
+          if (loading)
+            const Padding(
+              padding: EdgeInsetsDirectional.only(end: 6),
+              child: SizedBox.square(
+                dimension: 14,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+          Switch.adaptive(
+            key: const Key('home-availability'),
+            value: isAvailable,
+            onChanged: loading ? null : onChanged,
+            activeTrackColor: const Color(0xFF287447),
+          ),
         ],
       ),
     );
@@ -550,63 +571,80 @@ class CommunityPostCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
+          Stack(
             children: [
-              const CircleAvatar(
-                radius: 16,
-                backgroundColor: Color(0xFFFFF0EE),
-                child: AppIcon(
-                  AppIcons.userOutline,
-                  color: AppColors.muted,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
+              Padding(
+                padding: const EdgeInsets.only(left: 40),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      post.authorName,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
+                    const CircleAvatar(
+                      radius: 16,
+                      backgroundColor: Color(0xFFFFF0EE),
+                      child: AppIcon(
+                        AppIcons.userOutline,
+                        color: AppColors.muted,
+                        size: 20,
                       ),
                     ),
-                    Text(
-                      DateFormat.yMMMd(locale)
-                          .add_jm()
-                          .format(post.createdAt.toLocal()),
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: AppColors.muted,
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            post.authorName,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            DateFormat.yMMMd(locale)
+                                .add_jm()
+                                .format(post.createdAt.toLocal()),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: AppColors.muted,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
               if (post.isMine ? onDelete != null : onReport != null)
-                PopupMenuButton<String>(
-                  key: Key('post-menu-${post.id}'),
-                  padding: EdgeInsets.zero,
-                  onSelected: (v) =>
-                      v == 'delete' ? onDelete?.call() : onReport?.call(),
-                  itemBuilder: (_) => [
-                    if (post.isMine)
-                      PopupMenuItem(
-                        value: 'delete',
-                        child: Text(t.deletePostAction),
-                      )
-                    else
-                      PopupMenuItem(
-                        value: 'report',
-                        child: Text(t.reportAction),
-                      ),
-                  ],
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: PopupMenuButton<String>(
+                      key: Key('post-menu-${post.id}'),
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.more_vert, size: 20),
+                      onSelected: (v) =>
+                          v == 'delete' ? onDelete?.call() : onReport?.call(),
+                      itemBuilder: (_) => [
+                        if (post.isMine)
+                          PopupMenuItem(
+                            value: 'delete',
+                            child: Text(t.deletePostAction),
+                          )
+                        else
+                          PopupMenuItem(
+                            value: 'report',
+                            child: Text(t.reportAction),
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           Text(
             post.text,
             style: const TextStyle(
@@ -620,6 +658,7 @@ class CommunityPostCard extends StatelessWidget {
             children: [
               _ReactionButton(
                 key: Key('like-${post.id}'),
+                selectedColor: Colors.black,
                 icon: post.myReaction == PostReaction.like
                     ? Icons.thumb_up
                     : Icons.thumb_up_outlined,
@@ -659,12 +698,14 @@ class _ReactionButton extends StatelessWidget {
     required this.count,
     required this.selected,
     required this.onTap,
+    this.selectedColor = AppColors.red,
   });
   final IconData icon;
   final String label;
   final int count;
   final bool selected;
   final VoidCallback? onTap;
+  final Color selectedColor;
   @override
   Widget build(BuildContext context) => Semantics(
     button: true,
@@ -679,11 +720,11 @@ class _ReactionButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: selected
-              ? AppColors.red.withValues(alpha: 0.08)
+              ? selectedColor.withValues(alpha: 0.08)
               : const Color(0xFFF7F7F7),
           border: Border.all(
             color: selected
-                ? AppColors.red.withValues(alpha: 0.2)
+                ? selectedColor.withValues(alpha: 0.2)
                 : Colors.transparent,
           ),
         ),
@@ -694,7 +735,7 @@ class _ReactionButton extends StatelessWidget {
             Icon(
               icon,
               size: 18,
-              color: selected ? AppColors.red : AppColors.muted,
+              color: selected ? selectedColor : AppColors.muted,
             ),
             const SizedBox(width: 6),
             Text(
@@ -702,7 +743,7 @@ class _ReactionButton extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 13,
-                color: selected ? AppColors.red : AppColors.muted,
+                color: selected ? selectedColor : AppColors.muted,
               ),
             ),
           ],

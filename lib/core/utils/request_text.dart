@@ -7,6 +7,14 @@ String urgencyLabel(AppLocalizations t, Urgency u) => switch (u) {
   Urgency.scheduled => t.urgencyScheduled,
 };
 
+String requestStatusLabel(AppLocalizations t, RequestStatus status) =>
+    switch (status) {
+      RequestStatus.open => t.requestActive,
+      RequestStatus.fulfilled => t.requestComplete,
+      RequestStatus.cancelled => t.requestCancelled,
+      RequestStatus.expired => t.requestExpired,
+    };
+
 String placeLine(BloodRequest r, String lang) {
   final parts = [
     r.district?.of(lang),

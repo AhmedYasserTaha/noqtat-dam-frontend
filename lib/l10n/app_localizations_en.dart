@@ -174,6 +174,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestActive => 'Active';
 
   @override
+  String get requestExpired => 'Expired';
+
+  @override
   String get requestComplete => 'Completed';
 
   @override
@@ -202,6 +205,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get availabilityLabel => 'Available to donate';
+
+  @override
+  String get unavailableNow => 'Currently unavailable';
 
   @override
   String get donationHistoryTitle => 'Donation history';

@@ -207,11 +207,7 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            r.status == RequestStatus.fulfilled
-                                ? t.requestComplete
-                                : r.status == RequestStatus.cancelled
-                                ? t.requestCancelled
-                                : t.requestActive,
+                            requestStatusLabel(t, r.status),
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -424,11 +420,7 @@ class _RequestDetails extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                request.status == RequestStatus.fulfilled
-                                    ? t.requestComplete
-                                    : request.status == RequestStatus.cancelled
-                                    ? t.requestCancelled
-                                    : t.requestActive,
+                                requestStatusLabel(t, request.status),
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,

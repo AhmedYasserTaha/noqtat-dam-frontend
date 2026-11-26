@@ -92,7 +92,7 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
   };
 
   Color _color(PledgeStatus status) => switch (status) {
-    PledgeStatus.onTheWay => AppColors.red,
+    PledgeStatus.onTheWay => const Color(0xFF3978B8),
     PledgeStatus.donated => const Color(0xFF287447),
     PledgeStatus.cancelled => AppColors.muted,
   };
@@ -401,6 +401,7 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                           color: Color(0xFFEDEAEA),
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
                               child: Container(
@@ -441,7 +442,6 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                                 ),
                               ),
                             ),
-                            const Spacer(),
                             TextButton(
                               onPressed: _updating != null
                                   ? null

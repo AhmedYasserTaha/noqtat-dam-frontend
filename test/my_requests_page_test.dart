@@ -28,6 +28,26 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets('expired request shows expired in the card and details', (
+    tester,
+  ) async {
+    final backend = FakeBackend();
+    backend.on(
+      'GET /requests/mine',
+      (_) => FakeReply({
+        'items': [requestJson(id: 6, isMine: true, status: 'expired')],
+      }),
+    );
+    backend.on('GET /requests/6/pledges', (_) => FakeReply(<Object?>[]));
+    await open(tester, backend);
+    final t = AppLocalizations.of(tester.element(find.byType(MyRequestsPage)))!;
+    expect(find.text(t.requestExpired), findsOneWidget);
+    await tester.tap(find.text(t.requestDetails));
+    await tester.pumpAndSettle();
+    expect(find.text(t.requestExpired), findsOneWidget);
+    expect(find.text(t.markFulfilled), findsNothing);
+  });
+
   testWidgets('empty account loads all requests in one call and shows create', (
     tester,
   ) async {

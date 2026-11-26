@@ -422,6 +422,12 @@ abstract class AppLocalizations {
   /// **'نشطة'**
   String get requestActive;
 
+  /// No description provided for @requestExpired.
+  ///
+  /// In ar, this message translates to:
+  /// **'منتهي'**
+  String get requestExpired;
+
   /// No description provided for @requestComplete.
   ///
   /// In ar, this message translates to:
@@ -431,7 +437,7 @@ abstract class AppLocalizations {
   /// No description provided for @requestCancelled.
   ///
   /// In ar, this message translates to:
-  /// **'ملغية'**
+  /// **'منتهي'**
   String get requestCancelled;
 
   /// No description provided for @requestDateLabel.
@@ -481,6 +487,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'متاح للتبرع'**
   String get availabilityLabel;
+
+  /// No description provided for @unavailableNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متاح حاليًا'**
+  String get unavailableNow;
 
   /// No description provided for @donationHistoryTitle.
   ///
