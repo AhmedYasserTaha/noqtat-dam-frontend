@@ -35,6 +35,11 @@ void main() {
     await tester.tap(find.text(t.myAccountTab).last);
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text(t.languageLabel), 200);
+    await Scrollable.ensureVisible(
+      tester.element(find.text(t.languageLabel)),
+      alignment: 0.3,
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.text(t.languageLabel));
     await tester.pumpAndSettle();
     await tester.tap(find.text('English'));
@@ -62,31 +67,28 @@ void main() {
     expect(find.text('01012345678'), findsOneWidget);
   });
 
-  testWidgets('donations API runs only when donation history is opened', (
+  testWidgets('profile offers my donations without the duplicate history row', (
     tester,
   ) async {
     final (backend, _) = await boot(tester);
     backend.on(
-      'GET /profile/donations',
-      (_) => FakeReply([
-        {
-          'requestId': 7,
-          'donatedAt': '2026-11-01T10:00:00.000Z',
-          'bloodType': 'O+',
-          'hospitalName': 'History hospital',
-        },
-      ]),
+      'GET /pledges/mine',
+      (_) => FakeReply({'items': [], 'nextCursor': null, 'hasMore': false}),
     );
-    expect(backend.callsTo('GET /profile/donations'), isEmpty);
     await tester.tap(find.text(t.myAccountTab).last);
     await tester.pumpAndSettle();
-    expect(backend.callsTo('GET /profile/donations'), isEmpty);
-    await tester.scrollUntilVisible(find.text(t.donationHistoryTitle), 200);
-    await tester.tap(find.text(t.donationHistoryTitle));
+    expect(find.text(t.donationHistoryTitle), findsNothing);
+    await tester.scrollUntilVisible(find.text(t.myDonationsTitle), 200);
+    await Scrollable.ensureVisible(
+      tester.element(find.text(t.myDonationsTitle)),
+      alignment: 0.3,
+    );
     await tester.pumpAndSettle();
-    expect(backend.callsTo('GET /profile/donations'), hasLength(1));
-    expect(find.textContaining('History hospital'), findsOneWidget);
-    expect(find.textContaining(t.staticAccountPreview), findsNothing);
+    await tester.tap(find.text(t.myDonationsTitle));
+    await tester.pumpAndSettle();
+    expect(find.text(t.myDonationsEmpty), findsOneWidget);
+    expect(backend.callsTo('GET /pledges/mine'), hasLength(1));
+    expect(backend.callsTo('GET /profile/donations'), isEmpty);
   });
 
   testWidgets('availability toggle patches the server', (tester) async {
@@ -107,6 +109,8 @@ void main() {
     await tester.pumpAndSettle();
     final logout = find.text(t.logoutAction);
     await tester.scrollUntilVisible(logout, 300);
+    await Scrollable.ensureVisible(tester.element(logout), alignment: 0.3);
+    await tester.pumpAndSettle();
     await tester.tap(logout);
     await tester.pumpAndSettle();
     expect(find.text(t.welcomeBack), findsOneWidget);
@@ -122,6 +126,8 @@ void main() {
     await tester.pumpAndSettle();
     final del = find.widgetWithText(TextButton, t.deleteAccountTitle);
     await tester.scrollUntilVisible(del, 300);
+    await Scrollable.ensureVisible(tester.element(del), alignment: 0.3);
+    await tester.pumpAndSettle();
     await tester.tap(del);
     await tester.pumpAndSettle();
     await tester.tap(find.text(t.deleteAccountConfirm));

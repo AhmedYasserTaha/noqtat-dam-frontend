@@ -1382,6 +1382,36 @@ abstract class AppLocalizations {
   /// **'المتبرعون'**
   String get pledgesTitle;
 
+  /// No description provided for @myDonationsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبرعاتي'**
+  String get myDonationsTitle;
+
+  /// No description provided for @myDonationsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش تبرعات في القسم ده حاليًا'**
+  String get myDonationsEmpty;
+
+  /// No description provided for @donationRecorded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبرعت'**
+  String get donationRecorded;
+
+  /// No description provided for @donationCancelled.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغي'**
+  String get donationCancelled;
+
+  /// No description provided for @donationClosed.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطلب مقفول، ومش متاح تغيير حالة التبرع.'**
+  String get donationClosed;
+
   /// No description provided for @errAlreadyPledged.
   ///
   /// In ar, this message translates to:

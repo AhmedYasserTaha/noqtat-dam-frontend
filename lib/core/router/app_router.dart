@@ -30,6 +30,7 @@ import '../../features/blood_request/presentation/pages/blood_request_page.dart'
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/info_page.dart';
 import '../../features/blood_request/presentation/pages/my_requests_page.dart';
+import '../../features/blood_request/presentation/pages/my_donations_page.dart';
 
 /// Re-runs the router redirect whenever the auth state changes.
 class RouterRefresh extends ChangeNotifier {
@@ -151,6 +152,10 @@ GoRouter createRouter(AuthCubit auth, RouterRefresh refresh) => GoRouter(
         create: (_) => PostsCubit(getIt<GetPosts>())..load(),
         child: const PostsPage(),
       ),
+    ),
+    GoRoute(
+      path: '/my-donations',
+      builder: (context, state) => const MyDonationsPage(),
     ),
     GoRoute(
       path: '/notifications',

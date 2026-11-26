@@ -30,6 +30,7 @@ abstract final class ApiConstants {
   static const home = '/home';
   static const requests = '/requests';
   static const myRequests = '/requests/mine';
+  static const myPledges = '/pledges/mine';
   static String request(int id) => '$requests/$id';
   static String requestPledge(int id) => '${request(id)}/pledge';
   static String requestPledges(int id) => '${request(id)}/pledges';

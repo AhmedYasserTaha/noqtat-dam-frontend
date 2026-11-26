@@ -756,6 +756,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pledgesTitle => 'Donors who pledged';
 
   @override
+  String get myDonationsTitle => 'My donations';
+
+  @override
+  String get myDonationsEmpty => 'No donations in this section yet';
+
+  @override
+  String get donationRecorded => 'Donated';
+
+  @override
+  String get donationCancelled => 'Cancelled';
+
+  @override
+  String get donationClosed =>
+      'This request is closed. Donation status cannot be changed.';
+
+  @override
   String get errAlreadyPledged =>
       'You already signed up to donate to this request. No need to sign up again.';
 

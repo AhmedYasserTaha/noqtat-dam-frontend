@@ -763,6 +763,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pledgesTitle => 'المتبرعون';
 
   @override
+  String get myDonationsTitle => 'تبرعاتي';
+
+  @override
+  String get myDonationsEmpty => 'مفيش تبرعات في القسم ده حاليًا';
+
+  @override
+  String get donationRecorded => 'تبرعت';
+
+  @override
+  String get donationCancelled => 'ملغي';
+
+  @override
+  String get donationClosed => 'الطلب مقفول، ومش متاح تغيير حالة التبرع.';
+
+  @override
   String get errAlreadyPledged =>
       'أنت مسجّل بالفعل للتبرع بهذا الطلب، مش محتاج تسجّل مرة تانية.';
 
