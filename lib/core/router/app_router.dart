@@ -28,6 +28,7 @@ import '../../features/auth/presentation/pages/complete_profile_page.dart';
 import '../../features/home_feed/presentation/pages/home_feed_page.dart';
 import '../../features/blood_request/presentation/pages/blood_request_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/profile/presentation/pages/edit_profile_page.dart';
 import '../../features/profile/presentation/pages/info_page.dart';
 import '../../features/blood_request/presentation/pages/my_requests_page.dart';
 import '../../features/blood_request/presentation/pages/my_donations_page.dart';
@@ -112,6 +113,10 @@ GoRouter createRouter(AuthCubit auth, RouterRefresh refresh) => GoRouter(
     GoRoute(
       path: '/complete-profile',
       builder: (context, state) => const CompleteProfilePage(),
+    ),
+    GoRoute(
+      path: '/edit-profile',
+      builder: (context, state) => const EditProfilePage(),
     ),
     ShellRoute(
       builder: (context, state, child) =>

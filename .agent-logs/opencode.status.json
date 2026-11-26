@@ -1,9 +1,9 @@
 ﻿{
     "agent":  "opencode",
-    "task":  "Make these exact 2 fixes: 1) In lib/core/network/api_client.dart: in _send(), if data == null or data == \u0027\u0027, return \u003cString, dynamic\u003e{} instead of throwing UnexpectedFailure; and in _request(), move \u0027final token = await tokens.read();\u0027 inside the try block so storage errors are caught. 2) In lib/features/home_feed/presentation/pages/home_feed_page.dart: in _donate(BloodRequest r), only call feed.pledge(r.id) when r.myPledge == null || r.myPledge == PledgeStatus.cancelled (so PledgeStatus.donated opens the sheet directly without re-pledging). Do not touch other files.",
+    "task":  "Convert Edit Profile from a bottom sheet into a full screen like CompleteProfilePage: 1) Create lib/features/profile/presentation/pages/edit_profile_page.dart (mirroring lib/features/auth/presentation/pages/complete_profile_page.dart): AppBar(title: Text(l10n.editProfileTitle)), scrollable form with TextFormField for name (l10n.fullName), TextFormField for phone (l10n.mobileNumber, TextInputType.phone, TextDirection.ltr), BloodTypeSelector, EgyptLocationFields, SwitchListTile (l10n.markedAvailable / l10n.unavailableNow), and PrimaryButton(label: l10n.saveChanges). Prefill all fields from ProfileCubit.state.profile (or load if null). Validate name non-empty, phone non-empty, bloodType != null, governorateId != null. On save call cubit.update(ProfileUpdate(name: ..., phone: ..., bloodType: ..., governorateId: ..., districtId: ..., isAvailable: ...)); if ok show l10n.profileSaved snackbar and context.pop(); if false show failureMessage. 2) Add GoRoute(path: \u0027/edit-profile\u0027, builder: (_, __) =\u003e const EditProfilePage()) in lib/core/router/app_router.dart. 3) In lib/features/profile/presentation/pages/profile_page.dart, replace the _edit(profile) bottom sheet call on line 214 with context.push(\u0027/edit-profile\u0027) and remove unused _edit method. Do not run flutter commands.",
     "status":  "Done",
     "errorType":  null,
     "exitCode":  0,
-    "started":  "2026-11-26T18:53:13.6852149+02:00",
-    "duration":  "123s"
+    "started":  "2026-11-26T19:15:23.9044168+02:00",
+    "duration":  "114s"
 }

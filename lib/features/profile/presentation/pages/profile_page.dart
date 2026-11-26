@@ -28,67 +28,6 @@ class _ProfilePageState extends State<ProfilePage> {
     context.read<ProfileCubit>().load();
   }
 
-  Future<void> _edit(UserProfile profile) async {
-    final t = AppLocalizations.of(context)!;
-    final cubit = context.read<ProfileCubit>();
-    var name = profile.name;
-    var phone = profile.phone;
-    final result = await showModalBottomSheet<(String, String)>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (sheetContext) => Padding(
-        padding: EdgeInsets.fromLTRB(
-          24,
-          0,
-          24,
-          MediaQuery.viewInsetsOf(sheetContext).bottom + 24,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                t.editProfileTitle,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                initialValue: name,
-                onChanged: (value) => name = value,
-                decoration: InputDecoration(labelText: t.fullName),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                initialValue: phone,
-                onChanged: (value) => phone = value,
-                keyboardType: TextInputType.phone,
-                textDirection: TextDirection.ltr,
-                decoration: InputDecoration(labelText: t.mobileNumber),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(sheetContext, (name, phone)),
-                child: Text(t.saveChanges),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-    if (result == null || result.$1.trim().isEmpty) return;
-    final ok = await cubit.update(
-      ProfileUpdate(name: result.$1.trim(), phone: result.$2.trim()),
-    );
-    if (!mounted) return;
-    _result(ok, t.profileSaved);
-  }
-
   void _result(bool ok, String success) {
     final t = AppLocalizations.of(context)!;
     final f = context.read<ProfileCubit>().state.actionFailure;
@@ -211,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: double.infinity,
                 height: 40,
                 child: OutlinedButton(
-                  onPressed: () => _edit(profile),
+                  onPressed: () => context.push('/edit-profile'),
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(0, 40),
                     textStyle: const TextStyle(
