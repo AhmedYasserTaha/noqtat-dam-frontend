@@ -360,36 +360,44 @@ class UrgentRequestCard extends StatelessWidget {
               Expanded(
                 child: SizedBox(
                   height: 44,
-                  child: ElevatedButton(
-                    onPressed: request.isMine ? onViewMine : onDonate,
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      disabledBackgroundColor: const Color(0xFF403636),
-                      disabledForegroundColor: Colors.white,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: AppColors.redGradient,
+                      borderRadius: BorderRadius.circular(AppRadii.button),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const AppIcon(
-                          AppIcons.bloodDropFilled,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 9),
-                        Flexible(
-                          child: Text(
-                            request.isMine
-                                ? t.viewMyRequests
-                                : pledged
-                                ? t.viewPledge
-                                : t.iWillDonate,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900,
+                    child: ElevatedButton(
+                      onPressed: request.isMine ? onViewMine : onDonate,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        elevation: 0,
+                        disabledBackgroundColor: const Color(0xFF403636),
+                        disabledForegroundColor: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const AppIcon(
+                            AppIcons.bloodDropFilled,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 9),
+                          Flexible(
+                            child: Text(
+                              request.isMine
+                                  ? t.viewMyRequests
+                                  : pledged
+                                  ? t.viewPledge
+                                  : t.iWillDonate,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -612,21 +620,36 @@ class CompactRequestCard extends StatelessWidget {
           const SizedBox(height: 12),
           SizedBox(
             height: 42,
-            child: ElevatedButton(
-              onPressed: request.isMine ? null : onDonate,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: urgent ? AppColors.red : AppColors.ink,
-                foregroundColor: Colors.white,
-                disabledBackgroundColor: AppColors.border,
-                disabledForegroundColor: AppColors.muted,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: (urgent && !request.isMine)
+                    ? AppColors.redGradient
+                    : null,
+                borderRadius: BorderRadius.circular(AppRadii.button),
               ),
-              child: Text(
-                label,
-                style: const TextStyle(fontWeight: FontWeight.w900),
+              child: ElevatedButton(
+                onPressed: request.isMine ? null : onDonate,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: (urgent && !request.isMine)
+                      ? Colors.transparent
+                      : urgent
+                      ? AppColors.red
+                      : AppColors.ink,
+                  shadowColor: (urgent && !request.isMine)
+                      ? Colors.transparent
+                      : null,
+                  foregroundColor: Colors.white,
+                  disabledBackgroundColor: AppColors.border,
+                  disabledForegroundColor: AppColors.muted,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  label,
+                  style: const TextStyle(fontWeight: FontWeight.w900),
+                ),
               ),
             ),
           ),

@@ -12,6 +12,11 @@ abstract final class AppColors {
   static const success = Color(0xFF15803D);
   static const warning = Color(0xFFB45309);
   static const info = Color(0xFF0369A1);
+  static const redGradient = LinearGradient(
+    colors: [Color(0xFFB91C1C), Color(0xFF991B1B)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }
 
 abstract final class AppRadii {

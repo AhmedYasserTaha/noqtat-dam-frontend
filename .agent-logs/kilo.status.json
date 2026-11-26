@@ -1,9 +1,9 @@
 ﻿{
     "agent":  "kilo",
-    "task":  "In lib/core/widgets/app_bottom_nav.dart: polish the bottom navigation bar to match the warm minimalist theme while keeping ALL existing Texts, Tooltips, Keys, and callbacks intact: use AppColors.surface background, border AppColors.border, soft elevation shadow (AppColors.ink.withValues(alpha: 0.06), blurRadius: 18, offset: Offset(0, 6)), subtle warm pill highlight (AppColors.red.withValues(alpha: 0.09)) behind the selected destination, and AppColors.red FilledButton for createRequestAction. Do not run shell commands.",
+    "task":  "In lib/features/home_feed/presentation/widgets/feed_cards.dart: apply AppColors.redGradient (from lib/core/theme/app_colors.dart) to the urgent red donate ElevatedButton in CompactRequestCard (when urgent == true \u0026\u0026 !request.isMine) and in UrgentRequestCard (if it has a red ElevatedButton). Keep ElevatedButton as the widget (with backgroundColor: Colors.transparent, shadowColor: Colors.transparent) inside a DecoratedBox(decoration: BoxDecoration(gradient: AppColors.redGradient, borderRadius: BorderRadius.circular(AppRadii.button))) so all existing ElevatedButton widget tests pass. Do not run shell commands.",
     "status":  "Done",
     "errorType":  null,
     "exitCode":  0,
-    "started":  "2026-11-26T20:04:17.9881385+02:00",
-    "duration":  "92s"
+    "started":  "2026-11-26T20:15:51.6354900+02:00",
+    "duration":  "28s"
 }

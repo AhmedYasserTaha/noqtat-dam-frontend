@@ -1,9 +1,9 @@
 ﻿{
     "agent":  "opencode",
-    "task":  "Redesign CompactRequestCard in lib/features/home_feed/presentation/widgets/feed_cards.dart (lines 433-567) into a modern multi-row professional card while keeping ALL existing Keys (Key(\u0027distance-label\u0027), Key(\u0027request-menu-\u0027)), all existing Texts (t.bagsNeeded, hospitalName, placeLine, urgencyLabel, t.donateAction, t.viewPledge, t.shareRequest, t.reportAction), and constructor parameters 100% intact. New layout: 1) Top Row: 52x52 bloodType badge (radius 14; if urgent use deep crimson gradient [Color(0xFFB91C1C), Color(0xFF991B1B)] with white text, else AppColors.red.withValues(alpha: 0.09) with AppColors.red text) + Expanded Column with Row(bagsNeeded bold + urgency pill badge if request.urgency != Urgency.scheduled) and hospital/place Row with Icons.local_hospital_outlined (size 14, AppColors.muted) + optional distance-label text; plus PopupMenuButton at top end. 2) Middle: subtle LinearProgressIndicator showing request.bagsCollected / request.bagsNeeded.clamp(1, 20) (minHeight 5, radius 999, backgroundColor AppColors.subtle, color urgent ? AppColors.red : AppColors.ink). 3) Bottom: full-width SizedBox(height: 42) ElevatedButton (backgroundColor urgent ? AppColors.red : AppColors.ink, disabled when request.isMine) for label. Do not edit other files.",
-    "status":  "Failed",
-    "errorType":  "timeout",
-    "exitCode":  "-1",
-    "started":  "2026-11-26T20:08:56.9439975+02:00",
-    "duration":  "181s"
+    "task":  "Apply AppColors.redGradient (from lib/core/theme/app_colors.dart) to: 1) lib/core/widgets/primary_button.dart: keep ElevatedButton as the child (so widget tests using ElevatedButton still pass!), wrap it in DecoratedBox(decoration: BoxDecoration(gradient: onPressed == null ? null : AppColors.redGradient, color: onPressed == null ? AppColors.border : null, borderRadius: BorderRadius.circular(AppRadii.button))) and set ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent). 2) lib/core/widgets/app_bottom_nav.dart: wrap the FilledButton for createRequestAction in DecoratedBox(decoration: BoxDecoration(gradient: AppColors.redGradient, borderRadius: BorderRadius.circular(13))) and set FilledButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent, foregroundColor: Colors.white, ...). Do not edit other files.",
+    "status":  "Done",
+    "errorType":  null,
+    "exitCode":  0,
+    "started":  "2026-11-26T20:15:50.0629148+02:00",
+    "duration":  "79s"
 }
