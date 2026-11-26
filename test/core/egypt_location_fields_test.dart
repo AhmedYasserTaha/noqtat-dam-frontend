@@ -11,6 +11,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  testWidgets(
+    'multiple districts persist and all districts stays above results',
+    (tester) async {
+      final backend = FakeBackend();
+      final tokens = MemoryTokenStore();
+      configureDependencies(tokens: tokens, api: backend.client(tokens));
+      addTearDown(getIt.reset);
+      await tester.runAsync(() => EgyptLocations.load());
+      List<EgyptLocation> selection = [];
+      final t = await AppLocalizations.delegate.load(const Locale('en'));
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light,
+          locale: const Locale('en'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: EgyptLocationFields(
+              allowAllDistricts: true,
+              initialGovernorate: const EgyptLocation(
+                id: 'EG12',
+                arabicName: 'الدقهلية',
+                englishName: 'Dakahlia',
+              ),
+              onDistrictsChanged: (items) => selection = items,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(t.allGovernorateDistricts));
+      await tester.pumpAndSettle();
+      final options = find.byType(CheckboxListTile);
+      final first = tester.widget<CheckboxListTile>(options.at(1)).key!;
+      final second = tester.widget<CheckboxListTile>(options.at(2)).key!;
+      expect(
+        tester.getTopLeft(find.byKey(const Key('select-all-districts'))).dy,
+        lessThan(tester.getTopLeft(find.byKey(first)).dy),
+      );
+      await tester.tap(find.byKey(first));
+      await tester.pump();
+      await tester.tap(find.byKey(second));
+      await tester.pump();
+      await tester.tap(find.text(t.saveChanges));
+      await tester.pumpAndSettle();
+      expect(selection, hasLength(2));
+      await tester.tap(
+        find.text(selection.map((d) => d.name('en')).join('، ')),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.widget<CheckboxListTile>(find.byKey(first)).value, isTrue);
+      await tester.tap(find.byKey(const Key('select-all-districts')));
+      await tester.pump();
+      await tester.tap(find.text(t.saveChanges));
+      await tester.pumpAndSettle();
+      expect(selection, isEmpty);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets('district picker follows governorate and resets on change', (
     tester,
   ) async {

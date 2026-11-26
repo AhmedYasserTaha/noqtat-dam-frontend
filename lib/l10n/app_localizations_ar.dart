@@ -649,7 +649,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get requestAreaNotice =>
-      'المركز اختياري. لو اخترته، الإشعار يروح للمتبرعين بنفس الفصيلة فيه فقط. من غير مركز، يروح للمحافظة كلها.';
+      'تقدر تختار أكتر من مركز، أو كل مراكز المحافظة. إرسال الطلب لأكتر من مركز لسه محتاج تفعيل من الباك إند.';
+
+  @override
+  String get multipleDistrictsPending =>
+      'إرسال الطلب لأكتر من مركز لسه مش متاح. اختار مركز واحد أو كل مراكز المحافظة مؤقتًا.';
 
   @override
   String get requestNeedsDeadline => 'اختار تاريخ ووقت للطلب المجدول.';

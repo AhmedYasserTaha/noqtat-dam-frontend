@@ -640,7 +640,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get requestAreaNotice =>
-      'District is optional. Choosing one targets matching-blood-type donors there only; leaving it unset targets the whole governorate.';
+      'Choose multiple districts or the whole governorate. Sending to multiple districts still requires backend support.';
+
+  @override
+  String get multipleDistrictsPending =>
+      'Sending to multiple districts is not available yet. Choose one district or the whole governorate for now.';
 
   @override
   String get requestNeedsDeadline =>

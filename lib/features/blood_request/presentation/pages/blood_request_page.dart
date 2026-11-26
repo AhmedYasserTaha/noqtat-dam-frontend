@@ -38,6 +38,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   int _bags = 3;
   int _urgency = 0;
   String? _governorate, _district, _governorateId, _districtId;
+  bool _multipleDistricts = false;
   int? _hospitalId;
   DateTime? _deadline;
   bool _finished = false;
@@ -122,6 +123,10 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   Future<void> _review() async {
     FocusScope.of(context).unfocus();
     final t = AppLocalizations.of(context)!;
+    if (_multipleDistricts) {
+      _snack(t.multipleDistrictsPending);
+      return;
+    }
     final existing = widget.initialRequest;
     if (existing != null &&
         (existing.status != RequestStatus.open ||
@@ -483,6 +488,11 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                         children: [
                           EgyptLocationFields(
                             allowAllDistricts: true,
+                            onDistrictsChanged: (districts) {
+                              setState(() {
+                                _multipleDistricts = districts.length > 1;
+                              });
+                            },
                             initialGovernorate: _initialGovernorate,
                             initialDistrict: _initialDistrict,
                             onChanged: (governorate, district) {

@@ -1169,8 +1169,14 @@ abstract class AppLocalizations {
   /// No description provided for @requestAreaNotice.
   ///
   /// In ar, this message translates to:
-  /// **'المركز اختياري. لو اخترته، الإشعار يروح للمتبرعين بنفس الفصيلة فيه فقط. من غير مركز، يروح للمحافظة كلها.'**
+  /// **'تقدر تختار أكتر من مركز، أو كل مراكز المحافظة. إرسال الطلب لأكتر من مركز لسه محتاج تفعيل من الباك إند.'**
   String get requestAreaNotice;
+
+  /// No description provided for @multipleDistrictsPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال الطلب لأكتر من مركز لسه مش متاح. اختار مركز واحد أو كل مراكز المحافظة مؤقتًا.'**
+  String get multipleDistrictsPending;
 
   /// No description provided for @requestNeedsDeadline.
   ///

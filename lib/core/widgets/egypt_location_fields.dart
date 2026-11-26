@@ -13,9 +13,11 @@ class EgyptLocationFields extends StatefulWidget {
     this.initialGovernorate,
     this.initialDistrict,
     this.allowAllDistricts = false,
+    this.onDistrictsChanged,
   });
   final EgyptLocation? initialGovernorate, initialDistrict;
   final bool allowAllDistricts;
+  final ValueChanged<List<EgyptLocation>>? onDistrictsChanged;
   final void Function(EgyptLocation? governorate, EgyptLocation? district)?
   onChanged;
 
@@ -29,6 +31,7 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
   Future<List<EgyptLocation>>? _districts;
   EgyptLocation? _governorate;
   EgyptLocation? _district;
+  List<EgyptLocation> _selectedDistricts = [];
 
   @override
   void initState() {
@@ -37,6 +40,7 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
     _data = _locations.governorates();
     _governorate = widget.initialGovernorate;
     _district = widget.initialDistrict;
+    _selectedDistricts = [if (_district != null) _district!];
     if (_governorate != null)
       _districts = _locations.districts(_governorate!.id);
   }
@@ -78,9 +82,11 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                       setState(() {
                         _governorate = selected;
                         _district = null;
+                        _selectedDistricts = [];
                         _districts = _locations.districts(selected.id);
                       });
                       widget.onChanged?.call(_governorate, null);
+                      widget.onDistrictsChanged?.call([]);
                     },
             ),
             const SizedBox(height: 16),
@@ -108,11 +114,48 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                       : widget.allowAllDistricts && _district == null
                       ? t.allGovernorateDistricts
                       : t.selectDistrict,
-                  value: _district,
+                  value: _selectedDistricts.length > 1 ? null : _district,
+                  displayText: _selectedDistricts.length > 1
+                      ? _selectedDistricts
+                            .map(
+                              (d) => d.name(
+                                Localizations.localeOf(context).languageCode,
+                              ),
+                            )
+                            .join('، ')
+                      : null,
                   onTap: items == null || _governorate == null
                       ? null
                       : () async {
                           final governorateId = _governorate!.id;
+                          if (widget.allowAllDistricts) {
+                            final selected =
+                                await showModalBottomSheet<List<EgyptLocation>>(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  useSafeArea: true,
+                                  backgroundColor: Colors.white,
+                                  builder: (_) => _DistrictMultiPicker(
+                                    items: items,
+                                    selected: _selectedDistricts,
+                                  ),
+                                );
+                            if (!mounted ||
+                                selected == null ||
+                                _governorate?.id != governorateId)
+                              return;
+                            setState(() {
+                              _selectedDistricts = selected;
+                              _district = selected.length == 1
+                                  ? selected.single
+                                  : null;
+                            });
+                            widget.onChanged?.call(_governorate, _district);
+                            widget.onDistrictsChanged?.call(
+                              List.unmodifiable(selected),
+                            );
+                            return;
+                          }
                           final selected = await _pick(
                             context,
                             t.selectDistrict,
@@ -145,8 +188,12 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                   child: TextButton(
                     key: const Key('clear-request-district'),
                     onPressed: () {
-                      setState(() => _district = null);
+                      setState(() {
+                        _district = null;
+                        _selectedDistricts = [];
+                      });
                       widget.onChanged?.call(_governorate, null);
+                      widget.onDistrictsChanged?.call([]);
                     },
                     child: Text(t.allGovernorateDistricts),
                   ),
@@ -164,6 +211,7 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
     required String hint,
     required EgyptLocation? value,
     required VoidCallback? onTap,
+    String? displayText,
   }) {
     final language = Localizations.localeOf(context).languageCode;
     return FormField<EgyptLocation>(
@@ -198,7 +246,7 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                   ),
                 ),
                 child: Text(
-                  value?.name(language) ?? hint,
+                  displayText ?? value?.name(language) ?? hint,
                   style: TextStyle(
                     fontSize: 14,
                     color: value == null ? AppColors.muted : AppColors.ink,
@@ -208,6 +256,112 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _DistrictMultiPicker extends StatefulWidget {
+  const _DistrictMultiPicker({required this.items, required this.selected});
+  final List<EgyptLocation> items, selected;
+
+  @override
+  State<_DistrictMultiPicker> createState() => _DistrictMultiPickerState();
+}
+
+class _DistrictMultiPickerState extends State<_DistrictMultiPicker> {
+  late final Set<String> _ids = widget.selected.map((d) => d.id).toSet();
+  String _query = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    final language = Localizations.localeOf(context).languageCode;
+    final items =
+        widget.items
+            .where(
+              (d) =>
+                  normalizeLocationSearch('${d.arabicName} ${d.englishName}')
+                      .contains(_query),
+            )
+            .toList()
+          ..sort((a, b) => a.name(language).compareTo(b.name(language)));
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: SizedBox(
+        height: MediaQuery.sizeOf(context).height * .7,
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(t.selectDistrict),
+              trailing: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                onChanged: (value) =>
+                    setState(() => _query = normalizeLocationSearch(value)),
+                decoration: InputDecoration(
+                  hintText: t.searchLocations,
+                  prefixIcon: const Icon(Icons.search),
+                ),
+              ),
+            ),
+            CheckboxListTile(
+              key: const Key('select-all-districts'),
+              title: Text(t.allGovernorateDistricts),
+              value: _ids.isEmpty,
+              onChanged: (_) => setState(() => _ids.clear()),
+            ),
+            const Divider(height: 1),
+            Expanded(
+              child: items.isEmpty
+                  ? Center(child: Text(t.noLocationsFound))
+                  : ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (_, index) {
+                        final item = items[index];
+                        return CheckboxListTile(
+                          key: ValueKey('district-option-${item.id}'),
+                          title: Text(
+                            item.name(language),
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          value: _ids.contains(item.id),
+                          onChanged: (selected) => setState(() {
+                            if (selected == true) {
+                              _ids.add(item.id);
+                            } else {
+                              _ids.remove(item.id);
+                            }
+                            if (_ids.length == widget.items.length)
+                              _ids.clear();
+                          }),
+                        );
+                      },
+                    ),
+            ),
+            SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(
+                      context,
+                      widget.items.where((d) => _ids.contains(d.id)).toList(),
+                    ),
+                    child: Text(t.saveChanges),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
