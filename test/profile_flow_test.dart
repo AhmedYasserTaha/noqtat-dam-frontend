@@ -193,6 +193,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(t.markFulfilled));
     await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.widgetWithText(ElevatedButton, t.markFulfilled),
+      ),
+    );
+    await tester.pumpAndSettle();
     expect(backend.callsTo('PATCH /requests/20').single.body, {
       'status': 'fulfilled',
     });

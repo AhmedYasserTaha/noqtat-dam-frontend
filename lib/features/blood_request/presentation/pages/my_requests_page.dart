@@ -596,26 +596,26 @@ class _RequestDetails extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
-                            cubit.setStatus(
-                              request.id,
-                              RequestStatus.fulfilled,
-                            );
-                            Navigator.pop(context);
-                          },
+                          onPressed: () => _confirmStatus(
+                            context,
+                            cubit,
+                            request.id,
+                            RequestStatus.fulfilled,
+                            t.markFulfilled,
+                          ),
                           child: Text(t.markFulfilled),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () {
-                            cubit.setStatus(
-                              request.id,
-                              RequestStatus.cancelled,
-                            );
-                            Navigator.pop(context);
-                          },
+                          onPressed: () => _confirmStatus(
+                            context,
+                            cubit,
+                            request.id,
+                            RequestStatus.cancelled,
+                            t.cancelRequest,
+                          ),
                           child: Text(t.cancelRequest),
                         ),
                       ),
@@ -671,6 +671,37 @@ class _RequestDetails extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _confirmStatus(
+    BuildContext context,
+    MyRequestsCubit cubit,
+    int requestId,
+    RequestStatus status,
+    String label,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(label),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(
+              MaterialLocalizations.of(dialogContext).cancelButtonLabel,
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(label),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && context.mounted) {
+      cubit.setStatus(requestId, status);
+      Navigator.pop(context);
+    }
   }
 }
 

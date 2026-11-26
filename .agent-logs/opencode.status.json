@@ -1,9 +1,9 @@
 ﻿{
     "agent":  "opencode",
-    "task":  "Convert Edit Profile from a bottom sheet into a full screen like CompleteProfilePage: 1) Create lib/features/profile/presentation/pages/edit_profile_page.dart (mirroring lib/features/auth/presentation/pages/complete_profile_page.dart): AppBar(title: Text(l10n.editProfileTitle)), scrollable form with TextFormField for name (l10n.fullName), TextFormField for phone (l10n.mobileNumber, TextInputType.phone, TextDirection.ltr), BloodTypeSelector, EgyptLocationFields, SwitchListTile (l10n.markedAvailable / l10n.unavailableNow), and PrimaryButton(label: l10n.saveChanges). Prefill all fields from ProfileCubit.state.profile (or load if null). Validate name non-empty, phone non-empty, bloodType != null, governorateId != null. On save call cubit.update(ProfileUpdate(name: ..., phone: ..., bloodType: ..., governorateId: ..., districtId: ..., isAvailable: ...)); if ok show l10n.profileSaved snackbar and context.pop(); if false show failureMessage. 2) Add GoRoute(path: \u0027/edit-profile\u0027, builder: (_, __) =\u003e const EditProfilePage()) in lib/core/router/app_router.dart. 3) In lib/features/profile/presentation/pages/profile_page.dart, replace the _edit(profile) bottom sheet call on line 214 with context.push(\u0027/edit-profile\u0027) and remove unused _edit method. Do not run flutter commands.",
+    "task":  "In lib/features/blood_request/presentation/pages/my_requests_page.dart around lines 595-623: extract a shared async helper _confirmStatus(BuildContext context, MyRequestsCubit cubit, int requestId, RequestStatus status, String label) that shows an AlertDialog(title: Text(label), actions: [TextButton(onPressed: () =\u003e Navigator.pop(dialogContext, false), child: Text(MaterialLocalizations.of(dialogContext).cancelButtonLabel)), ElevatedButton(onPressed: () =\u003e Navigator.pop(dialogContext, true), child: Text(label))]). Only if confirmed == true and context.mounted, call cubit.setStatus(requestId, status) and Navigator.pop(context). Use this helper for both markFulfilled and cancelRequest buttons. Do not edit other files.",
     "status":  "Done",
     "errorType":  null,
     "exitCode":  0,
-    "started":  "2026-11-26T19:15:23.9044168+02:00",
-    "duration":  "114s"
+    "started":  "2026-11-26T19:25:08.7928404+02:00",
+    "duration":  "52s"
 }
