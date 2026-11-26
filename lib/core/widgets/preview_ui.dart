@@ -17,7 +17,7 @@ class PreviewCard extends StatelessWidget {
     color: Colors.white,
     shape: RoundedRectangleBorder(
       side: const BorderSide(color: AppColors.border),
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(AppRadii.card),
     ),
     clipBehavior: Clip.antiAlias,
     child: Padding(padding: padding, child: child),
@@ -39,17 +39,17 @@ class PreviewPage extends StatelessWidget {
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 512),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
+            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w700),
           ),
           if (subtitle.isNotEmpty) ...[
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: const TextStyle(fontSize: 11, color: AppColors.muted),
+              style: const TextStyle(fontSize: 12, color: AppColors.muted, height: 1.6),
             ),
           ],
           const SizedBox(height: 14),
@@ -76,10 +76,16 @@ class PreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
     contentPadding: EdgeInsets.zero,
-    leading: AppIcon(icon, color: AppColors.ink, size: 21),
+    leading: Container(
+      width: 34,
+      height: 34,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: AppColors.subtle, borderRadius: BorderRadius.circular(10)),
+      child: AppIcon(icon, color: AppColors.ink, size: 18),
+    ),
     title: Text(
       label,
-      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
     ),
     subtitle: value == null
         ? null

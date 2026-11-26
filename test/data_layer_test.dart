@@ -25,6 +25,28 @@ void main() {
   });
 
   group('blood requests', () {
+    test('multiple districts are sent separately and restored from the response', () async {
+      backend.on('POST /requests', (_) => FakeReply({
+        ...requestJson(id: 20),
+        'districtId': null,
+        'districtIds': ['EG0101', 'EG0102'],
+        'districts': [
+          {'id': 'EG0101', 'ar': 'First', 'en': 'First'},
+          {'id': 'EG0102', 'ar': 'Second', 'en': 'Second'}
+        ]
+      }, 201));
+      final source = BloodRequestRemoteDataSource(api);
+      final result = await source.create(const BloodRequestDraft(
+        bloodType: 'AB+', bagsNeeded: 4, hospitalName: 'Hospital',
+        governorateId: 'EG01', districtIds: ['EG0101', 'EG0102'],
+        urgency: Urgency.within24h, contactPhone: '01012345678',
+      ));
+      final body = backend.callsTo('POST /requests').single.body as Map;
+      expect(body['districtIds'], ['EG0101', 'EG0102']);
+      expect(body.containsKey('districtId'), isFalse);
+      expect(result.districtIds, ['EG0101', 'EG0102']);
+      expect(result.districts.map((d) => d.en), ['First', 'Second']);
+    });
     test(
       'create sends the API field names and omits empty optionals',
       () async {

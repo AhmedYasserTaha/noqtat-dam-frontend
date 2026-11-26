@@ -124,6 +124,7 @@ class BloodRequest extends Equatable {
     governorateId,
     districtId,
     districtIds,
+    districts,
   ];
 }
 

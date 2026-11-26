@@ -12,7 +12,7 @@ abstract final class AppTextStyles {
   );
   static const title = TextStyle(
     fontFamily: 'Cairo',
-    fontSize: 20,
+    fontSize: 18,
     height: 1.4,
     color: AppColors.ink,
     fontWeight: FontWeight.w700,
@@ -25,6 +25,6 @@ abstract final class AppTextStyles {
   static const hero = TextStyle(
     fontFamily: 'Cairo',
     fontSize: 26,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w700,
   );
 }

@@ -502,6 +502,8 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                             onDistrictsChanged: (districts) {
                               setState(() {
                                 _targetDistricts = districts;
+                                final language = Localizations.localeOf(context).languageCode;
+                                _district = districts.isEmpty ? null : districts.map((d) => d.name(language)).join('، ');
                               });
                             },
                             initialGovernorate: _initialGovernorate,
