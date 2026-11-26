@@ -26,9 +26,11 @@ abstract final class ApiErrorCodes {
   static const needGovernorate = 'need_governorate';
   static const tooManyAttempts = 'too_many_attempts';
   static const invalid = 'invalid';
+  static const alreadyPledged = 'already_pledged';
 
   static String fromMessage(String? message) {
     final m = (message ?? '').toLowerCase();
+    if (m.contains('already pledged')) return alreadyPledged;
     if (m.contains('invalid phone') || m.contains('invalid contactphone')) {
       return invalidPhone;
     }
@@ -68,7 +70,7 @@ class ApiClient {
   final TokenStore tokens;
 
   /// Sent as `Accept-Language` so the backend localizes errors and content.
-  final String languageCode;
+  String languageCode;
   final _unauthorized = StreamController<void>.broadcast();
 
   /// Fires when the server rejects a request that carried a session token
@@ -180,16 +182,26 @@ class ApiClient {
       };
     }
     final data = e.response?.data;
-    final message = data is Map ? data['error']?.toString() : null;
-    final code = ApiErrorCodes.fromMessage(message);
+    final error = data is Map ? data['error']?.toString() : null;
+    final message = data is Map ? data['message'] as String? : null;
+    final serverCode = data is Map ? data['code'] as String? : null;
+    final code = serverCode?.isNotEmpty == true
+        ? serverCode!
+        : ApiErrorCodes.fromMessage(error);
     return switch (status) {
-      400 => ValidationFailure(code),
-      401 => AuthFailure(code == ApiErrorCodes.invalid ? 'unauthorized' : code),
-      403 => PermissionFailure(code),
-      404 => const NotFoundFailure(),
-      409 => ConflictFailure(code),
-      429 => ValidationFailure(ApiErrorCodes.tooManyAttempts),
-      _ => const ServerFailure(),
+      400 => ValidationFailure(code, message: message),
+      401 => AuthFailure(
+        code == ApiErrorCodes.invalid ? 'unauthorized' : code,
+        message: message,
+      ),
+      403 => PermissionFailure(code, message: message),
+      404 => NotFoundFailure.response(serverCode ?? 'not_found', message),
+      409 => ConflictFailure(code, message: message),
+      429 => ValidationFailure(
+        serverCode ?? ApiErrorCodes.tooManyAttempts,
+        message: message,
+      ),
+      _ => ServerFailure.response(serverCode ?? 'server', message),
     };
   }
 }

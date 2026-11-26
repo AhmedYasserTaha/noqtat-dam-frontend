@@ -175,18 +175,27 @@ void main() {
     tester,
   ) async {
     final b = FakeBackend();
-    stubHome(b, requests: [requestJson(id: 30, hospital: 'مستشفى أ')]);
+    stubHome(
+      b,
+      requests: [
+        requestJson(id: 30, urgency: 'scheduled', hospital: 'مستشفى أ'),
+      ],
+    );
     var fail = true;
     b.on('GET /requests', (o) {
       if (o.queryParameters['cursor'] == '0-30') {
         if (fail) return FakeReply({'error': 'down'}, 500);
         return FakeReply({
-          'items': [requestJson(id: 29, hospital: 'مستشفى ب')],
+          'items': [
+            requestJson(id: 29, urgency: 'scheduled', hospital: 'مستشفى ب'),
+          ],
           'nextCursor': null,
         });
       }
       return FakeReply({
-        'items': [requestJson(id: 30, hospital: 'مستشفى أ')],
+        'items': [
+          requestJson(id: 30, urgency: 'scheduled', hospital: 'مستشفى أ'),
+        ],
         'nextCursor': '0-30',
       });
     });
@@ -206,7 +215,12 @@ void main() {
     tester,
   ) async {
     final b = FakeBackend();
-    stubHome(b, requests: [requestJson(id: 8, contactPhone: '01099998888')]);
+    stubHome(
+      b,
+      requests: [
+        requestJson(id: 8, urgency: 'scheduled', contactPhone: '01099998888'),
+      ],
+    );
     final share = await _boot(tester, b);
     await tester.tap(find.byKey(const Key('request-menu-8')));
     await tester.pumpAndSettle();

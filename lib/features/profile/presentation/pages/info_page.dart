@@ -1,135 +1,142 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injection.dart';
-import '../../../content/data/content_remote_datasource.dart';
-import '../../../content/presentation/content_cubit.dart';
-
+import '../../../../core/network/api_client.dart';
+import '../../../../core/network/content_api.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/failure_message.dart';
 import '../../../../l10n/app_localizations.dart';
 
 enum ProfileInfo { privacy, terms, about, help }
 
-class InfoPage extends StatelessWidget {
+class InfoPage extends StatefulWidget {
   const InfoPage({super.key, required this.kind});
   final ProfileInfo kind;
-
-  String get _slug => switch (kind) {
-    ProfileInfo.privacy => 'privacy',
-    ProfileInfo.terms => 'terms',
-    ProfileInfo.about => 'about',
-    ProfileInfo.help => 'faq',
-  };
-
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) =>
-          ContentCubit(getIt<ContentRemoteDataSource>())..load(_slug),
-      child: _InfoView(kind: kind),
-    );
-  }
+  State<InfoPage> createState() => _InfoPageState();
 }
 
-class _InfoView extends StatelessWidget {
-  const _InfoView({required this.kind});
-  final ProfileInfo kind;
+class _InfoPageState extends State<InfoPage> {
+  Future<ContentPage>? _page;
+  String? _language;
+
+  void _load() {
+    final slug = widget.kind == ProfileInfo.help ? 'faq' : widget.kind.name;
+    _page = ContentApi(getIt<ApiClient>()).page(slug, _language!);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final language = Localizations.localeOf(context).languageCode;
+    if (_language != language) {
+      _language = language;
+      _load();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant InfoPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.kind != widget.kind) _load();
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    final remote = context.watch<ContentCubit>().state;
-    var (title, sections) = switch (kind) {
-      ProfileInfo.privacy => (
-        t.privacyTitle,
-        [
-          (t.privacyDataTitle, t.privacyDataBody),
-          (t.privacyContactTitle, t.privacyContactBody),
-          (t.privacyControlTitle, t.privacyControlBody),
-        ],
-      ),
-      ProfileInfo.terms => (
-        t.termsTitle,
-        [
-          (t.termsUseTitle, t.termsUseBody),
-          (t.termsAccuracyTitle, t.termsAccuracyBody),
-          (t.termsMedicalTitle, t.termsMedicalBody),
-        ],
-      ),
-      ProfileInfo.about => (
-        t.aboutTitle,
-        [(t.authBrand, t.aboutBody), (t.versionLabel, '1.0.0 · UI Preview')],
-      ),
-      ProfileInfo.help => (
-        t.helpTitle,
-        [
-          (t.helpRequestTitle, t.helpRequestBody),
-          (t.helpDonateTitle, t.helpDonateBody),
-          (t.helpContactTitle, t.helpContactBody),
-        ],
-      ),
+    final title = switch (widget.kind) {
+      ProfileInfo.privacy => t.privacyTitle,
+      ProfileInfo.terms => t.termsTitle,
+      ProfileInfo.about => t.aboutTitle,
+      ProfileInfo.help => t.helpTitle,
     };
-    var notice = kind == ProfileInfo.privacy || kind == ProfileInfo.terms
-        ? t.policyDraftNotice
-        : t.staticAccountPreview;
-    if (remote != null) {
-      title = remote.title;
-      sections = [for (final s in remote.sections) (s.heading, s.body)];
-      notice = remote.isDraft ? (remote.notice ?? t.policyDraftNotice) : '';
-    }
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
-        ),
-      ),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 512),
-          child: ListView(
-            padding: const EdgeInsets.all(18),
-            children: [
-              if (notice.isNotEmpty)
-                Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF7F2EF),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Text(
-                    notice,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      height: 1.8,
-                      color: AppColors.muted,
-                    ),
-                  ),
-                ),
-              const SizedBox(height: 18),
-              for (final (heading, body) in sections) ...[
-                Text(
-                  heading,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  body,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    height: 1.75,
-                    color: AppColors.muted,
-                  ),
-                ),
-                const SizedBox(height: 18),
-              ],
-            ],
+    return FutureBuilder<ContentPage>(
+      future: _page,
+      builder: (context, snapshot) {
+        final page = snapshot.connectionState == ConnectionState.done
+            ? snapshot.data
+            : null;
+        return Scaffold(
+          appBar: AppBar(
+            leading: const BackButton(),
+            title: Text(page?.title ?? title),
           ),
-        ),
-      ),
+          body: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 512),
+              child: snapshot.connectionState != ConnectionState.done
+                  ? const CircularProgressIndicator()
+                  : snapshot.hasError
+                  ? Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            snapshot.error is ApiException
+                                ? failureMessage(
+                                    t,
+                                    (snapshot.error! as ApiException).failure,
+                                  )
+                                : t.errGeneric,
+                            textAlign: TextAlign.center,
+                          ),
+                          TextButton(
+                            onPressed: () => setState(_load),
+                            child: Text(t.retry),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView(
+                      padding: const EdgeInsets.all(16),
+                      children: [
+                        if (page!.notice?.isNotEmpty == true ||
+                            page.isDraft) ...[
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF7F2EF),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              page.notice?.isNotEmpty == true
+                                  ? page.notice!
+                                  : t.policyDraftNotice,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                height: 1.7,
+                                color: AppColors.muted,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                        ],
+                        for (final section in page.sections) ...[
+                          Text(
+                            section.heading,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            section.body,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              height: 1.8,
+                              color: AppColors.muted,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                        ],
+                      ],
+                    ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

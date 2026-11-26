@@ -4,6 +4,7 @@ import '../network/api_client.dart';
 
 /// Turns a [Failure] into localized user copy.
 String failureMessage(AppLocalizations t, Failure f) {
+  if (f.message?.trim().isNotEmpty == true) return f.message!;
   switch (f) {
     case NetworkFailure():
       return t.errNetwork;

@@ -145,7 +145,8 @@ void main() {
       ),
     );
     await _boot(tester, backend, token: 'saved');
-    await tester.tap(find.text(t.donateAction).first);
+    await tester.ensureVisible(find.text(t.iWillDonate).first);
+    await tester.tap(find.text(t.iWillDonate).first);
     await tester.pumpAndSettle();
     expect(find.text('01099998888'), findsOneWidget);
     expect(find.textContaining(t.pledgeNote.substring(0, 20)), findsOneWidget);

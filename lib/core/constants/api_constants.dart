@@ -40,4 +40,11 @@ abstract final class ApiConstants {
   static String post(int id) => '$posts/$id';
   static String postReaction(int id) => '${post(id)}/reaction';
   static String postReport(int id) => '${post(id)}/report';
+
+  // Public translated metadata and informational content.
+  static const labels = '/meta/labels';
+  static const messages = '/meta/messages';
+  static const content = '/content';
+  static String contentPage(String slug) =>
+      '$content/${Uri.encodeComponent(slug)}';
 }
