@@ -64,6 +64,8 @@ class BloodRequest extends Equatable {
     this.selfReportedDonatedCount = 0,
     this.governorateId,
     this.districtId,
+    this.districtIds,
+    this.districts = const [],
   });
   final int id, bagsNeeded, bagsCollected, onTheWayCount;
   final String authorName, bloodType, hospitalName;
@@ -72,6 +74,8 @@ class BloodRequest extends Equatable {
   final RequestStatus status;
   final LocalizedName? governorate, district;
   final String? governorateId, districtId;
+  final List<String>? districtIds;
+  final List<LocalizedName> districts;
   final DateTime? deadline;
   final DateTime createdAt;
   final String? notes;
@@ -119,6 +123,7 @@ class BloodRequest extends Equatable {
     selfReportedDonatedCount,
     governorateId,
     districtId,
+    districtIds,
   ];
 }
 
@@ -129,6 +134,7 @@ class BloodRequestDraft extends Equatable {
     required this.hospitalName,
     required this.governorateId,
     this.districtId,
+    this.districtIds,
     required this.urgency,
     required this.contactPhone,
     this.hospitalId,
@@ -137,6 +143,7 @@ class BloodRequestDraft extends Equatable {
   });
   final String bloodType, hospitalName, governorateId, contactPhone;
   final String? districtId;
+  final List<String>? districtIds;
   final String notes;
   final int? hospitalId;
   final int bagsNeeded;
@@ -149,6 +156,7 @@ class BloodRequestDraft extends Equatable {
     hospitalName,
     governorateId,
     districtId,
+    districtIds,
     urgency,
     contactPhone,
     hospitalId,

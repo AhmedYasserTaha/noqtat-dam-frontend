@@ -12,10 +12,12 @@ class EgyptLocationFields extends StatefulWidget {
     this.onChanged,
     this.initialGovernorate,
     this.initialDistrict,
+    this.initialDistricts,
     this.allowAllDistricts = false,
     this.onDistrictsChanged,
   });
   final EgyptLocation? initialGovernorate, initialDistrict;
+  final List<EgyptLocation>? initialDistricts;
   final bool allowAllDistricts;
   final ValueChanged<List<EgyptLocation>>? onDistrictsChanged;
   final void Function(EgyptLocation? governorate, EgyptLocation? district)?
@@ -40,7 +42,8 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
     _data = _locations.governorates();
     _governorate = widget.initialGovernorate;
     _district = widget.initialDistrict;
-    _selectedDistricts = [if (_district != null) _district!];
+    _selectedDistricts =
+        widget.initialDistricts ?? [if (_district != null) _district!];
     if (_governorate != null)
       _districts = _locations.districts(_governorate!.id);
   }

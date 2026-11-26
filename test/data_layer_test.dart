@@ -54,6 +54,7 @@ void main() {
           'hospitalName': 'مستشفى',
           'governorateId': 'EG01',
           'districtId': 'EG0101',
+          'districtIds': ['EG0101'],
           'urgency': 'within_24h',
           'contactPhone': '01012345678',
         });

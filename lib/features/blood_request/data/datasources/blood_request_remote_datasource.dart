@@ -18,7 +18,11 @@ class BloodRequestRemoteDataSource {
             'hospitalName': d.hospitalName,
             'hospitalId': ?d.hospitalId,
             'governorateId': d.governorateId,
-            'districtId': d.districtId,
+            if (d.districtId != null && d.districtIds == null)
+              'districtId': d.districtId,
+            'districtIds':
+                d.districtIds ??
+                (d.districtId == null ? null : [d.districtId!]),
             'urgency': d.urgency.api,
             'contactPhone': d.contactPhone,
             'deadline': ?d.deadline?.toUtc().toIso8601String(),
@@ -51,7 +55,11 @@ class BloodRequestRemoteDataSource {
         'hospitalName': draft.hospitalName,
         if (draft.hospitalId != null) 'hospitalId': draft.hospitalId,
         'governorateId': draft.governorateId,
-        'districtId': draft.districtId,
+        if (draft.districtId != null && draft.districtIds == null)
+          'districtId': draft.districtId,
+        'districtIds':
+            draft.districtIds ??
+            (draft.districtId == null ? null : [draft.districtId!]),
         'urgency': draft.urgency.api,
         'contactPhone': draft.contactPhone,
         'deadline': draft.deadline?.toUtc().toIso8601String(),

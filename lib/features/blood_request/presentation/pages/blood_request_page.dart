@@ -38,7 +38,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   int _bags = 3;
   int _urgency = 0;
   String? _governorate, _district, _governorateId, _districtId;
-  bool _multipleDistricts = false;
+  List<EgyptLocation> _targetDistricts = [];
   int? _hospitalId;
   DateTime? _deadline;
   bool _finished = false;
@@ -64,6 +64,19 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
     });
     _governorateId = r.governorateId;
     _districtId = r.districtId;
+    _targetDistricts = [
+      for (var i = 0; i < (r.districtIds?.length ?? 0); i++)
+        EgyptLocation(
+          id: r.districtIds![i],
+          parentId: r.governorateId,
+          arabicName: i < r.districts.length
+              ? r.districts[i].ar
+              : r.districtIds![i],
+          englishName: i < r.districts.length
+              ? r.districts[i].en
+              : r.districtIds![i],
+        ),
+    ];
     _governorate = r.governorate?.ar;
     _district = r.district?.ar;
     if (_governorateId != null)
@@ -123,10 +136,6 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   Future<void> _review() async {
     FocusScope.of(context).unfocus();
     final t = AppLocalizations.of(context)!;
-    if (_multipleDistricts) {
-      _snack(t.multipleDistrictsPending);
-      return;
-    }
     final existing = widget.initialRequest;
     if (existing != null &&
         (existing.status != RequestStatus.open ||
@@ -296,7 +305,9 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
         hospitalName: _hospital.text.trim(),
         hospitalId: _hospitalId,
         governorateId: _governorateId!,
-        districtId: _districtId,
+        districtIds: _targetDistricts.isEmpty
+            ? null
+            : _targetDistricts.map((d) => d.id).toList(),
         urgency: Urgency.values[_urgency],
         contactPhone: _phone.text.trim(),
         deadline: _urgency == 2 ? _deadline : null,
@@ -490,11 +501,12 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                             allowAllDistricts: true,
                             onDistrictsChanged: (districts) {
                               setState(() {
-                                _multipleDistricts = districts.length > 1;
+                                _targetDistricts = districts;
                               });
                             },
                             initialGovernorate: _initialGovernorate,
                             initialDistrict: _initialDistrict,
+                            initialDistricts: _targetDistricts,
                             onChanged: (governorate, district) {
                               final language = Localizations.localeOf(context)
                                   .languageCode;
@@ -512,7 +524,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                           _label(t.hospitalNameLabel),
                           HospitalField(
                             governorateId: _governorateId,
-                            districtId: _districtId,
+                            districtId: null,
                             controller: _hospital,
                             onSelected: (hospital) =>
                                 _hospitalId = hospital?.id,

@@ -27,6 +27,8 @@ class BloodRequestModel extends BloodRequest {
     super.selfReportedDonatedCount,
     super.governorateId,
     super.districtId,
+    super.districtIds,
+    super.districts,
   });
 
   factory BloodRequestModel.fromJson(Map<String, dynamic> j) =>
@@ -34,6 +36,13 @@ class BloodRequestModel extends BloodRequest {
         id: j['id'] as int,
         governorateId: j['governorateId'] as String?,
         districtId: j['districtId'] as String?,
+        districtIds: j.containsKey('districtIds')
+            ? (j['districtIds'] as List?)?.cast<String>()
+            : (j['districtId'] == null ? null : [j['districtId'] as String]),
+        districts: [
+          for (final d in (j['districts'] as List? ?? []))
+            if (LocalizedName.fromJson(d) != null) LocalizedName.fromJson(d)!,
+        ],
         authorName: j['authorName'] as String? ?? '',
         isMine: j['isMine'] as bool? ?? false,
         bloodType: j['bloodType'] as String,
