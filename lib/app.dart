@@ -81,7 +81,13 @@ class _DamyAppState extends State<DamyApp> {
       listenWhen: (a, b) =>
           a.status != b.status && b.status == AuthStatus.unauthenticated,
       // Drop the previous account's data when the session ends.
-      listener: (context, _) => getIt<ProfileCubit>().reset(),
+      listener: (context, _) {
+        getIt<ProfileCubit>().reset();
+        getIt<FeedCubit>().reset();
+        getIt<MyRequestsCubit>().reset();
+        PaintingBinding.instance.imageCache.clear();
+        PaintingBinding.instance.imageCache.clearLiveImages();
+      },
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: _router,

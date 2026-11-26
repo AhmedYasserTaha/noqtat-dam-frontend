@@ -1,5 +1,7 @@
 import 'package:damy/app.dart';
 import 'package:damy/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:damy/features/home_feed/presentation/cubit/feed_cubit.dart';
+import 'package:damy/features/blood_request/presentation/cubit/my_requests_cubit.dart';
 import 'package:damy/core/di/injection.dart';
 import 'package:damy/core/storage/token_store.dart';
 import 'package:damy/l10n/app_localizations.dart';
@@ -115,6 +117,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(t.welcomeBack), findsOneWidget);
     expect(await tokens.read(), isNull);
+    expect(getIt<ProfileCubit>().state.profile, isNull);
+    expect(getIt<FeedCubit>().state.home, isNull);
+    expect(getIt<FeedCubit>().state.requests, isEmpty);
+    expect(getIt<FeedCubit>().state.posts, isEmpty);
+    expect(getIt<MyRequestsCubit>().state.items, isEmpty);
   });
 
   testWidgets('delete account calls DELETE /profile then returns to login', (

@@ -58,10 +58,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileState(status: ProfileStatus.ready, profile: profile));
 
   Future<void> load({bool reuseExisting = false}) async {
+    final session = _session;
     if (state.profile == null) emit(const ProfileState());
     if (!reuseExisting || state.profile == null) {
       final result = await _get(const NoParams());
-      if (isClosed) return;
+      if (isClosed || session != _session) return;
       result.fold(
         (f) => emit(state.copyWith(status: ProfileStatus.failure, failure: f)),
         (p) => emit(state.copyWith(status: ProfileStatus.ready, profile: p)),
@@ -71,8 +72,9 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   /// Donation history is fetched only when its view is opened.
   Future<bool> loadHistory() async {
+    final session = _session;
     final history = await _history(const NoParams());
-    if (isClosed) return false;
+    if (isClosed || session != _session) return false;
     return history.fold(
       (failure) {
         emit(state.copyWith(actionFailure: failure));
@@ -87,8 +89,9 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   /// Returns true when the server accepted the change.
   Future<bool> update(ProfileUpdate update) async {
+    final session = _session;
     final result = await _update(update);
-    if (isClosed) return false;
+    if (isClosed || session != _session) return false;
     return result.fold(
       (f) {
         emit(state.copyWith(actionFailure: f));
@@ -102,8 +105,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<bool> deleteAccount() async {
+    final session = _session;
     final result = await _delete(const NoParams());
-    if (isClosed) return false;
+    if (isClosed || session != _session) return false;
     return result.fold(
       (f) {
         emit(state.copyWith(actionFailure: f));
@@ -116,5 +120,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  void reset() => emit(const ProfileState());
+  int _session = 0;
+  void reset() {
+    _session++;
+    emit(const ProfileState());
+  }
 }

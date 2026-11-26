@@ -46,7 +46,7 @@ class DonationReadinessCard extends StatelessWidget {
     final locale = Localizations.localeOf(context).toString();
     final last = readiness.lastDonationAt;
     final history = readiness.donationsCount == 0 && last == null
-        ? t.noDonationsRecorded
+        ? null
         : last == null
         ? t.selfReportedCount(readiness.donationsCount)
         : t.selfReportedLast(
@@ -85,10 +85,14 @@ class DonationReadinessCard extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                Text(
-                  history,
-                  style: const TextStyle(fontSize: 11, color: AppColors.muted),
-                ),
+                if (history != null)
+                  Text(
+                    history,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.muted,
+                    ),
+                  ),
               ],
             ),
           ),

@@ -115,13 +115,14 @@ class FeedCubit extends Cubit<FeedState> {
   final ReportContent _report;
 
   Future<void> load([FeedQuery? query]) async {
+    final session = _session;
     final q = query ?? state.query;
     emit(state.copyWith(status: FeedStatus.loading, query: q));
     final results = await (
       _home(const NoParams()),
       _feed(FeedPageParams(q)),
     ).wait;
-    if (isClosed || state.query != q) return;
+    if (isClosed || session != _session || state.query != q) return;
     final home = results.$1;
     final feed = results.$2;
     final failure =
@@ -153,6 +154,7 @@ class FeedCubit extends Cubit<FeedState> {
   /// A failure keeps the current items and sets [FeedState.loadMoreFailure];
   /// calling this again retries.
   Future<void> loadMore() async {
+    final session = _session;
     if (state.status != FeedStatus.ready ||
         state.loadingMore ||
         !state.hasMore) {
@@ -162,7 +164,7 @@ class FeedCubit extends Cubit<FeedState> {
     emit(state.copyWith(loadingMore: true));
     if (state.requestsNext != null) {
       final result = await _feed(FeedPageParams(q, cursor: state.requestsNext));
-      if (isClosed || state.query != q) return;
+      if (isClosed || session != _session || state.query != q) return;
       result.fold(
         (f) => emit(state.copyWith(loadingMore: false, loadMoreFailure: f)),
         (page) {
@@ -183,7 +185,7 @@ class FeedCubit extends Cubit<FeedState> {
       return;
     }
     final result = await _posts(state.postsNext);
-    if (isClosed || state.query != q) return;
+    if (isClosed || session != _session || state.query != q) return;
     result.fold(
       (f) => emit(state.copyWith(loadingMore: false, loadMoreFailure: f)),
       (page) {
@@ -212,8 +214,9 @@ class FeedCubit extends Cubit<FeedState> {
   Future<BloodRequest?> _act(
     Future<Either<Failure, BloodRequest>> Function() call,
   ) async {
+    final session = _session;
     final result = await call();
-    if (isClosed) return null;
+    if (isClosed || session != _session) return null;
     return result.fold(
       (f) {
         emit(state.copyWith(actionFailure: f));
@@ -231,13 +234,14 @@ class FeedCubit extends Cubit<FeedState> {
   /// Like / dislike. Tapping the reaction you already have removes it. The UI
   /// updates at once and goes back to the old value if the server refuses.
   Future<void> react(int postId, PostReaction tapped) async {
+    final session = _session;
     final index = state.posts.indexWhere((p) => p.id == postId);
     if (index < 0) return;
     final before = state.posts[index];
     final next = before.myReaction == tapped ? null : tapped;
     _replacePost(before.withReaction(next));
     final result = await _react(ReactParams(postId, next));
-    if (isClosed) return;
+    if (isClosed || session != _session) return;
     result.fold((f) {
       _replacePost(before);
       emit(state.copyWith(actionFailure: f));
@@ -251,8 +255,9 @@ class FeedCubit extends Cubit<FeedState> {
   );
 
   Future<bool> deletePost(int postId) async {
+    final session = _session;
     final result = await _deletePost(postId);
-    if (isClosed) return false;
+    if (isClosed || session != _session) return false;
     return result.fold(
       (f) {
         emit(state.copyWith(actionFailure: f));
@@ -273,8 +278,9 @@ class FeedCubit extends Cubit<FeedState> {
   /// Reports are reviewed by hand by the app owner; nothing is hidden from
   /// other users automatically.
   Future<bool> report(ReportTarget target, int id, ReportReason reason) async {
+    final session = _session;
     final result = await _report(ReportParams(target, id, reason));
-    if (isClosed) return false;
+    if (isClosed || session != _session) return false;
     return result.fold(
       (f) {
         emit(state.copyWith(actionFailure: f));
@@ -296,5 +302,11 @@ class FeedCubit extends Cubit<FeedState> {
         return true;
       },
     );
+  }
+
+  int _session = 0;
+  void reset() {
+    _session++;
+    emit(const FeedState());
   }
 }

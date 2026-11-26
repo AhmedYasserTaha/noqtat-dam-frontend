@@ -55,6 +55,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
   final UpdateMyRequest _update;
 
   Future<void> load([RequestTab? tab]) async {
+    final session = _session;
     final next = tab ?? state.tab;
     emit(
       MyRequestsState(
@@ -65,7 +66,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
       ),
     );
     final result = await _mine(next);
-    if (isClosed || state.tab != next) return;
+    if (isClosed || session != _session || state.tab != next) return;
     result.fold(
       (f) => emit(state.copyWith(status: MyRequestsStatus.failure, failure: f)),
       (items) => emit(
@@ -88,11 +89,18 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
       _apply(UpdateRequestParams(id, status: status));
 
   Future<void> _apply(UpdateRequestParams params) async {
+    final session = _session;
     final result = await _update(params);
-    if (isClosed) return;
+    if (isClosed || session != _session) return;
     await result.fold(
       (f) async => emit(state.copyWith(actionFailure: f)),
       (_) => load(),
     );
+  }
+
+  int _session = 0;
+  void reset() {
+    _session++;
+    emit(const MyRequestsState());
   }
 }
