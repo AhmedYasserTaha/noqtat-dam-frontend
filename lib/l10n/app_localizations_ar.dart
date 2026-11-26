@@ -641,7 +641,15 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get requestMissingFields => 'اكتب المستشفى والمركز ورقم تواصل الأول.';
+  String get requestMissingFields =>
+      'اختار المحافظة واكتب المستشفى ورقم تواصل الأول.';
+
+  @override
+  String get allGovernorateDistricts => 'كل مراكز المحافظة';
+
+  @override
+  String get requestAreaNotice =>
+      'المركز اختياري. لو اخترته، الإشعار يروح للمتبرعين بنفس الفصيلة فيه فقط. من غير مركز، يروح للمحافظة كلها.';
 
   @override
   String get requestNeedsDeadline => 'اختار تاريخ ووقت للطلب المجدول.';

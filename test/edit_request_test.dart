@@ -68,6 +68,11 @@ void main() {
           )
           .first;
       await tester.scrollUntilVisible(hospital, 250, scrollable: formScroll);
+      final clearDistrict = find.byKey(const Key('clear-request-district'));
+      await tester.ensureVisible(clearDistrict);
+      await tester.tap(clearDistrict);
+      await tester.pumpAndSettle();
+      expect(find.text(t.requestAreaNotice), findsOneWidget);
       expect(
         tester.widget<TextField>(hospital).controller!.text,
         'Original hospital',
@@ -97,7 +102,11 @@ void main() {
       await tester.tap(save);
       await tester.pumpAndSettle();
       final body = backend.callsTo('PATCH /requests/7').single.body as Map;
-      expect(body, {'hospitalName': 'Updated hospital', 'notes': ''});
+      expect(body, {
+        'hospitalName': 'Updated hospital',
+        'notes': '',
+        'districtId': null,
+      });
       expect(backend.callsTo('POST /requests'), isEmpty);
       expect(find.textContaining('Updated hospital'), findsOneWidget);
       expect(tester.takeException(), isNull);

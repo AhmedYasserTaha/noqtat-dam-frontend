@@ -128,14 +128,15 @@ class BloodRequestDraft extends Equatable {
     required this.bagsNeeded,
     required this.hospitalName,
     required this.governorateId,
-    required this.districtId,
+    this.districtId,
     required this.urgency,
     required this.contactPhone,
     this.hospitalId,
     this.deadline,
     this.notes = '',
   });
-  final String bloodType, hospitalName, governorateId, districtId, contactPhone;
+  final String bloodType, hospitalName, governorateId, contactPhone;
+  final String? districtId;
   final String notes;
   final int? hospitalId;
   final int bagsNeeded;

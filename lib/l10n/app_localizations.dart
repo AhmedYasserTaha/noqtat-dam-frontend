@@ -1157,8 +1157,20 @@ abstract class AppLocalizations {
   /// No description provided for @requestMissingFields.
   ///
   /// In ar, this message translates to:
-  /// **'اكتب المستشفى والمركز ورقم تواصل الأول.'**
+  /// **'اختار المحافظة واكتب المستشفى ورقم تواصل الأول.'**
   String get requestMissingFields;
+
+  /// No description provided for @allGovernorateDistricts.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل مراكز المحافظة'**
+  String get allGovernorateDistricts;
+
+  /// No description provided for @requestAreaNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'المركز اختياري. لو اخترته، الإشعار يروح للمتبرعين بنفس الفصيلة فيه فقط. من غير مركز، يروح للمحافظة كلها.'**
+  String get requestAreaNotice;
 
   /// No description provided for @requestNeedsDeadline.
   ///

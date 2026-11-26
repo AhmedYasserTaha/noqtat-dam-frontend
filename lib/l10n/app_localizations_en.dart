@@ -633,7 +633,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get requestMissingFields =>
-      'Add the hospital, district and a contact phone first.';
+      'Choose a governorate and add the hospital and contact phone first.';
+
+  @override
+  String get allGovernorateDistricts => 'All districts in the governorate';
+
+  @override
+  String get requestAreaNotice =>
+      'District is optional. Choosing one targets matching-blood-type donors there only; leaving it unset targets the whole governorate.';
 
   @override
   String get requestNeedsDeadline =>

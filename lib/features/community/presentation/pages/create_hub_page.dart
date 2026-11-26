@@ -49,20 +49,20 @@ class CreateHubPage extends StatelessWidget {
               ),
               tabs: [
                 Tab(
-                  key: const Key('create-tab-post'),
-                  text: t.createPostOption,
-                ),
-                Tab(
                   key: const Key('create-tab-request'),
                   text: t.createRequestOption,
+                ),
+                Tab(
+                  key: const Key('create-tab-post'),
+                  text: t.createPostOption,
                 ),
               ],
             ),
           ),
           body: const TabBarView(
             children: [
-              _KeepAlive(child: NewPostPage(embedded: true)),
               _KeepAlive(child: BloodRequestPage(embedded: true)),
+              _KeepAlive(child: NewPostPage(embedded: true)),
             ],
           ),
         ),

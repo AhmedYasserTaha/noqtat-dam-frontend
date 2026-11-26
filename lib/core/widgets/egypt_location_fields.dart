@@ -12,8 +12,10 @@ class EgyptLocationFields extends StatefulWidget {
     this.onChanged,
     this.initialGovernorate,
     this.initialDistrict,
+    this.allowAllDistricts = false,
   });
   final EgyptLocation? initialGovernorate, initialDistrict;
+  final bool allowAllDistricts;
   final void Function(EgyptLocation? governorate, EgyptLocation? district)?
   onChanged;
 
@@ -103,6 +105,8 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                       ? t.chooseGovernorateFirst
                       : items == null
                       ? t.loadingLocations
+                      : widget.allowAllDistricts && _district == null
+                      ? t.allGovernorateDistricts
                       : t.selectDistrict,
                   value: _district,
                   onTap: items == null || _governorate == null
@@ -125,6 +129,29 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
                 );
               },
             ),
+            if (widget.allowAllDistricts && _governorate != null) ...[
+              const SizedBox(height: 6),
+              Text(
+                t.requestAreaNotice,
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: AppColors.muted,
+                  height: 1.6,
+                ),
+              ),
+              if (_district != null)
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton(
+                    key: const Key('clear-request-district'),
+                    onPressed: () {
+                      setState(() => _district = null);
+                      widget.onChanged?.call(_governorate, null);
+                    },
+                    child: Text(t.allGovernorateDistricts),
+                  ),
+                ),
+            ],
           ],
         );
       },

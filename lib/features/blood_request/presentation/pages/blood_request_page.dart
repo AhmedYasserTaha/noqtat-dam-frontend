@@ -131,7 +131,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
     }
     final missing =
         _hospital.text.trim().isEmpty ||
-        _districtId == null ||
+        _governorateId == null ||
         _phone.text.trim().isEmpty;
     if (missing) {
       _snack(t.requestMissingFields);
@@ -291,7 +291,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
         hospitalName: _hospital.text.trim(),
         hospitalId: _hospitalId,
         governorateId: _governorateId!,
-        districtId: _districtId!,
+        districtId: _districtId,
         urgency: Urgency.values[_urgency],
         contactPhone: _phone.text.trim(),
         deadline: _urgency == 2 ? _deadline : null,
@@ -482,6 +482,7 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           EgyptLocationFields(
+                            allowAllDistricts: true,
                             initialGovernorate: _initialGovernorate,
                             initialDistrict: _initialDistrict,
                             onChanged: (governorate, district) {
