@@ -422,6 +422,18 @@ abstract class AppLocalizations {
   /// **'نشطة'**
   String get requestActive;
 
+  /// No description provided for @editBloodRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل الطلب'**
+  String get editBloodRequest;
+
+  /// No description provided for @editBloodRequestHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'عدّل بيانات طلبك وراجعها قبل الحفظ.'**
+  String get editBloodRequestHint;
+
   /// No description provided for @requestExpired.
   ///
   /// In ar, this message translates to:
@@ -1153,6 +1165,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اختار تاريخ ووقت للطلب المجدول.'**
   String get requestNeedsDeadline;
+
+  /// No description provided for @requestFutureDeadline.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار موعد في المستقبل للطلب.'**
+  String get requestFutureDeadline;
+
+  /// No description provided for @requestClosedForEditing.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطلب مقفول أو منتهي، ومش متاح تعديله.'**
+  String get requestClosedForEditing;
 
   /// No description provided for @myRequestsSubtitle.
   ///

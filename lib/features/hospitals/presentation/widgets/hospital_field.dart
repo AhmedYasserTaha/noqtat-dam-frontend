@@ -130,7 +130,10 @@ class _HospitalFieldState extends State<HospitalField> {
             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 13),
           ),
           child: Text(
-            _selected?.name ?? t.chooseHospital,
+            _selected?.name ??
+                (widget.controller.text.isNotEmpty
+                    ? widget.controller.text
+                    : t.chooseHospital),
             style: TextStyle(
               fontSize: 14,
               color: _selected == null ? AppColors.muted : AppColors.ink,

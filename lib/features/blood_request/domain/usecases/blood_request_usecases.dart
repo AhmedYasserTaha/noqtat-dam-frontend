@@ -23,7 +23,15 @@ class GetMyRequests implements UseCase<List<BloodRequest>, RequestTab> {
 }
 
 class UpdateRequestParams {
-  const UpdateRequestParams(this.id, {this.bagsCollected, this.status});
+  const UpdateRequestParams(
+    this.id, {
+    this.bagsCollected,
+    this.status,
+    this.draft,
+    this.original,
+  });
+  final BloodRequestDraft? draft;
+  final BloodRequest? original;
   final int id;
   final int? bagsCollected;
   final RequestStatus? status;
@@ -34,7 +42,13 @@ class UpdateMyRequest implements UseCase<BloodRequest, UpdateRequestParams> {
   final BloodRequestRepository repository;
   @override
   Future<Either<Failure, BloodRequest>> call(UpdateRequestParams p) =>
-      repository.update(p.id, bagsCollected: p.bagsCollected, status: p.status);
+      repository.update(
+        p.id,
+        bagsCollected: p.bagsCollected,
+        status: p.status,
+        draft: p.draft,
+        original: p.original,
+      );
 }
 
 class PledgeToDonate implements UseCase<BloodRequest, int> {

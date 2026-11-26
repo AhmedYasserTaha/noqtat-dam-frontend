@@ -7,7 +7,13 @@ import '../network/locations_api.dart';
 import '../utils/egypt_locations.dart';
 
 class EgyptLocationFields extends StatefulWidget {
-  const EgyptLocationFields({super.key, this.onChanged});
+  const EgyptLocationFields({
+    super.key,
+    this.onChanged,
+    this.initialGovernorate,
+    this.initialDistrict,
+  });
+  final EgyptLocation? initialGovernorate, initialDistrict;
   final void Function(EgyptLocation? governorate, EgyptLocation? district)?
   onChanged;
 
@@ -27,6 +33,10 @@ class _EgyptLocationFieldsState extends State<EgyptLocationFields> {
     super.initState();
     _locations = getIt<LocationsApi>();
     _data = _locations.governorates();
+    _governorate = widget.initialGovernorate;
+    _district = widget.initialDistrict;
+    if (_governorate != null)
+      _districts = _locations.districts(_governorate!.id);
   }
 
   @override

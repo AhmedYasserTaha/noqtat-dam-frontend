@@ -19,6 +19,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../hospitals/presentation/widgets/hospital_map_button.dart';
 import '../../domain/entities/blood_request.dart';
 import '../cubit/my_requests_cubit.dart';
+import '../cubit/blood_request_cubit.dart';
+import 'blood_request_page.dart';
 
 class MyRequestsPage extends StatefulWidget {
   const MyRequestsPage({super.key});
@@ -496,6 +498,27 @@ class _RequestDetails extends StatelessWidget {
           ),
           if (open) ...[
             const SizedBox(height: 8),
+            if (request.isMine)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.edit_outlined, size: 18),
+                  label: Text(t.editBloodRequest),
+                  onPressed: () async {
+                    final updated = await Navigator.of(context)
+                        .push<BloodRequest>(
+                          MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                              create: (_) => getIt<BloodRequestCubit>(),
+                              child: BloodRequestPage(initialRequest: request),
+                            ),
+                          ),
+                        );
+                    if (!context.mounted || updated == null) return;
+                    cubit.replaceRequest(updated);
+                  },
+                ),
+              ),
             _DetailsSection(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -54,6 +54,14 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
   final GetMyRequests _mine;
   final UpdateMyRequest _update;
 
+  void replaceRequest(BloodRequest request) => emit(
+    state.copyWith(
+      items: [
+        for (final item in state.items) item.id == request.id ? request : item,
+      ],
+    ),
+  );
+
   Future<void> load([RequestTab? tab]) async {
     final session = _session;
     final next = tab ?? state.tab;

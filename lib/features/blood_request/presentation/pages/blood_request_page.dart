@@ -9,6 +9,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/failure_message.dart';
 import '../../../../core/widgets/app_icon.dart';
 import '../../../../core/widgets/egypt_location_fields.dart';
+import '../../../../core/utils/egypt_locations.dart';
 import '../../../../core/widgets/preview_ui.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../hospitals/presentation/widgets/hospital_field.dart';
@@ -16,7 +17,12 @@ import '../../domain/entities/blood_request.dart';
 import '../cubit/blood_request_cubit.dart';
 
 class BloodRequestPage extends StatefulWidget {
-  const BloodRequestPage({super.key, this.embedded = false});
+  const BloodRequestPage({
+    super.key,
+    this.embedded = false,
+    this.initialRequest,
+  });
+  final BloodRequest? initialRequest;
 
   /// True when shown inside the create screen's tabs, which own the app bar.
   final bool embedded;
@@ -35,6 +41,44 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   int? _hospitalId;
   DateTime? _deadline;
   bool _finished = false;
+  EgyptLocation? _initialGovernorate, _initialDistrict;
+
+  @override
+  void initState() {
+    super.initState();
+    final r = widget.initialRequest;
+    if (r == null) return;
+    _hospital.text = r.hospitalName;
+    _phone.text = r.contactPhone ?? '';
+    _notes.text = r.notes ?? '';
+    _bloodType = r.bloodType;
+    _bags = r.bagsNeeded;
+    _urgency = r.urgency.index;
+    _deadline = r.deadline?.toLocal();
+    _hospitalId = r.hospitalId;
+    _hospital.addListener(() {
+      if (_hospitalId == r.hospitalId && _hospital.text != r.hospitalName) {
+        _hospitalId = null;
+      }
+    });
+    _governorateId = r.governorateId;
+    _districtId = r.districtId;
+    _governorate = r.governorate?.ar;
+    _district = r.district?.ar;
+    if (_governorateId != null)
+      _initialGovernorate = EgyptLocation(
+        id: _governorateId!,
+        arabicName: r.governorate?.ar ?? '',
+        englishName: r.governorate?.en ?? '',
+      );
+    if (_districtId != null)
+      _initialDistrict = EgyptLocation(
+        id: _districtId!,
+        parentId: _governorateId,
+        arabicName: r.district?.ar ?? '',
+        englishName: r.district?.en ?? '',
+      );
+  }
 
   @override
   void dispose() {
@@ -78,6 +122,13 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
   Future<void> _review() async {
     FocusScope.of(context).unfocus();
     final t = AppLocalizations.of(context)!;
+    final existing = widget.initialRequest;
+    if (existing != null &&
+        (existing.status != RequestStatus.open ||
+            (existing.deadline?.isBefore(DateTime.now()) ?? false))) {
+      _snack(t.requestClosedForEditing);
+      return;
+    }
     final missing =
         _hospital.text.trim().isEmpty ||
         _districtId == null ||
@@ -88,6 +139,10 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
     }
     if (_urgency == 2 && _deadline == null) {
       _snack(t.requestNeedsDeadline);
+      return;
+    }
+    if (_urgency == 2 && !_deadline!.isAfter(DateTime.now())) {
+      _snack(t.requestFutureDeadline);
       return;
     }
     final urgency = [
@@ -213,7 +268,11 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => Navigator.pop(sheetContext, true),
-              child: Text(t.confirmRequestPreview),
+              child: Text(
+                widget.initialRequest == null
+                    ? t.confirmRequestPreview
+                    : t.saveChanges,
+              ),
             ),
             const SizedBox(height: 8),
             OutlinedButton(
@@ -235,9 +294,11 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
         districtId: _districtId!,
         urgency: Urgency.values[_urgency],
         contactPhone: _phone.text.trim(),
-        deadline: _deadline,
+        deadline: _urgency == 2 ? _deadline : null,
         notes: _notes.text,
       ),
+      requestId: widget.initialRequest?.id,
+      original: widget.initialRequest,
     );
   }
 
@@ -258,6 +319,10 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
       BlocConsumer<BloodRequestCubit, BloodRequestState>(
         listener: (context, state) {
           if (state.status == CreateStatus.success) {
+            if (widget.initialRequest != null) {
+              Navigator.pop(context, state.request);
+              return;
+            }
             setState(() => _finished = true);
           } else if (state.status == CreateStatus.failure &&
               state.failure != null) {
@@ -277,7 +342,9 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
           ? null
           : AppBar(
               title: Text(
-                t.createRequestAction,
+                widget.initialRequest == null
+                    ? t.createRequestAction
+                    : t.editBloodRequest,
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w800,
@@ -305,7 +372,9 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
                   children: [
                     Text(
-                      t.createRequestSubtitle,
+                      widget.initialRequest == null
+                          ? t.createRequestSubtitle
+                          : t.editBloodRequestHint,
                       style: const TextStyle(
                         fontSize: 13,
                         height: 1.8,
@@ -369,7 +438,11 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                               ),
                               IconButton(
                                 tooltip: t.decreaseBags,
-                                onPressed: _bags > 1
+                                onPressed:
+                                    _bags >
+                                        (widget.initialRequest?.bagsCollected ??
+                                                1)
+                                            .clamp(1, 20)
                                     ? () => setState(() => _bags--)
                                     : null,
                                 icon: const Text(
@@ -409,12 +482,16 @@ class _BloodRequestPageState extends State<BloodRequestPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           EgyptLocationFields(
+                            initialGovernorate: _initialGovernorate,
+                            initialDistrict: _initialDistrict,
                             onChanged: (governorate, district) {
                               final language = Localizations.localeOf(context)
                                   .languageCode;
                               _governorate = governorate?.name(language);
                               _district = district?.name(language);
                               setState(() {
+                                if (_governorateId != governorate?.id)
+                                  _hospitalId = null;
                                 _governorateId = governorate?.id;
                                 _districtId = district?.id;
                               });

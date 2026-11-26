@@ -25,11 +25,15 @@ class BloodRequestModel extends BloodRequest {
     super.hospitalId,
     super.hospitalLocation,
     super.selfReportedDonatedCount,
+    super.governorateId,
+    super.districtId,
   });
 
   factory BloodRequestModel.fromJson(Map<String, dynamic> j) =>
       BloodRequestModel(
         id: j['id'] as int,
+        governorateId: j['governorateId'] as String?,
+        districtId: j['districtId'] as String?,
         authorName: j['authorName'] as String? ?? '',
         isMine: j['isMine'] as bool? ?? false,
         bloodType: j['bloodType'] as String,

@@ -24,8 +24,16 @@ class BloodRequestRepositoryImpl implements BloodRequestRepository {
     int id, {
     int? bagsCollected,
     RequestStatus? status,
+    BloodRequestDraft? draft,
+    BloodRequest? original,
   }) => safeCall(
-    () => remote.update(id, bagsCollected: bagsCollected, status: status),
+    () => remote.update(
+      id,
+      bagsCollected: bagsCollected,
+      status: status,
+      draft: draft,
+      original: original,
+    ),
   );
 
   @override

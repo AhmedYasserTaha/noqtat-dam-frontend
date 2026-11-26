@@ -174,6 +174,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get requestActive => 'نشطة';
 
   @override
+  String get editBloodRequest => 'تعديل الطلب';
+
+  @override
+  String get editBloodRequestHint => 'عدّل بيانات طلبك وراجعها قبل الحفظ.';
+
+  @override
   String get requestExpired => 'منتهي';
 
   @override
@@ -639,6 +645,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get requestNeedsDeadline => 'اختار تاريخ ووقت للطلب المجدول.';
+
+  @override
+  String get requestFutureDeadline => 'اختار موعد في المستقبل للطلب.';
+
+  @override
+  String get requestClosedForEditing =>
+      'الطلب مقفول أو منتهي، ومش متاح تعديله.';
 
   @override
   String get myRequestsSubtitle => 'الطلبات اللي نشرتها';

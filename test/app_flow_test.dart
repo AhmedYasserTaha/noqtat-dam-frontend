@@ -95,7 +95,7 @@ void main() {
     final login = backend.callsTo('POST /auth/login').single.body as Map;
     expect(login['phone'], '01012345678');
     // Readiness never claims medical eligibility.
-    expect(find.text(t.markedAvailable), findsOneWidget);
+    expect(find.text(t.availabilityLabel), findsOneWidget);
   });
 
   testWidgets('a saved token restores the session without the login screen', (

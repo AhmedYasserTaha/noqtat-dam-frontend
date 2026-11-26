@@ -138,7 +138,9 @@ void configureDependencies({
     ..registerLazySingleton(() => CancelPledge(getIt()))
     ..registerLazySingleton(() => GetRequestPledges(getIt()))
     ..registerFactory(() => PledgesCubit(getIt()))
-    ..registerFactory(() => BloodRequestCubit(getIt()))
+    ..registerFactory(
+      () => BloodRequestCubit(getIt(), getIt<UpdateMyRequest>()),
+    )
     ..registerLazySingleton(() => MyRequestsCubit(getIt(), getIt()));
 
   // feed

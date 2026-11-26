@@ -13,6 +13,8 @@ abstract interface class BloodRequestRepository {
     int id, {
     int? bagsCollected,
     RequestStatus? status,
+    BloodRequestDraft? draft,
+    BloodRequest? original,
   });
   Future<Either<Failure, BloodRequest>> pledge(int id);
 

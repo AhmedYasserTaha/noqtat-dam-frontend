@@ -35,19 +35,56 @@ class BloodRequestRemoteDataSource {
     return parseList(body);
   }
 
-  Future<BloodRequestModel> update(
+  Future<BloodRequest> update(
     int id, {
     int? bagsCollected,
     RequestStatus? status,
-  }) async => BloodRequestModel.fromJson(
-    await api.patch(
-      ApiConstants.request(id),
-      body: {
-        if (bagsCollected != null) 'bagsCollected': bagsCollected,
-        if (status != null) 'status': status.name,
+    BloodRequestDraft? draft,
+    BloodRequest? original,
+  }) async {
+    final body = {
+      if (bagsCollected != null) 'bagsCollected': bagsCollected,
+      if (status != null) 'status': status.name,
+      if (draft != null) ...{
+        'bloodType': draft.bloodType,
+        'bagsNeeded': draft.bagsNeeded,
+        'hospitalName': draft.hospitalName,
+        if (draft.hospitalId != null) 'hospitalId': draft.hospitalId,
+        'governorateId': draft.governorateId,
+        'districtId': draft.districtId,
+        'urgency': draft.urgency.api,
+        'contactPhone': draft.contactPhone,
+        'deadline': draft.deadline?.toUtc().toIso8601String(),
+        'notes': draft.notes.trim(),
       },
-    ),
-  );
+    };
+    if (original != null && draft != null) {
+      final before = <String, Object?>{
+        'bloodType': original.bloodType,
+        'bagsNeeded': original.bagsNeeded,
+        'hospitalName': original.hospitalName,
+        'hospitalId': original.hospitalId,
+        'governorateId': original.governorateId,
+        'districtId': original.districtId,
+        'urgency': original.urgency.api,
+        'contactPhone': original.contactPhone,
+        'deadline': original.deadline?.toUtc().toIso8601String(),
+        'notes': original.notes?.trim() ?? '',
+      };
+      body.removeWhere(
+        (key, value) => before.containsKey(key) && before[key] == value,
+      );
+      // A changed manual name must detach the hospital directory link. Otherwise
+      // retain the ID when sending the name, as required by the backend contract.
+      if (body.containsKey('hospitalName') && draft.hospitalId != null) {
+        body['hospitalId'] = draft.hospitalId;
+      }
+      if (body.isEmpty) return original;
+    }
+    return BloodRequestModel.fromJson(
+      await api.patch(ApiConstants.request(id), body: body),
+    );
+  }
 
   Future<List<DonorPledge>> pledges(int requestId) async => [
     for (final p in await api.getAll(ApiConstants.requestPledges(requestId)))

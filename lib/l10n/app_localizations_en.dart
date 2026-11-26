@@ -174,6 +174,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestActive => 'Active';
 
   @override
+  String get editBloodRequest => 'Edit request';
+
+  @override
+  String get editBloodRequestHint =>
+      'Update your request details and review them before saving.';
+
+  @override
   String get requestExpired => 'Expired';
 
   @override
@@ -631,6 +638,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get requestNeedsDeadline =>
       'Choose a date and time for a scheduled request.';
+
+  @override
+  String get requestFutureDeadline =>
+      'Choose a future date and time for the request.';
+
+  @override
+  String get requestClosedForEditing =>
+      'This request is closed or expired and cannot be edited.';
 
   @override
   String get myRequestsSubtitle => 'Requests you published';
