@@ -31,14 +31,14 @@ class AppBottomNav extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 480),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: AppColors.border),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.ink.withValues(alpha: .05),
-                  blurRadius: 20,
-                  offset: const Offset(0, 4),
+                  color: AppColors.ink.withValues(alpha: 0.06),
+                  blurRadius: 18,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
@@ -129,12 +129,19 @@ class AppBottomNav extends StatelessWidget {
         selected: active,
         button: true,
         label: label,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => onSelected(destination),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeInOut,
+          decoration: BoxDecoration(
+            color: active ? AppColors.red.withValues(alpha: 0.09) : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
-            child: Padding(
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => onSelected(destination),
+              borderRadius: BorderRadius.circular(12),
+              child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -167,6 +174,7 @@ class AppBottomNav extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

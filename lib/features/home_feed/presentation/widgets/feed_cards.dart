@@ -25,7 +25,7 @@ class FeedCard extends StatelessWidget {
     decoration: BoxDecoration(
       gradient: dark
           ? const LinearGradient(
-              colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+              colors: [Color(0xFF292524), Color(0xFF1C1917)],
             )
           : null,
       color: dark ? null : Colors.white,
@@ -70,7 +70,7 @@ class DonationReadinessCard extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFFD32F2F), Color(0xFFB71C1C)],
+                colors: [Color(0xFFB91C1C), Color(0xFF991B1B)],
               ),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
@@ -454,112 +454,182 @@ class CompactRequestCard extends StatelessWidget {
     final urgent = request.urgency == Urgency.critical;
     final pledged = request.myPledge == PledgeStatus.onTheWay;
     final label = pledged ? t.viewPledge : t.donateAction;
+    final progress = (request.bagsCollected / request.bagsNeeded.clamp(1, 20))
+        .clamp(0.0, 1.0);
     return FeedCard(
       padding: const EdgeInsets.all(12),
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            width: 38,
-            height: 38,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: urgent ? AppColors.red : const Color(0xFFF2ECE9),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Text(
-              request.bloodType,
-              textDirection: TextDirection.ltr,
-              style: TextStyle(
-                color: urgent ? Colors.white : AppColors.ink,
-                fontSize: 17,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  t.bagsNeeded(request.bagsNeeded),
-                  style: const TextStyle(
-                    fontSize: 13,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 52,
+                height: 52,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: urgent
+                      ? const LinearGradient(
+                          colors: [Color(0xFFB91C1C), Color(0xFF991B1B)],
+                        )
+                      : null,
+                  color: urgent ? null : AppColors.red.withValues(alpha: 0.09),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Text(
+                  request.bloodType,
+                  textDirection: TextDirection.ltr,
+                  style: TextStyle(
+                    color: urgent ? Colors.white : AppColors.red,
+                    fontSize: 19,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                Text(
-                  '${request.hospitalName} · ${placeLine(request, lang)}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            t.bagsNeeded(request.bagsNeeded),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                        if (request.urgency != Urgency.scheduled) ...[
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: urgent
+                                  ? AppColors.red.withValues(alpha: 0.1)
+                                  : AppColors.subtle,
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: Text(
+                              '● ${urgencyLabel(t, request.urgency)}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w800,
+                                color: urgent ? AppColors.red : AppColors.ink,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.local_hospital_outlined,
+                          size: 14,
+                          color: AppColors.muted,
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${request.hospitalName} · ${placeLine(request, lang)}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.muted,
+                                ),
+                              ),
+                              if (distanceKm != null)
+                                Text(
+                                  // Pins are volunteer-edited map data; say so unless a
+                                  // reviewer confirmed this one.
+                                  (request.hospitalLocation?.isVerified ??
+                                          false)
+                                      ? t.distanceApprox(_km(distanceKm!))
+                                      : t.distanceApproxUnreviewed(
+                                          _km(distanceKm!),
+                                        ),
+                                  key: const Key('distance-label'),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: AppColors.muted,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                if (distanceKm != null)
-                  Text(
-                    // Pins are volunteer-edited map data; say so unless a
-                    // reviewer confirmed this one.
-                    (request.hospitalLocation?.isVerified ?? false)
-                        ? t.distanceApprox(_km(distanceKm!))
-                        : t.distanceApproxUnreviewed(_km(distanceKm!)),
-                    key: const Key('distance-label'),
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.muted,
-                    ),
-                  ),
-                if (request.urgency != Urgency.scheduled)
-                  Text(
-                    '● ${urgencyLabel(t, request.urgency)}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w800,
-                      color: urgent ? AppColors.red : AppColors.ink,
-                    ),
-                  ),
-              ],
-            ),
+              ),
+              if (onShare != null || (onReport != null && !request.isMine))
+                PopupMenuButton<String>(
+                  key: Key('request-menu-${request.id}'),
+                  padding: EdgeInsets.zero,
+                  onSelected: (v) =>
+                      v == 'share' ? onShare?.call() : onReport?.call(),
+                  itemBuilder: (_) => [
+                    if (onShare != null)
+                      PopupMenuItem(
+                        value: 'share',
+                        child: Text(t.shareRequest),
+                      ),
+                    if (onReport != null && !request.isMine)
+                      PopupMenuItem(
+                        value: 'report',
+                        child: Text(t.reportAction),
+                      ),
+                  ],
+                ),
+            ],
           ),
-          const SizedBox(width: 8),
+          const SizedBox(height: 12),
+          LinearProgressIndicator(
+            value: progress,
+            minHeight: 5,
+            borderRadius: BorderRadius.circular(999),
+            backgroundColor: AppColors.subtle,
+            color: urgent ? AppColors.red : AppColors.ink,
+          ),
+          const SizedBox(height: 12),
           SizedBox(
-            height: 44,
-            child: urgent
-                ? ElevatedButton(
-                    onPressed: request.isMine ? null : onDonate,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.ink,
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                    child: Text(
-                      label,
-                      style: const TextStyle(fontWeight: FontWeight.w900),
-                    ),
-                  )
-                : OutlinedButton(
-                    onPressed: request.isMine ? null : onDonate,
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      foregroundColor: AppColors.ink,
-                      side: const BorderSide(color: AppColors.ink),
-                    ),
-                    child: Text(
-                      label,
-                      style: const TextStyle(fontWeight: FontWeight.w900),
-                    ),
-                  ),
-          ),
-          if (onShare != null || (onReport != null && !request.isMine))
-            PopupMenuButton<String>(
-              key: Key('request-menu-${request.id}'),
-              padding: EdgeInsets.zero,
-              onSelected: (v) =>
-                  v == 'share' ? onShare?.call() : onReport?.call(),
-              itemBuilder: (_) => [
-                if (onShare != null)
-                  PopupMenuItem(value: 'share', child: Text(t.shareRequest)),
-                if (onReport != null && !request.isMine)
-                  PopupMenuItem(value: 'report', child: Text(t.reportAction)),
-              ],
+            height: 42,
+            child: ElevatedButton(
+              onPressed: request.isMine ? null : onDonate,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: urgent ? AppColors.red : AppColors.ink,
+                foregroundColor: Colors.white,
+                disabledBackgroundColor: AppColors.border,
+                disabledForegroundColor: AppColors.muted,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                label,
+                style: const TextStyle(fontWeight: FontWeight.w900),
+              ),
             ),
+          ),
         ],
       ),
     );

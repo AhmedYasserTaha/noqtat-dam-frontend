@@ -1,9 +1,9 @@
 ﻿{
     "agent":  "kilo",
-    "task":  "Polish HomeHeader and FeedCard / DonationReadinessCard visually while keeping ALL existing Keys, Semantics, Texts, and constructor signatures intact: 1) In lib/features/home_feed/presentation/widgets/feed_cards.dart: in FeedCard, add a subtle BoxShadow (color: AppColors.ink.withValues(alpha: 0.05), blurRadius: 14, offset: Offset(0, 4)) for light cards and a LinearGradient([Color(0xFF1E293B), Color(0xFF0F172A)]) for dark: true cards; in DonationReadinessCard, give the bloodType container a subtle gradient ([Color(0xFFD32F2F), Color(0xFFB71C1C)]) with white bold text and soft shadow. 2) In lib/features/home_feed/presentation/widgets/home_header.dart: wrap the AppIcons.bloodDropFilled icon in a 38x38 rounded Container (radius 12, color AppColors.red.withValues(alpha: 0.10)), and style the location InkWell as a subtle pill container (surface background + border). Do not run shell commands.",
+    "task":  "In lib/core/widgets/app_bottom_nav.dart: polish the bottom navigation bar to match the warm minimalist theme while keeping ALL existing Texts, Tooltips, Keys, and callbacks intact: use AppColors.surface background, border AppColors.border, soft elevation shadow (AppColors.ink.withValues(alpha: 0.06), blurRadius: 18, offset: Offset(0, 6)), subtle warm pill highlight (AppColors.red.withValues(alpha: 0.09)) behind the selected destination, and AppColors.red FilledButton for createRequestAction. Do not run shell commands.",
     "status":  "Done",
     "errorType":  null,
     "exitCode":  0,
-    "started":  "2026-11-26T19:57:05.6430823+02:00",
-    "duration":  "77s"
+    "started":  "2026-11-26T20:04:17.9881385+02:00",
+    "duration":  "92s"
 }
