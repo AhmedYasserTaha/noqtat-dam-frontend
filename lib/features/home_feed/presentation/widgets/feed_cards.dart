@@ -23,9 +23,23 @@ class FeedCard extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: padding,
     decoration: BoxDecoration(
-      color: dark ? AppColors.ink : Colors.white,
+      gradient: dark
+          ? const LinearGradient(
+              colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+            )
+          : null,
+      color: dark ? null : Colors.white,
       borderRadius: BorderRadius.circular(dark ? 22 : 16),
       border: dark ? null : Border.all(color: AppColors.border),
+      boxShadow: dark
+          ? null
+          : [
+              BoxShadow(
+                color: AppColors.ink.withValues(alpha: 0.05),
+                blurRadius: 14,
+                offset: const Offset(0, 4),
+              ),
+            ],
     ),
     child: child,
   );
@@ -55,8 +69,17 @@ class DonationReadinessCard extends StatelessWidget {
             height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColors.red.withValues(alpha: 0.07),
+              gradient: const LinearGradient(
+                colors: [Color(0xFFD32F2F), Color(0xFFB71C1C)],
+              ),
               borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFD32F2F).withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Text(
               bloodType,
@@ -64,7 +87,7 @@ class DonationReadinessCard extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: AppColors.red,
+                color: Colors.white,
               ),
             ),
           ),

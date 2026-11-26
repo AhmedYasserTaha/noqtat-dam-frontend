@@ -26,10 +26,19 @@ class HomeHeader extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 4),
       child: Row(
         children: [
-          const AppIcon(
-            AppIcons.bloodDropFilled,
-            color: AppColors.red,
-            size: 25,
+          Container(
+            width: 38,
+            height: 38,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.red.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const AppIcon(
+              AppIcons.bloodDropFilled,
+              color: AppColors.red,
+              size: 25,
+            ),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -52,9 +61,14 @@ class HomeHeader extends StatelessWidget {
                   label: t.chooseLocationChip,
                   child: InkWell(
                     onTap: onChooseLocation,
-                    borderRadius: BorderRadius.circular(8),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppColors.surface,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: AppColors.border),
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

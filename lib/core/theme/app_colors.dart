@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static const ink = Color(0xFF151010);
-  static const background = Color(0xFFFFFFFF);
+  static const ink = Color(0xFF1F1D1A);
+  static const background = Color(0xFFFAF8F5);
   static const surface = Color(0xFFFFFFFF);
-  static const subtle = Color(0xFFF8F8F8);
-  static const border = Color(0xFFEBE8E7);
-  static const muted = Color(0xFF756E6C);
-  static const red = Color(0xFFC8201A);
-  static const redOnDark = Color(0xFFE5483F);
+  static const subtle = Color(0xFFF3EFEA);
+  static const border = Color(0xFFE7E2DA);
+  static const muted = Color(0xFF78716C);
+  static const red = Color(0xFFB91C1C);
+  static const redOnDark = Color(0xFFDC2626);
+  static const success = Color(0xFF15803D);
+  static const warning = Color(0xFFB45309);
+  static const info = Color(0xFF0369A1);
 }
 
 abstract final class AppRadii {

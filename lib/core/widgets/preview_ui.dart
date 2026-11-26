@@ -13,14 +13,25 @@ class PreviewCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets padding;
   @override
-  Widget build(BuildContext context) => Material(
-    color: Colors.white,
-    shape: RoundedRectangleBorder(
-      side: const BorderSide(color: AppColors.border),
+  Widget build(BuildContext context) => Container(
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      border: Border.all(color: AppColors.border),
       borderRadius: BorderRadius.circular(AppRadii.card),
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.ink.withValues(alpha: 0.04),
+          blurRadius: 12,
+          offset: const Offset(0, 3),
+        ),
+      ],
     ),
     clipBehavior: Clip.antiAlias,
-    child: Padding(padding: padding, child: child),
+    child: Material(
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
+      child: Padding(padding: padding, child: child),
+    ),
   );
 }
 

@@ -28,7 +28,7 @@ abstract final class AppTheme {
       headlineLarge: AppTextStyles.hero,
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.surface,
+      backgroundColor: AppColors.background,
       foregroundColor: AppColors.ink,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
